@@ -682,6 +682,12 @@
       z-index: 0;
     }
 
+    .hero__background picture {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
     .hero__background img {
       width: 100%;
       height: 100%;
@@ -2847,9 +2853,12 @@
   <!-- ============================================================
        HERO SECTION
        ============================================================ -->
-  <section class="hero" id="hero" style="--hero-focus: 50% 30%; --hero-focus-mobile: 58% 24%;">
+  <section class="hero" id="hero" style="--hero-focus: 50% 30%; --hero-focus-mobile: 72% 34%;">
     <div class="hero__background">
-      <img src="assets/images/hero-main.jpeg" alt="Brazilian Jiu Jitsu training at Live Oak Academy" loading="eager">
+      <picture>
+        <source media="(max-width: 768px)" srcset="assets/images/about-hero.jpeg">
+        <img src="assets/images/hero-main.jpeg" alt="Brazilian Jiu Jitsu training at Live Oak Academy" loading="eager">
+      </picture>
     </div>
     <div class="hero__overlay"></div>
     <div class="hero__grain"></div>
