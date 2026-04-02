@@ -1,6 +1,3 @@
-# Live Oak Jiu Jitsu Academy Knowledge Base
-
-Use this file for business facts only.
 
 ## Business Identity
 
@@ -39,15 +36,14 @@ Use this file for business facts only.
 ### Adult Programs
 
 - Adult Fundamental & Advanced BJJ Gi
-- Adult Fundamentals & Advanced No Gi
-- Takedown & Submission Class
+- Adult Program
 - Open Mat
 
 ### Youth Programs
 
 - Sprouts: ages 3-5
 - Youth BJJ: ages 6-12
-- Teen classes: age 13+ through the academy's age 13+ offerings
+- Teens ages 13 and up join the Adult Program
 
 ### Specialty Programs
 
@@ -56,10 +52,11 @@ Use this file for business facts only.
 
 ## Program Details
 
-- Brazilian Jiu Jitsu program includes Gi, No Gi, Women's Only, Takedowns, Fundamentals, and Open Classes
+- Brazilian Jiu Jitsu training is available through sprouts, youth, teen, and adult programming
 - Women's Class focuses on standing defense and generating effective angles against a stronger or heavier opponent
 - Executive Program includes private and semi-private training with IBJJF certified instructors
-- Youth programs include Sprouts ages 3-5, Youth BJJ ages 6-12, and Teen Classes age 13+
+- Youth programs include Sprouts ages 3-5 and Youth BJJ ages 6-12
+- Teens age 13 and up train in the Adult Program
 - No Gi means training without the traditional uniform jacket, usually in shorts and a rash guard
 
 ## Staff
@@ -91,7 +88,8 @@ Use this file for business facts only.
 
 - Sprouts ages 3-5: $125 monthly
 - Youth ages 6-17: $160 monthly
-- Adults: $180 monthly
+- Adults: $160 monthly
+- First responders and active military: $153 monthly
 
 ## Discounts And Offers
 
@@ -112,38 +110,33 @@ Use this file for business facts only.
 
 ## Trial Information
 
-- The homepage says the first class is free
-- The pricing page says the first trial week is free
-- Public materials indicate the academy offers a free trial to get started
+- The academy offers a 3 day calendar trial
 
 ## Weekly Schedule
 
-### Monday / Wednesday / Friday
+### Sprouts Ages 3-5
 
-- 6:30 AM: Adult Fundamental & Advanced BJJ Gi, ages 13+
-- 11:00 AM: Youth BJJ Class, ages 6-12
-- 12:00 PM: Adult Fundamental & Advanced BJJ Gi, ages 13+
-- 4:00 PM: Youth BJJ, ages 6-12
-- 5:00 PM: Sprouts, ages 3-5, Monday and Wednesday only
-- 6:00 PM: Adult Fundamental & Advanced BJJ Gi, ages 13+
+- Monday through Thursday: 5:00 PM to 5:30 PM
+- Sprouts class is followed by 20 minutes of playtime
 
-### Tuesday / Thursday
+### Youth Ages 6-12
 
-- 6:30 AM: Adult Fundamental & Advanced BJJ Gi, ages 13+
-- 11:00 AM: Youth BJJ Class, ages 6-12
-- 12:00 PM: Adult Fundamentals & Advanced No Gi, ages 13+
-- 4:00 PM: Youth BJJ, ages 6-12
-- 5:00 PM: Sprouts, ages 3-5
-- 6:00 PM: Takedown & Submission Class, ages 11+, No Gi
+- Monday through Friday: 11:00 AM
+- Monday through Friday: 4:00 PM
+- Saturday: 9:00 AM
+- Youth classes are one hour
 
-### Saturday
+### Teens And Adults Ages 13 And Up
 
-- 9:00 AM: Youth BJJ, ages 6-12
-- 10:00 AM: Adult Fundamentals & Advanced No Gi, ages 13+
+- Monday through Friday: 6:30 AM
+- Monday through Friday: 12:00 PM
+- Monday through Friday: 6:00 PM
+- Saturday: 10:00 AM
+- Classes are one hour and a half
 
 ### Sunday
 
-- 10:00 AM: Open Mat, ages 13+, BJJ, Wrestling, Judo, MMA
+- 10:00 AM: Open Mat for ages 13 and up
 
 ## Common Questions
 
@@ -169,9 +162,16 @@ Use this file for business facts only.
 - Yes
 - Sprouts for ages 3-5
 - Youth BJJ for ages 6-12
-- Age 13+ students can train in age 13+ offerings
+- Teens age 13 and up join the Adult Program
 
 ### Is the academy suitable for self-defense?
 
 - Yes
 - Public materials describe the training as rooted in self-defense
+
+### What should someone bring to a trial?
+
+- Flip flops
+- A bottle of water
+- Arrive 10 minutes early
+- New visitors get a tour of the academy and complete liability forms
