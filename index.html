@@ -663,6 +663,8 @@
        HERO SECTION
        ================================================================ */
     .hero {
+      --hero-focus: center 30%;
+      --hero-focus-mobile: var(--hero-focus);
       position: relative;
       width: 100%;
       min-height: 100vh;
@@ -684,7 +686,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center 30%;
+      object-position: var(--hero-focus);
       transform: scale(1.05);
       transition: transform 0.1s linear;
       will-change: transform;
@@ -965,6 +967,8 @@
     }
 
     .program-card {
+      --program-focus: center;
+      --program-focus-mobile: var(--program-focus);
       position: relative;
       border-radius: var(--border-radius-lg);
       overflow: hidden;
@@ -977,7 +981,7 @@
       position: absolute;
       inset: 0;
       background-size: cover;
-      background-position: center;
+      background-position: var(--program-focus);
       transition: transform var(--duration-slow) var(--ease-smooth);
     }
 
@@ -2509,29 +2513,43 @@
         display: none;
       }
 
+      .hero {
+        min-height: min(100svh, 52rem);
+      }
+
       .hero__background img {
-        object-position: 35% 30%;
+        object-position: var(--hero-focus-mobile);
       }
 
       .hero__overlay {
         background:
           linear-gradient(
             180deg,
-            rgba(10, 10, 10, 0.65) 0%,
-            rgba(10, 10, 10, 0.55) 30%,
-            rgba(10, 10, 10, 0.6) 60%,
-            rgba(10, 10, 10, 0.8) 88%,
-            rgba(10, 10, 10, 0.85) 93%,
+            rgba(10, 10, 10, 0.72) 0%,
+            rgba(10, 10, 10, 0.52) 28%,
+            rgba(10, 10, 10, 0.52) 62%,
+            rgba(10, 10, 10, 0.78) 90%,
+            rgba(10, 10, 10, 0.86) 96%,
             rgba(255, 255, 255, 1) 100%
           );
       }
 
+      .hero__content {
+        max-width: 26rem;
+        padding-top: calc(var(--nav-height) + 5rem);
+        padding-bottom: 7rem;
+      }
+
       .hero__title {
-        font-size: clamp(2.5rem, 9vw, 4rem);
+        font-size: clamp(2.75rem, 11vw, 4.25rem);
+        line-height: 0.96;
+        text-wrap: balance;
       }
 
       .hero__subtitle {
         font-size: var(--text-base);
+        max-width: 24rem;
+        text-wrap: balance;
       }
 
       .hero__ctas {
@@ -2548,18 +2566,35 @@
         margin-top: var(--space-lg);
       }
 
+      .hero__scroll {
+        display: none;
+      }
+
       .struggle__grid {
         grid-template-columns: 1fr 1fr;
         gap: var(--space-md);
       }
 
+      .section-subtitle {
+        margin-bottom: var(--space-xl);
+      }
+
       .programs__grid {
         grid-template-columns: 1fr;
         gap: var(--space-md);
+        margin-top: var(--space-sm);
       }
 
       .program-card {
-        aspect-ratio: 16 / 9;
+        aspect-ratio: 5 / 4;
+      }
+
+      .program-card__image {
+        background-position: var(--program-focus-mobile);
+      }
+
+      .program-card__content {
+        padding: 1.5rem;
       }
 
       .coaches__grid {
@@ -2635,6 +2670,23 @@
 
     /* Mobile */
     @media (max-width: 480px) {
+      .hero {
+        min-height: min(100svh, 48rem);
+      }
+
+      .hero__content {
+        padding-top: calc(var(--nav-height) + 4.5rem);
+        padding-bottom: 6rem;
+      }
+
+      .hero__title {
+        font-size: clamp(2.55rem, 12vw, 3.75rem);
+      }
+
+      .hero__subtitle {
+        max-width: 20rem;
+      }
+
       .struggle__grid {
         grid-template-columns: 1fr;
       }
@@ -2662,6 +2714,10 @@
 
       .section-heading {
         font-size: clamp(1.75rem, 6vw, 2.5rem);
+      }
+
+      .program-card {
+        aspect-ratio: 4 / 3;
       }
 
       .step-number {
@@ -2791,7 +2847,7 @@
   <!-- ============================================================
        HERO SECTION
        ============================================================ -->
-  <section class="hero" id="hero">
+  <section class="hero" id="hero" style="--hero-focus: 50% 30%; --hero-focus-mobile: 68% 28%;">
     <div class="hero__background">
       <img src="assets/images/hero-main.jpeg" alt="Brazilian Jiu Jitsu training at Live Oak Academy" loading="eager">
     </div>
@@ -2907,7 +2963,7 @@
     <div class="programs__grid">
 
       <!-- Program 1 — Brazilian Jiu Jitsu -->
-      <article class="program-card reveal">
+      <article class="program-card reveal" style="--program-focus: 50% 50%; --program-focus-mobile: 58% 42%;">
         <div class="program-card__image" style="background-image: url('assets/images/programs-bjj.jpeg');">
           <div class="program-card__overlay"></div>
           <div class="program-card__content">
@@ -2919,7 +2975,7 @@
       </article>
 
       <!-- Program 2 — Women's Class -->
-      <article class="program-card reveal">
+      <article class="program-card reveal" style="--program-focus: 50% 50%; --program-focus-mobile: 36% 48%;">
         <div class="program-card__image" style="background-image: url('assets/images/programs-womens.jpeg');">
           <div class="program-card__overlay"></div>
           <div class="program-card__content">
@@ -2931,7 +2987,7 @@
       </article>
 
       <!-- Program 3 — Executive Program -->
-      <article class="program-card reveal">
+      <article class="program-card reveal" style="--program-focus: 50% 50%; --program-focus-mobile: 54% 42%;">
         <div class="program-card__image" style="background-image: url('assets/images/programs-executive.jpeg');">
           <div class="program-card__overlay"></div>
           <div class="program-card__content">
@@ -2943,7 +2999,7 @@
       </article>
 
       <!-- Program 4 — Youth Programs -->
-      <article class="program-card reveal">
+      <article class="program-card reveal" style="--program-focus: 50% 50%; --program-focus-mobile: 50% 42%;">
         <div class="program-card__image" style="background-image: url('assets/images/training-1.jpeg');">
           <div class="program-card__overlay"></div>
           <div class="program-card__content">
