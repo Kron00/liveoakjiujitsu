@@ -741,6 +741,17 @@
       padding-top: var(--nav-height);
     }
 
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: var(--text-hero);
+      font-weight: 600;
+      line-height: 1.05;
+      color: #ffffff;
+      margin-bottom: var(--space-sm);
+      opacity: 0;
+      animation: fadeInUp var(--duration-slower) var(--ease-smooth) 0.3s forwards;
+    }
+
     .hero__location {
       font-family: var(--font-body);
       font-size: var(--text-xs);
@@ -748,17 +759,6 @@
       text-transform: uppercase;
       letter-spacing: 0.3em;
       color: var(--color-gold);
-      margin-bottom: var(--space-lg);
-      opacity: 0;
-      animation: fadeInUp var(--duration-slower) var(--ease-smooth) 0.3s forwards;
-    }
-
-    .hero__title {
-      font-family: var(--font-display);
-      font-size: var(--text-hero);
-      font-weight: 600;
-      line-height: 1.05;
-      color: #ffffff;
       margin-bottom: var(--space-lg);
       opacity: 0;
       animation: fadeInUp var(--duration-slower) var(--ease-smooth) 0.5s forwards;
@@ -2778,8 +2778,8 @@
     <div class="hero__vignette"></div>
 
     <div class="hero__content">
-      <p class="hero__location">Fairfield, California</p>
       <h1 class="hero__title">Live Oak<br>Jiu Jitsu Academy</h1>
+      <p class="hero__location">Fairfield, California</p>
       <p class="hero__subtitle">Excellence in Brazilian Jiu Jitsu instruction in a five-star facility.</p>
       <div class="hero__ctas">
         <a href="#book" class="btn btn--primary btn--large">Schedule a Visit</a>
