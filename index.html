@@ -1841,12 +1841,24 @@
       position: relative;
       transition: all var(--duration-base) var(--ease-smooth);
       box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
+      overflow: hidden;
     }
 
     .testimonial-card:hover {
       transform: translateY(-4px);
       border-color: #ddd;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    .testimonial-card-photo {
+      width: calc(100% + clamp(4rem, 6vw, 5rem));
+      margin-left: calc(-1 * clamp(2rem, 3vw, 2.5rem));
+      margin-right: calc(-1 * clamp(2rem, 3vw, 2.5rem));
+      margin-top: calc(-1 * clamp(2rem, 3vw, 2.5rem));
+      margin-bottom: var(--space-lg);
+      height: 220px;
+      object-fit: cover;
+      display: block;
     }
 
     .testimonial-quote-mark {
@@ -1858,6 +1870,10 @@
       position: absolute;
       top: 1rem;
       left: 1.5rem;
+    }
+
+    .testimonial-card:has(.testimonial-card-photo) .testimonial-quote-mark {
+      display: none;
     }
 
     .testimonial-text {
@@ -1902,6 +1918,25 @@
     .testimonial-stars svg {
       fill: var(--color-gold);
       color: var(--color-gold);
+    }
+
+    .testimonial-google-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: var(--space-sm);
+    }
+
+    .testimonial-google-badge svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .testimonial-google-badge span {
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      letter-spacing: 0.02em;
     }
 
     /* Carousel navigation */
@@ -2459,12 +2494,6 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .testimonials__grid .testimonial-card:nth-child(3) {
-        grid-column: 1 / -1;
-        max-width: 50%;
-        margin: 0 auto;
-      }
-
       .steps__grid::before {
         left: calc(16.666%);
         right: calc(16.666%);
@@ -2624,10 +2653,6 @@
         grid-template-columns: 1fr;
         max-width: 500px;
         margin: 0 auto;
-      }
-
-      .testimonials__grid .testimonial-card:nth-child(3) {
-        max-width: 100%;
       }
 
       .contact-grid {
@@ -3475,19 +3500,18 @@
 <section id="testimonials" class="testimonials-section">
   <div class="container">
 
-    <span class="section-label">MEMBER STORIES</span>
+    <span class="section-label">GOOGLE REVIEWS</span>
 
     <h2 class="section-heading">Hear What Our Members Have to Say</h2>
 
     <div class="testimonials__grid">
 
-      <!-- Testimonial 1 — Steve A. -->
+      <!-- Google Review 1 — Davet Mohammed (with photo) -->
       <div class="testimonial-card reveal">
-        <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">I started training jiu jitsu in early 2021. I was out of shape and in search of something new. It turned out to be one of the best decisions I have ever made. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student's progress. He's not just my coach anymore, but a friend on and off the mats.</p>
+        <img src="assets/images/review-davet.jpeg" alt="Group photo at Live Oak Jiu Jitsu Academy Women's Self-Defense Seminar" class="testimonial-card-photo" loading="lazy">
+        <p class="testimonial-text">I had an amazing experience at Live Oak Jiu Jitsu Academy! I attended their free All Women's BJJ &amp; Self-Defense Seminar, and I was blown away by the professionalism, cleanliness, and supportive environment. The academy itself is spotless, the mats are spring-loaded for comfort and safety, and the atmosphere is welcoming and empowering.</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Steve A.</h4>
-        <p class="testimonial-meta">Blue Belt &middot; Attorney</p>
+        <h4 class="testimonial-name">Davet Mohammed</h4>
         <div class="testimonial-stars">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
@@ -3495,15 +3519,18 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
         </div>
+        <div class="testimonial-google-badge">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <span>Google Review</span>
+        </div>
       </div>
 
-      <!-- Testimonial 2 — Tito P. -->
+      <!-- Google Review 2 — Ayari Sorenson (with photo) -->
       <div class="testimonial-card reveal">
-        <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self-control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes well structured, goal oriented and most of all fun plus entertaining.</p>
+        <img src="assets/images/review-ayari.jpeg" alt="Coach training with young student at Live Oak Jiu Jitsu Academy" class="testimonial-card-photo" loading="lazy">
+        <p class="testimonial-text">Started bringing my 3 &amp; 5 year old here about 3 weeks ago and I love it! My kids are always so excited to go to class. They have so much fun and learn at the same time. Coach Alex, Coach Parker, &amp; Coach Jose all have so much patience for the little ones and it&rsquo;s so clear they enjoy what they do. I&rsquo;m so happy we gave this place a chance!</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Tito P.</h4>
-        <p class="testimonial-meta">Purple Belt &middot; Art Director</p>
+        <h4 class="testimonial-name">Ayari Sorenson</h4>
         <div class="testimonial-stars">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
@@ -3511,15 +3538,18 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
         </div>
+        <div class="testimonial-google-badge">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <span>Google Review</span>
+        </div>
       </div>
 
-      <!-- Testimonial 3 — Brittany R. -->
+      <!-- Google Review 3 — Kurt Bohannon (with photo) -->
       <div class="testimonial-card reveal">
-        <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. His care for his family, his friends and his community is unparalleled.</p>
+        <img src="assets/images/review-kurt.jpeg" alt="Two members training in gis at Live Oak Jiu Jitsu Academy" class="testimonial-card-photo" loading="lazy">
+        <p class="testimonial-text">Come check em out!!</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Brittany R.</h4>
-        <p class="testimonial-meta">Purple Belt &middot; Stunt Person &amp; Artist</p>
+        <h4 class="testimonial-name">Kurt Bohannon</h4>
         <div class="testimonial-stars">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
@@ -3527,15 +3557,18 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
         </div>
+        <div class="testimonial-google-badge">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <span>Google Review</span>
+        </div>
       </div>
 
-      <!-- Testimonial 4 — Frank P. -->
+      <!-- Google Review 4 — Tony Fortier (text only) -->
       <div class="testimonial-card reveal">
         <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. Coach Alex has been my rock. My coach and friend, my good wolf. Never give up!</p>
+        <p class="testimonial-text">Live Oak Jiu-Jitsu academy is the beginning of what will be a pillar in the community. The mindset the coaches have about versatility and functional application of technique will undoubtedly create an unstoppable force on the tournament mats. With a great atmosphere and highly welcoming coaches, this place is a perfect fit for any student with the desire to be great.</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Frank P.</h4>
-        <p class="testimonial-meta">Purple Belt &middot; Competitor &amp; Artist</p>
+        <h4 class="testimonial-name">Tony Fortier</h4>
         <div class="testimonial-stars">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
@@ -3543,15 +3576,18 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
         </div>
+        <div class="testimonial-google-badge">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <span>Google Review</span>
+        </div>
       </div>
 
-      <!-- Testimonial 5 — Jake J. -->
+      <!-- Google Review 5 — Galen Tong (text only) -->
       <div class="testimonial-card reveal">
         <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">I started Jiu Jitsu at 57 and was a little intimidated. I am now about to turn 64 and have earned a purple belt. I have become healthier and happier, more fit. The best benefits are the great friends I've made.</p>
+        <p class="testimonial-text">I&rsquo;m currently a 3rd degree black belt in BJJ and stopped by Live Oak while traveling for a drop in class. Excellent gym with huge mat space, showers and even an office area for members. Chris Park and Alex Lucas are great teachers. Classes are small enough to get personal instruction. Very friendly students. I highly recommend.</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Jake J.</h4>
-        <p class="testimonial-meta">Purple Belt &middot; Competitor &amp; Comedian</p>
+        <h4 class="testimonial-name">Galen Tong</h4>
         <div class="testimonial-stars">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
@@ -3559,21 +3595,28 @@
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
         </div>
+        <div class="testimonial-google-badge">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <span>Google Review</span>
+        </div>
       </div>
 
-      <!-- Testimonial 6 — Nick R. -->
+      <!-- Google Review 6 — ac2jones (text only) -->
       <div class="testimonial-card reveal">
         <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">Coach Alex shows up for his team and his students. His love for Jiu Jitsu and passion for learning is inspiring. His expertise, technical, physical, and mental preparation have helped me succeed numerous times in competitions.</p>
+        <p class="testimonial-text">Great Academy! I&rsquo;m a purple belt from Northern California recently relocated here to Solano County! Clean mats, great professors and coaches. Also good rolling partners, all weight classes and belt levels. They were super welcoming to me and my son Rio. Thank you guys, we found a home away from home.</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Nick R.</h4>
-        <p class="testimonial-meta">Purple Belt &middot; Competitor &amp; Nutrition Consultant</p>
+        <h4 class="testimonial-name">ac2jones</h4>
         <div class="testimonial-stars">
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.56 5.82 22 7 14.14 2 9.27l6.91-1.01z"/></svg>
+        </div>
+        <div class="testimonial-google-badge">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+          <span>Google Review</span>
         </div>
       </div>
 

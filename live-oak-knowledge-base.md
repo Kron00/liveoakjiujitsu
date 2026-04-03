@@ -35,9 +35,10 @@
 
 ### Adult Programs
 
-- Adult Fundamental & Advanced BJJ Gi
-- Adult Program
-- Open Mat
+- Adult Fundamental & Advanced BJJ Gi (Monday, Wednesday, Friday)
+- Adult Fundamentals & Advanced No Gi (Tuesday, Thursday, Saturday)
+- Takedown & Submission Class (Tuesday, Thursday)
+- Open Mat (Sunday)
 
 ### Youth Programs
 
@@ -111,6 +112,7 @@
 ## Trial Information
 
 - The academy offers a 3 day calendar trial
+- The 3 day calendar trial is three days within a calendar week where the caller can train, get a feel for the classes, and see if it is a good fit
 
 ## Weekly Schedule
 
@@ -118,6 +120,7 @@
 
 - Monday through Thursday: 5:00 PM to 5:30 PM
 - Sprouts class is followed by 20 minutes of playtime
+- Sprouts is not offered on Friday, Saturday, or Sunday
 
 ### Youth Ages 6-12
 
@@ -126,13 +129,24 @@
 - Saturday: 9:00 AM
 - Youth classes are one hour
 
-### Teens And Adults Ages 13 And Up
+### Monday, Wednesday, Friday — Teens And Adults Ages 13 And Up
 
-- Monday through Friday: 6:30 AM
-- Monday through Friday: 12:00 PM
-- Monday through Friday: 6:00 PM
-- Saturday: 10:00 AM
+- 6:30 AM: Adult Fundamental & Advanced BJJ Gi
+- 12:00 PM: Adult Fundamental & Advanced BJJ Gi
+- 6:00 PM: Adult Fundamental & Advanced BJJ Gi
 - Classes are one hour and a half
+
+### Tuesday, Thursday — Teens And Adults Ages 13 And Up
+
+- 6:30 AM: Adult Fundamental & Advanced BJJ Gi
+- 12:00 PM: Adult Fundamentals & Advanced No Gi
+- 6:00 PM: Takedown & Submission Class, ages 11 and up, No Gi
+- Classes are one hour and a half
+
+### Saturday
+
+- 10:00 AM: Adult Fundamentals & Advanced No Gi, ages 13 and up
+- Class is one hour and a half
 
 ### Sunday
 
