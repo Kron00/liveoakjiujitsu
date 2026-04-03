@@ -1850,18 +1850,31 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.08);
     }
 
-    .testimonial-card-photo {
+    .testimonial-card-media {
       width: calc(100% + clamp(4rem, 6vw, 5rem));
       margin-left: calc(-1 * clamp(2rem, 3vw, 2.5rem));
       margin-right: calc(-1 * clamp(2rem, 3vw, 2.5rem));
       margin-top: calc(-1 * clamp(2rem, 3vw, 2.5rem));
       margin-bottom: var(--space-lg);
       aspect-ratio: 4 / 3;
-      height: auto;
-      object-fit: cover;
-      object-position: center;
       background: #f7f3ee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .testimonial-card-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center center;
       display: block;
+    }
+
+    .testimonial-card-photo--zoomed {
+      transform: scale(1.42);
+      transform-origin: center center;
     }
 
     .testimonial-quote-mark {
@@ -3511,7 +3524,9 @@
 
       <!-- Google Review 1 — Davet Mohammed (with photo) -->
       <div class="testimonial-card reveal">
-        <img src="assets/images/review-davet.jpeg" alt="Group photo at Live Oak Jiu Jitsu Academy Women's Self-Defense Seminar" class="testimonial-card-photo" loading="lazy">
+        <div class="testimonial-card-media">
+          <img src="assets/images/review-davet.jpeg" alt="Group photo at Live Oak Jiu Jitsu Academy Women's Self-Defense Seminar" class="testimonial-card-photo" loading="lazy">
+        </div>
         <p class="testimonial-text">I had an amazing experience at Live Oak Jiu Jitsu Academy! I attended their free All Women's BJJ &amp; Self-Defense Seminar, and I was blown away by the professionalism, cleanliness, and supportive environment. The academy itself is spotless, the mats are spring-loaded for comfort and safety, and the atmosphere is welcoming and empowering.</p>
         <div class="testimonial-divider"></div>
         <h4 class="testimonial-name">Davet Mohammed</h4>
@@ -3530,7 +3545,9 @@
 
       <!-- Google Review 2 — Ayari Sorenson (with photo) -->
       <div class="testimonial-card reveal">
-        <img src="assets/images/review-ayari.jpeg" alt="Coach training with young student at Live Oak Jiu Jitsu Academy" class="testimonial-card-photo" loading="lazy">
+        <div class="testimonial-card-media">
+          <img src="assets/images/review-ayari.jpeg" alt="Coach training with young student at Live Oak Jiu Jitsu Academy" class="testimonial-card-photo" loading="lazy">
+        </div>
         <p class="testimonial-text">Started bringing my 3&amp;5 year old here about 3 weeks ago and I love it! My kids are always so excited to go to class. They have so much fun and learn at the same time. Coach Alex, coach parker, &amp; coach jose all have so much patience for the little ones and it&rsquo;s so clear they enjoy what they do. I&rsquo;m so happy we gave this place a chance!</p>
         <div class="testimonial-divider"></div>
         <h4 class="testimonial-name">Ayari Sorenson</h4>
@@ -3549,7 +3566,9 @@
 
       <!-- Google Review 3 — Ayari Sorenson (with photo) -->
       <div class="testimonial-card reveal">
-        <img src="assets/images/review-right.webp" alt="Coach training with a young student during kids class at Live Oak Jiu Jitsu Academy" class="testimonial-card-photo" loading="lazy">
+        <div class="testimonial-card-media">
+          <img src="assets/images/review-right.webp" alt="Coach training with a young student during kids class at Live Oak Jiu Jitsu Academy" class="testimonial-card-photo testimonial-card-photo--zoomed" loading="lazy">
+        </div>
         <p class="testimonial-text">Started bringing my 3&amp;5 year old here about 3 weeks ago and I love it! My kids are always so excited to go to class. They have so much fun and learn at the same time. Coach Alex, coach parker, &amp; coach jose all have so much patience for the little ones and it&rsquo;s so clear they enjoy what they do. I&rsquo;m so happy we gave this place a chance!</p>
         <div class="testimonial-divider"></div>
         <h4 class="testimonial-name">Ayari Sorenson</h4>

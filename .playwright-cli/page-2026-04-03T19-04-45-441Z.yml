@@ -1,0 +1,490 @@
+- generic [active] [ref=e1]:
+  - navigation "Main navigation" [ref=e2]:
+    - generic [ref=e3]:
+      - link "Live Oak Jiu Jitsu Academy - Home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Live Oak Jiu Jitsu Academy" [ref=e5]
+      - generic [ref=e6]:
+        - link "About" [ref=e7] [cursor=pointer]:
+          - /url: "#about"
+        - link "Programs" [ref=e8] [cursor=pointer]:
+          - /url: "#programs"
+        - link "Schedule" [ref=e9] [cursor=pointer]:
+          - /url: "#schedule"
+        - link "Testimonials" [ref=e10] [cursor=pointer]:
+          - /url: "#testimonials"
+        - link "Pricing" [ref=e11] [cursor=pointer]:
+          - /url: "#pricing"
+        - link "Contact" [ref=e12] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=e13]:
+        - link "(707) 759-6876" [ref=e14] [cursor=pointer]:
+          - /url: tel:+17077596876
+        - link "Book Free Class" [ref=e15] [cursor=pointer]:
+          - /url: "#book"
+  - generic [ref=e16]:
+    - img "Brazilian Jiu Jitsu training at Live Oak Academy" [ref=e19]
+    - generic [ref=e21]:
+      - heading "Live Oak Jiu Jitsu Academy" [level=1] [ref=e22]:
+        - text: Live Oak
+        - text: Jiu Jitsu Academy
+      - paragraph [ref=e23]: Excellence in Brazilian Jiu Jitsu instruction in a five-star facility.
+      - generic [ref=e24]:
+        - link "Schedule a Visit" [ref=e25] [cursor=pointer]:
+          - /url: "#book"
+        - link "View Programs" [ref=e26] [cursor=pointer]:
+          - /url: "#programs"
+      - paragraph [ref=e27]: Fairfield, California
+    - generic [ref=e29]: Scroll
+  - generic [ref=e32]:
+    - generic [ref=e33]: TIME TO MAKE A CHANGE
+    - heading "Do You Struggle With:" [level=2] [ref=e34]
+    - generic [ref=e35]:
+      - generic [ref=e36]:
+        - img [ref=e38]
+        - heading "Balancing Physical and Mental Health" [level=3] [ref=e44]
+        - paragraph [ref=e45]: Like a chess game, Brazilian Jiu Jitsu requires a high level of concentration, while engaged in a fun, calorie burning, experience that results in a mental release.
+      - generic [ref=e46]:
+        - img [ref=e48]
+        - heading "Self-Defense" [level=3] [ref=e51]
+        - paragraph [ref=e52]: No one ever signed up for Brazilian Jiu Jitsu just to win a medal. All students are taught to defend themselves resulting in being more confident.
+      - generic [ref=e53]:
+        - img [ref=e55]
+        - heading "Youth Programs" [level=3] [ref=e63]
+        - paragraph [ref=e64]: Our curriculum is specifically designed to provide children with physical, emotional and verbal tools to overcome bullying.
+      - generic [ref=e65]:
+        - img [ref=e67]
+        - heading "Community" [level=3] [ref=e75]
+        - paragraph [ref=e76]: Build life long bonds with teammates through hard work, respect and trust. Be part of our numerous programs and potentially our competition team!
+  - generic [ref=e78]:
+    - generic [ref=e79]: REACH YOUR GOALS
+    - heading "Be a healthier, stronger you, in a truly empowering academy." [level=2] [ref=e80]
+    - paragraph [ref=e81]: We have multiple programs that will keep you motivated and inspired to keep coming back for more.
+    - generic [ref=e82]:
+      - article [ref=e83] [cursor=pointer]:
+        - generic [ref=e86]:
+          - heading "Brazilian Jiu Jitsu" [level=3] [ref=e87]
+          - paragraph: A mix of modern and old school techniques, rooted in self defense and competition tested. We offer Gi, No-Gi, Women's Only, Takedowns, Fundamentals and Open Classes.
+      - article [ref=e88] [cursor=pointer]:
+        - generic [ref=e91]:
+          - heading "Women's Class" [level=3] [ref=e92]
+          - paragraph: Focus on standing defense and generating appropriate angles for best offense against a stronger heavier opponent. Our female practitioners have the option of also attending open classes.
+      - article [ref=e93] [cursor=pointer]:
+        - generic [ref=e96]:
+          - heading "Executive Program" [level=3] [ref=e97]
+          - paragraph: Our instructors will identify and hone strengths while filling in gaps in technique. Private and semi-private training with IBJJF certified instructors to elevate your skills.
+      - article [ref=e98] [cursor=pointer]:
+        - generic [ref=e101]:
+          - heading "Youth Programs (Ages 3-17)" [level=3] [ref=e102]
+          - paragraph: Sprouts (ages 3-5), Youth BJJ (ages 6-12), and Teen Classes (age 13+). All staff are Live Scanned certified to ensure your child's safety.
+  - generic [ref=e104]:
+    - generic [ref=e105]: MEET YOUR COACHES
+    - heading "Learn from the best. Train with the best." [level=2] [ref=e106]
+    - paragraph [ref=e107]: All Instructors are Live Scanned Certified
+    - generic [ref=e108]:
+      - generic [ref=e109]:
+        - img "Coach Alejandro (Alex) Lucas — Head Instructor at Live Oak Jiu Jitsu" [ref=e111]
+        - generic [ref=e112]:
+          - heading "Alejandro (Alex) Lucas" [level=3] [ref=e113]
+          - text: Head Instructor / All Programs / Co-Owner
+          - generic [ref=e114]: Second Degree Black Belt
+          - paragraph [ref=e115]: "Alejandro Lucas, Second Degree Black Belt under Coral Belt Renato Magno, began Brazilian Jiu Jitsu at the age of 26. He's developed curriculum and successfully taught at all program levels including Youth, Adults, Fundamentals, Women's Program and Competition Team. Coach Alex's classes are detail oriented, focused on overall development and encouraging. His infectious enthusiasm can be seen in his teaching style. Coach Alex achieved #1 Black Belt for his age group in 2017 and 2023 for NABJJF."
+          - paragraph [ref=e116]:
+            - emphasis [ref=e117]: Strategic, timing and systems based.
+      - generic [ref=e118]:
+        - img "Coach Chris Park — Instructor at Live Oak Jiu Jitsu" [ref=e120]
+        - generic [ref=e121]:
+          - heading "Chris Park" [level=3] [ref=e122]
+          - text: Instructor / Youth Programs and Adults
+          - generic [ref=e123]: Black Belt (May 2024)
+          - paragraph [ref=e124]: Started at Street Sports Jiu Jitsu Academy as a white belt in 2010. 'Park,' as he's known, earned his Black Belt in May 2024 under Coral Belt Renato Magno. He became part of the Youth coaching staff as a Blue Belt and has extensive mixed class and private session experience.
+          - paragraph [ref=e125]:
+            - emphasis [ref=e126]: Playful, creative and inventive.
+      - generic [ref=e127]:
+        - img "Coach Jose Meza — Co-Instructor at Live Oak Jiu Jitsu" [ref=e129]
+        - generic [ref=e130]:
+          - heading "Jose Meza" [level=3] [ref=e131]
+          - text: Co-Instructor / Co-Owner
+          - generic [ref=e132]: Blue Belt
+          - paragraph [ref=e133]: Jose achieved his blue belt under Scott Singer, fourth degree Black Belt. Jose's Brazilian Jiu Jitsu focuses heavily on fundamentals and guard work.
+          - paragraph [ref=e134]:
+            - emphasis [ref=e135]: Fundamentals-focused with strong guard work.
+  - generic [ref=e137]:
+    - generic [ref=e138]: TRAIN WITH US
+    - heading "Weekly Class Schedule" [level=2] [ref=e139]
+    - paragraph [ref=e140]: "Open hours: M-F 7am–9pm, Sat 9am–1pm, Sun 10am–12pm"
+    - generic [ref=e141]:
+      - generic [ref=e142]:
+        - heading "Mon / Wed / Fri" [level=3] [ref=e144]
+        - generic [ref=e145]:
+          - generic [ref=e146]:
+            - generic [ref=e147]: 6:30 AM
+            - generic [ref=e148]: Adult Fundamental & Advanced BJJ Gi
+            - generic [ref=e149]: Ages 13+
+          - generic [ref=e150]:
+            - generic [ref=e151]: 11:00 AM
+            - generic [ref=e152]: Youth BJJ Class
+            - generic [ref=e153]: Ages 6–12
+          - generic [ref=e154]:
+            - generic [ref=e155]: 12:00 PM
+            - generic [ref=e156]: Adult Fundamental & Advanced BJJ Gi
+            - generic [ref=e157]: Ages 13+
+          - generic [ref=e158]:
+            - generic [ref=e159]: 4:00 PM
+            - generic [ref=e160]: Youth BJJ
+            - generic [ref=e161]: Ages 6–12
+          - generic [ref=e162]:
+            - generic [ref=e163]: 5:00 PM
+            - generic [ref=e164]: Sprouts
+            - generic [ref=e165]: Ages 3–5
+            - generic [ref=e166]: Mon & Wed only
+          - generic [ref=e167]:
+            - generic [ref=e168]: 6:00 PM
+            - generic [ref=e169]: Adult Fundamental & Advanced BJJ Gi
+            - generic [ref=e170]: Ages 13+
+      - generic [ref=e171]:
+        - heading "Tue / Thu" [level=3] [ref=e173]
+        - generic [ref=e174]:
+          - generic [ref=e175]:
+            - generic [ref=e176]: 6:30 AM
+            - generic [ref=e177]: Adult Fundamental & Advanced BJJ Gi
+            - generic [ref=e178]: Ages 13+
+          - generic [ref=e179]:
+            - generic [ref=e180]: 11:00 AM
+            - generic [ref=e181]: Youth BJJ Class
+            - generic [ref=e182]: Ages 6–12
+          - generic [ref=e183]:
+            - generic [ref=e184]: 12:00 PM
+            - generic [ref=e185]: Adult Fundamentals & Advanced No Gi
+            - generic [ref=e186]: Ages 13+
+          - generic [ref=e187]:
+            - generic [ref=e188]: 4:00 PM
+            - generic [ref=e189]: Youth BJJ
+            - generic [ref=e190]: Ages 6–12
+          - generic [ref=e191]:
+            - generic [ref=e192]: 5:00 PM
+            - generic [ref=e193]: Sprouts
+            - generic [ref=e194]: Ages 3–5
+          - generic [ref=e195]:
+            - generic [ref=e196]: 6:00 PM
+            - generic [ref=e197]: Takedown & Submission Class
+            - generic [ref=e198]: Ages 11+ · No Gi
+      - generic [ref=e199]:
+        - heading "Saturday" [level=3] [ref=e201]
+        - generic [ref=e202]:
+          - generic [ref=e203]:
+            - generic [ref=e204]: 9:00 AM
+            - generic [ref=e205]: Youth BJJ
+            - generic [ref=e206]: Ages 6–12
+          - generic [ref=e207]:
+            - generic [ref=e208]: 10:00 AM
+            - generic [ref=e209]: Adult Fundamentals & Advanced No Gi
+            - generic [ref=e210]: Ages 13+
+      - generic [ref=e211]:
+        - heading "Sunday" [level=3] [ref=e213]
+        - generic [ref=e215]:
+          - generic [ref=e216]: 10:00 AM
+          - generic [ref=e217]: Open Mat
+          - generic [ref=e218]: Ages 13+ · BJJ, Wrestling, Judo, MMA
+    - generic [ref=e219]:
+      - generic [ref=e222]: Adult Classes
+      - generic [ref=e225]: Youth Classes
+      - generic [ref=e228]: Sprouts
+      - generic [ref=e231]: Open Mat
+    - generic [ref=e232]:
+      - paragraph [ref=e233]:
+        - text: First class is always
+        - strong [ref=e234]: FREE
+        - text: . Schedule your visit today!
+      - link "Book Your Free Class" [ref=e235] [cursor=pointer]:
+        - /url: "#contact"
+  - generic [ref=e237]:
+    - generic [ref=e238]: MEMBERSHIP
+    - heading "Transparent pricing. No contracts, no hidden fees." [level=2] [ref=e239]
+    - paragraph [ref=e240]: Every membership includes unlimited classes, open mat access, and a supportive community behind you from day one.
+    - generic [ref=e241]:
+      - generic [ref=e244]:
+        - text: Little Ones
+        - heading "Sprouts" [level=3] [ref=e245]
+        - paragraph [ref=e246]: Ages 3–5
+        - generic [ref=e247]:
+          - generic [ref=e248]: $
+          - generic [ref=e249]: "125"
+        - paragraph [ref=e250]: per month
+        - generic [ref=e252]:
+          - generic [ref=e253]:
+            - img [ref=e254]
+            - generic [ref=e256]: Mon–Thu classes at 5:00 PM
+          - generic [ref=e257]:
+            - img [ref=e258]
+            - generic [ref=e260]: 20 minutes of supervised playtime
+          - generic [ref=e261]:
+            - img [ref=e262]
+            - generic [ref=e264]: Live Scanned certified instructors
+          - generic [ref=e265]:
+            - img [ref=e266]
+            - generic [ref=e268]: Age-appropriate curriculum
+        - link "Get Started" [ref=e269] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=e270]:
+        - generic [ref=e272]: Most Popular
+        - generic [ref=e273]:
+          - text: All Access
+          - heading "Adults" [level=3] [ref=e274]
+          - paragraph [ref=e275]: Ages 13+
+          - generic [ref=e276]:
+            - generic [ref=e277]: $
+            - generic [ref=e278]: "160"
+          - paragraph [ref=e279]: per month
+          - generic [ref=e281]:
+            - generic [ref=e282]:
+              - img [ref=e283]
+              - generic [ref=e285]: Unlimited Gi & No-Gi classes
+            - generic [ref=e286]:
+              - img [ref=e287]
+              - generic [ref=e289]: Fundamentals & Advanced training
+            - generic [ref=e290]:
+              - img [ref=e291]
+              - generic [ref=e293]: Open Mat & Takedown classes
+            - generic [ref=e294]:
+              - img [ref=e295]
+              - generic [ref=e297]: Women's class access
+            - generic [ref=e298]:
+              - img [ref=e299]
+              - generic [ref=e301]: Morning, noon & evening sessions
+          - link "Get Started" [ref=e302] [cursor=pointer]:
+            - /url: "#contact"
+      - generic [ref=e305]:
+        - text: Young Athletes
+        - heading "Youth" [level=3] [ref=e306]
+        - paragraph [ref=e307]: Ages 6–17
+        - generic [ref=e308]:
+          - generic [ref=e309]: $
+          - generic [ref=e310]: "160"
+        - paragraph [ref=e311]: per month
+        - generic [ref=e313]:
+          - generic [ref=e314]:
+            - img [ref=e315]
+            - generic [ref=e317]: Weekday & Saturday classes
+          - generic [ref=e318]:
+            - img [ref=e319]
+            - generic [ref=e321]: Teens 13+ join Adult classes
+          - generic [ref=e322]:
+            - img [ref=e323]
+            - generic [ref=e325]: Live Scanned certified instructors
+          - generic [ref=e326]:
+            - img [ref=e327]
+            - generic [ref=e329]: Self-defense & competition prep
+        - link "Get Started" [ref=e330] [cursor=pointer]:
+          - /url: "#contact"
+    - generic [ref=e331]:
+      - generic [ref=e332]:
+        - img [ref=e334]
+        - paragraph [ref=e336]:
+          - strong [ref=e337]: "First Responder & Military:"
+          - text: $153/month — thank you for your service.
+      - generic [ref=e338]:
+        - img [ref=e340]
+        - paragraph [ref=e345]:
+          - strong [ref=e346]: Family bundles
+          - text: and
+          - strong [ref=e347]: company wellness
+          - text: programs available. Contact us for details.
+      - generic [ref=e348]:
+        - img [ref=e350]
+        - paragraph [ref=e352]:
+          - strong [ref=e353]: 3-day free trial
+          - text: — experience the academy before you commit.
+  - generic [ref=e357]:
+    - generic [ref=e358]: YOUR JOURNEY STARTS HERE
+    - heading "Start with these 3 steps towards a healthier you." [level=2] [ref=e359]
+    - generic [ref=e360]:
+      - generic [ref=e361]:
+        - generic [ref=e362]: "01"
+        - heading "SCHEDULE A VISIT" [level=3] [ref=e363]
+        - paragraph [ref=e364]: We have a fundamental program specially built for beginners where no experience is necessary.
+      - generic [ref=e365]:
+        - generic [ref=e366]: "02"
+        - heading "COME FOR YOUR FREE INTRO CLASS" [level=3] [ref=e367]
+        - paragraph [ref=e368]: It is a great opportunity to get to know our instructors, program and school atmosphere.
+      - generic [ref=e369]:
+        - generic [ref=e370]: "03"
+        - heading "START YOUR JOURNEY WITH US" [level=3] [ref=e371]
+        - paragraph [ref=e372]: You will have an entire family and a beautiful community supporting you.
+  - generic [ref=e374]:
+    - generic [ref=e375]: GOOGLE REVIEWS
+    - heading "Hear What Our Members Have to Say" [level=2] [ref=e376]
+    - generic [ref=e377]:
+      - generic [ref=e378]:
+        - img "Group photo at Live Oak Jiu Jitsu Academy Women's Self-Defense Seminar" [ref=e380]
+        - paragraph [ref=e381]: I had an amazing experience at Live Oak Jiu Jitsu Academy! I attended their free All Women's BJJ & Self-Defense Seminar, and I was blown away by the professionalism, cleanliness, and supportive environment. The academy itself is spotless, the mats are spring-loaded for comfort and safety, and the atmosphere is welcoming and empowering.
+        - heading "Davet Mohammed" [level=4] [ref=e383]
+        - generic [ref=e384]:
+          - img [ref=e385]
+          - img [ref=e387]
+          - img [ref=e389]
+          - img [ref=e391]
+          - img [ref=e393]
+        - generic [ref=e395]:
+          - img [ref=e396]
+          - generic [ref=e401]: Google Review
+      - generic [ref=e402]:
+        - img "Coach training with young student at Live Oak Jiu Jitsu Academy" [ref=e404]
+        - paragraph [ref=e405]: Started bringing my 3&5 year old here about 3 weeks ago and I love it! My kids are always so excited to go to class. They have so much fun and learn at the same time. Coach Alex, coach parker, & coach jose all have so much patience for the little ones and it’s so clear they enjoy what they do. I’m so happy we gave this place a chance!
+        - heading "Ayari Sorenson" [level=4] [ref=e407]
+        - generic [ref=e408]:
+          - img [ref=e409]
+          - img [ref=e411]
+          - img [ref=e413]
+          - img [ref=e415]
+          - img [ref=e417]
+        - generic [ref=e419]:
+          - img [ref=e420]
+          - generic [ref=e425]: Google Review
+      - generic [ref=e426]:
+        - img "Coach training with a young student during kids class at Live Oak Jiu Jitsu Academy" [ref=e428]
+        - paragraph [ref=e429]: Started bringing my 3&5 year old here about 3 weeks ago and I love it! My kids are always so excited to go to class. They have so much fun and learn at the same time. Coach Alex, coach parker, & coach jose all have so much patience for the little ones and it’s so clear they enjoy what they do. I’m so happy we gave this place a chance!
+        - heading "Ayari Sorenson" [level=4] [ref=e431]
+        - generic [ref=e432]:
+          - img [ref=e433]
+          - img [ref=e435]
+          - img [ref=e437]
+          - img [ref=e439]
+          - img [ref=e441]
+        - generic [ref=e443]:
+          - img [ref=e444]
+          - generic [ref=e449]: Google Review
+      - generic [ref=e450]:
+        - generic [ref=e451]: “
+        - paragraph [ref=e452]: Live Oak Jiu-Jitsu academy is the beginning of what will be a pillar in the community. The mindset the coaches have about versatility and functional application of technique will undoubtedly create an unstoppable force on the tournament mats. With a great atmosphere and highly welcoming coaches, this place is a perfect fit for any student with the desire to be great.
+        - heading "Tony Fortier" [level=4] [ref=e454]
+        - generic [ref=e455]:
+          - img [ref=e456]
+          - img [ref=e458]
+          - img [ref=e460]
+          - img [ref=e462]
+          - img [ref=e464]
+        - generic [ref=e466]:
+          - img [ref=e467]
+          - generic [ref=e472]: Google Review
+      - generic [ref=e473]:
+        - generic [ref=e474]: “
+        - paragraph [ref=e475]: I’m currently a 3rd degree black belt in BJJ and stopped by Live Oak while traveling for a drop in class. Excellent gym with huge mat space, showers and even an office area for members. Chris Park and Alex Lucas are great teachers. Classes are small enough to get personal instruction. Very friendly students. I highly recommend.
+        - heading "Galen Tong" [level=4] [ref=e477]
+        - generic [ref=e478]:
+          - img [ref=e479]
+          - img [ref=e481]
+          - img [ref=e483]
+          - img [ref=e485]
+          - img [ref=e487]
+        - generic [ref=e489]:
+          - img [ref=e490]
+          - generic [ref=e495]: Google Review
+      - generic [ref=e496]:
+        - generic [ref=e497]: “
+        - paragraph [ref=e498]: Great Academy! I’m a purple belt from Northern California recently relocated here to Solano County! Clean mats, great professors and coaches. Also good rolling partners, all weight classes and belt levels. They were super welcoming to me and my son Rio. Thank you guys, we found a home away from home.
+        - heading "ac2jones" [level=4] [ref=e500]
+        - generic [ref=e501]:
+          - img [ref=e502]
+          - img [ref=e504]
+          - img [ref=e506]
+          - img [ref=e508]
+          - img [ref=e510]
+        - generic [ref=e512]:
+          - img [ref=e513]
+          - generic [ref=e518]: Google Review
+  - generic [ref=e521]:
+    - generic [ref=e522]:
+      - generic [ref=e523]: GET STARTED TODAY
+      - heading "Schedule Your Visit" [level=2] [ref=e524]
+      - paragraph [ref=e525]: We're excited to work with you. Fill out the form below and one of our instructors will contact you to get you registered for your first class.
+      - list [ref=e526]:
+        - listitem [ref=e527]:
+          - img [ref=e528]
+          - generic [ref=e531]: 910 Texas Street, Fairfield, California, 94533
+        - listitem [ref=e532]:
+          - img [ref=e533]
+          - link "(707) 759-6876" [ref=e535] [cursor=pointer]:
+            - /url: tel:+17077596876
+        - listitem [ref=e536]:
+          - img [ref=e537]
+          - link "contact@liveoakjiujitsuacademy.com" [ref=e540] [cursor=pointer]:
+            - /url: mailto:contact@liveoakjiujitsuacademy.com
+        - listitem [ref=e541]:
+          - img [ref=e542]
+          - generic [ref=e545]: M-F 7am–9pm · Sat 9am–1pm · Sun 10am–12pm
+      - link "@liveoakjiujitsuacademy" [ref=e546] [cursor=pointer]:
+        - /url: https://www.instagram.com/liveoakjiujitsuacademy
+        - img [ref=e547]
+        - generic [ref=e550]: "@liveoakjiujitsuacademy"
+    - generic [ref=e552]:
+      - generic [ref=e553]:
+        - generic [ref=e554]:
+          - generic [ref=e555]: First Name
+          - textbox "First Name" [ref=e556]
+        - generic [ref=e557]:
+          - generic [ref=e558]: Last Name
+          - textbox "Last Name" [ref=e559]
+      - generic [ref=e560]:
+        - generic [ref=e561]:
+          - generic [ref=e562]: Email
+          - textbox "Email" [ref=e563]:
+            - /placeholder: Email Address
+        - generic [ref=e564]:
+          - generic [ref=e565]: Phone
+          - textbox "Phone" [ref=e566]:
+            - /placeholder: Phone Number
+      - generic [ref=e567]:
+        - generic [ref=e568]: Message
+        - textbox "Message" [ref=e569]:
+          - /placeholder: Tell us about your goals or ask any questions...
+      - button "Schedule a Visit" [ref=e570] [cursor=pointer]
+  - contentinfo [ref=e571]:
+    - generic [ref=e572]:
+      - generic [ref=e573]:
+        - generic [ref=e574]:
+          - link "Live Oak Jiu Jitsu Academy" [ref=e575] [cursor=pointer]:
+            - /url: "#"
+            - img "Live Oak Jiu Jitsu Academy" [ref=e576]
+          - paragraph [ref=e577]: Building stronger bodies, sharper minds, and an unbreakable community through the art of Brazilian Jiu Jitsu.
+          - link "Follow us on Instagram" [ref=e578] [cursor=pointer]:
+            - /url: https://www.instagram.com/liveoakjiujitsuacademy
+            - img [ref=e579]
+        - generic [ref=e582]:
+          - heading "Quick Links" [level=4] [ref=e583]
+          - list [ref=e584]:
+            - listitem [ref=e585]:
+              - link "About" [ref=e586] [cursor=pointer]:
+                - /url: "#about"
+            - listitem [ref=e587]:
+              - link "Programs" [ref=e588] [cursor=pointer]:
+                - /url: "#programs"
+            - listitem [ref=e589]:
+              - link "Schedule" [ref=e590] [cursor=pointer]:
+                - /url: "#schedule"
+            - listitem [ref=e591]:
+              - link "Pricing" [ref=e592] [cursor=pointer]:
+                - /url: "#pricing"
+            - listitem [ref=e593]:
+              - link "Contact" [ref=e594] [cursor=pointer]:
+                - /url: "#contact"
+        - generic [ref=e595]:
+          - heading "Contact" [level=4] [ref=e596]
+          - generic [ref=e597]:
+            - paragraph [ref=e598]:
+              - text: 910 Texas Street
+              - text: Fairfield, California 94533
+            - paragraph [ref=e599]:
+              - link "(707) 759-6876" [ref=e600] [cursor=pointer]:
+                - /url: tel:+17077596876
+            - paragraph [ref=e601]:
+              - link "contact@liveoakjiujitsuacademy.com" [ref=e602] [cursor=pointer]:
+                - /url: mailto:contact@liveoakjiujitsuacademy.com
+      - generic [ref=e603]:
+        - paragraph [ref=e604]: © 2025 Live Oak Jiu Jitsu Academy. All rights reserved.
+        - generic [ref=e605]:
+          - link "Privacy Policy" [ref=e606] [cursor=pointer]:
+            - /url: "#"
+          - generic [ref=e607]: "|"
+          - link "Terms of Service" [ref=e608] [cursor=pointer]:
+            - /url: "#"
