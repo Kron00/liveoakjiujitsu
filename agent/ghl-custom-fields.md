@@ -61,8 +61,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 1 Last Name | `person_1_last_name` | Single Line Text |
 | Person 1 Age | `person_1_age` | Number |
 | Person 1 Program | `person_1_program` | Single Line Text |
-| Person 1 Preferred Day | `person_1_preferred_day` | Single Line Text |
-| Person 1 Preferred Time | `person_1_preferred_time` | Single Line Text |
+| Person 1 Appointment Datetime | `person_1_appointment_datetime` | Single Line Text |
 | Person 1 Date of Birth | `person_1_dob` | Date Picker |
 | Person 1 Emergency Contact | `person_1_emergency_contact` | Single Line Text |
 | Person 1 Allergies | `person_1_allergies` | Single Line Text |
@@ -80,8 +79,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 2 Last Name | `person_2_last_name` | Single Line Text |
 | Person 2 Age | `person_2_age` | Number |
 | Person 2 Program | `person_2_program` | Single Line Text |
-| Person 2 Preferred Day | `person_2_preferred_day` | Single Line Text |
-| Person 2 Preferred Time | `person_2_preferred_time` | Single Line Text |
+| Person 2 Appointment Datetime | `person_2_appointment_datetime` | Single Line Text |
 | Person 2 Date of Birth | `person_2_dob` | Date Picker |
 | Person 2 Emergency Contact | `person_2_emergency_contact` | Single Line Text |
 | Person 2 Allergies | `person_2_allergies` | Single Line Text |
@@ -99,8 +97,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 3 Last Name | `person_3_last_name` | Single Line Text |
 | Person 3 Age | `person_3_age` | Number |
 | Person 3 Program | `person_3_program` | Single Line Text |
-| Person 3 Preferred Day | `person_3_preferred_day` | Single Line Text |
-| Person 3 Preferred Time | `person_3_preferred_time` | Single Line Text |
+| Person 3 Appointment Datetime | `person_3_appointment_datetime` | Single Line Text |
 | Person 3 Date of Birth | `person_3_dob` | Date Picker |
 | Person 3 Emergency Contact | `person_3_emergency_contact` | Single Line Text |
 | Person 3 Allergies | `person_3_allergies` | Single Line Text |
@@ -118,8 +115,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 4 Last Name | `person_4_last_name` | Single Line Text |
 | Person 4 Age | `person_4_age` | Number |
 | Person 4 Program | `person_4_program` | Single Line Text |
-| Person 4 Preferred Day | `person_4_preferred_day` | Single Line Text |
-| Person 4 Preferred Time | `person_4_preferred_time` | Single Line Text |
+| Person 4 Appointment Datetime | `person_4_appointment_datetime` | Single Line Text |
 | Person 4 Date of Birth | `person_4_dob` | Date Picker |
 | Person 4 Emergency Contact | `person_4_emergency_contact` | Single Line Text |
 | Person 4 Allergies | `person_4_allergies` | Single Line Text |
@@ -137,8 +133,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 5 Last Name | `person_5_last_name` | Single Line Text |
 | Person 5 Age | `person_5_age` | Number |
 | Person 5 Program | `person_5_program` | Single Line Text |
-| Person 5 Preferred Day | `person_5_preferred_day` | Single Line Text |
-| Person 5 Preferred Time | `person_5_preferred_time` | Single Line Text |
+| Person 5 Appointment Datetime | `person_5_appointment_datetime` | Single Line Text |
 | Person 5 Date of Birth | `person_5_dob` | Date Picker |
 | Person 5 Emergency Contact | `person_5_emergency_contact` | Single Line Text |
 | Person 5 Allergies | `person_5_allergies` | Single Line Text |
@@ -156,8 +151,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 6 Last Name | `person_6_last_name` | Single Line Text |
 | Person 6 Age | `person_6_age` | Number |
 | Person 6 Program | `person_6_program` | Single Line Text |
-| Person 6 Preferred Day | `person_6_preferred_day` | Single Line Text |
-| Person 6 Preferred Time | `person_6_preferred_time` | Single Line Text |
+| Person 6 Appointment Datetime | `person_6_appointment_datetime` | Single Line Text |
 | Person 6 Date of Birth | `person_6_dob` | Date Picker |
 | Person 6 Emergency Contact | `person_6_emergency_contact` | Single Line Text |
 | Person 6 Allergies | `person_6_allergies` | Single Line Text |
@@ -175,8 +169,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 7 Last Name | `person_7_last_name` | Single Line Text |
 | Person 7 Age | `person_7_age` | Number |
 | Person 7 Program | `person_7_program` | Single Line Text |
-| Person 7 Preferred Day | `person_7_preferred_day` | Single Line Text |
-| Person 7 Preferred Time | `person_7_preferred_time` | Single Line Text |
+| Person 7 Appointment Datetime | `person_7_appointment_datetime` | Single Line Text |
 | Person 7 Date of Birth | `person_7_dob` | Date Picker |
 | Person 7 Emergency Contact | `person_7_emergency_contact` | Single Line Text |
 | Person 7 Allergies | `person_7_allergies` | Single Line Text |
@@ -194,8 +187,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 8 Last Name | `person_8_last_name` | Single Line Text |
 | Person 8 Age | `person_8_age` | Number |
 | Person 8 Program | `person_8_program` | Single Line Text |
-| Person 8 Preferred Day | `person_8_preferred_day` | Single Line Text |
-| Person 8 Preferred Time | `person_8_preferred_time` | Single Line Text |
+| Person 8 Appointment Datetime | `person_8_appointment_datetime` | Single Line Text |
 | Person 8 Date of Birth | `person_8_dob` | Date Picker |
 | Person 8 Emergency Contact | `person_8_emergency_contact` | Single Line Text |
 | Person 8 Allergies | `person_8_allergies` | Single Line Text |
@@ -213,8 +205,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 9 Last Name | `person_9_last_name` | Single Line Text |
 | Person 9 Age | `person_9_age` | Number |
 | Person 9 Program | `person_9_program` | Single Line Text |
-| Person 9 Preferred Day | `person_9_preferred_day` | Single Line Text |
-| Person 9 Preferred Time | `person_9_preferred_time` | Single Line Text |
+| Person 9 Appointment Datetime | `person_9_appointment_datetime` | Single Line Text |
 | Person 9 Date of Birth | `person_9_dob` | Date Picker |
 | Person 9 Emergency Contact | `person_9_emergency_contact` | Single Line Text |
 | Person 9 Allergies | `person_9_allergies` | Single Line Text |
@@ -232,8 +223,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 | Person 10 Last Name | `person_10_last_name` | Single Line Text |
 | Person 10 Age | `person_10_age` | Number |
 | Person 10 Program | `person_10_program` | Single Line Text |
-| Person 10 Preferred Day | `person_10_preferred_day` | Single Line Text |
-| Person 10 Preferred Time | `person_10_preferred_time` | Single Line Text |
+| Person 10 Appointment Datetime | `person_10_appointment_datetime` | Single Line Text |
 | Person 10 Date of Birth | `person_10_dob` | Date Picker |
 | Person 10 Emergency Contact | `person_10_emergency_contact` | Single Line Text |
 | Person 10 Allergies | `person_10_allergies` | Single Line Text |
@@ -244,8 +234,8 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 ## Total Field Count
 
 - **7** general custom fields
-- **10** fields × **10** people = **100** per-person fields
-- **107 custom fields total**
+- **9** fields × **10** people = **90** per-person fields
+- **97 custom fields total**
 
 ---
 
@@ -256,13 +246,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 - `Youth BJJ (Ages 6–12)`
 - `Adult & Teen BJJ (Ages 13+)`
 
-**Preferred Day values:**
-- `Monday`, `Tuesday`, `Wednesday`, `Thursday`, `Friday`, `Saturday`
-
-**Preferred Time values:**
-- Adult BJJ: `6:30 AM`, `12:00 PM`, `6:00 PM` (Mon–Fri), `10:00 AM` (Sat)
-- Youth BJJ: `11:00 AM`, `4:00 PM` (Mon–Fri), `9:00 AM` (Sat)
-- Sprouts: `5:00 PM` (Mon–Thu only)
+**Appointment Datetime format:** ISO 8601 — `YYYY-MM-DDTHH:mm:ss` (e.g. `2026-04-13T18:00:00`)
 
 **Experience values:**
 - `None`

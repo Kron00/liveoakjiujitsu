@@ -1101,8 +1101,6 @@
         payload.person_1_last_name = payload.last_name;
         payload.person_1_age = jmAge.value;
         payload.person_1_program = LABELS[prog];
-        payload.person_1_preferred_day = jmSched.day;
-        payload.person_1_preferred_time = jmSched.time;
         payload.person_1_appointment_datetime = jmSched.appointmentDatetime;
         payload.person_1_dob = jmDob.value;
         payload.person_1_emergency_contact = jmEm.value.trim();
@@ -1138,7 +1136,6 @@
           var pre = 'person_' + (i+1) + '_', d = result.data[i];
           payload[pre + 'first_name'] = d.first_name; payload[pre + 'last_name'] = d.last_name;
           payload[pre + 'age'] = d.age; payload[pre + 'program'] = LABELS[d.program];
-          payload[pre + 'preferred_day'] = d.preferred_day; payload[pre + 'preferred_time'] = d.preferred_time;
           payload[pre + 'appointment_datetime'] = d.appointment_datetime;
           payload[pre + 'dob'] = d.dob; payload[pre + 'emergency_contact'] = d.emergency_contact;
           if (d.allergies) payload[pre + 'allergies'] = d.allergies;
@@ -1187,8 +1184,6 @@
         payload.person_1_last_name = payload.last_name;
         payload.person_1_age = btAge.value;
         payload.person_1_program = LABELS[selfProg];
-        payload.person_1_preferred_day = btSched.day;
-        payload.person_1_preferred_time = btSched.time;
         payload.person_1_appointment_datetime = btSched.appointmentDatetime;
         payload.person_1_dob = btDob.value;
         payload.person_1_emergency_contact = btEm.value.trim();
@@ -1203,7 +1198,6 @@
           var pre2 = 'person_' + (j+2) + '_', d2 = resultB.data[j];
           payload[pre2 + 'first_name'] = d2.first_name; payload[pre2 + 'last_name'] = d2.last_name;
           payload[pre2 + 'age'] = d2.age; payload[pre2 + 'program'] = LABELS[d2.program];
-          payload[pre2 + 'preferred_day'] = d2.preferred_day; payload[pre2 + 'preferred_time'] = d2.preferred_time;
           payload[pre2 + 'appointment_datetime'] = d2.appointment_datetime;
           payload[pre2 + 'dob'] = d2.dob; payload[pre2 + 'emergency_contact'] = d2.emergency_contact;
           if (d2.allergies) payload[pre2 + 'allergies'] = d2.allergies;
