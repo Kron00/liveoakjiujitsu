@@ -110,6 +110,8 @@ Can a member pause or cancel? Yes. Let any staff member know and the account can
 
 How do I sign up after my trial? Come in and any staff member will help you find the right membership package.
 
+How do I sign up for a trial? Fill out the signup form at liveoakjiujitsuacademy.com/voice-agent-signup to pick your class day and time and get booked for a free three day trial.
+
 # Discounts
 
 First responders and active military: one hundred fifty three dollars a month.

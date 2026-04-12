@@ -217,12 +217,15 @@
     .schedule-prompt { font-size: 0.78rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
     .day-picker { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
     .day-btn {
-      flex: 1 1 auto; min-width: 0; padding: 0.6rem 0.3rem;
+      flex: 1 1 auto; min-width: 0; padding: 0.5rem 0.2rem;
       border: 1.5px solid var(--border); border-radius: var(--radius); background: #fff;
       font-family: var(--font-body); font-size: 0.72rem; font-weight: 400; color: var(--text-dim);
       cursor: pointer; text-align: center; transition: all var(--fast) var(--smooth);
       -webkit-tap-highlight-color: transparent;
+      display: flex; flex-direction: column; align-items: center; gap: 0.1rem; line-height: 1.2;
     }
+    .day-btn-date { font-size: 0.58rem; opacity: 0.6; font-weight: 300; }
+    .day-btn.active .day-btn-date { opacity: 1; }
     .day-btn:hover { border-color: #ccc; }
     .day-btn.active { border-color: var(--red); background: var(--red); color: #fff; font-weight: 500; }
     .day-btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
@@ -755,6 +758,23 @@
       sprouts: { Monday:['5:00 PM'], Tuesday:['5:00 PM'], Wednesday:['5:00 PM'], Thursday:['5:00 PM'] }
     };
 
+    // Date helpers
+    var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var DAY_INDEX = { Monday:1, Tuesday:2, Wednesday:3, Thursday:4, Friday:5, Saturday:6 };
+    var TIME_24 = { '6:30 AM':'06:30:00','9:00 AM':'09:00:00','10:00 AM':'10:00:00','11:00 AM':'11:00:00','12:00 PM':'12:00:00','4:00 PM':'16:00:00','5:00 PM':'17:00:00','6:00 PM':'18:00:00' };
+
+    function getNextDate(dayName) {
+      var target = DAY_INDEX[dayName];
+      var today = new Date();
+      var diff = target - today.getDay();
+      if (diff <= 0) diff += 7;
+      var d = new Date(today); d.setDate(today.getDate() + diff);
+      return d;
+    }
+    function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+    function toISO(d) { return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); }
+    function toShort(d) { return MONTHS[d.getMonth()] + ' ' + d.getDate(); }
+
     // Helpers
     function getProgram(age) { var a = parseInt(age, 10); if (a >= 3 && a <= 5) return 'sprouts'; if (a >= 6 && a <= 12) return 'youth'; if (a >= 13) return 'adult'; return null; }
     function formatPhone(v) { var d = v.replace(/\D/g, ''); if (!d) return ''; if (d.length <= 3) return '(' + d; if (d.length <= 6) return '(' + d.slice(0,3) + ') ' + d.slice(3); return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6,10); }
@@ -781,13 +801,16 @@
       container.innerHTML = '';
       for (var i = 0; i < DAYS.length; i++) {
         var d = DAYS[i];
+        var nextDate = getNextDate(d);
+        var dateISO = toISO(nextDate);
+        var dateShort = toShort(nextDate);
         var btn = document.createElement('button');
         btn.type = 'button'; btn.className = 'day-btn';
-        btn.textContent = d.slice(0, 3);
+        btn.innerHTML = '<span class="day-btn-name">' + d.slice(0, 3) + '</span><span class="day-btn-date">' + dateShort + '</span>';
         btn.setAttribute('data-day', d);
         var times = SCHEDULE[program] && SCHEDULE[program][d];
         if (!times || times.length === 0) { btn.classList.add('disabled'); }
-        else { (function(day) { btn.addEventListener('click', function() { onDayClick(day, container); }); })(d); }
+        else { (function(day, iso, short) { btn.addEventListener('click', function() { onDayClick(day, iso, short); }); })(d, dateISO, dateShort); }
         container.appendChild(btn);
       }
     }
@@ -816,9 +839,9 @@
       var timesEl = document.getElementById(timesId);
       var confirmEl = document.getElementById(confirmId);
       var confirmText = document.getElementById(confirmTextId);
-      var state = { day: null, time: null, program: null };
+      var state = { day: null, date: null, dateShort: null, time: null, program: null, appointmentDatetime: null };
 
-      function reset() { state.day = null; state.time = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
+      function reset() { state.day = null; state.date = null; state.dateShort = null; state.time = null; state.appointmentDatetime = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
 
       ageSel.addEventListener('input', function() {
         var p = getProgram(ageSel.value);
@@ -828,8 +851,8 @@
         else { section.classList.remove('show'); }
       });
 
-      function onDay(day) {
-        state.day = day; state.time = null;
+      function onDay(day, dateISO, dateShort) {
+        state.day = day; state.date = dateISO; state.dateShort = dateShort; state.time = null; state.appointmentDatetime = null;
         setActiveBtn(daysEl, day, 'data-day');
         timeLabel.style.display = 'block';
         timesEl.classList.add('show');
@@ -838,8 +861,9 @@
       }
       function onTime(time) {
         state.time = time;
+        state.appointmentDatetime = state.date + 'T' + TIME_24[time];
         setActiveBtn(timesEl, time, 'data-time');
-        confirmText.textContent = state.day + ' at ' + time;
+        confirmText.textContent = state.day + ', ' + state.dateShort + ' at ' + time;
         confirmEl.classList.add('show');
       }
 
@@ -925,9 +949,9 @@
       var timesEl = card.querySelector('[data-role="times"]');
       var confirmEl = card.querySelector('[data-role="confirm"]');
       var confirmText = card.querySelector('[data-role="confirmtext"]');
-      var cardState = { day: null, time: null, program: null };
+      var cardState = { day: null, date: null, dateShort: null, time: null, program: null, appointmentDatetime: null };
 
-      function resetCardSched() { cardState.day = null; cardState.time = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
+      function resetCardSched() { cardState.day = null; cardState.date = null; cardState.dateShort = null; cardState.time = null; cardState.appointmentDatetime = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
 
       ageSel.addEventListener('input', function() {
         var v = parseInt(ageSel.value, 10);
@@ -938,8 +962,8 @@
         else if (p) { tagText.textContent = LABELS[p]; tag.classList.add('show'); resetCardSched(); buildDayBtns(daysEl, p, onCardDay); schedSection.classList.add('show'); }
         else { tag.classList.remove('show'); schedSection.classList.remove('show'); resetCardSched(); }
       });
-      function onCardDay(day) {
-        cardState.day = day; cardState.time = null;
+      function onCardDay(day, dateISO, dateShort) {
+        cardState.day = day; cardState.date = dateISO; cardState.dateShort = dateShort; cardState.time = null; cardState.appointmentDatetime = null;
         setActiveBtn(daysEl, day, 'data-day');
         timeLabel.style.display = 'block'; timesEl.classList.add('show');
         confirmEl.classList.remove('show');
@@ -947,8 +971,9 @@
       }
       function onCardTime(time) {
         cardState.time = time;
+        cardState.appointmentDatetime = cardState.date + 'T' + TIME_24[time];
         setActiveBtn(timesEl, time, 'data-time');
-        confirmText.textContent = cardState.day + ' at ' + time;
+        confirmText.textContent = cardState.day + ', ' + cardState.dateShort + ' at ' + time;
         confirmEl.classList.add('show');
       }
 
@@ -1015,7 +1040,7 @@
         if (!sc.day || !sc.time) { showError('Please pick a day and time for ' + label + '.'); c.querySelector('[data-role="days"]').scrollIntoView({ behavior:'smooth', block:'nearest' }); return null; }
         var prog = getProgram(a.value);
         programs[prog] = true;
-        var entry = { first_name: f.value.trim(), last_name: l.value.trim(), age: a.value, program: prog, dob: dob.value, emergency_contact: em.value.trim(), preferred_day: sc.day, preferred_time: sc.time };
+        var entry = { first_name: f.value.trim(), last_name: l.value.trim(), age: a.value, program: prog, dob: dob.value, emergency_contact: em.value.trim(), preferred_day: sc.day, preferred_time: sc.time, appointment_datetime: sc.appointmentDatetime, dateShort: sc.dateShort };
         if (al.value.trim()) entry.allergies = al.value.trim();
         if (ex.value) entry.experience = ex.value;
         data.push(entry);
@@ -1078,6 +1103,7 @@
         payload.person_1_program = LABELS[prog];
         payload.person_1_preferred_day = jmSched.day;
         payload.person_1_preferred_time = jmSched.time;
+        payload.person_1_appointment_datetime = jmSched.appointmentDatetime;
         payload.person_1_dob = jmDob.value;
         payload.person_1_emergency_contact = jmEm.value.trim();
         var jmAll = document.getElementById('jmAllergies').value.trim();
@@ -1086,7 +1112,7 @@
         if (jmExp) payload.person_1_experience = jmExp;
         payload.programs_needed = LABELS[prog];
         programs[prog] = true;
-        allPeople.push({ first_name: payload.first_name, program: prog, day: jmSched.day, time: jmSched.time });
+        allPeople.push({ first_name: payload.first_name, program: prog, day: jmSched.day, time: jmSched.time, dateShort: jmSched.dateShort });
       }
 
       // ------ OTHERS ------
@@ -1113,13 +1139,14 @@
           payload[pre + 'first_name'] = d.first_name; payload[pre + 'last_name'] = d.last_name;
           payload[pre + 'age'] = d.age; payload[pre + 'program'] = LABELS[d.program];
           payload[pre + 'preferred_day'] = d.preferred_day; payload[pre + 'preferred_time'] = d.preferred_time;
+          payload[pre + 'appointment_datetime'] = d.appointment_datetime;
           payload[pre + 'dob'] = d.dob; payload[pre + 'emergency_contact'] = d.emergency_contact;
           if (d.allergies) payload[pre + 'allergies'] = d.allergies;
           if (d.experience) payload[pre + 'experience'] = d.experience;
         }
         programs = result.programs;
         payload.programs_needed = Object.keys(programs).map(function(k) { return LABELS[k]; }).join(', ');
-        allPeople = result.data.map(function(d) { return { first_name: d.first_name, program: d.program, day: d.preferred_day, time: d.preferred_time }; });
+        allPeople = result.data.map(function(d) { return { first_name: d.first_name, program: d.program, day: d.preferred_day, time: d.preferred_time, dateShort: d.dateShort }; });
       }
 
       // ------ BOTH ------
@@ -1162,13 +1189,14 @@
         payload.person_1_program = LABELS[selfProg];
         payload.person_1_preferred_day = btSched.day;
         payload.person_1_preferred_time = btSched.time;
+        payload.person_1_appointment_datetime = btSched.appointmentDatetime;
         payload.person_1_dob = btDob.value;
         payload.person_1_emergency_contact = btEm.value.trim();
         var btAll = document.getElementById('btAllergies').value.trim();
         if (btAll) payload.person_1_allergies = btAll;
         var btExp = document.getElementById('btExperience').value;
         if (btExp) payload.person_1_experience = btExp;
-        allPeople.push({ first_name: payload.first_name, program: selfProg, day: btSched.day, time: btSched.time });
+        allPeople.push({ first_name: payload.first_name, program: selfProg, day: btSched.day, time: btSched.time, dateShort: btSched.dateShort });
 
         // Rest
         for (var j = 0; j < resultB.data.length; j++) {
@@ -1176,10 +1204,11 @@
           payload[pre2 + 'first_name'] = d2.first_name; payload[pre2 + 'last_name'] = d2.last_name;
           payload[pre2 + 'age'] = d2.age; payload[pre2 + 'program'] = LABELS[d2.program];
           payload[pre2 + 'preferred_day'] = d2.preferred_day; payload[pre2 + 'preferred_time'] = d2.preferred_time;
+          payload[pre2 + 'appointment_datetime'] = d2.appointment_datetime;
           payload[pre2 + 'dob'] = d2.dob; payload[pre2 + 'emergency_contact'] = d2.emergency_contact;
           if (d2.allergies) payload[pre2 + 'allergies'] = d2.allergies;
           if (d2.experience) payload[pre2 + 'experience'] = d2.experience;
-          allPeople.push({ first_name: d2.first_name, program: d2.program, day: d2.preferred_day, time: d2.preferred_time });
+          allPeople.push({ first_name: d2.first_name, program: d2.program, day: d2.preferred_day, time: d2.preferred_time, dateShort: d2.dateShort });
         }
         payload.person_count = 1 + resultB.data.length;
         payload.programs_needed = Object.keys(programs).map(function(k) { return LABELS[k]; }).join(', ');
@@ -1203,7 +1232,7 @@
         var p = people[i];
         var card = document.createElement('div'); card.className = 'booking-card';
         card.innerHTML = '<div class="booking-card-name">' + p.first_name + '</div>' +
-          '<div class="booking-card-detail">' + p.day + ' at ' + p.time + '</div>' +
+          '<div class="booking-card-detail">' + p.day + ', ' + p.dateShort + ' at ' + p.time + '</div>' +
           '<div class="booking-card-program">' + LABELS[p.program] + '</div>';
         bookingSummary.appendChild(card);
       }
