@@ -215,20 +215,26 @@
     .schedule-section { display: none; animation: slideIn 0.3s var(--smooth); }
     .schedule-section.show { display: block; }
     .schedule-prompt { font-size: 0.78rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
-    .day-picker { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .day-picker {
+      display: flex; gap: 0.4rem; margin-bottom: 1rem;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scrollbar-width: none; padding-bottom: 0.25rem;
+      scroll-snap-type: x mandatory;
+    }
+    .day-picker::-webkit-scrollbar { display: none; }
     .day-btn {
-      flex: 1 1 auto; min-width: 0; padding: 0.5rem 0.2rem;
+      flex: 0 0 auto; min-width: 4.1rem; padding: 0.6rem 0.35rem;
       border: 1.5px solid var(--border); border-radius: var(--radius); background: #fff;
-      font-family: var(--font-body); font-size: 0.72rem; font-weight: 400; color: var(--text-dim);
+      font-family: var(--font-body); font-size: 0.75rem; font-weight: 400; color: var(--text-dim);
       cursor: pointer; text-align: center; transition: all var(--fast) var(--smooth);
       -webkit-tap-highlight-color: transparent;
-      display: flex; flex-direction: column; align-items: center; gap: 0.1rem; line-height: 1.2;
+      display: flex; flex-direction: column; align-items: center; gap: 0.15rem; line-height: 1.2;
+      scroll-snap-align: start;
     }
-    .day-btn-date { font-size: 0.58rem; opacity: 0.6; font-weight: 300; }
+    .day-btn-date { font-size: 0.6rem; opacity: 0.55; font-weight: 300; }
     .day-btn.active .day-btn-date { opacity: 1; }
     .day-btn:hover { border-color: #ccc; }
     .day-btn.active { border-color: var(--red); background: var(--red); color: #fff; font-weight: 500; }
-    .day-btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
     .time-picker { display: none; flex-wrap: wrap; gap: 0.4rem; }
     .time-picker.show { display: flex; animation: slideIn 0.2s var(--smooth); }
     .time-btn {
@@ -760,17 +766,9 @@
 
     // Date helpers
     var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var DAY_INDEX = { Monday:1, Tuesday:2, Wednesday:3, Thursday:4, Friday:5, Saturday:6 };
+    var DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     var TIME_24 = { '6:30 AM':'06:30:00','9:00 AM':'09:00:00','10:00 AM':'10:00:00','11:00 AM':'11:00:00','12:00 PM':'12:00:00','4:00 PM':'16:00:00','5:00 PM':'17:00:00','6:00 PM':'18:00:00' };
 
-    function getNextDate(dayName) {
-      var target = DAY_INDEX[dayName];
-      var today = new Date();
-      var diff = target - today.getDay();
-      if (diff <= 0) diff += 7;
-      var d = new Date(today); d.setDate(today.getDate() + diff);
-      return d;
-    }
     function pad2(n) { return n < 10 ? '0' + n : '' + n; }
     function toISO(d) { return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); }
     function toShort(d) { return MONTHS[d.getMonth()] + ' ' + d.getDate(); }
@@ -799,18 +797,19 @@
     // ===== SCHEDULE PICKER HELPERS =====
     function buildDayBtns(container, program, onDayClick) {
       container.innerHTML = '';
-      for (var i = 0; i < DAYS.length; i++) {
-        var d = DAYS[i];
-        var nextDate = getNextDate(d);
-        var dateISO = toISO(nextDate);
-        var dateShort = toShort(nextDate);
+      var today = new Date();
+      for (var i = 1; i <= 14; i++) {
+        var d = new Date(today); d.setDate(today.getDate() + i);
+        var dayName = DAY_NAMES[d.getDay()];
+        var times = SCHEDULE[program] && SCHEDULE[program][dayName];
+        if (!times || times.length === 0) continue;
+        var dateISO = toISO(d);
+        var dateShort = toShort(d);
         var btn = document.createElement('button');
         btn.type = 'button'; btn.className = 'day-btn';
-        btn.innerHTML = '<span class="day-btn-name">' + d.slice(0, 3) + '</span><span class="day-btn-date">' + dateShort + '</span>';
-        btn.setAttribute('data-day', d);
-        var times = SCHEDULE[program] && SCHEDULE[program][d];
-        if (!times || times.length === 0) { btn.classList.add('disabled'); }
-        else { (function(day, iso, short) { btn.addEventListener('click', function() { onDayClick(day, iso, short); }); })(d, dateISO, dateShort); }
+        btn.innerHTML = '<span class="day-btn-name">' + dayName.slice(0, 3) + '</span><span class="day-btn-date">' + dateShort + '</span>';
+        btn.setAttribute('data-date', dateISO);
+        (function(day, iso, short) { btn.addEventListener('click', function() { onDayClick(day, iso, short); }); })(dayName, dateISO, dateShort);
         container.appendChild(btn);
       }
     }
@@ -853,7 +852,7 @@
 
       function onDay(day, dateISO, dateShort) {
         state.day = day; state.date = dateISO; state.dateShort = dateShort; state.time = null; state.appointmentDatetime = null;
-        setActiveBtn(daysEl, day, 'data-day');
+        setActiveBtn(daysEl, dateISO, 'data-date');
         timeLabel.style.display = 'block';
         timesEl.classList.add('show');
         confirmEl.classList.remove('show');
@@ -964,7 +963,7 @@
       });
       function onCardDay(day, dateISO, dateShort) {
         cardState.day = day; cardState.date = dateISO; cardState.dateShort = dateShort; cardState.time = null; cardState.appointmentDatetime = null;
-        setActiveBtn(daysEl, day, 'data-day');
+        setActiveBtn(daysEl, dateISO, 'data-date');
         timeLabel.style.display = 'block'; timesEl.classList.add('show');
         confirmEl.classList.remove('show');
         buildTimeBtns(timesEl, cardState.program, day, onCardTime);
