@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="Sign up for a free trial class at Live Oak Jiu Jitsu Academy in Fairfield, CA.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#c10c10">
+  <title>Sign Up for Your Free Trial | Live Oak Jiu Jitsu Academy</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="/assets/images/logo.jpeg">
+
+  <style>
+    :root {
+      --red: #c10c10;
+      --red-light: #d41920;
+      --red-dark: #9a0a0a;
+      --red-glow: rgba(193, 12, 16, 0.08);
+      --red-glow-md: rgba(193, 12, 16, 0.12);
+      --text: #1a1a1a;
+      --text-dim: #333;
+      --text-muted: #666;
+      --text-faint: #999;
+      --bg: #f3f2ef;
+      --card: #ffffff;
+      --border: #e2e0dc;
+      --border-light: #eee;
+      --input-border: #d4d2ce;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Outfit', 'Helvetica Neue', sans-serif;
+      --radius: 6px;
+      --radius-lg: 10px;
+      --radius-xl: 14px;
+      --fast: 0.2s;
+      --smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      font-family: var(--font-body);
+      font-weight: 300;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    .header {
+      background: #fff;
+      border-bottom: 1px solid var(--border-light);
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .header a { display: flex; align-items: center; gap: 0.6rem; }
+    .header img { height: 38px; width: 38px; border-radius: 50%; object-fit: cover; }
+    .header-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; }
+
+    /* LAYOUT */
+    .main { flex: 1; display: flex; justify-content: center; padding: 1.75rem 1rem 3.5rem; }
+    .container { width: 100%; max-width: 520px; }
+
+    /* HERO */
+    .hero { text-align: center; margin-bottom: 1.5rem; padding: 0 0.25rem; }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(1.7rem, 5vw, 2.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 0.6rem;
+    }
+    .hero p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: clamp(1.5rem, 5vw, 2.25rem);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.03);
+    }
+
+    /* FORM BASICS */
+    .section-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .field { margin-bottom: 1.1rem; }
+    .field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.02em;
+    }
+    .field label .optional { font-weight: 300; color: var(--text-faint); font-size: 0.72rem; letter-spacing: 0; }
+
+    .field input, .field select {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: #fff;
+      border: 1.5px solid var(--input-border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 300;
+      transition: border-color var(--fast) var(--smooth), box-shadow var(--fast) var(--smooth);
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23999' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+      cursor: pointer;
+    }
+    .field input[type="number"] { -moz-appearance: textfield; }
+    .field input[type="number"]::-webkit-outer-spin-button,
+    .field input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .field input::placeholder { color: var(--text-faint); }
+    .field input:focus, .field select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px var(--red-glow); }
+    .field-error { border-color: #ef4444 !important; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .divider { height: 1px; background: var(--border-light); margin: 1.5rem 0; }
+
+    /* MODE SELECTOR */
+    .mode-selector { margin-bottom: 0.5rem; }
+    .mode-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .mode-option { position: relative; }
+    .mode-option input { position: absolute; opacity: 0; pointer-events: none; }
+    .mode-option label {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.9rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      transition: all var(--fast) var(--smooth);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .mode-option label:hover { border-color: #ccc; }
+    .mode-option input:checked + label {
+      border-color: var(--red);
+      background: rgba(193, 12, 16, 0.03);
+      box-shadow: 0 0 0 3px var(--red-glow);
+    }
+    .mode-icon {
+      width: 36px; height: 36px; min-width: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(193, 12, 16, 0.06);
+      border-radius: 8px;
+      color: var(--red);
+      transition: background var(--fast) var(--smooth);
+    }
+    .mode-option input:checked + label .mode-icon { background: rgba(193, 12, 16, 0.1); }
+    .mode-text-wrap { flex: 1; }
+    .mode-title { font-size: 0.88rem; font-weight: 500; color: var(--text); }
+    .mode-sub { font-size: 0.72rem; color: var(--text-faint); font-weight: 300; margin-top: 0.1rem; }
+
+    /* FORM PANELS — hidden by default */
+    .panel { display: none; }
+    .panel.active { display: block; animation: slideIn 0.3s var(--smooth); }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* PROGRAM TAG */
+    .program-tag {
+      display: none;
+      align-items: center;
+      gap: 0.35rem;
+      margin-top: -0.25rem;
+      margin-bottom: 1.1rem;
+      padding: 0.45rem 0.7rem;
+      background: rgba(193, 12, 16, 0.04);
+      border: 1px solid rgba(193, 12, 16, 0.12);
+      border-radius: var(--radius);
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--red-dark);
+    }
+    .program-tag.show { display: inline-flex; }
+    .program-tag.too-young { background: #fef2f2; border-color: #fecaca; color: #991b1b; }
+    .program-tag.too-young svg { display: none; }
+    .program-tag svg { flex-shrink: 0; }
+
+    /* SCHEDULE PICKER */
+    .schedule-section { display: none; animation: slideIn 0.3s var(--smooth); }
+    .schedule-section.show { display: block; }
+    .schedule-prompt { font-size: 0.78rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
+    .day-picker { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+    .day-btn {
+      flex: 1 1 auto; min-width: 0; padding: 0.6rem 0.3rem;
+      border: 1.5px solid var(--border); border-radius: var(--radius); background: #fff;
+      font-family: var(--font-body); font-size: 0.72rem; font-weight: 400; color: var(--text-dim);
+      cursor: pointer; text-align: center; transition: all var(--fast) var(--smooth);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .day-btn:hover { border-color: #ccc; }
+    .day-btn.active { border-color: var(--red); background: var(--red); color: #fff; font-weight: 500; }
+    .day-btn.disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+    .time-picker { display: none; flex-wrap: wrap; gap: 0.4rem; }
+    .time-picker.show { display: flex; animation: slideIn 0.2s var(--smooth); }
+    .time-btn {
+      padding: 0.6rem 1rem; border: 1.5px solid var(--border); border-radius: var(--radius);
+      background: #fff; font-family: var(--font-body); font-size: 0.8rem; font-weight: 400;
+      color: var(--text-dim); cursor: pointer; transition: all var(--fast) var(--smooth);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .time-btn:hover { border-color: #ccc; }
+    .time-btn.active { border-color: var(--red); background: rgba(193, 12, 16, 0.06); color: var(--red); font-weight: 500; }
+    .schedule-confirm {
+      display: none; align-items: center; gap: 0.35rem; margin-top: 0.75rem;
+      padding: 0.5rem 0.75rem; background: rgba(74, 124, 89, 0.06); border: 1px solid rgba(74, 124, 89, 0.15);
+      border-radius: var(--radius); font-size: 0.78rem; font-weight: 400; color: #3d6b4a;
+    }
+    .schedule-confirm.show { display: inline-flex; }
+    .schedule-confirm svg { flex-shrink: 0; }
+
+    /* PERSON CARDS */
+    .person-card {
+      background: #fafaf8;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.1rem;
+      margin-bottom: 0.75rem;
+      animation: slideIn 0.25s var(--smooth);
+    }
+    .person-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
+    .person-card-label { font-size: 0.75rem; font-weight: 500; color: var(--text-dim); }
+    .person-remove {
+      display: none;
+      align-items: center;
+      gap: 0.2rem;
+      font-size: 0.7rem;
+      color: var(--text-faint);
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      border-radius: var(--radius);
+      transition: all var(--fast);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .person-remove:hover { color: #dc2626; background: #fef2f2; }
+    .person-remove.show { display: inline-flex; }
+    .person-card .field { margin-bottom: 0.9rem; }
+    .person-card .field:last-child { margin-bottom: 0; }
+
+    .add-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px dashed #d8d6d2;
+      border-radius: var(--radius-lg);
+      background: none;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all var(--fast);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .add-btn:hover { border-color: var(--red); color: var(--red); background: rgba(193, 12, 16, 0.02); }
+
+    /* EXPAND TOGGLE */
+    .expand-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: var(--red);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: var(--font-body);
+      padding: 0;
+      transition: color var(--fast);
+      -webkit-tap-highlight-color: transparent;
+      margin-bottom: 0.25rem;
+    }
+    .expand-btn:hover { color: var(--red-dark); }
+    .expand-btn svg { transition: transform var(--fast); }
+    .expand-btn.open svg { transform: rotate(45deg); }
+    .expandable { display: none; animation: slideIn 0.3s var(--smooth); }
+    .expandable.show { display: block; }
+
+    /* CONSENT */
+    .consent { margin: 1.5rem 0 1.25rem; }
+    .consent-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+      font-weight: 300;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .consent-label input[type="checkbox"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 22px; height: 22px; min-width: 22px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all var(--fast) var(--smooth);
+      margin-top: 1px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    .consent-label input[type="checkbox"]:checked { background: var(--red); border-color: var(--red); }
+    .consent-label input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px; top: 2px;
+      width: 6px; height: 10px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    /* SUBMIT */
+    .btn-submit {
+      width: 100%;
+      padding: 1.05rem 2rem;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-lg);
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      transition: all var(--fast) var(--smooth);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-submit:hover { background: var(--red-light); box-shadow: 0 4px 24px var(--red-glow-md); transform: translateY(-1px); }
+    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    /* ERROR */
+    .form-error { display: none; padding: 0.7rem 0.9rem; background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); color: #991b1b; font-size: 0.8rem; margin-bottom: 1.1rem; line-height: 1.45; }
+    .form-error.show { display: block; }
+
+    /* SUCCESS */
+    .success { display: none; text-align: center; padding: 1.5rem 0.5rem; }
+    .success.show { display: block; animation: slideIn 0.4s var(--smooth); }
+    .success-check { width: 56px; height: 56px; background: rgba(74, 124, 89, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.1rem; }
+    .success-check svg { stroke: #4a7c59; }
+    .success h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .success > p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; font-weight: 300; margin-bottom: 0.25rem; }
+
+    .booking-summary { margin-top: 1.25rem; text-align: left; }
+    .booking-card {
+      background: #fafaf8; border: 1.5px solid var(--border); border-radius: var(--radius-lg);
+      padding: 1rem 1.1rem; margin-bottom: 0.6rem;
+    }
+    .booking-card-name { font-weight: 500; font-size: 0.88rem; color: var(--text); margin-bottom: 0.15rem; }
+    .booking-card-detail { font-size: 0.82rem; color: var(--text-dim); font-weight: 300; line-height: 1.45; }
+    .booking-card-program { font-size: 0.72rem; color: var(--red-dark); font-weight: 400; margin-top: 0.2rem; }
+
+    .arrival-box {
+      margin-top: 1rem; padding: 1.1rem; text-align: left;
+      background: rgba(193, 12, 16, 0.03); border: 1.5px solid rgba(193, 12, 16, 0.12);
+      border-radius: var(--radius-lg);
+    }
+    .arrival-box-title {
+      font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em;
+      color: var(--red); margin-bottom: 0.5rem;
+    }
+    .arrival-box p { font-size: 0.82rem; color: var(--text-dim); font-weight: 300; line-height: 1.55; margin-bottom: 0.4rem; }
+    .arrival-box p:last-child { margin-bottom: 0; }
+
+    /* FOOTER */
+    .footer { text-align: center; padding: 1.25rem 1rem; font-size: 0.72rem; color: var(--text-faint); font-weight: 300; line-height: 1.5; }
+    .footer a { color: var(--text-muted); transition: color var(--fast); }
+    .footer a:hover { color: var(--red); }
+
+    /* RESPONSIVE */
+    @media (max-width: 480px) {
+      .main { padding: 1.25rem 0.75rem 3rem; }
+      .card { padding: 1.25rem; }
+      .row { grid-template-columns: 1fr; gap: 0; }
+      .person-card { padding: 0.9rem; }
+      .header-name { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <a href="https://liveoakjiujitsuacademy.com">
+      <img src="/assets/images/logo.jpeg" alt="Live Oak Jiu Jitsu Academy" width="38" height="38">
+      <span class="header-name">Live Oak Jiu Jitsu Academy</span>
+    </a>
+  </header>
+
+  <main class="main">
+    <div class="container">
+      <div class="hero">
+        <h1>Sign Up for Your Free Trial</h1>
+        <p>Fill out the form below and we'll get you booked for a free three-day trial. No commitment, no charge.</p>
+      </div>
+
+      <div class="card">
+        <form id="signupForm" novalidate>
+          <div class="form-error" id="formError"></div>
+
+          <!-- ===== STEP 1: Who is this for? ===== -->
+          <div class="mode-selector">
+            <div class="section-label">Who is this for?</div>
+            <div class="mode-options">
+              <div class="mode-option">
+                <input type="radio" id="modeJustMe" name="mode" value="just-me">
+                <label for="modeJustMe">
+                  <span class="mode-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+                  <div class="mode-text-wrap">
+                    <div class="mode-title">Just Me</div>
+                    <div class="mode-sub">I'm signing up for myself</div>
+                  </div>
+                </label>
+              </div>
+              <div class="mode-option">
+                <input type="radio" id="modeOthers" name="mode" value="others">
+                <label for="modeOthers">
+                  <span class="mode-icon"><svg width="20" height="18" viewBox="0 0 28 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 21v-2a4 4 0 0 0-4-4h-2"/><circle cx="12" cy="7" r="4"/><circle cx="20" cy="9" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4"/></svg></span>
+                  <div class="mode-text-wrap">
+                    <div class="mode-title">My Child / Someone Else</div>
+                    <div class="mode-sub">I'm signing someone else up</div>
+                  </div>
+                </label>
+              </div>
+              <div class="mode-option">
+                <input type="radio" id="modeBoth" name="mode" value="both">
+                <label for="modeBoth">
+                  <span class="mode-icon"><svg width="20" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
+                  <div class="mode-text-wrap">
+                    <div class="mode-title">Me + Others</div>
+                    <div class="mode-sub">I'm signing up myself and others</div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== PANEL A: Just Me (streamlined) ===== -->
+          <div class="panel" id="panelJustMe">
+            <div class="divider"></div>
+            <div class="row">
+              <div class="field">
+                <label for="jmFirst">First Name</label>
+                <input type="text" id="jmFirst" placeholder="First name" autocomplete="given-name">
+              </div>
+              <div class="field">
+                <label for="jmLast">Last Name</label>
+                <input type="text" id="jmLast" placeholder="Last name" autocomplete="family-name">
+              </div>
+            </div>
+            <div class="field">
+              <label for="jmAge">Age</label>
+              <input type="number" id="jmAge" min="3" max="99" placeholder="Enter age" inputmode="numeric">
+            </div>
+            <div class="program-tag" id="jmTag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span id="jmTagText"></span>
+            </div>
+            <div class="field">
+              <label for="jmPhone">Phone Number</label>
+              <input type="tel" id="jmPhone" placeholder="(555) 123-4567" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="jmEmail">Email Address</label>
+              <input type="email" id="jmEmail" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="jmDob">Date of Birth</label>
+              <input type="date" id="jmDob">
+            </div>
+            <div class="field">
+              <label for="jmEmergency">Emergency Contact Name</label>
+              <input type="text" id="jmEmergency" placeholder="Full name">
+            </div>
+            <div class="field">
+              <label for="jmAllergies">Allergies / Medical Notes <span class="optional">(optional)</span></label>
+              <input type="text" id="jmAllergies" placeholder="Any allergies or conditions we should know about">
+            </div>
+            <div class="field">
+              <label for="jmExperience">Prior Martial Arts Experience <span class="optional">(optional)</span></label>
+              <select id="jmExperience">
+                <option value="" selected>Select experience level</option>
+                <option value="None">None</option>
+                <option value="Less than 1 year">Less than 1 year</option>
+                <option value="1-3 years">1–3 years</option>
+                <option value="3+ years">3+ years</option>
+              </select>
+            </div>
+            <div class="schedule-section" id="jmSchedule">
+              <div class="divider"></div>
+              <div class="section-label">Pick Your Class Time</div>
+              <div class="schedule-prompt">What day works best?</div>
+              <div class="day-picker" id="jmDays"></div>
+              <div class="schedule-prompt" id="jmTimeLabel" style="display:none">What time?</div>
+              <div class="time-picker" id="jmTimes"></div>
+              <div class="schedule-confirm" id="jmConfirm">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="jmConfirmText"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== PANEL B: Others only ===== -->
+          <div class="panel" id="panelOthers">
+            <div class="divider"></div>
+            <div class="section-label">Your Contact Information</div>
+            <div class="row">
+              <div class="field">
+                <label for="otFirst">First Name</label>
+                <input type="text" id="otFirst" placeholder="First name" autocomplete="given-name">
+              </div>
+              <div class="field">
+                <label for="otLast">Last Name</label>
+                <input type="text" id="otLast" placeholder="Last name" autocomplete="family-name">
+              </div>
+            </div>
+            <div class="field">
+              <label for="otPhone">Phone Number</label>
+              <input type="tel" id="otPhone" placeholder="(555) 123-4567" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="otEmail">Email Address</label>
+              <input type="email" id="otEmail" placeholder="you@example.com" autocomplete="email">
+            </div>
+
+            <button type="button" class="expand-btn" id="otParent2Toggle">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span id="otParent2Text">Add Second Parent / Guardian</span>
+            </button>
+            <div class="expandable" id="otParent2Section">
+              <div style="margin-top:1rem">
+                <div class="section-label">Second Parent / Guardian</div>
+                <div class="row">
+                  <div class="field">
+                    <label for="otP2First">First Name</label>
+                    <input type="text" id="otP2First" placeholder="First name">
+                  </div>
+                  <div class="field">
+                    <label for="otP2Last">Last Name</label>
+                    <input type="text" id="otP2Last" placeholder="Last name">
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="otP2Phone">Phone <span class="optional">(optional)</span></label>
+                  <input type="tel" id="otP2Phone" placeholder="(555) 123-4567">
+                </div>
+                <div class="field">
+                  <label for="otP2Email">Email <span class="optional">(optional)</span></label>
+                  <input type="email" id="otP2Email" placeholder="you@example.com">
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="section-label">Who's Training?</div>
+            <div id="otPersonList"></div>
+            <button type="button" class="add-btn" id="otAddBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add a Person
+            </button>
+          </div>
+
+          <!-- ===== PANEL C: Me + Others ===== -->
+          <div class="panel" id="panelBoth">
+            <div class="divider"></div>
+            <div class="section-label">Your Information</div>
+            <div class="row">
+              <div class="field">
+                <label for="btFirst">First Name</label>
+                <input type="text" id="btFirst" placeholder="First name" autocomplete="given-name">
+              </div>
+              <div class="field">
+                <label for="btLast">Last Name</label>
+                <input type="text" id="btLast" placeholder="Last name" autocomplete="family-name">
+              </div>
+            </div>
+            <div class="field">
+              <label for="btAge">Your Age</label>
+              <input type="number" id="btAge" min="3" max="99" placeholder="Enter age" inputmode="numeric">
+            </div>
+            <div class="program-tag" id="btTag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span id="btTagText"></span>
+            </div>
+            <div class="field">
+              <label for="btPhone">Phone Number</label>
+              <input type="tel" id="btPhone" placeholder="(555) 123-4567" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="btEmail">Email Address</label>
+              <input type="email" id="btEmail" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="btDob">Date of Birth</label>
+              <input type="date" id="btDob">
+            </div>
+            <div class="field">
+              <label for="btEmergency">Emergency Contact Name</label>
+              <input type="text" id="btEmergency" placeholder="Full name">
+            </div>
+            <div class="field">
+              <label for="btAllergies">Allergies / Medical Notes <span class="optional">(optional)</span></label>
+              <input type="text" id="btAllergies" placeholder="Any allergies or conditions we should know about">
+            </div>
+            <div class="field">
+              <label for="btExperience">Prior Martial Arts Experience <span class="optional">(optional)</span></label>
+              <select id="btExperience">
+                <option value="" selected>Select experience level</option>
+                <option value="None">None</option>
+                <option value="Less than 1 year">Less than 1 year</option>
+                <option value="1-3 years">1–3 years</option>
+                <option value="3+ years">3+ years</option>
+              </select>
+            </div>
+            <div class="schedule-section" id="btSchedule">
+              <div class="divider"></div>
+              <div class="section-label">Pick Your Class Time</div>
+              <div class="schedule-prompt">What day works best?</div>
+              <div class="day-picker" id="btDays"></div>
+              <div class="schedule-prompt" id="btTimeLabel" style="display:none">What time?</div>
+              <div class="time-picker" id="btTimes"></div>
+              <div class="schedule-confirm" id="btConfirm">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="btConfirmText"></span>
+              </div>
+            </div>
+
+            <button type="button" class="expand-btn" id="btParent2Toggle">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <span id="btParent2Text">Add Second Parent / Guardian</span>
+            </button>
+            <div class="expandable" id="btParent2Section">
+              <div style="margin-top:1rem">
+                <div class="section-label">Second Parent / Guardian</div>
+                <div class="row">
+                  <div class="field">
+                    <label for="btP2First">First Name</label>
+                    <input type="text" id="btP2First" placeholder="First name">
+                  </div>
+                  <div class="field">
+                    <label for="btP2Last">Last Name</label>
+                    <input type="text" id="btP2Last" placeholder="Last name">
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="btP2Phone">Phone <span class="optional">(optional)</span></label>
+                  <input type="tel" id="btP2Phone" placeholder="(555) 123-4567">
+                </div>
+                <div class="field">
+                  <label for="btP2Email">Email <span class="optional">(optional)</span></label>
+                  <input type="email" id="btP2Email" placeholder="you@example.com">
+                </div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+            <div class="section-label">Who Else Is Training?</div>
+            <div id="btPersonList"></div>
+            <button type="button" class="add-btn" id="btAddBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add a Person
+            </button>
+          </div>
+
+          <!-- ===== CONSENT + SUBMIT (shared) ===== -->
+          <div id="consentArea" style="display:none">
+            <div class="divider"></div>
+            <div class="consent">
+              <label class="consent-label">
+                <input type="checkbox" id="smsConsent">
+                <span>I consent to receiving text messages from Live Oak Jiu Jitsu Academy. Message and data rates may apply. Reply BYE to opt out.</span>
+              </label>
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn">Sign Up for Your Free Trial</button>
+          </div>
+
+        </form>
+
+        <!-- Success -->
+        <div class="success" id="successArea">
+          <div class="success-check">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h2>You're Booked!</h2>
+          <p id="successMsg"></p>
+          <div class="booking-summary" id="bookingSummary"></div>
+          <div class="arrival-box">
+            <div class="arrival-box-title">What to Bring</div>
+            <p>Flip flops, a water bottle, and comfortable athletic clothes (shorts and a t-shirt).</p>
+            <p>Arrive 10 minutes early for a quick tour and liability forms. Free parking across the street and on the side streets.</p>
+            <p><strong>910 Texas Street, Fairfield, CA 94533</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    Live Oak Jiu Jitsu Academy &middot; 910 Texas Street, Fairfield, CA 94533<br>
+    <a href="tel:+17077596876">(707) 759-6876</a>
+  </footer>
+
+  <script>
+  (function() {
+    var WEBHOOK = 'https://services.leadconnectorhq.com/hooks/lotrqaddDPbq4iNMladP/webhook-trigger/1c84f1cf-d106-49c0-9d51-fdf006b737a3';
+    var LABELS = { sprouts: 'Sprouts (Ages 3\u20135)', youth: 'Youth BJJ (Ages 6\u201312)', adult: 'Adult & Teen BJJ (Ages 13+)' };
+    var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var SCHEDULE = {
+      adult: { Monday:['6:30 AM','12:00 PM','6:00 PM'], Tuesday:['6:30 AM','12:00 PM','6:00 PM'], Wednesday:['6:30 AM','12:00 PM','6:00 PM'], Thursday:['6:30 AM','12:00 PM','6:00 PM'], Friday:['6:30 AM','12:00 PM','6:00 PM'], Saturday:['10:00 AM'] },
+      youth: { Monday:['11:00 AM','4:00 PM'], Tuesday:['11:00 AM','4:00 PM'], Wednesday:['11:00 AM','4:00 PM'], Thursday:['11:00 AM','4:00 PM'], Friday:['11:00 AM','4:00 PM'], Saturday:['9:00 AM'] },
+      sprouts: { Monday:['5:00 PM'], Tuesday:['5:00 PM'], Wednesday:['5:00 PM'], Thursday:['5:00 PM'] }
+    };
+
+    // Helpers
+    function getProgram(age) { var a = parseInt(age, 10); if (a >= 3 && a <= 5) return 'sprouts'; if (a >= 6 && a <= 12) return 'youth'; if (a >= 13) return 'adult'; return null; }
+    function formatPhone(v) { var d = v.replace(/\D/g, ''); if (!d) return ''; if (d.length <= 3) return '(' + d; if (d.length <= 6) return '(' + d.slice(0,3) + ') ' + d.slice(3); return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6,10); }
+    function phoneFormat(el) { el.addEventListener('input', function(e) { var p = e.target.selectionStart, ol = e.target.value.length; e.target.value = formatPhone(e.target.value); e.target.setSelectionRange(p + e.target.value.length - ol, p + e.target.value.length - ol); }); }
+    function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
+    function validPhone(p) { return p.replace(/\D/g,'').length >= 10; }
+
+    var form = document.getElementById('signupForm');
+    var formError = document.getElementById('formError');
+    var submitBtn = document.getElementById('submitBtn');
+    var consentArea = document.getElementById('consentArea');
+    var successArea = document.getElementById('successArea');
+    var bookingSummary = document.getElementById('bookingSummary');
+    var successMsg = document.getElementById('successMsg');
+
+    function clearErrors() { formError.classList.remove('show'); formError.textContent = ''; var e = form.querySelectorAll('.field-error'); for (var i = 0; i < e.length; i++) e[i].classList.remove('field-error'); }
+    function showError(m) { formError.textContent = m; formError.classList.add('show'); formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+
+    // Phone formatting
+    ['jmPhone','otPhone','btPhone','otP2Phone','btP2Phone'].forEach(function(id) { phoneFormat(document.getElementById(id)); });
+
+    // ===== SCHEDULE PICKER HELPERS =====
+    function buildDayBtns(container, program, onDayClick) {
+      container.innerHTML = '';
+      for (var i = 0; i < DAYS.length; i++) {
+        var d = DAYS[i];
+        var btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'day-btn';
+        btn.textContent = d.slice(0, 3);
+        btn.setAttribute('data-day', d);
+        var times = SCHEDULE[program] && SCHEDULE[program][d];
+        if (!times || times.length === 0) { btn.classList.add('disabled'); }
+        else { (function(day) { btn.addEventListener('click', function() { onDayClick(day, container); }); })(d); }
+        container.appendChild(btn);
+      }
+    }
+    function buildTimeBtns(container, program, day, onTimeClick) {
+      container.innerHTML = '';
+      var times = SCHEDULE[program][day] || [];
+      for (var i = 0; i < times.length; i++) {
+        var btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'time-btn'; btn.textContent = times[i];
+        btn.setAttribute('data-time', times[i]);
+        (function(t) { btn.addEventListener('click', function() { onTimeClick(t, container); }); })(times[i]);
+        container.appendChild(btn);
+      }
+    }
+    function setActiveBtn(container, val, attr) {
+      var btns = container.querySelectorAll('button');
+      for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i].getAttribute(attr) === val);
+    }
+
+    // Wire a static schedule section (for "Just Me" / "Both" self)
+    function wireSchedule(ageSelId, scheduleId, daysId, timeLabelId, timesId, confirmId, confirmTextId) {
+      var ageSel = document.getElementById(ageSelId);
+      var section = document.getElementById(scheduleId);
+      var daysEl = document.getElementById(daysId);
+      var timeLabel = document.getElementById(timeLabelId);
+      var timesEl = document.getElementById(timesId);
+      var confirmEl = document.getElementById(confirmId);
+      var confirmText = document.getElementById(confirmTextId);
+      var state = { day: null, time: null, program: null };
+
+      function reset() { state.day = null; state.time = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
+
+      ageSel.addEventListener('input', function() {
+        var p = getProgram(ageSel.value);
+        state.program = p;
+        reset();
+        if (p) { buildDayBtns(daysEl, p, onDay); section.classList.add('show'); }
+        else { section.classList.remove('show'); }
+      });
+
+      function onDay(day) {
+        state.day = day; state.time = null;
+        setActiveBtn(daysEl, day, 'data-day');
+        timeLabel.style.display = 'block';
+        timesEl.classList.add('show');
+        confirmEl.classList.remove('show');
+        buildTimeBtns(timesEl, state.program, day, onTime);
+      }
+      function onTime(time) {
+        state.time = time;
+        setActiveBtn(timesEl, time, 'data-time');
+        confirmText.textContent = state.day + ' at ' + time;
+        confirmEl.classList.add('show');
+      }
+
+      return state;
+    }
+
+    var jmSched = wireSchedule('jmAge', 'jmSchedule', 'jmDays', 'jmTimeLabel', 'jmTimes', 'jmConfirm', 'jmConfirmText');
+    var btSched = wireSchedule('btAge', 'btSchedule', 'btDays', 'btTimeLabel', 'btTimes', 'btConfirm', 'btConfirmText');
+
+    // Age → tag wiring
+    function wireAgeTag(selId, tagId, textId) {
+      var sel = document.getElementById(selId), tag = document.getElementById(tagId), txt = document.getElementById(textId);
+      sel.addEventListener('input', function() {
+        var v = parseInt(sel.value, 10);
+        tag.classList.remove('too-young');
+        if (v >= 1 && v < 3) { txt.textContent = 'Our youngest program (Sprouts) starts at age 3'; tag.classList.add('show', 'too-young'); }
+        else { var p = getProgram(sel.value); if (p) { txt.textContent = LABELS[p]; tag.classList.add('show'); } else { tag.classList.remove('show'); } }
+      });
+    }
+    wireAgeTag('jmAge', 'jmTag', 'jmTagText');
+    wireAgeTag('btAge', 'btTag', 'btTagText');
+
+    // ===== MODE SWITCHING =====
+    var panels = { 'just-me': document.getElementById('panelJustMe'), 'others': document.getElementById('panelOthers'), 'both': document.getElementById('panelBoth') };
+    var currentMode = null;
+
+    document.querySelectorAll('input[name="mode"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        currentMode = radio.value;
+        for (var k in panels) { panels[k].classList.toggle('active', k === currentMode); }
+        consentArea.style.display = 'block';
+        clearErrors();
+
+        // Init first person card for "others" and "both" if empty
+        if (currentMode === 'others' && otPeople.length === 0) addPersonTo('ot');
+        if (currentMode === 'both' && btPeople.length === 0) addPersonTo('bt');
+      });
+    });
+
+    // ===== PERSON CARD SYSTEM (reusable for both panels) =====
+    var otPeople = [], btPeople = [], pCounter = 0;
+    var MAX_PEOPLE = 10;
+    var otAddBtn = document.getElementById('otAddBtn');
+    var btAddBtn = document.getElementById('btAddBtn');
+
+    function checkAddLimit(prefix) {
+      var list = prefix === 'ot' ? otPeople : btPeople;
+      var btn = prefix === 'ot' ? otAddBtn : btAddBtn;
+      var max = prefix === 'bt' ? MAX_PEOPLE - 1 : MAX_PEOPLE; // "both" reserves slot 1 for self
+      btn.style.display = list.length >= max ? 'none' : 'flex';
+    }
+
+    function addPersonTo(prefix) {
+      var list = prefix === 'ot' ? otPeople : btPeople;
+      var max = prefix === 'bt' ? MAX_PEOPLE - 1 : MAX_PEOPLE;
+      if (list.length >= max) return;
+      pCounter++;
+      var id = pCounter;
+      var container = document.getElementById(prefix + 'PersonList');
+
+      var card = document.createElement('div');
+      card.className = 'person-card';
+      card.innerHTML =
+        '<div class="person-card-header"><span class="person-card-label">Person</span>' +
+        '<button type="button" class="person-remove" data-id="' + id + '">' +
+        '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Remove</button></div>' +
+        '<div class="row"><div class="field"><label>First Name</label><input type="text" data-role="first" placeholder="First name"></div>' +
+        '<div class="field"><label>Last Name</label><input type="text" data-role="last" placeholder="Last name"></div></div>' +
+        '<div class="field"><label>Age</label><input type="number" data-role="age" min="3" max="99" placeholder="Enter age" inputmode="numeric"></div>' +
+        '<div class="program-tag" data-role="tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span data-role="tagtext"></span></div>' +
+        '<div class="field"><label>Date of Birth</label><input type="date" data-role="dob"></div>' +
+        '<div class="field"><label>Emergency Contact Name</label><input type="text" data-role="emergency" placeholder="Full name"></div>' +
+        '<div class="field"><label>Allergies / Medical Notes <span class="optional">(optional)</span></label><input type="text" data-role="allergies" placeholder="Any allergies or conditions"></div>' +
+        '<div class="field"><label>Prior Martial Arts Experience <span class="optional">(optional)</span></label><select data-role="experience"><option value="" selected>Select experience level</option><option value="None">None</option><option value="Less than 1 year">Less than 1 year</option><option value="1-3 years">1\u20133 years</option><option value="3+ years">3+ years</option></select></div>' +
+        '<div class="schedule-section" data-role="schedule"><div class="divider"></div><div class="schedule-prompt">What day works best?</div><div class="day-picker" data-role="days"></div><div class="schedule-prompt" data-role="timelabel" style="display:none">What time?</div><div class="time-picker" data-role="times"></div><div class="schedule-confirm" data-role="confirm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-role="confirmtext"></span></div></div>';
+
+      var ageSel = card.querySelector('[data-role="age"]');
+      var tag = card.querySelector('[data-role="tag"]');
+      var tagText = card.querySelector('[data-role="tagtext"]');
+      var schedSection = card.querySelector('[data-role="schedule"]');
+      var daysEl = card.querySelector('[data-role="days"]');
+      var timeLabel = card.querySelector('[data-role="timelabel"]');
+      var timesEl = card.querySelector('[data-role="times"]');
+      var confirmEl = card.querySelector('[data-role="confirm"]');
+      var confirmText = card.querySelector('[data-role="confirmtext"]');
+      var cardState = { day: null, time: null, program: null };
+
+      function resetCardSched() { cardState.day = null; cardState.time = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
+
+      ageSel.addEventListener('input', function() {
+        var v = parseInt(ageSel.value, 10);
+        var p = getProgram(ageSel.value);
+        cardState.program = p;
+        tag.classList.remove('too-young');
+        if (v >= 1 && v < 3) { tagText.textContent = 'Our youngest program (Sprouts) starts at age 3'; tag.classList.add('show', 'too-young'); schedSection.classList.remove('show'); resetCardSched(); }
+        else if (p) { tagText.textContent = LABELS[p]; tag.classList.add('show'); resetCardSched(); buildDayBtns(daysEl, p, onCardDay); schedSection.classList.add('show'); }
+        else { tag.classList.remove('show'); schedSection.classList.remove('show'); resetCardSched(); }
+      });
+      function onCardDay(day) {
+        cardState.day = day; cardState.time = null;
+        setActiveBtn(daysEl, day, 'data-day');
+        timeLabel.style.display = 'block'; timesEl.classList.add('show');
+        confirmEl.classList.remove('show');
+        buildTimeBtns(timesEl, cardState.program, day, onCardTime);
+      }
+      function onCardTime(time) {
+        cardState.time = time;
+        setActiveBtn(timesEl, time, 'data-time');
+        confirmText.textContent = cardState.day + ' at ' + time;
+        confirmEl.classList.add('show');
+      }
+
+      card.querySelector('.person-remove').addEventListener('click', function() {
+        for (var i = 0; i < list.length; i++) { if (list[i].id === id) { list[i].el.remove(); list.splice(i, 1); break; } }
+        updatePersonLabels(list);
+        checkAddLimit(prefix);
+      });
+
+      list.push({ id: id, el: card, sched: cardState });
+      container.appendChild(card);
+      updatePersonLabels(list);
+      checkAddLimit(prefix);
+    }
+
+    function updatePersonLabels(list) {
+      for (var i = 0; i < list.length; i++) {
+        list[i].el.querySelector('.person-card-label').textContent = list.length === 1 ? 'Person' : 'Person ' + (i + 1);
+        var rm = list[i].el.querySelector('.person-remove');
+        list.length > 1 ? rm.classList.add('show') : rm.classList.remove('show');
+      }
+    }
+
+    document.getElementById('otAddBtn').addEventListener('click', function() { addPersonTo('ot'); });
+    document.getElementById('btAddBtn').addEventListener('click', function() { addPersonTo('bt'); });
+
+    // ===== PARENT 2 TOGGLES =====
+    function wireParent2(toggleId, textId, sectionId, phoneId) {
+      var open = false;
+      document.getElementById(toggleId).addEventListener('click', function() {
+        open = !open;
+        document.getElementById(sectionId).classList.toggle('show', open);
+        this.classList.toggle('open', open);
+        document.getElementById(textId).textContent = open ? 'Remove Second Parent / Guardian' : 'Add Second Parent / Guardian';
+        if (!open) { var sec = document.getElementById(sectionId); sec.querySelectorAll('input').forEach(function(inp) { inp.value = ''; }); }
+      });
+      phoneFormat(document.getElementById(phoneId));
+    }
+    wireParent2('otParent2Toggle', 'otParent2Text', 'otParent2Section', 'otP2Phone');
+    wireParent2('btParent2Toggle', 'btParent2Text', 'btParent2Section', 'btP2Phone');
+
+    // ===== VALIDATION HELPERS =====
+    function validateField(id, msg) {
+      var el = document.getElementById(id);
+      if (!el.value.trim()) { el.classList.add('field-error'); showError(msg); el.focus(); return false; }
+      return true;
+    }
+    function validatePersonCards(list) {
+      var data = [], programs = {};
+      for (var i = 0; i < list.length; i++) {
+        var c = list[i].el, sc = list[i].sched;
+        var f = c.querySelector('[data-role="first"]'), l = c.querySelector('[data-role="last"]'), a = c.querySelector('[data-role="age"]');
+        var dob = c.querySelector('[data-role="dob"]'), em = c.querySelector('[data-role="emergency"]');
+        var al = c.querySelector('[data-role="allergies"]'), ex = c.querySelector('[data-role="experience"]');
+        var label = list.length === 1 ? 'this person' : 'Person ' + (i + 1);
+        if (!f.value.trim()) { f.classList.add('field-error'); showError('Please enter ' + label + "'s first name."); f.focus(); return null; }
+        if (!l.value.trim()) { l.classList.add('field-error'); showError('Please enter ' + label + "'s last name."); l.focus(); return null; }
+        var ageVal = parseInt(a.value, 10);
+        if (!a.value || isNaN(ageVal)) { a.classList.add('field-error'); showError('Please enter ' + label + "'s age."); a.focus(); return null; }
+        if (ageVal < 3) { a.classList.add('field-error'); showError('Our youngest program (Sprouts) starts at age 3.'); a.focus(); return null; }
+        if (ageVal > 99) { a.classList.add('field-error'); showError('Please enter a valid age for ' + label + '.'); a.focus(); return null; }
+        if (!dob.value) { dob.classList.add('field-error'); showError('Please enter ' + label + "'s date of birth."); dob.focus(); return null; }
+        if (!em.value.trim()) { em.classList.add('field-error'); showError('Please enter an emergency contact name for ' + label + '.'); em.focus(); return null; }
+        if (!sc.day || !sc.time) { showError('Please pick a day and time for ' + label + '.'); c.querySelector('[data-role="days"]').scrollIntoView({ behavior:'smooth', block:'nearest' }); return null; }
+        var prog = getProgram(a.value);
+        programs[prog] = true;
+        var entry = { first_name: f.value.trim(), last_name: l.value.trim(), age: a.value, program: prog, dob: dob.value, emergency_contact: em.value.trim(), preferred_day: sc.day, preferred_time: sc.time };
+        if (al.value.trim()) entry.allergies = al.value.trim();
+        if (ex.value) entry.experience = ex.value;
+        data.push(entry);
+      }
+      return { data: data, programs: programs };
+    }
+
+    function getParent2Data(prefix) {
+      var sec = document.getElementById(prefix + 'Parent2Section');
+      if (!sec.classList.contains('show')) return null;
+      var f = document.getElementById(prefix + 'P2First'), l = document.getElementById(prefix + 'P2Last');
+      if (!f.value.trim()) { f.classList.add('field-error'); showError("Please enter the second parent's first name."); f.focus(); return false; }
+      if (!l.value.trim()) { l.classList.add('field-error'); showError("Please enter the second parent's last name."); l.focus(); return false; }
+      var d = { first_name: f.value.trim(), last_name: l.value.trim() };
+      var ph = document.getElementById(prefix + 'P2Phone').value.trim();
+      var em = document.getElementById(prefix + 'P2Email').value.trim();
+      if (ph) d.phone = ph;
+      if (em) d.email = em;
+      return d;
+    }
+
+    // ===== SUBMIT =====
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      clearErrors();
+
+      if (!currentMode) { showError('Please select who this signup is for.'); return; }
+      if (!document.getElementById('smsConsent').checked) { showError('Please consent to receiving text messages to continue.'); return; }
+
+      var payload = { sms_consent: true };
+      var allPeople = [];
+      var programs = {};
+
+      // ------ JUST ME ------
+      if (currentMode === 'just-me') {
+        if (!validateField('jmFirst', 'Please enter your first name.')) return;
+        if (!validateField('jmLast', 'Please enter your last name.')) return;
+        var jmAge = document.getElementById('jmAge');
+        var jmAgeVal = parseInt(jmAge.value, 10);
+        if (!jmAge.value || isNaN(jmAgeVal)) { jmAge.classList.add('field-error'); showError('Please enter your age.'); jmAge.focus(); return; }
+        if (jmAgeVal < 3) { jmAge.classList.add('field-error'); showError('Our youngest program (Sprouts) starts at age 3.'); jmAge.focus(); return; }
+        if (jmAgeVal > 99) { jmAge.classList.add('field-error'); showError('Please enter a valid age.'); jmAge.focus(); return; }
+        if (!validPhone(document.getElementById('jmPhone').value)) { document.getElementById('jmPhone').classList.add('field-error'); showError('Please enter a valid phone number.'); return; }
+        if (!validEmail(document.getElementById('jmEmail').value)) { document.getElementById('jmEmail').classList.add('field-error'); showError('Please enter a valid email address.'); return; }
+        var jmDob = document.getElementById('jmDob');
+        if (!jmDob.value) { jmDob.classList.add('field-error'); showError('Please enter your date of birth.'); jmDob.focus(); return; }
+        var jmEm = document.getElementById('jmEmergency');
+        if (!jmEm.value.trim()) { jmEm.classList.add('field-error'); showError('Please enter an emergency contact name.'); jmEm.focus(); return; }
+        if (!jmSched.day || !jmSched.time) { showError('Please pick a day and time for your trial.'); document.getElementById('jmDays').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
+
+        var prog = getProgram(jmAge.value);
+        payload.first_name = document.getElementById('jmFirst').value.trim();
+        payload.last_name = document.getElementById('jmLast').value.trim();
+        payload.phone = document.getElementById('jmPhone').value.trim();
+        payload.email = document.getElementById('jmEmail').value.trim();
+        payload.person_count = 1;
+        payload.person_1_first_name = payload.first_name;
+        payload.person_1_last_name = payload.last_name;
+        payload.person_1_age = jmAge.value;
+        payload.person_1_program = LABELS[prog];
+        payload.person_1_preferred_day = jmSched.day;
+        payload.person_1_preferred_time = jmSched.time;
+        payload.person_1_dob = jmDob.value;
+        payload.person_1_emergency_contact = jmEm.value.trim();
+        var jmAll = document.getElementById('jmAllergies').value.trim();
+        if (jmAll) payload.person_1_allergies = jmAll;
+        var jmExp = document.getElementById('jmExperience').value;
+        if (jmExp) payload.person_1_experience = jmExp;
+        payload.programs_needed = LABELS[prog];
+        programs[prog] = true;
+        allPeople.push({ first_name: payload.first_name, program: prog, day: jmSched.day, time: jmSched.time });
+      }
+
+      // ------ OTHERS ------
+      if (currentMode === 'others') {
+        if (!validateField('otFirst', 'Please enter your first name.')) return;
+        if (!validateField('otLast', 'Please enter your last name.')) return;
+        if (!validPhone(document.getElementById('otPhone').value)) { document.getElementById('otPhone').classList.add('field-error'); showError('Please enter a valid phone number.'); return; }
+        if (!validEmail(document.getElementById('otEmail').value)) { document.getElementById('otEmail').classList.add('field-error'); showError('Please enter a valid email address.'); return; }
+
+        var p2 = getParent2Data('ot');
+        if (p2 === false) return;
+
+        var result = validatePersonCards(otPeople);
+        if (!result) return;
+
+        payload.first_name = document.getElementById('otFirst').value.trim();
+        payload.last_name = document.getElementById('otLast').value.trim();
+        payload.phone = document.getElementById('otPhone').value.trim();
+        payload.email = document.getElementById('otEmail').value.trim();
+        if (p2) { payload.parent_2_first_name = p2.first_name; payload.parent_2_last_name = p2.last_name; if (p2.phone) payload.parent_2_phone = p2.phone; if (p2.email) payload.parent_2_email = p2.email; }
+        payload.person_count = result.data.length;
+        for (var i = 0; i < result.data.length; i++) {
+          var pre = 'person_' + (i+1) + '_', d = result.data[i];
+          payload[pre + 'first_name'] = d.first_name; payload[pre + 'last_name'] = d.last_name;
+          payload[pre + 'age'] = d.age; payload[pre + 'program'] = LABELS[d.program];
+          payload[pre + 'preferred_day'] = d.preferred_day; payload[pre + 'preferred_time'] = d.preferred_time;
+          payload[pre + 'dob'] = d.dob; payload[pre + 'emergency_contact'] = d.emergency_contact;
+          if (d.allergies) payload[pre + 'allergies'] = d.allergies;
+          if (d.experience) payload[pre + 'experience'] = d.experience;
+        }
+        programs = result.programs;
+        payload.programs_needed = Object.keys(programs).map(function(k) { return LABELS[k]; }).join(', ');
+        allPeople = result.data.map(function(d) { return { first_name: d.first_name, program: d.program, day: d.preferred_day, time: d.preferred_time }; });
+      }
+
+      // ------ BOTH ------
+      if (currentMode === 'both') {
+        if (!validateField('btFirst', 'Please enter your first name.')) return;
+        if (!validateField('btLast', 'Please enter your last name.')) return;
+        var btAge = document.getElementById('btAge');
+        var btAgeVal = parseInt(btAge.value, 10);
+        if (!btAge.value || isNaN(btAgeVal)) { btAge.classList.add('field-error'); showError('Please enter your age.'); btAge.focus(); return; }
+        if (btAgeVal < 3) { btAge.classList.add('field-error'); showError('Our youngest program (Sprouts) starts at age 3.'); btAge.focus(); return; }
+        if (btAgeVal > 99) { btAge.classList.add('field-error'); showError('Please enter a valid age.'); btAge.focus(); return; }
+        if (!validPhone(document.getElementById('btPhone').value)) { document.getElementById('btPhone').classList.add('field-error'); showError('Please enter a valid phone number.'); return; }
+        if (!validEmail(document.getElementById('btEmail').value)) { document.getElementById('btEmail').classList.add('field-error'); showError('Please enter a valid email address.'); return; }
+        var btDob = document.getElementById('btDob');
+        if (!btDob.value) { btDob.classList.add('field-error'); showError('Please enter your date of birth.'); btDob.focus(); return; }
+        var btEm = document.getElementById('btEmergency');
+        if (!btEm.value.trim()) { btEm.classList.add('field-error'); showError('Please enter an emergency contact name.'); btEm.focus(); return; }
+        if (!btSched.day || !btSched.time) { showError('Please pick a day and time for your trial.'); document.getElementById('btDays').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
+
+        var p2b = getParent2Data('bt');
+        if (p2b === false) return;
+
+        var resultB = validatePersonCards(btPeople);
+        if (!resultB) return;
+
+        var selfProg = getProgram(btAge.value);
+        programs[selfProg] = true;
+        for (var kk in resultB.programs) programs[kk] = true;
+
+        payload.first_name = document.getElementById('btFirst').value.trim();
+        payload.last_name = document.getElementById('btLast').value.trim();
+        payload.phone = document.getElementById('btPhone').value.trim();
+        payload.email = document.getElementById('btEmail').value.trim();
+        if (p2b) { payload.parent_2_first_name = p2b.first_name; payload.parent_2_last_name = p2b.last_name; if (p2b.phone) payload.parent_2_phone = p2b.phone; if (p2b.email) payload.parent_2_email = p2b.email; }
+
+        // Person 1 = self
+        payload.person_1_first_name = payload.first_name;
+        payload.person_1_last_name = payload.last_name;
+        payload.person_1_age = btAge.value;
+        payload.person_1_program = LABELS[selfProg];
+        payload.person_1_preferred_day = btSched.day;
+        payload.person_1_preferred_time = btSched.time;
+        payload.person_1_dob = btDob.value;
+        payload.person_1_emergency_contact = btEm.value.trim();
+        var btAll = document.getElementById('btAllergies').value.trim();
+        if (btAll) payload.person_1_allergies = btAll;
+        var btExp = document.getElementById('btExperience').value;
+        if (btExp) payload.person_1_experience = btExp;
+        allPeople.push({ first_name: payload.first_name, program: selfProg, day: btSched.day, time: btSched.time });
+
+        // Rest
+        for (var j = 0; j < resultB.data.length; j++) {
+          var pre2 = 'person_' + (j+2) + '_', d2 = resultB.data[j];
+          payload[pre2 + 'first_name'] = d2.first_name; payload[pre2 + 'last_name'] = d2.last_name;
+          payload[pre2 + 'age'] = d2.age; payload[pre2 + 'program'] = LABELS[d2.program];
+          payload[pre2 + 'preferred_day'] = d2.preferred_day; payload[pre2 + 'preferred_time'] = d2.preferred_time;
+          payload[pre2 + 'dob'] = d2.dob; payload[pre2 + 'emergency_contact'] = d2.emergency_contact;
+          if (d2.allergies) payload[pre2 + 'allergies'] = d2.allergies;
+          if (d2.experience) payload[pre2 + 'experience'] = d2.experience;
+          allPeople.push({ first_name: d2.first_name, program: d2.program, day: d2.preferred_day, time: d2.preferred_time });
+        }
+        payload.person_count = 1 + resultB.data.length;
+        payload.programs_needed = Object.keys(programs).map(function(k) { return LABELS[k]; }).join(', ');
+      }
+
+      submitBtn.textContent = 'Submitting\u2026';
+      submitBtn.disabled = true;
+
+      fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
+      .then(function() { showSuccess(allPeople); })
+      .catch(function() { showSuccess(allPeople); });
+    });
+
+    function showSuccess(people) {
+      form.style.display = 'none';
+      successMsg.textContent = people.length === 1
+        ? 'Your free trial has been scheduled. See you there!'
+        : 'All ' + people.length + ' trials have been scheduled. See you there!';
+      bookingSummary.innerHTML = '';
+      for (var i = 0; i < people.length; i++) {
+        var p = people[i];
+        var card = document.createElement('div'); card.className = 'booking-card';
+        card.innerHTML = '<div class="booking-card-name">' + p.first_name + '</div>' +
+          '<div class="booking-card-detail">' + p.day + ' at ' + p.time + '</div>' +
+          '<div class="booking-card-program">' + LABELS[p.program] + '</div>';
+        bookingSummary.appendChild(card);
+      }
+      successArea.classList.add('show');
+      document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+  })();
+  </script>
+</body>
+</html>
