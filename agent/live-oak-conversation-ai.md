@@ -98,7 +98,7 @@ Sunday: Open Mat only, not recommended for first visits.
 ## Business Information
 
 Address: 910 Texas Street, Fairfield, CA 94533
-Phone: (707) 759-6876
+Phone: (707) 755-7247
 Website: liveoakjiujitsuacademy.com
 Instagram: @liveoakjiujitsuacademy
 Parking: Free parking across the street and on the side streets.

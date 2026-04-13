@@ -2,7 +2,7 @@
 
 Business name: Live Oak Jiu Jitsu Academy
 Address: 910 Texas Street, Fairfield, California 94533
-Phone: (707) 759-6876
+Phone: (707) 755-7247
 Website: liveoakjiujitsuacademy.com
 Instagram: @liveoakjiujitsuacademy
 Hours: Monday through Friday 7 a.m. to 9 p.m., Saturday 9 a.m. to 1 p.m., Sunday 10 a.m. to 12 p.m.
