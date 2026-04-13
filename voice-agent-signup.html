@@ -75,13 +75,13 @@
     .container { width: 100%; max-width: 520px; }
 
     /* HERO */
-    .hero { text-align: center; margin-bottom: 1.5rem; padding: 0 0.25rem; }
+    .hero { text-align: center; margin-bottom: 2rem; padding: 0 0.25rem; }
     .hero h1 {
       font-family: var(--font-display);
       font-size: clamp(1.7rem, 5vw, 2.2rem);
       font-weight: 700;
       line-height: 1.15;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.75rem;
     }
     .hero p { font-size: 0.92rem; color: var(--text-muted); line-height: 1.55; }
 
@@ -90,7 +90,7 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: var(--radius-xl);
-      padding: clamp(1.5rem, 5vw, 2.25rem);
+      padding: clamp(1.75rem, 5vw, 2.5rem);
       box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 16px rgba(0,0,0,0.06), 0 12px 40px rgba(0,0,0,0.03);
     }
 
@@ -101,18 +101,18 @@
       text-transform: uppercase;
       letter-spacing: 0.18em;
       color: var(--text-muted);
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.6rem;
       border-bottom: 1px solid var(--border-light);
     }
 
-    .field { margin-bottom: 1.1rem; }
+    .field { margin-bottom: 1.25rem; }
     .field label {
       display: block;
       font-size: 0.78rem;
       font-weight: 500;
       color: var(--text);
-      margin-bottom: 0.4rem;
+      margin-bottom: 0.5rem;
       letter-spacing: 0.02em;
     }
     .field label .optional { font-weight: 300; color: var(--text-faint); font-size: 0.72rem; letter-spacing: 0; }
@@ -144,19 +144,37 @@
     .field input::placeholder { color: var(--text-faint); }
     .field input:focus, .field select:focus { outline: none; border-color: var(--red); box-shadow: 0 0 0 3px var(--red-glow); }
     .field-error { border-color: #ef4444 !important; }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .divider { height: 1px; background: var(--border-light); margin: 1.5rem 0; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .divider { height: 1px; background: var(--border-light); margin: 1.75rem 0; }
+    .section-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: -0.25rem 0 1.25rem;
+    }
+    .dob-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 0.8fr 1fr;
+      gap: 0.65rem;
+    }
+    .dob-grid .field { margin-bottom: 0; }
+    .dob-grid input, .dob-grid select { text-align: left; }
+    .dob-help {
+      font-size: 0.72rem;
+      color: var(--text-faint);
+      margin-top: 0.55rem;
+    }
 
     /* MODE SELECTOR */
-    .mode-selector { margin-bottom: 0.5rem; }
-    .mode-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .mode-selector { margin-bottom: 0.75rem; }
+    .mode-options { display: flex; flex-direction: column; gap: 0.6rem; }
     .mode-option { position: relative; }
     .mode-option input { position: absolute; opacity: 0; pointer-events: none; }
     .mode-option label {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.9rem 1rem;
+      gap: 0.85rem;
+      padding: 1rem 1.1rem;
       border: 2px solid var(--border);
       border-radius: var(--radius-lg);
       cursor: pointer;
@@ -195,10 +213,10 @@
     .program-tag {
       display: none;
       align-items: center;
-      gap: 0.35rem;
-      margin-top: -0.25rem;
-      margin-bottom: 1.1rem;
-      padding: 0.45rem 0.7rem;
+      gap: 0.4rem;
+      margin-top: 0.35rem;
+      margin-bottom: 1.35rem;
+      padding: 0.5rem 0.75rem;
       background: rgba(193, 12, 16, 0.04);
       border: 1px solid rgba(193, 12, 16, 0.12);
       border-radius: var(--radius);
@@ -212,12 +230,13 @@
     .program-tag svg { flex-shrink: 0; }
 
     /* SCHEDULE PICKER */
-    .schedule-section { display: none; animation: slideIn 0.3s var(--smooth); }
+    .schedule-section { display: none; animation: slideIn 0.3s var(--smooth); margin-top: 0.25rem; }
     .schedule-section.show { display: block; }
-    .schedule-prompt { font-size: 0.78rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
-    .day-picker { margin-bottom: 1rem; }
+    .schedule-prompt { font-size: 0.78rem; font-weight: 500; color: var(--text); margin-bottom: 0.6rem; }
+    .schedule-note { font-size: 0.74rem; color: var(--text-muted); margin: -0.2rem 0 1.1rem; line-height: 1.45; }
+    .day-picker { margin-bottom: 1.15rem; }
     .week-nav {
-      display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;
     }
     .week-label { font-size: 0.72rem; font-weight: 400; color: var(--text-muted); }
     .week-arrow {
@@ -228,7 +247,7 @@
     }
     .week-arrow:hover { border-color: #ccc; }
     .week-arrow:disabled { opacity: 0.2; cursor: not-allowed; pointer-events: none; }
-    .week-days { display: flex; gap: 0.4rem; }
+    .week-days { display: flex; gap: 0.5rem; }
     .day-btn {
       flex: 1; min-width: 0; padding: 0.6rem 0.2rem;
       border: 1.5px solid var(--border); border-radius: var(--radius); background: #fff;
@@ -241,7 +260,7 @@
     .day-btn.active .day-btn-date { opacity: 1; }
     .day-btn:hover { border-color: #ccc; }
     .day-btn.active { border-color: var(--red); background: var(--red); color: #fff; font-weight: 500; }
-    .time-picker { display: none; flex-wrap: wrap; gap: 0.4rem; }
+    .time-picker { display: none; flex-wrap: wrap; gap: 0.5rem; }
     .time-picker.show { display: flex; animation: slideIn 0.2s var(--smooth); }
     .time-btn {
       padding: 0.6rem 1rem; border: 1.5px solid var(--border); border-radius: var(--radius);
@@ -252,8 +271,8 @@
     .time-btn:hover { border-color: #ccc; }
     .time-btn.active { border-color: var(--red); background: rgba(193, 12, 16, 0.06); color: var(--red); font-weight: 500; }
     .schedule-confirm {
-      display: none; align-items: center; gap: 0.35rem; margin-top: 0.75rem;
-      padding: 0.5rem 0.75rem; background: rgba(74, 124, 89, 0.06); border: 1px solid rgba(74, 124, 89, 0.15);
+      display: none; align-items: center; gap: 0.4rem; margin-top: 1rem;
+      padding: 0.55rem 0.8rem; background: rgba(74, 124, 89, 0.06); border: 1px solid rgba(74, 124, 89, 0.15);
       border-radius: var(--radius); font-size: 0.78rem; font-weight: 400; color: #3d6b4a;
     }
     .schedule-confirm.show { display: inline-flex; }
@@ -264,11 +283,11 @@
       background: #fafaf8;
       border: 1.5px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 1.1rem;
-      margin-bottom: 0.75rem;
+      padding: 1.35rem;
+      margin-bottom: 1.1rem;
       animation: slideIn 0.25s var(--smooth);
     }
-    .person-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
+    .person-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.15rem; }
     .person-card-label { font-size: 0.75rem; font-weight: 500; color: var(--text-dim); }
     .person-remove {
       display: none;
@@ -287,16 +306,17 @@
     }
     .person-remove:hover { color: #dc2626; background: #fef2f2; }
     .person-remove.show { display: inline-flex; }
-    .person-card .field { margin-bottom: 0.9rem; }
+    .person-card .field { margin-bottom: 1.15rem; }
     .person-card .field:last-child { margin-bottom: 0; }
 
     .add-btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.35rem;
+      gap: 0.4rem;
       width: 100%;
-      padding: 0.8rem;
+      padding: 0.9rem;
+      margin-top: 0.15rem;
       border: 2px dashed #d8d6d2;
       border-radius: var(--radius-lg);
       background: none;
@@ -314,7 +334,7 @@
     .expand-btn {
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.4rem;
       font-size: 0.8rem;
       font-weight: 400;
       color: var(--red);
@@ -325,6 +345,7 @@
       padding: 0;
       transition: color var(--fast);
       -webkit-tap-highlight-color: transparent;
+      margin-top: 0.25rem;
       margin-bottom: 0.25rem;
     }
     .expand-btn:hover { color: var(--red-dark); }
@@ -334,7 +355,7 @@
     .expandable.show { display: block; }
 
     /* CONSENT */
-    .consent { margin: 1.5rem 0 1.25rem; }
+    .consent { margin: 1.75rem 0 1.5rem; }
     .consent-label {
       display: flex;
       align-items: flex-start;
@@ -390,49 +411,56 @@
     .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
     /* ERROR */
-    .form-error { display: none; padding: 0.7rem 0.9rem; background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); color: #991b1b; font-size: 0.8rem; margin-bottom: 1.1rem; line-height: 1.45; }
+    .form-error { display: none; padding: 0.75rem 1rem; background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); color: #991b1b; font-size: 0.8rem; margin-bottom: 1.25rem; line-height: 1.45; }
     .form-error.show { display: block; }
 
     /* SUCCESS */
-    .success { display: none; text-align: center; padding: 1.5rem 0.5rem; }
+    .success { display: none; text-align: center; padding: 1.75rem 0.5rem; }
     .success.show { display: block; animation: slideIn 0.4s var(--smooth); }
-    .success-check { width: 56px; height: 56px; background: rgba(74, 124, 89, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.1rem; }
+    .success-check { width: 56px; height: 56px; background: rgba(74, 124, 89, 0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.25rem; }
     .success-check svg { stroke: #4a7c59; }
-    .success h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .success > p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; font-weight: 300; margin-bottom: 0.25rem; }
+    .success h2 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; margin-bottom: 0.6rem; }
+    .success > p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; font-weight: 300; margin-bottom: 0.35rem; }
 
-    .booking-summary { margin-top: 1.25rem; text-align: left; }
+    .booking-summary { margin-top: 1.5rem; text-align: left; }
     .booking-card {
       background: #fafaf8; border: 1.5px solid var(--border); border-radius: var(--radius-lg);
-      padding: 1rem 1.1rem; margin-bottom: 0.6rem;
+      padding: 1.1rem 1.2rem; margin-bottom: 0.7rem;
     }
-    .booking-card-name { font-weight: 500; font-size: 0.88rem; color: var(--text); margin-bottom: 0.15rem; }
+    .booking-card-name { font-weight: 500; font-size: 0.88rem; color: var(--text); margin-bottom: 0.2rem; }
     .booking-card-detail { font-size: 0.82rem; color: var(--text-dim); font-weight: 300; line-height: 1.45; }
-    .booking-card-program { font-size: 0.72rem; color: var(--red-dark); font-weight: 400; margin-top: 0.2rem; }
+    .booking-card-program { font-size: 0.72rem; color: var(--red-dark); font-weight: 400; margin-top: 0.3rem; }
 
     .arrival-box {
-      margin-top: 1rem; padding: 1.1rem; text-align: left;
+      margin-top: 1.25rem; padding: 1.25rem; text-align: left;
       background: rgba(193, 12, 16, 0.03); border: 1.5px solid rgba(193, 12, 16, 0.12);
       border-radius: var(--radius-lg);
     }
     .arrival-box-title {
       font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.15em;
-      color: var(--red); margin-bottom: 0.5rem;
+      color: var(--red); margin-bottom: 0.6rem;
     }
-    .arrival-box p { font-size: 0.82rem; color: var(--text-dim); font-weight: 300; line-height: 1.55; margin-bottom: 0.4rem; }
+    .arrival-box p { font-size: 0.82rem; color: var(--text-dim); font-weight: 300; line-height: 1.55; margin-bottom: 0.5rem; }
     .arrival-box p:last-child { margin-bottom: 0; }
 
     /* FOOTER */
-    .footer { text-align: center; padding: 1.25rem 1rem; font-size: 0.72rem; color: var(--text-faint); font-weight: 300; line-height: 1.5; }
+    .footer { text-align: center; padding: 1.5rem 1rem; font-size: 0.72rem; color: var(--text-faint); font-weight: 300; line-height: 1.6; }
     .footer a { color: var(--text-muted); transition: color var(--fast); }
     .footer a:hover { color: var(--red); }
 
     /* RESPONSIVE */
     @media (max-width: 480px) {
       .main { padding: 1.25rem 0.75rem 3rem; }
-      .card { padding: 1.25rem; }
-      .row { grid-template-columns: 1fr; gap: 0; }
-      .person-card { padding: 0.9rem; }
+      .card { padding: 1.35rem; }
+      .row { grid-template-columns: 1fr; gap: 0.25rem; }
+      .dob-grid { grid-template-columns: 1fr 0.9fr 1fr; }
+      .section-note { margin: -0.15rem 0 1.1rem; }
+      .person-card { padding: 1.15rem; margin-bottom: 1rem; }
+      .person-card-header { margin-bottom: 1rem; }
+      .person-card .field { margin-bottom: 1.05rem; }
+      .program-tag { margin-top: 0.25rem; margin-bottom: 1.1rem; }
+      .schedule-section { margin-top: 0.15rem; }
+      .schedule-note { margin: -0.15rem 0 0.95rem; }
       .header-name { font-size: 0.95rem; }
     }
   </style>
@@ -450,7 +478,7 @@
     <div class="container">
       <div class="hero">
         <h1>Sign Up for Your Free Trial</h1>
-        <p>Fill out the form below and we'll get you booked for a free three-day trial. No commitment, no charge.</p>
+        <p>Fill out the form below and we'll get you booked for a free trial class. No commitment, no charge.</p>
       </div>
 
       <div class="card">
@@ -508,12 +536,44 @@
               </div>
             </div>
             <div class="field">
-              <label for="jmAge">Age</label>
-              <input type="number" id="jmAge" min="3" max="99" placeholder="Enter age" inputmode="numeric">
+              <label for="jmDobMonth">Date of Birth <span class="optional">(used to show the right class times)</span></label>
+              <div class="dob-grid">
+                <select id="jmDobMonth" aria-label="Birth month">
+                  <option value="" selected>Month</option>
+                  <option value="1">Jan</option>
+                  <option value="2">Feb</option>
+                  <option value="3">Mar</option>
+                  <option value="4">Apr</option>
+                  <option value="5">May</option>
+                  <option value="6">Jun</option>
+                  <option value="7">Jul</option>
+                  <option value="8">Aug</option>
+                  <option value="9">Sep</option>
+                  <option value="10">Oct</option>
+                  <option value="11">Nov</option>
+                  <option value="12">Dec</option>
+                </select>
+                <input type="text" id="jmDobDay" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Day" aria-label="Birth day">
+                <input type="text" id="jmDobYear" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Year" aria-label="Birth year">
+              </div>
+              <div class="dob-help">Month / day / year</div>
             </div>
             <div class="program-tag" id="jmTag">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               <span id="jmTagText"></span>
+            </div>
+            <div class="schedule-section" id="jmSchedule">
+              <div class="divider"></div>
+              <div class="section-label">Pick Your Class Time</div>
+              <div class="schedule-note">Your available class times are based on your date of birth.</div>
+              <div class="schedule-prompt">What day works best?</div>
+              <div class="day-picker" id="jmDays"></div>
+              <div class="schedule-prompt" id="jmTimeLabel" style="display:none">What time?</div>
+              <div class="time-picker" id="jmTimes"></div>
+              <div class="schedule-confirm" id="jmConfirm">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="jmConfirmText"></span>
+              </div>
             </div>
             <div class="field">
               <label for="jmPhone">Phone Number</label>
@@ -524,11 +584,7 @@
               <input type="email" id="jmEmail" placeholder="you@example.com" autocomplete="email">
             </div>
             <div class="field">
-              <label for="jmDob">Date of Birth</label>
-              <input type="date" id="jmDob">
-            </div>
-            <div class="field">
-              <label for="jmEmergency">Emergency Contact Name</label>
+              <label for="jmEmergency">Emergency Contact Name <span class="optional">(optional)</span></label>
               <input type="text" id="jmEmergency" placeholder="Full name">
             </div>
             <div class="field">
@@ -544,18 +600,6 @@
                 <option value="1-3 years">1–3 years</option>
                 <option value="3+ years">3+ years</option>
               </select>
-            </div>
-            <div class="schedule-section" id="jmSchedule">
-              <div class="divider"></div>
-              <div class="section-label">Pick Your Class Time</div>
-              <div class="schedule-prompt">What day works best?</div>
-              <div class="day-picker" id="jmDays"></div>
-              <div class="schedule-prompt" id="jmTimeLabel" style="display:none">What time?</div>
-              <div class="time-picker" id="jmTimes"></div>
-              <div class="schedule-confirm" id="jmConfirm">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span id="jmConfirmText"></span>
-              </div>
             </div>
           </div>
 
@@ -612,6 +656,7 @@
 
             <div class="divider"></div>
             <div class="section-label">Who's Training?</div>
+            <div class="section-note">Each person picks their own class time after you enter their birthdate.</div>
             <div id="otPersonList"></div>
             <button type="button" class="add-btn" id="otAddBtn">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -634,12 +679,44 @@
               </div>
             </div>
             <div class="field">
-              <label for="btAge">Your Age</label>
-              <input type="number" id="btAge" min="3" max="99" placeholder="Enter age" inputmode="numeric">
+              <label for="btDobMonth">Date of Birth <span class="optional">(used to show the right class times)</span></label>
+              <div class="dob-grid">
+                <select id="btDobMonth" aria-label="Birth month">
+                  <option value="" selected>Month</option>
+                  <option value="1">Jan</option>
+                  <option value="2">Feb</option>
+                  <option value="3">Mar</option>
+                  <option value="4">Apr</option>
+                  <option value="5">May</option>
+                  <option value="6">Jun</option>
+                  <option value="7">Jul</option>
+                  <option value="8">Aug</option>
+                  <option value="9">Sep</option>
+                  <option value="10">Oct</option>
+                  <option value="11">Nov</option>
+                  <option value="12">Dec</option>
+                </select>
+                <input type="text" id="btDobDay" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Day" aria-label="Birth day">
+                <input type="text" id="btDobYear" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Year" aria-label="Birth year">
+              </div>
+              <div class="dob-help">Month / day / year</div>
             </div>
             <div class="program-tag" id="btTag">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
               <span id="btTagText"></span>
+            </div>
+            <div class="schedule-section" id="btSchedule">
+              <div class="divider"></div>
+              <div class="section-label">Pick Your Class Time</div>
+              <div class="schedule-note">Your available class times are based on your date of birth.</div>
+              <div class="schedule-prompt">What day works best?</div>
+              <div class="day-picker" id="btDays"></div>
+              <div class="schedule-prompt" id="btTimeLabel" style="display:none">What time?</div>
+              <div class="time-picker" id="btTimes"></div>
+              <div class="schedule-confirm" id="btConfirm">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="btConfirmText"></span>
+              </div>
             </div>
             <div class="field">
               <label for="btPhone">Phone Number</label>
@@ -650,11 +727,7 @@
               <input type="email" id="btEmail" placeholder="you@example.com" autocomplete="email">
             </div>
             <div class="field">
-              <label for="btDob">Date of Birth</label>
-              <input type="date" id="btDob">
-            </div>
-            <div class="field">
-              <label for="btEmergency">Emergency Contact Name</label>
+              <label for="btEmergency">Emergency Contact Name <span class="optional">(optional)</span></label>
               <input type="text" id="btEmergency" placeholder="Full name">
             </div>
             <div class="field">
@@ -671,19 +744,6 @@
                 <option value="3+ years">3+ years</option>
               </select>
             </div>
-            <div class="schedule-section" id="btSchedule">
-              <div class="divider"></div>
-              <div class="section-label">Pick Your Class Time</div>
-              <div class="schedule-prompt">What day works best?</div>
-              <div class="day-picker" id="btDays"></div>
-              <div class="schedule-prompt" id="btTimeLabel" style="display:none">What time?</div>
-              <div class="time-picker" id="btTimes"></div>
-              <div class="schedule-confirm" id="btConfirm">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-                <span id="btConfirmText"></span>
-              </div>
-            </div>
-
             <button type="button" class="expand-btn" id="btParent2Toggle">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               <span id="btParent2Text">Add Second Parent / Guardian</span>
@@ -714,6 +774,7 @@
 
             <div class="divider"></div>
             <div class="section-label">Who Else Is Training?</div>
+            <div class="section-note">Each additional person picks their own class time after you enter their birthdate.</div>
             <div id="btPersonList"></div>
             <button type="button" class="add-btn" id="btAddBtn">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -781,6 +842,53 @@
 
     // Helpers
     function getProgram(age) { var a = parseInt(age, 10); if (a >= 3 && a <= 5) return 'sprouts'; if (a >= 6 && a <= 12) return 'youth'; if (a >= 13) return 'adult'; return null; }
+    function getAgeFromDob(dobValue) {
+      if (!dobValue) return null;
+      var dob = new Date(dobValue + 'T00:00:00');
+      if (isNaN(dob.getTime())) return null;
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+      if (dob > today) return null;
+      var age = today.getFullYear() - dob.getFullYear();
+      var monthDiff = today.getMonth() - dob.getMonth();
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) age--;
+      return age;
+    }
+    function getProgramFromDob(dobValue) {
+      var age = getAgeFromDob(dobValue);
+      return age === null ? null : getProgram(age);
+    }
+    function getProgramLabelFromDob(dobValue) {
+      var program = getProgramFromDob(dobValue);
+      return program ? LABELS[program] : '';
+    }
+    function fullName(first, last) {
+      return [first, last].filter(Boolean).join(' ').trim();
+    }
+    function getDobFieldState(parts) {
+      var month = parts.month.value.trim();
+      var day = parts.day.value.trim();
+      var year = parts.year.value.trim();
+      if (!month && !day && !year) return { complete: false, valid: false, value: '', empty: true };
+      if (!month || !day || !year) return { complete: false, valid: false, value: '', empty: false };
+      if (!/^\d{1,2}$/.test(day) || !/^\d{4}$/.test(year) || !/^\d{1,2}$/.test(month)) return { complete: true, valid: false, value: '', empty: false };
+      var m = parseInt(month, 10), d = parseInt(day, 10), y = parseInt(year, 10);
+      var currentYear = new Date().getFullYear();
+      if (m < 1 || m > 12 || d < 1 || d > 31 || y < 1900 || y > currentYear) return { complete: true, valid: false, value: '', empty: false };
+      var dob = new Date(y, m - 1, d);
+      if (dob.getFullYear() !== y || dob.getMonth() !== m - 1 || dob.getDate() !== d) return { complete: true, valid: false, value: '', empty: false };
+      return { complete: true, valid: true, value: y + '-' + pad2(m) + '-' + pad2(d), empty: false };
+    }
+    function bindDobInputs(parts, handler) {
+      ['month', 'day', 'year'].forEach(function(key) {
+        parts[key].addEventListener(key === 'month' ? 'change' : 'input', handler);
+      });
+    }
+    function setDobFieldError(parts, hasError) {
+      ['month', 'day', 'year'].forEach(function(key) {
+        parts[key].classList.toggle('field-error', hasError);
+      });
+    }
     function formatPhone(v) { var d = v.replace(/\D/g, ''); if (!d) return ''; if (d.length <= 3) return '(' + d; if (d.length <= 6) return '(' + d.slice(0,3) + ') ' + d.slice(3); return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6,10); }
     function phoneFormat(el) { el.addEventListener('input', function(e) { var p = e.target.selectionStart, ol = e.target.value.length; e.target.value = formatPhone(e.target.value); e.target.setSelectionRange(p + e.target.value.length - ol, p + e.target.value.length - ol); }); }
     function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
@@ -875,9 +983,34 @@
       for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i].getAttribute(attr) === val);
     }
 
+    function syncProgramUI(dobState, tag, txt, section, reset, buildDays, state) {
+      var age = dobState.valid ? getAgeFromDob(dobState.value) : null;
+      var program = age === null ? null : getProgram(age);
+      state.program = program;
+      reset();
+      tag.classList.remove('too-young');
+      if (!dobState.complete || !dobState.valid) {
+        tag.classList.remove('show');
+        section.classList.remove('show');
+        return;
+      }
+      if (age < 3) {
+        txt.textContent = 'Our youngest program (Sprouts) starts at age 3';
+        tag.classList.add('show', 'too-young');
+        section.classList.remove('show');
+        return;
+      }
+      txt.textContent = LABELS[program];
+      tag.classList.add('show');
+      buildDays(program);
+      section.classList.add('show');
+    }
+
     // Wire a static schedule section (for "Just Me" / "Both" self)
-    function wireSchedule(ageSelId, scheduleId, daysId, timeLabelId, timesId, confirmId, confirmTextId) {
-      var ageSel = document.getElementById(ageSelId);
+    function wireSchedule(dobIds, tagId, textId, scheduleId, daysId, timeLabelId, timesId, confirmId, confirmTextId) {
+      var dobParts = { month: document.getElementById(dobIds.month), day: document.getElementById(dobIds.day), year: document.getElementById(dobIds.year) };
+      var tag = document.getElementById(tagId);
+      var txt = document.getElementById(textId);
       var section = document.getElementById(scheduleId);
       var daysEl = document.getElementById(daysId);
       var timeLabel = document.getElementById(timeLabelId);
@@ -888,12 +1021,10 @@
 
       function reset() { state.day = null; state.date = null; state.dateShort = null; state.time = null; state.appointmentDatetime = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
 
-      ageSel.addEventListener('input', function() {
-        var p = getProgram(ageSel.value);
-        state.program = p;
-        reset();
-        if (p) { buildDayBtns(daysEl, p, onDay); section.classList.add('show'); }
-        else { section.classList.remove('show'); }
+      bindDobInputs(dobParts, function() {
+        syncProgramUI(getDobFieldState(dobParts), tag, txt, section, reset, function(program) {
+          buildDayBtns(daysEl, program, onDay);
+        }, state);
       });
 
       function onDay(day, dateISO, dateShort) {
@@ -915,21 +1046,8 @@
       return state;
     }
 
-    var jmSched = wireSchedule('jmAge', 'jmSchedule', 'jmDays', 'jmTimeLabel', 'jmTimes', 'jmConfirm', 'jmConfirmText');
-    var btSched = wireSchedule('btAge', 'btSchedule', 'btDays', 'btTimeLabel', 'btTimes', 'btConfirm', 'btConfirmText');
-
-    // Age → tag wiring
-    function wireAgeTag(selId, tagId, textId) {
-      var sel = document.getElementById(selId), tag = document.getElementById(tagId), txt = document.getElementById(textId);
-      sel.addEventListener('input', function() {
-        var v = parseInt(sel.value, 10);
-        tag.classList.remove('too-young');
-        if (v >= 1 && v < 3) { txt.textContent = 'Our youngest program (Sprouts) starts at age 3'; tag.classList.add('show', 'too-young'); }
-        else { var p = getProgram(sel.value); if (p) { txt.textContent = LABELS[p]; tag.classList.add('show'); } else { tag.classList.remove('show'); } }
-      });
-    }
-    wireAgeTag('jmAge', 'jmTag', 'jmTagText');
-    wireAgeTag('btAge', 'btTag', 'btTagText');
+    var jmSched = wireSchedule({ month: 'jmDobMonth', day: 'jmDobDay', year: 'jmDobYear' }, 'jmTag', 'jmTagText', 'jmSchedule', 'jmDays', 'jmTimeLabel', 'jmTimes', 'jmConfirm', 'jmConfirmText');
+    var btSched = wireSchedule({ month: 'btDobMonth', day: 'btDobDay', year: 'btDobYear' }, 'btTag', 'btTagText', 'btSchedule', 'btDays', 'btTimeLabel', 'btTimes', 'btConfirm', 'btConfirmText');
 
     // ===== MODE SWITCHING =====
     var panels = { 'just-me': document.getElementById('panelJustMe'), 'others': document.getElementById('panelOthers'), 'both': document.getElementById('panelBoth') };
@@ -977,15 +1095,14 @@
         '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Remove</button></div>' +
         '<div class="row"><div class="field"><label>First Name</label><input type="text" data-role="first" placeholder="First name"></div>' +
         '<div class="field"><label>Last Name</label><input type="text" data-role="last" placeholder="Last name"></div></div>' +
-        '<div class="field"><label>Age</label><input type="number" data-role="age" min="3" max="99" placeholder="Enter age" inputmode="numeric"></div>' +
+        '<div class="field"><label>Date of Birth <span class="optional">(used to show the right class times)</span></label><div class="dob-grid"><select data-role="dob-month" aria-label="Birth month"><option value="" selected>Month</option><option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option><option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option><option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option></select><input type="text" data-role="dob-day" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Day" aria-label="Birth day"><input type="text" data-role="dob-year" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Year" aria-label="Birth year"></div><div class="dob-help">Month / day / year</div></div>' +
         '<div class="program-tag" data-role="tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span data-role="tagtext"></span></div>' +
-        '<div class="field"><label>Date of Birth</label><input type="date" data-role="dob"></div>' +
-        '<div class="field"><label>Emergency Contact Name</label><input type="text" data-role="emergency" placeholder="Full name"></div>' +
+        '<div class="schedule-section" data-role="schedule"><div class="divider"></div><div class="section-label">Pick Class Time</div><div class="schedule-note">This person picks their own class time based on their birthdate.</div><div class="schedule-prompt">What day works best?</div><div class="day-picker" data-role="days"></div><div class="schedule-prompt" data-role="timelabel" style="display:none">What time?</div><div class="time-picker" data-role="times"></div><div class="schedule-confirm" data-role="confirm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-role="confirmtext"></span></div></div>' +
+        '<div class="field"><label>Emergency Contact Name <span class="optional">(optional)</span></label><input type="text" data-role="emergency" placeholder="Full name"></div>' +
         '<div class="field"><label>Allergies / Medical Notes <span class="optional">(optional)</span></label><input type="text" data-role="allergies" placeholder="Any allergies or conditions"></div>' +
-        '<div class="field"><label>Prior Martial Arts Experience <span class="optional">(optional)</span></label><select data-role="experience"><option value="" selected>Select experience level</option><option value="None">None</option><option value="Less than 1 year">Less than 1 year</option><option value="1-3 years">1\u20133 years</option><option value="3+ years">3+ years</option></select></div>' +
-        '<div class="schedule-section" data-role="schedule"><div class="divider"></div><div class="schedule-prompt">What day works best?</div><div class="day-picker" data-role="days"></div><div class="schedule-prompt" data-role="timelabel" style="display:none">What time?</div><div class="time-picker" data-role="times"></div><div class="schedule-confirm" data-role="confirm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-role="confirmtext"></span></div></div>';
+        '<div class="field"><label>Prior Martial Arts Experience <span class="optional">(optional)</span></label><select data-role="experience"><option value="" selected>Select experience level</option><option value="None">None</option><option value="Less than 1 year">Less than 1 year</option><option value="1-3 years">1\u20133 years</option><option value="3+ years">3+ years</option></select></div>';
 
-      var ageSel = card.querySelector('[data-role="age"]');
+      var dobParts = { month: card.querySelector('[data-role="dob-month"]'), day: card.querySelector('[data-role="dob-day"]'), year: card.querySelector('[data-role="dob-year"]') };
       var tag = card.querySelector('[data-role="tag"]');
       var tagText = card.querySelector('[data-role="tagtext"]');
       var schedSection = card.querySelector('[data-role="schedule"]');
@@ -998,14 +1115,10 @@
 
       function resetCardSched() { cardState.day = null; cardState.date = null; cardState.dateShort = null; cardState.time = null; cardState.appointmentDatetime = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
 
-      ageSel.addEventListener('input', function() {
-        var v = parseInt(ageSel.value, 10);
-        var p = getProgram(ageSel.value);
-        cardState.program = p;
-        tag.classList.remove('too-young');
-        if (v >= 1 && v < 3) { tagText.textContent = 'Our youngest program (Sprouts) starts at age 3'; tag.classList.add('show', 'too-young'); schedSection.classList.remove('show'); resetCardSched(); }
-        else if (p) { tagText.textContent = LABELS[p]; tag.classList.add('show'); resetCardSched(); buildDayBtns(daysEl, p, onCardDay); schedSection.classList.add('show'); }
-        else { tag.classList.remove('show'); schedSection.classList.remove('show'); resetCardSched(); }
+      bindDobInputs(dobParts, function() {
+        syncProgramUI(getDobFieldState(dobParts), tag, tagText, schedSection, resetCardSched, function(program) {
+          buildDayBtns(daysEl, program, onCardDay);
+        }, cardState);
       });
       function onCardDay(day, dateISO, dateShort) {
         cardState.day = day; cardState.date = dateISO; cardState.dateShort = dateShort; cardState.time = null; cardState.appointmentDatetime = null;
@@ -1066,26 +1179,26 @@
       if (!el.value.trim()) { el.classList.add('field-error'); showError(msg); el.focus(); return false; }
       return true;
     }
-    function validatePersonCards(list) {
+    function validatePersonCards(list, defaultEmergencyName) {
       var data = [], programs = {};
       for (var i = 0; i < list.length; i++) {
         var c = list[i].el, sc = list[i].sched;
-        var f = c.querySelector('[data-role="first"]'), l = c.querySelector('[data-role="last"]'), a = c.querySelector('[data-role="age"]');
-        var dob = c.querySelector('[data-role="dob"]'), em = c.querySelector('[data-role="emergency"]');
+        var f = c.querySelector('[data-role="first"]'), l = c.querySelector('[data-role="last"]');
+        var dobParts = { month: c.querySelector('[data-role="dob-month"]'), day: c.querySelector('[data-role="dob-day"]'), year: c.querySelector('[data-role="dob-year"]') }, em = c.querySelector('[data-role="emergency"]');
         var al = c.querySelector('[data-role="allergies"]'), ex = c.querySelector('[data-role="experience"]');
         var label = list.length === 1 ? 'this person' : 'Person ' + (i + 1);
         if (!f.value.trim()) { f.classList.add('field-error'); showError('Please enter ' + label + "'s first name."); f.focus(); return null; }
         if (!l.value.trim()) { l.classList.add('field-error'); showError('Please enter ' + label + "'s last name."); l.focus(); return null; }
-        var ageVal = parseInt(a.value, 10);
-        if (!a.value || isNaN(ageVal)) { a.classList.add('field-error'); showError('Please enter ' + label + "'s age."); a.focus(); return null; }
-        if (ageVal < 3) { a.classList.add('field-error'); showError('Our youngest program (Sprouts) starts at age 3.'); a.focus(); return null; }
-        if (ageVal > 99) { a.classList.add('field-error'); showError('Please enter a valid age for ' + label + '.'); a.focus(); return null; }
-        if (!dob.value) { dob.classList.add('field-error'); showError('Please enter ' + label + "'s date of birth."); dob.focus(); return null; }
-        if (!em.value.trim()) { em.classList.add('field-error'); showError('Please enter an emergency contact name for ' + label + '.'); em.focus(); return null; }
+        var dobState = getDobFieldState(dobParts);
+        if (!dobState.complete) { setDobFieldError(dobParts, true); showError('Please enter ' + label + "'s date of birth."); dobParts.month.focus(); return null; }
+        if (!dobState.valid) { setDobFieldError(dobParts, true); showError('Please enter a valid date of birth for ' + label + '.'); dobParts.month.focus(); return null; }
+        var ageVal = getAgeFromDob(dobState.value);
+        if (ageVal < 3) { setDobFieldError(dobParts, true); showError('Our youngest program (Sprouts) starts at age 3.'); dobParts.month.focus(); return null; }
         if (!sc.day || !sc.time) { showError('Please pick a day and time for ' + label + '.'); c.querySelector('[data-role="days"]').scrollIntoView({ behavior:'smooth', block:'nearest' }); return null; }
-        var prog = getProgram(a.value);
+        var prog = getProgram(ageVal);
         programs[prog] = true;
-        var entry = { first_name: f.value.trim(), last_name: l.value.trim(), age: a.value, program: prog, dob: dob.value, emergency_contact: em.value.trim(), preferred_day: sc.day, preferred_time: sc.time, appointment_datetime: sc.appointmentDatetime, dateShort: sc.dateShort };
+        var emergencyContact = em.value.trim() || defaultEmergencyName;
+        var entry = { first_name: f.value.trim(), last_name: l.value.trim(), age: ageVal, program: prog, dob: dobState.value, emergency_contact: emergencyContact, preferred_day: sc.day, preferred_time: sc.time, appointment_datetime: sc.appointmentDatetime, dateShort: sc.dateShort };
         if (al.value.trim()) entry.allergies = al.value.trim();
         if (ex.value) entry.experience = ex.value;
         data.push(entry);
@@ -1123,20 +1236,18 @@
       if (currentMode === 'just-me') {
         if (!validateField('jmFirst', 'Please enter your first name.')) return;
         if (!validateField('jmLast', 'Please enter your last name.')) return;
-        var jmAge = document.getElementById('jmAge');
-        var jmAgeVal = parseInt(jmAge.value, 10);
-        if (!jmAge.value || isNaN(jmAgeVal)) { jmAge.classList.add('field-error'); showError('Please enter your age.'); jmAge.focus(); return; }
-        if (jmAgeVal < 3) { jmAge.classList.add('field-error'); showError('Our youngest program (Sprouts) starts at age 3.'); jmAge.focus(); return; }
-        if (jmAgeVal > 99) { jmAge.classList.add('field-error'); showError('Please enter a valid age.'); jmAge.focus(); return; }
         if (!validPhone(document.getElementById('jmPhone').value)) { document.getElementById('jmPhone').classList.add('field-error'); showError('Please enter a valid phone number.'); return; }
         if (!validEmail(document.getElementById('jmEmail').value)) { document.getElementById('jmEmail').classList.add('field-error'); showError('Please enter a valid email address.'); return; }
-        var jmDob = document.getElementById('jmDob');
-        if (!jmDob.value) { jmDob.classList.add('field-error'); showError('Please enter your date of birth.'); jmDob.focus(); return; }
+        var jmDobParts = { month: document.getElementById('jmDobMonth'), day: document.getElementById('jmDobDay'), year: document.getElementById('jmDobYear') };
+        var jmDobState = getDobFieldState(jmDobParts);
+        if (!jmDobState.complete) { setDobFieldError(jmDobParts, true); showError('Please enter your date of birth.'); jmDobParts.month.focus(); return; }
+        if (!jmDobState.valid) { setDobFieldError(jmDobParts, true); showError('Please enter a valid date of birth.'); jmDobParts.month.focus(); return; }
+        var jmAgeVal = getAgeFromDob(jmDobState.value);
+        if (jmAgeVal < 3) { setDobFieldError(jmDobParts, true); showError('Our youngest program (Sprouts) starts at age 3.'); jmDobParts.month.focus(); return; }
         var jmEm = document.getElementById('jmEmergency');
-        if (!jmEm.value.trim()) { jmEm.classList.add('field-error'); showError('Please enter an emergency contact name.'); jmEm.focus(); return; }
         if (!jmSched.day || !jmSched.time) { showError('Please pick a day and time for your trial.'); document.getElementById('jmDays').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
 
-        var prog = getProgram(jmAge.value);
+        var prog = getProgram(jmAgeVal);
         payload.first_name = document.getElementById('jmFirst').value.trim();
         payload.last_name = document.getElementById('jmLast').value.trim();
         payload.phone = toE164US(document.getElementById('jmPhone').value);
@@ -1144,11 +1255,11 @@
         payload.person_count = 1;
         payload.person_1_first_name = payload.first_name;
         payload.person_1_last_name = payload.last_name;
-        payload.person_1_age = jmAge.value;
+        payload.person_1_age = jmAgeVal;
         payload.person_1_program = LABELS[prog];
         payload.person_1_appointment_datetime = jmSched.appointmentDatetime;
-        payload.person_1_dob = jmDob.value;
-        payload.person_1_emergency_contact = jmEm.value.trim();
+        payload.person_1_dob = jmDobState.value;
+        if (jmEm.value.trim()) payload.person_1_emergency_contact = jmEm.value.trim();
         var jmAll = document.getElementById('jmAllergies').value.trim();
         if (jmAll) payload.person_1_allergies = jmAll;
         var jmExp = document.getElementById('jmExperience').value;
@@ -1168,7 +1279,7 @@
         var p2 = getParent2Data('ot');
         if (p2 === false) return;
 
-        var result = validatePersonCards(otPeople);
+        var result = validatePersonCards(otPeople, fullName(document.getElementById('otFirst').value.trim(), document.getElementById('otLast').value.trim()));
         if (!result) return;
 
         payload.first_name = document.getElementById('otFirst').value.trim();
@@ -1195,26 +1306,24 @@
       if (currentMode === 'both') {
         if (!validateField('btFirst', 'Please enter your first name.')) return;
         if (!validateField('btLast', 'Please enter your last name.')) return;
-        var btAge = document.getElementById('btAge');
-        var btAgeVal = parseInt(btAge.value, 10);
-        if (!btAge.value || isNaN(btAgeVal)) { btAge.classList.add('field-error'); showError('Please enter your age.'); btAge.focus(); return; }
-        if (btAgeVal < 3) { btAge.classList.add('field-error'); showError('Our youngest program (Sprouts) starts at age 3.'); btAge.focus(); return; }
-        if (btAgeVal > 99) { btAge.classList.add('field-error'); showError('Please enter a valid age.'); btAge.focus(); return; }
         if (!validPhone(document.getElementById('btPhone').value)) { document.getElementById('btPhone').classList.add('field-error'); showError('Please enter a valid phone number.'); return; }
         if (!validEmail(document.getElementById('btEmail').value)) { document.getElementById('btEmail').classList.add('field-error'); showError('Please enter a valid email address.'); return; }
-        var btDob = document.getElementById('btDob');
-        if (!btDob.value) { btDob.classList.add('field-error'); showError('Please enter your date of birth.'); btDob.focus(); return; }
+        var btDobParts = { month: document.getElementById('btDobMonth'), day: document.getElementById('btDobDay'), year: document.getElementById('btDobYear') };
+        var btDobState = getDobFieldState(btDobParts);
+        if (!btDobState.complete) { setDobFieldError(btDobParts, true); showError('Please enter your date of birth.'); btDobParts.month.focus(); return; }
+        if (!btDobState.valid) { setDobFieldError(btDobParts, true); showError('Please enter a valid date of birth.'); btDobParts.month.focus(); return; }
+        var btAgeVal = getAgeFromDob(btDobState.value);
+        if (btAgeVal < 3) { setDobFieldError(btDobParts, true); showError('Our youngest program (Sprouts) starts at age 3.'); btDobParts.month.focus(); return; }
         var btEm = document.getElementById('btEmergency');
-        if (!btEm.value.trim()) { btEm.classList.add('field-error'); showError('Please enter an emergency contact name.'); btEm.focus(); return; }
         if (!btSched.day || !btSched.time) { showError('Please pick a day and time for your trial.'); document.getElementById('btDays').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
 
         var p2b = getParent2Data('bt');
         if (p2b === false) return;
 
-        var resultB = validatePersonCards(btPeople);
+        var resultB = validatePersonCards(btPeople, fullName(document.getElementById('btFirst').value.trim(), document.getElementById('btLast').value.trim()));
         if (!resultB) return;
 
-        var selfProg = getProgram(btAge.value);
+        var selfProg = getProgram(btAgeVal);
         programs[selfProg] = true;
         for (var kk in resultB.programs) programs[kk] = true;
 
@@ -1227,11 +1336,11 @@
         // Person 1 = self
         payload.person_1_first_name = payload.first_name;
         payload.person_1_last_name = payload.last_name;
-        payload.person_1_age = btAge.value;
+        payload.person_1_age = btAgeVal;
         payload.person_1_program = LABELS[selfProg];
         payload.person_1_appointment_datetime = btSched.appointmentDatetime;
-        payload.person_1_dob = btDob.value;
-        payload.person_1_emergency_contact = btEm.value.trim();
+        payload.person_1_dob = btDobState.value;
+        if (btEm.value.trim()) payload.person_1_emergency_contact = btEm.value.trim();
         var btAll = document.getElementById('btAllergies').value.trim();
         if (btAll) payload.person_1_allergies = btAll;
         var btExp = document.getElementById('btExperience').value;
@@ -1257,15 +1366,22 @@
       submitBtn.disabled = true;
 
       fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-      .then(function() { showSuccess(allPeople); })
-      .catch(function() { showSuccess(allPeople); });
+      .then(function(res) {
+        if (!res.ok) throw new Error('Webhook failed');
+        showSuccess(allPeople);
+      })
+      .catch(function() {
+        submitBtn.textContent = 'Sign Up for Your Free Trial';
+        submitBtn.disabled = false;
+        showError("We couldn't finish your booking. Please try again or call (707) 759-6876.");
+      });
     });
 
     function showSuccess(people) {
       form.style.display = 'none';
       successMsg.textContent = people.length === 1
-        ? 'Your free trial has been scheduled. See you there!'
-        : 'All ' + people.length + ' trials have been scheduled. See you there!';
+        ? 'Your free trial class has been scheduled. See you there!'
+        : 'All ' + people.length + ' free trial classes have been scheduled. See you there!';
       bookingSummary.innerHTML = '';
       for (var i = 0; i < people.length; i++) {
         var p = people[i];
