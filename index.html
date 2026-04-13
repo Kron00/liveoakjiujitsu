@@ -2067,6 +2067,43 @@
       width: 100%;
     }
 
+    .contact-cta-card {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+    }
+
+    .contact-cta-title {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      line-height: 1.1;
+      color: var(--color-text);
+    }
+
+    .contact-cta-text,
+    .contact-cta-list li,
+    .contact-cta-note {
+      font-size: var(--text-base);
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--color-text-muted);
+    }
+
+    .contact-cta-list {
+      display: grid;
+      gap: 0.85rem;
+      padding: 1.25rem 0;
+      border-top: 1px solid var(--color-border-light);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .contact-cta-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
     .form-group {
       margin-bottom: var(--space-md);
     }
@@ -3259,7 +3296,7 @@
 
       <div class="nav__actions">
         <a href="tel:+17077557247" class="nav__phone">(707) 755-7247</a>
-        <a href="#book" class="btn btn--primary btn--small nav__cta">Book Free Class</a>
+        <a href="/signup" class="btn btn--primary btn--small nav__cta">Book Free Class</a>
         <button class="nav__hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
           <span class="nav__hamburger-line"></span>
           <span class="nav__hamburger-line"></span>
@@ -3278,7 +3315,7 @@
     <a href="#pricing" class="nav__mobile-link">Pricing</a>
     <a href="#contact" class="nav__mobile-link">Contact</a>
     <a href="tel:+17077557247" class="nav__mobile-phone">(707) 755-7247</a>
-    <a href="#book" class="btn btn--primary nav__mobile-cta">Book Free Class</a>
+    <a href="/signup" class="btn btn--primary nav__mobile-cta">Book Free Class</a>
   </div>
 
 
@@ -3302,7 +3339,7 @@
       <h1 class="hero__title">Live Oak<br>Jiu Jitsu Academy</h1>
       <p class="hero__subtitle">Premier Brazilian Jiu Jitsu & martial arts academy in Fairfield, California. Classes for all ages.</p>
       <div class="hero__ctas">
-        <a href="#book" class="btn btn--primary btn--large">Schedule a Visit</a>
+        <a href="/signup" class="btn btn--primary btn--large">Schedule a Visit</a>
         <a href="#programs" class="btn btn--outline btn--large">View Programs</a>
       </div>
       <p class="hero__location">Fairfield, California</p>
@@ -3665,7 +3702,7 @@
     <!-- CTA -->
     <div class="schedule-cta">
       <p class="schedule-cta-text">First class is always <strong>FREE</strong>. Schedule your visit today!</p>
-      <a href="#contact" class="btn btn-primary">Book Your Free Class</a>
+      <a href="/signup" class="btn btn-primary">Book Your Free Class</a>
     </div>
 
   </div>
@@ -3717,7 +3754,7 @@
             </div>
           </div>
 
-          <a href="#contact" class="pricing-card__cta pricing-card__cta--outline">Get Started</a>
+          <a href="/signup" class="pricing-card__cta pricing-card__cta--outline">Get Started</a>
         </div>
       </div>
 
@@ -3761,7 +3798,7 @@
             </div>
           </div>
 
-          <a href="#contact" class="pricing-card__cta pricing-card__cta--primary">Get Started</a>
+          <a href="/signup" class="pricing-card__cta pricing-card__cta--primary">Get Started</a>
         </div>
       </div>
 
@@ -3800,7 +3837,7 @@
             </div>
           </div>
 
-          <a href="#contact" class="pricing-card__cta pricing-card__cta--outline">Get Started</a>
+          <a href="/signup" class="pricing-card__cta pricing-card__cta--outline">Get Started</a>
         </div>
       </div>
 
@@ -4031,9 +4068,9 @@
       <div class="contact-info reveal-left">
         <span class="section-label">GET STARTED TODAY</span>
 
-        <h2 class="section-heading">Schedule Your Visit</h2>
+        <h2 class="section-heading">Start Your Free Trial Online</h2>
 
-        <p class="contact-intro">We're excited to work with you. Fill out the form below and one of our instructors will contact you to get you registered for your first class.</p>
+        <p class="contact-intro">Website visitors now use a dedicated signup flow so class bookings from the site stay separate from voice-agent signups. Pick your class time and submit directly online.</p>
 
         <ul class="contact-details">
           <li class="contact-detail-item">
@@ -4075,38 +4112,22 @@
         </a>
       </div>
 
-      <!-- Right Column — Form -->
+      <!-- Right Column — Signup CTA -->
       <div class="contact-form-wrapper reveal-right">
-        <form class="contact-form" id="contactForm" action="#" method="POST">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="firstName">First Name</label>
-              <input type="text" id="firstName" name="firstName" placeholder="First Name" required>
-            </div>
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
-              <input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
-            </div>
+        <div class="contact-form contact-cta-card">
+          <h3 class="contact-cta-title">Book From the Website</h3>
+          <p class="contact-cta-text">Use the dedicated website signup form to select who is training, choose the right class time, and send your booking straight to the website webhook.</p>
+          <ul class="contact-cta-list">
+            <li>Choose between signing up yourself, your child, or multiple people.</li>
+            <li>Select class times based on age and program eligibility.</li>
+            <li>Submit directly online instead of waiting for a follow-up call.</li>
+          </ul>
+          <div class="contact-cta-actions">
+            <a href="/signup" class="btn btn-primary btn-submit">Go to Website Signup</a>
+            <a href="tel:+17077557247" class="btn btn--outline btn-submit">Call Instead</a>
           </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" placeholder="Email Address" required>
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone</label>
-              <input type="tel" id="phone" name="phone" placeholder="Phone Number">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Tell us about your goals or ask any questions..."></textarea>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-submit">Schedule a Visit</button>
-        </form>
+          <p class="contact-cta-note">Questions before booking? Call, email, or message Instagram and the team can help.</p>
+        </div>
       </div>
 
     </div>
@@ -4438,36 +4459,6 @@
 
   animateCounters();
 
-
-  /* --------------------------------------------------
-     8. Contact Form — Basic Validation Feedback
-  -------------------------------------------------- */
-  var contactForm = document.getElementById('contactForm');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      var btn = contactForm.querySelector('.btn-submit');
-      var originalText = btn.textContent;
-
-      btn.textContent = 'Sending...';
-      btn.disabled = true;
-
-      // Simulate send (replace with actual form handler)
-      setTimeout(function() {
-        btn.textContent = 'Thank You!';
-        btn.classList.add('btn-success');
-
-        setTimeout(function() {
-          btn.textContent = originalText;
-          btn.disabled = false;
-          btn.classList.remove('btn-success');
-          contactForm.reset();
-        }, 3000);
-      }, 1200);
-    });
-  }
 
 })();
 

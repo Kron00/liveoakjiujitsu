@@ -66,6 +66,10 @@
       "destination": "/voice-signup.html"
     },
     {
+      "source": "/signup",
+      "destination": "/signup.html"
+    },
+    {
       "source": "/voice-agent-signup",
       "destination": "/voice-signup.html"
     },
