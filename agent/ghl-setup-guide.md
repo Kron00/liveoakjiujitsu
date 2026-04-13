@@ -1,6 +1,6 @@
 # GHL Setup Guide — Voice Agent Signup Form
 
-Step-by-step instructions for wiring up the `/voice-agent-signup` form to GoHighLevel.
+Step-by-step instructions for wiring up the `/voice-signup` form to GoHighLevel.
 
 ---
 
@@ -112,7 +112,7 @@ After the Book Appointment branches, the existing **SMS** action sends the confi
 
 ## Step 7: Test It
 
-Submit a test through the live form at `https://liveoakjiujitsuacademy.com/voice-agent-signup` and check:
+Submit a test through the live form at `https://liveoakjiujitsuacademy.com/voice-signup` and check:
 
 1. ✅ Contact created with all custom fields populated
 2. ✅ Tag added

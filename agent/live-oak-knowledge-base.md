@@ -1,119 +1,213 @@
-# Business Information
+# Live Oak Jiu Jitsu Academy — Voice AI Knowledge Base
+
+Use this knowledge base for Gigi on inbound phone calls.
+Answer clearly and briefly.
+After answering a prospect's question, guide naturally toward a free trial when appropriate.
+
+## Business Information
 
 Business name: Live Oak Jiu Jitsu Academy
 Address: 910 Texas Street, Fairfield, California 94533
-Phone: (707) 755-7247
+Phone: 707-755-7247
 Website: liveoakjiujitsuacademy.com
 Instagram: @liveoakjiujitsuacademy
-Hours: Monday through Friday 7 a.m. to 9 p.m., Saturday 9 a.m. to 1 p.m., Sunday 10 a.m. to 12 p.m.
-Parking: Plenty of free parking across the street and on the side streets.
-Beginner friendly with a fundamentals program built for beginners, no experience necessary.
-Instructors are Live Scanned certified.
+Parking: Plenty of free parking across the street and on the side streets
+Beginner friendly: yes
+Instructors are Live Scanned certified
 
-# Programs
+## Programs
 
-BJJ for adults and teens ages thirteen and up.
-Youth BJJ for ages six to twelve.
-Sprouts for ages three to five.
-Women's Class.
-Executive Program for private and semi private training with IBJJF certified instructors.
+Adult and Teen Brazilian Jiu Jitsu: ages 13 and up
+Youth BJJ: ages 6 to 12
+Sprouts: ages 3 to 5
+Women's class: available, but exact placement or scheduling may require staff follow-up
+Executive Program: private and semi-private training, staff follow-up may be needed for details
 
-# Staff
+## Staff
 
-Alejandro (Alex) Lucas: Head Instructor and Co Owner, second degree black belt under Coral Belt Renato Magno, detail oriented and systems based teaching. Active competitor in IBJJF, World Jiu Jitsu League, and local promotions with twenty years of competitive experience.
-Chris Park: Instructor for youth and adults, black belt awarded May 2024, creative and playful teaching style.
-Jose Meza: Co Instructor and Co Owner, blue belt earned under Scott Singer fourth degree black belt, fundamentals focused with strong guard work.
+Alejandro "Alex" Lucas: Head Instructor and Co-Owner, second degree black belt under Coral Belt Renato Magno, active competitor with roughly twenty years of competitive experience
+Chris Park: Instructor for youth and adults, black belt awarded May 2024
+Jose Meza: Co-Instructor and Co-Owner, fundamentals focused and known for strong guard work
 
-# Class Schedule
+## Class Schedule
 
-## Monday, Wednesday, Friday
+### Monday, Wednesday, Friday
 
-6:30 a.m. BJJ ages thirteen and up, one hour and thirty minutes.
-11:00 a.m. Youth ages six to twelve, one hour.
-12:00 p.m. BJJ ages thirteen and up, one hour and thirty minutes.
-4:00 p.m. Youth ages six to twelve, one hour.
-5:00 p.m. Sprouts ages three to five, Monday and Wednesday only, not Friday, thirty minutes followed by twenty minutes of playtime.
-6:00 p.m. BJJ ages thirteen and up, one hour and thirty minutes.
+Adult and Teen BJJ:
+- 6:30 a.m.
+- 12:00 p.m.
+- 6:00 p.m.
 
-## Tuesday, Thursday
+Youth BJJ:
+- 11:00 a.m.
+- 4:00 p.m.
 
-6:30 a.m. BJJ ages thirteen and up, one hour and thirty minutes.
-11:00 a.m. Youth ages six to twelve, one hour.
-12:00 p.m. BJJ ages thirteen and up, one hour and thirty minutes.
-4:00 p.m. Youth ages six to twelve, one hour.
-5:00 p.m. Sprouts ages three to five, thirty minutes followed by twenty minutes of playtime.
-6:00 p.m. BJJ ages eleven and up, one hour and thirty minutes.
+Sprouts:
+- 5:00 p.m. on Monday and Wednesday
 
-## Saturday
+### Tuesday, Thursday
 
-9:00 a.m. Youth ages six to twelve, one hour.
-10:00 a.m. BJJ ages thirteen and up, one hour and thirty minutes.
+Adult and Teen BJJ:
+- 6:30 a.m.
+- 12:00 p.m.
+- 6:00 p.m.
 
-## Sunday
+Youth BJJ:
+- 11:00 a.m.
+- 4:00 p.m.
 
-10:00 a.m. Open Mat, ages thirteen and up, open session, no set end time. Open Mat is unstructured training where students practice techniques freely. It is not an instructed class. New callers should be directed to a regular class Monday through Saturday for their first visit.
+Sprouts:
+- 5:00 p.m.
 
-# Pricing
+### Saturday
 
-Adults and teens ages thirteen and up: one hundred sixty dollars a month, unlimited classes.
-Youth ages six to twelve: one hundred sixty dollars a month.
-Sprouts ages three to five: one hundred twenty five dollars a month.
-First responders and active military: one hundred fifty three dollars a month.
-Family bundles: the fourth family member and beyond trains for free. Exact bundle pricing requires staff follow up.
-Executive Program and private training pricing require staff follow up.
-Company wellness programs are available but pricing requires staff follow up.
-If a member joins mid-month, the remaining days are prorated and the full billing cycle starts fresh on the first of the following month.
+Youth BJJ:
+- 9:00 a.m.
 
-# Trial Information
+Adult and Teen BJJ:
+- 10:00 a.m.
 
-The trial is a three day calendar trial with no charge. It is three days within a calendar week to attend any and all classes. For example, if someone starts on Monday, the decision window ends by the end of class on Wednesday. No commitment from the trial. The instructor will go over all membership details when the caller comes in.
+### Sunday
 
-# What To Bring To A Trial
+Open Mat only at 10:00 a.m.
+Open Mat is not a first-visit trial class.
+New callers should be directed to a regular Monday through Saturday class for their first visit.
 
-Flip flops, a bottle of water, comfortable athletic clothes like shorts and a t shirt. Arrive ten minutes early for a tour and liability forms. There is plenty of free parking across the street and on the side streets. No need to purchase any gear for the trial.
+## Pricing
 
-# Common Questions
+Adult and Teen BJJ: $180 per month
+Youth BJJ: $160 per month
+Sprouts: $125 per month
+First responders and active military: $153 per month
+Family bundles: fourth family member and beyond trains free
+Executive Program and private training pricing: staff follow-up required
+Mid-month joins are prorated, then billing resets to the first of the next month
 
-Are beginners welcome? Yes. The academy has a fundamentals program built for beginners and no experience is necessary.
+## Trial And Signup Rules
 
-Do you offer youth classes? Yes. Sprouts for ages three to five, Youth BJJ for ages six to twelve, and teens age thirteen and up join the BJJ program.
+The trial is a free three-day calendar trial.
+There is no charge and no commitment.
+It gives the caller three days within one calendar week to come in and try classes.
+The instructor goes over membership details when they come in.
 
-Do you have a women's class? Yes. Exact schedule requires staff follow up.
+Voice-agent signup link:
+https://liveoakjiujitsuacademy.com/voice-signup
 
-Do you offer private training? Yes. Private and semi private training are offered through the Executive Program.
+When a caller is ready to book:
+- ask for first name only
+- then ask for the best mobile number for the signup text
+- then text the voice-agent signup link immediately after the phone number is confirmed
 
-Is Brazilian Jiu Jitsu good for self defense? Yes. The curriculum emphasizes self protection, control, emotional stability, and finishing the fight with submissions. There is also a sport and competition component for those who want to compete.
+For Youth BJJ or Sprouts:
+- ask for the parent or guardian's first name
+- ask for the parent or guardian's best mobile number
+- text the signup link to that number
 
-Is Brazilian Jiu Jitsu good for weight loss? Yes. Training is highly active and very motivating because you are constantly moving and working with a partner.
+Do not ask for last name just to send the signup link.
+Do not promise to manually book the class by voice.
+Do not collect these by voice for routine trial signup because the form handles them:
+- last name
+- date of birth
+- emergency contact information
+- allergies or medical notes
+- prior experience
+- class day and time selection
 
-What is no ghee? No ghee means training without the traditional uniform jacket. You train in shorts and a rash guard instead.
+## What To Bring
 
-Is there parking? Yes. There is plenty of free parking across the street and on the side streets.
+Bring flip flops, a bottle of water, and comfortable athletic clothes like shorts and a t-shirt.
+Arrive ten minutes early for a quick tour and liability forms.
+No gear purchase is needed for the trial.
 
-What are the class durations? Adult and teen classes are one hour and thirty minutes. Youth classes are one hour. Sprouts classes are thirty minutes followed by twenty minutes of playtime.
+## Common Questions
 
-How many days a week should someone train? Come as often as you like. All programs are unlimited. The more often you train, the faster techniques become muscle memory.
+Are beginners welcome?
+Yes. The academy is beginner friendly and many students start with no experience.
 
-Can someone bring a friend or guest? Yes. Guests are welcome to take part in class. Anyone under eighteen will need a parent or guardian to sign a liability waiver before training. This can be done online or at the academy.
+Do you offer kids classes?
+Yes. Sprouts is ages 3 to 5. Youth BJJ is ages 6 to 12. Ages 13 and up join the adult and teen program.
 
-Can I use my own gear? Yes. You can train with any gear you already own. If you join as a member, the academy asks that you purchase a patch for your gi. For trials and guest visits, no purchase is necessary.
+Do you offer a women's class?
+Yes. The academy offers a women's class. Exact schedule or placement may require staff follow-up.
 
-Will my belt and stripes be respected? Yes. The academy respects your previous training, academy, and professor. Whatever rank you earned before is welcomed and valued.
+Do you offer private training?
+Yes. Private and semi-private training are offered through the Executive Program.
 
-Do your instructors compete? Yes. Coach Alex is an active IBJJF, World Jiu Jitsu League, and local promotions competitor with twenty years of competitive experience. He prepares the competition team physically, strategically, and mentally for tournaments, and reviews match footage with each student afterward.
+Is Brazilian Jiu Jitsu good for self-defense?
+Yes. The curriculum emphasizes control, self-protection, and practical application.
 
-What if my child is shy? That is common in the Sprouts class. One parent is welcome on the mat to do the class alongside their child for as many classes as needed. Whatever the kids are doing, the parent does it too.
+Is Brazilian Jiu Jitsu good for weight loss?
+Yes. Training is active and physically demanding, and many people find it highly motivating.
 
-What if my child plays other sports? Brazilian Jiu Jitsu complements the physical, emotional, and mental development of children and enhances performance in other sports. Cross training is encouraged and students report it is very helpful.
+What is no gi?
+No gi means training without the traditional gi jacket. Students typically wear shorts and a rash guard.
 
-Can a member pause or cancel? Yes. Let any staff member know and the account can be placed on hold for up to three months. If a longer break is needed, the member can be made an alumni and drop in from time to time until they are ready to rejoin full time.
+Is there parking?
+Yes. There is free parking across the street and on the side streets.
 
-How do I sign up after my trial? Come in and any staff member will help you find the right membership package.
+How long are classes?
+Adult and teen classes are about one hour and thirty minutes.
+Youth classes are about one hour.
+Sprouts is about thirty minutes followed by about twenty minutes of playtime.
 
-How do I sign up for a trial? Fill out the signup form at liveoakjiujitsuacademy.com/voice-agent-signup to pick your class day and time and get booked for a free three day trial.
+How often should someone train?
+As often as they like. Programs are unlimited.
 
-# Discounts
+Can someone bring a friend or guest?
+Yes. Guests are welcome. Anyone under 18 needs a parent or guardian to sign a liability waiver.
 
-First responders and active military: one hundred fifty three dollars a month.
-Family bundles: fourth family member and beyond trains for free.
-Company wellness programs are available.
+Can I use my own gear?
+Yes. Existing gear is fine for a trial or visit. No purchase is needed for the trial.
+
+Will you respect prior belt rank?
+Yes. Previous training and rank are respected.
+
+Do instructors compete?
+Yes. Coach Alex actively competes and helps prepare competition students.
+
+What if my child is shy?
+That is common. In Sprouts, one parent can be on the mat with the child as needed.
+
+What if my child plays other sports?
+BJJ complements other sports well and cross-training is common.
+
+Can a member pause or cancel?
+The academy can help with pauses or cancellations, but Gigi should not process that directly. Those requests should be handed to staff.
+
+How do I sign up after my trial?
+Staff will go over membership options when the caller comes in.
+
+How do I sign up for a trial?
+If they are ready, Gigi should text them the voice-agent signup form so they can choose a day and time and finish the booking.
+
+## Objection Helpers
+
+No experience:
+No experience is needed at all.
+
+Too nervous:
+That is common, and the trial is the easiest no-pressure way to get a feel for the academy.
+
+Too expensive:
+That is why the free trial helps. They can try it first before deciding anything.
+
+Too busy:
+There are class options Monday through Saturday, including morning, midday, and evening depending on program.
+
+Child is shy:
+Parents can help their child get comfortable, especially in Sprouts.
+
+Need to think about it:
+No pressure. The trial is there whenever they are ready.
+
+## Escalation Topics
+
+Escalate to staff for:
+- complaints
+- billing disputes
+- refunds
+- injuries or safety concerns
+- pause or cancellation requests
+- legal concerns
+- manager requests
+- anything not covered here with confidence

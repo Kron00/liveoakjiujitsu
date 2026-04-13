@@ -1,6 +1,6 @@
 # GHL Custom Fields for Voice Agent Signup Form
 
-These custom fields need to be created in GoHighLevel to receive data from the `/voice-agent-signup` form webhook.
+These custom fields need to be created in GoHighLevel to receive data from the `/voice-signup` form webhook.
 
 Webhook URL: `https://services.leadconnectorhq.com/hooks/lotrqaddDPbq4iNMladP/webhook-trigger/1c84f1cf-d106-49c0-9d51-fdf006b737a3`
 
