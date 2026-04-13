@@ -325,6 +325,76 @@
     .person-remove.show { display: inline-flex; }
     .person-card .field { margin-bottom: 1.15rem; }
     .person-card .field:last-child { margin-bottom: 0; }
+    .shared-emergency {
+      margin-bottom: 1.15rem;
+      padding: 0.85rem 0.9rem;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+    }
+    .shared-emergency-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      cursor: pointer;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+      font-weight: 300;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .shared-emergency-label input[type="checkbox"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      margin-top: 1px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      background: #fff;
+      position: relative;
+      cursor: pointer;
+      transition: all var(--fast) var(--smooth);
+    }
+    .shared-emergency-label input[type="checkbox"]:checked {
+      background: var(--red);
+      border-color: var(--red);
+    }
+    .shared-emergency-label input[type="checkbox"]:checked::after {
+      content: '';
+      position: absolute;
+      left: 4px;
+      top: 1px;
+      width: 5px;
+      height: 9px;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    .shared-emergency-copy { flex: 1; }
+    .shared-emergency-title {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .shared-emergency-note {
+      display: block;
+      margin-top: 0.18rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+    .shared-emergency-fields {
+      display: none;
+      margin-top: 0.9rem;
+    }
+    .shared-emergency-fields.show {
+      display: block;
+      animation: slideIn 0.2s var(--smooth);
+    }
+    .shared-emergency-fields .field:last-child { margin-bottom: 0; }
 
     .add-btn {
       display: flex;
@@ -475,6 +545,7 @@
       .person-card { padding: 1.15rem; margin-bottom: 1rem; }
       .person-card-header { margin-bottom: 1rem; }
       .person-card .field { margin-bottom: 1.05rem; }
+      .shared-emergency { margin-bottom: 1rem; padding: 0.8rem 0.85rem; }
       .program-tag { margin-top: 0.25rem; margin-bottom: 1.1rem; }
       .schedule-section { margin-top: 0.15rem; padding-bottom: 1rem; margin-bottom: 1rem; }
       .schedule-note { margin: -0.15rem 0 0.95rem; }
@@ -646,6 +717,14 @@
               <label for="otEmail">Email Address</label>
               <input type="email" id="otEmail" placeholder="you@example.com" autocomplete="email">
             </div>
+            <div class="field">
+              <label for="otEmergency">Shared Emergency Contact Name <span class="optional">(optional)</span></label>
+              <input type="text" id="otEmergency" placeholder="Full name">
+            </div>
+            <div class="field">
+              <label for="otEmergencyPhone">Shared Emergency Contact Phone <span class="optional">(optional)</span></label>
+              <input type="tel" id="otEmergencyPhone" placeholder="(555) 123-4567" autocomplete="tel">
+            </div>
 
             <button type="button" class="expand-btn" id="otParent2Toggle">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -748,11 +827,11 @@
               <input type="email" id="btEmail" placeholder="you@example.com" autocomplete="email">
             </div>
             <div class="field">
-              <label for="btEmergency">Emergency Contact Name <span class="optional">(optional)</span></label>
+              <label for="btEmergency">Shared Emergency Contact Name <span class="optional">(optional)</span></label>
               <input type="text" id="btEmergency" placeholder="Full name">
             </div>
             <div class="field">
-              <label for="btEmergencyPhone">Emergency Contact Phone <span class="optional">(optional)</span></label>
+              <label for="btEmergencyPhone">Shared Emergency Contact Phone <span class="optional">(optional)</span></label>
               <input type="tel" id="btEmergencyPhone" placeholder="(555) 123-4567" autocomplete="tel">
             </div>
             <div class="field">
@@ -937,7 +1016,7 @@
     function showError(m) { formError.textContent = m; formError.classList.add('show'); formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
 
     // Phone formatting
-    ['jmPhone','jmEmergencyPhone','otPhone','btPhone','btEmergencyPhone','otP2Phone','btP2Phone'].forEach(function(id) { phoneFormat(document.getElementById(id)); });
+    ['jmPhone','jmEmergencyPhone','otPhone','otEmergencyPhone','btPhone','btEmergencyPhone','otP2Phone','btP2Phone'].forEach(function(id) { phoneFormat(document.getElementById(id)); });
 
     // ===== SCHEDULE PICKER HELPERS =====
     function buildDayBtns(container, program, onDayClick) {
@@ -1123,8 +1202,7 @@
         '<div class="field"><label>Date of Birth <span class="optional">(used to show the right class times)</span></label><div class="dob-grid"><select data-role="dob-month" aria-label="Birth month"><option value="" selected>Month</option><option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option><option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option><option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option></select><input type="text" data-role="dob-day" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Day" aria-label="Birth day"><input type="text" data-role="dob-year" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Year" aria-label="Birth year"></div><div class="dob-help">Month / day / year</div></div>' +
         '<div class="program-tag" data-role="tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span data-role="tagtext"></span></div>' +
         '<div class="schedule-section" data-role="schedule"><div class="divider"></div><div class="section-label">Pick Class Time</div><div class="schedule-note">This person picks their own class time based on their birthdate.</div><div class="schedule-prompt">What day works best?</div><div class="day-picker" data-role="days"></div><div class="schedule-prompt" data-role="timelabel" style="display:none">What time?</div><div class="time-picker" data-role="times"></div><div class="schedule-confirm" data-role="confirm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-role="confirmtext"></span></div></div>' +
-        '<div class="field"><label>Emergency Contact Name <span class="optional">(optional)</span></label><input type="text" data-role="emergency" placeholder="Full name"></div>' +
-        '<div class="field"><label>Emergency Contact Phone <span class="optional">(optional)</span></label><input type="tel" data-role="emergency-phone" placeholder="(555) 123-4567"></div>' +
+        '<div class="shared-emergency"><label class="shared-emergency-label"><input type="checkbox" data-role="use-default-emergency" checked><span class="shared-emergency-copy"><span class="shared-emergency-title">Use emergency contact from above</span><span class="shared-emergency-note">Use the shared emergency contact above, or fall back to the main contact info.</span></span></label><div class="shared-emergency-fields" data-role="custom-emergency-fields"><div class="field"><label>Custom Emergency Contact Name</label><input type="text" data-role="emergency" placeholder="Full name"></div><div class="field"><label>Custom Emergency Contact Phone</label><input type="tel" data-role="emergency-phone" placeholder="(555) 123-4567"></div></div></div>' +
         '<div class="field"><label>Allergies / Medical Notes <span class="optional">(optional)</span></label><input type="text" data-role="allergies" placeholder="Any allergies or conditions"></div>' +
         '<div class="field"><label>Prior Martial Arts Experience <span class="optional">(optional)</span></label><select data-role="experience"><option value="" selected>Select experience level</option><option value="None">None</option><option value="Less than 1 year">Less than 1 year</option><option value="1-3 years">1\u20133 years</option><option value="3+ years">3+ years</option></select></div>';
 
@@ -1137,6 +1215,8 @@
       var timesEl = card.querySelector('[data-role="times"]');
       var confirmEl = card.querySelector('[data-role="confirm"]');
       var confirmText = card.querySelector('[data-role="confirmtext"]');
+      var useDefaultEmergency = card.querySelector('[data-role="use-default-emergency"]');
+      var customEmergencyFields = card.querySelector('[data-role="custom-emergency-fields"]');
       var cardState = { day: null, date: null, dateShort: null, time: null, program: null, appointmentDatetime: null };
 
       function resetCardSched() { cardState.day = null; cardState.date = null; cardState.dateShort = null; cardState.time = null; cardState.appointmentDatetime = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
@@ -1147,6 +1227,11 @@
         }, cardState);
       });
       phoneFormat(card.querySelector('[data-role="emergency-phone"]'));
+      function syncEmergencyMode() {
+        customEmergencyFields.classList.toggle('show', !useDefaultEmergency.checked);
+      }
+      useDefaultEmergency.addEventListener('change', syncEmergencyMode);
+      syncEmergencyMode();
       function onCardDay(day, dateISO, dateShort) {
         cardState.day = day; cardState.date = dateISO; cardState.dateShort = dateShort; cardState.time = null; cardState.appointmentDatetime = null;
         setActiveBtn(daysEl, dateISO, 'data-date');
@@ -1238,7 +1323,7 @@
       for (var i = 0; i < list.length; i++) {
         var c = list[i].el, sc = list[i].sched;
         var f = c.querySelector('[data-role="first"]'), l = c.querySelector('[data-role="last"]');
-        var dobParts = { month: c.querySelector('[data-role="dob-month"]'), day: c.querySelector('[data-role="dob-day"]'), year: c.querySelector('[data-role="dob-year"]') }, em = c.querySelector('[data-role="emergency"]'), emPhone = c.querySelector('[data-role="emergency-phone"]');
+        var dobParts = { month: c.querySelector('[data-role="dob-month"]'), day: c.querySelector('[data-role="dob-day"]'), year: c.querySelector('[data-role="dob-year"]') }, em = c.querySelector('[data-role="emergency"]'), emPhone = c.querySelector('[data-role="emergency-phone"]'), useDefaultEmergency = c.querySelector('[data-role="use-default-emergency"]');
         var al = c.querySelector('[data-role="allergies"]'), ex = c.querySelector('[data-role="experience"]');
         var label = list.length === 1 ? 'this person' : 'Person ' + (i + 1);
         if (!f.value.trim()) { f.classList.add('field-error'); showError('Please enter ' + label + "'s first name."); f.focus(); return null; }
@@ -1251,7 +1336,9 @@
         if (!sc.day || !sc.time) { showError('Please pick a day and time for ' + label + '.'); c.querySelector('[data-role="days"]').scrollIntoView({ behavior:'smooth', block:'nearest' }); return null; }
         var prog = getProgram(ageVal);
         programs[prog] = true;
-        var emergency = getEmergencyContact(em, emPhone, label, defaultEmergencyName, defaultEmergencyPhone);
+        var emergency = useDefaultEmergency && useDefaultEmergency.checked
+          ? { name: defaultEmergencyName || '', phone: defaultEmergencyPhone ? toE164US(defaultEmergencyPhone) : '' }
+          : getEmergencyContact(em, emPhone, label);
         if (!emergency) return null;
         var entry = { first_name: f.value.trim(), last_name: l.value.trim(), age: ageVal, program: prog, dob: dobState.value, emergency_contact: emergency.name, emergency_contact_phone: emergency.phone, preferred_day: sc.day, preferred_time: sc.time, appointment_datetime: sc.appointmentDatetime, dateShort: sc.dateShort };
         if (al.value.trim()) entry.allergies = al.value.trim();
@@ -1334,11 +1421,15 @@
         if (!validateField('otLast', 'Please enter your last name.')) return;
         if (!validPhone(document.getElementById('otPhone').value)) { document.getElementById('otPhone').classList.add('field-error'); showError('Please enter a valid phone number.'); return; }
         if (!validEmail(document.getElementById('otEmail').value)) { document.getElementById('otEmail').classList.add('field-error'); showError('Please enter a valid email address.'); return; }
+        var otSharedEmergency = getEmergencyContact(document.getElementById('otEmergency'), document.getElementById('otEmergencyPhone'), 'the shared emergency contact');
+        if (!otSharedEmergency) return;
+        var otDefaultEmergencyName = otSharedEmergency.name || fullName(document.getElementById('otFirst').value.trim(), document.getElementById('otLast').value.trim());
+        var otDefaultEmergencyPhone = otSharedEmergency.phone || document.getElementById('otPhone').value;
 
         var p2 = getParent2Data('ot');
         if (p2 === false) return;
 
-        var result = validatePersonCards(otPeople, fullName(document.getElementById('otFirst').value.trim(), document.getElementById('otLast').value.trim()), document.getElementById('otPhone').value);
+        var result = validatePersonCards(otPeople, otDefaultEmergencyName, otDefaultEmergencyPhone);
         if (!result) return;
 
         payload.first_name = document.getElementById('otFirst').value.trim();
@@ -1376,14 +1467,16 @@
         if (btAgeVal < 3) { setDobFieldError(btDobParts, true); showError('Our youngest program (Sprouts) starts at age 3.'); btDobParts.month.focus(); return; }
         var btEm = document.getElementById('btEmergency');
         var btEmPhone = document.getElementById('btEmergencyPhone');
-        var btEmergency = getEmergencyContact(btEm, btEmPhone, 'you');
+        var btEmergency = getEmergencyContact(btEm, btEmPhone, 'the shared emergency contact');
         if (!btEmergency) return;
+        var btDefaultEmergencyName = btEmergency.name || fullName(document.getElementById('btFirst').value.trim(), document.getElementById('btLast').value.trim());
+        var btDefaultEmergencyPhone = btEmergency.phone || document.getElementById('btPhone').value;
         if (!btSched.day || !btSched.time) { showError('Please pick a day and time for your trial.'); document.getElementById('btDays').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
 
         var p2b = getParent2Data('bt');
         if (p2b === false) return;
 
-        var resultB = validatePersonCards(btPeople, fullName(document.getElementById('btFirst').value.trim(), document.getElementById('btLast').value.trim()), document.getElementById('btPhone').value);
+        var resultB = validatePersonCards(btPeople, btDefaultEmergencyName, btDefaultEmergencyPhone);
         if (!resultB) return;
 
         var selfProg = getProgram(btAgeVal);
