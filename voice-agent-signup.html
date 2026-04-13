@@ -767,7 +767,7 @@
     // Date helpers
     var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     var DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    var TIME_24 = { '6:30 AM':'06:30:00','9:00 AM':'09:00:00','10:00 AM':'10:00:00','11:00 AM':'11:00:00','12:00 PM':'12:00:00','4:00 PM':'16:00:00','5:00 PM':'17:00:00','6:00 PM':'18:00:00' };
+    function padTime(t) { return t.replace(/^(\d):/, '0$1:'); }
 
     function pad2(n) { return n < 10 ? '0' + n : '' + n; }
     function toISO(d) { return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); }
@@ -860,7 +860,7 @@
       }
       function onTime(time) {
         state.time = time;
-        state.appointmentDatetime = state.date + 'T' + TIME_24[time];
+        state.appointmentDatetime = state.date + ' ' + padTime(time);
         setActiveBtn(timesEl, time, 'data-time');
         confirmText.textContent = state.day + ', ' + state.dateShort + ' at ' + time;
         confirmEl.classList.add('show');
@@ -970,7 +970,7 @@
       }
       function onCardTime(time) {
         cardState.time = time;
-        cardState.appointmentDatetime = cardState.date + 'T' + TIME_24[time];
+        cardState.appointmentDatetime = cardState.date + ' ' + padTime(time);
         setActiveBtn(timesEl, time, 'data-time');
         confirmText.textContent = cardState.day + ', ' + cardState.dateShort + ' at ' + time;
         confirmEl.classList.add('show');

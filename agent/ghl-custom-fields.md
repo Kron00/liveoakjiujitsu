@@ -246,7 +246,7 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 - `Youth BJJ (Ages 6–12)`
 - `Adult & Teen BJJ (Ages 13+)`
 
-**Appointment Datetime format:** ISO 8601 — `YYYY-MM-DDTHH:mm:ss` (e.g. `2026-04-13T18:00:00`)
+**Appointment Datetime format:** `YYYY-MM-DD HH:MM AM/PM` (e.g. `2026-04-13 06:00 PM`)
 
 **Experience values:**
 - `None`
