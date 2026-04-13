@@ -62,8 +62,12 @@
       "destination": "/robots.txt"
     },
     {
+      "source": "/voice-signup",
+      "destination": "/voice-signup.html"
+    },
+    {
       "source": "/voice-agent-signup",
-      "destination": "/voice-agent-signup.html"
+      "destination": "/voice-signup.html"
     },
     {
       "source": "/(.*)",
