@@ -22,16 +22,11 @@ These map automatically to GHL's standard contact fields:
 Create these folders under **Settings > Custom Fields** to keep things organized:
 
 1. **Signup General** — holds the general/account-level fields (SMS Consent, Person Count, Programs Needed, Parent 2 fields)
-2. **Person 1** — holds all 10 fields for person 1
-3. **Person 2** — holds all 10 fields for person 2
-4. **Person 3** — holds all 10 fields for person 3
-5. **Person 4** — holds all 10 fields for person 4
-6. **Person 5** — holds all 10 fields for person 5
-7. **Person 6** — holds all 10 fields for person 6
-8. **Person 7** — holds all 10 fields for person 7
-9. **Person 8** — holds all 10 fields for person 8
-10. **Person 9** — holds all 10 fields for person 9
-11. **Person 10** — holds all 10 fields for person 10
+2. **Person 1** — holds all 9 fields for person 1
+3. **Person 2** — holds all 9 fields for person 2
+4. **Person 3** — holds all 9 fields for person 3
+5. **Person 4** — holds all 9 fields for person 4
+6. **Person 5** — holds all 9 fields for person 5
 
 ---
 
@@ -141,101 +136,11 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 
 ---
 
-## Person 6
-
-> **Folder: Person 6**
-
-| Field Name | Webhook Key | Field Type |
-|---|---|---|
-| Person 6 First Name | `person_6_first_name` | Single Line Text |
-| Person 6 Last Name | `person_6_last_name` | Single Line Text |
-| Person 6 Age | `person_6_age` | Number |
-| Person 6 Program | `person_6_program` | Single Line Text |
-| Person 6 Appointment Datetime | `person_6_appointment_datetime` | Single Line Text |
-| Person 6 Date of Birth | `person_6_dob` | Date Picker |
-| Person 6 Emergency Contact | `person_6_emergency_contact` | Single Line Text |
-| Person 6 Allergies | `person_6_allergies` | Single Line Text |
-| Person 6 Experience | `person_6_experience` | Single Line Text |
-
----
-
-## Person 7
-
-> **Folder: Person 7**
-
-| Field Name | Webhook Key | Field Type |
-|---|---|---|
-| Person 7 First Name | `person_7_first_name` | Single Line Text |
-| Person 7 Last Name | `person_7_last_name` | Single Line Text |
-| Person 7 Age | `person_7_age` | Number |
-| Person 7 Program | `person_7_program` | Single Line Text |
-| Person 7 Appointment Datetime | `person_7_appointment_datetime` | Single Line Text |
-| Person 7 Date of Birth | `person_7_dob` | Date Picker |
-| Person 7 Emergency Contact | `person_7_emergency_contact` | Single Line Text |
-| Person 7 Allergies | `person_7_allergies` | Single Line Text |
-| Person 7 Experience | `person_7_experience` | Single Line Text |
-
----
-
-## Person 8
-
-> **Folder: Person 8**
-
-| Field Name | Webhook Key | Field Type |
-|---|---|---|
-| Person 8 First Name | `person_8_first_name` | Single Line Text |
-| Person 8 Last Name | `person_8_last_name` | Single Line Text |
-| Person 8 Age | `person_8_age` | Number |
-| Person 8 Program | `person_8_program` | Single Line Text |
-| Person 8 Appointment Datetime | `person_8_appointment_datetime` | Single Line Text |
-| Person 8 Date of Birth | `person_8_dob` | Date Picker |
-| Person 8 Emergency Contact | `person_8_emergency_contact` | Single Line Text |
-| Person 8 Allergies | `person_8_allergies` | Single Line Text |
-| Person 8 Experience | `person_8_experience` | Single Line Text |
-
----
-
-## Person 9
-
-> **Folder: Person 9**
-
-| Field Name | Webhook Key | Field Type |
-|---|---|---|
-| Person 9 First Name | `person_9_first_name` | Single Line Text |
-| Person 9 Last Name | `person_9_last_name` | Single Line Text |
-| Person 9 Age | `person_9_age` | Number |
-| Person 9 Program | `person_9_program` | Single Line Text |
-| Person 9 Appointment Datetime | `person_9_appointment_datetime` | Single Line Text |
-| Person 9 Date of Birth | `person_9_dob` | Date Picker |
-| Person 9 Emergency Contact | `person_9_emergency_contact` | Single Line Text |
-| Person 9 Allergies | `person_9_allergies` | Single Line Text |
-| Person 9 Experience | `person_9_experience` | Single Line Text |
-
----
-
-## Person 10
-
-> **Folder: Person 10**
-
-| Field Name | Webhook Key | Field Type |
-|---|---|---|
-| Person 10 First Name | `person_10_first_name` | Single Line Text |
-| Person 10 Last Name | `person_10_last_name` | Single Line Text |
-| Person 10 Age | `person_10_age` | Number |
-| Person 10 Program | `person_10_program` | Single Line Text |
-| Person 10 Appointment Datetime | `person_10_appointment_datetime` | Single Line Text |
-| Person 10 Date of Birth | `person_10_dob` | Date Picker |
-| Person 10 Emergency Contact | `person_10_emergency_contact` | Single Line Text |
-| Person 10 Allergies | `person_10_allergies` | Single Line Text |
-| Person 10 Experience | `person_10_experience` | Single Line Text |
-
----
-
 ## Total Field Count
 
 - **7** general custom fields
-- **9** fields × **10** people = **90** per-person fields
-- **97 custom fields total**
+- **9** fields × **5** people = **45** per-person fields
+- **52 custom fields total**
 
 ---
 
@@ -257,3 +162,5 @@ Create these folders under **Settings > Custom Fields** to keep things organized
 **Date of Birth format:** `YYYY-MM-DD` (e.g. `1994-03-22`)
 
 **Allergies:** Free text, only sent if filled in (optional field)
+
+**Phone format:** Send contact phone values in E.164 when posting to GHL (for US numbers: `+1XXXXXXXXXX`).

@@ -785,6 +785,12 @@
     function phoneFormat(el) { el.addEventListener('input', function(e) { var p = e.target.selectionStart, ol = e.target.value.length; e.target.value = formatPhone(e.target.value); e.target.setSelectionRange(p + e.target.value.length - ol, p + e.target.value.length - ol); }); }
     function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
     function validPhone(p) { return p.replace(/\D/g,'').length >= 10; }
+    function toE164US(p) {
+      var d = p.replace(/\D/g, '');
+      if (d.length === 10) return '+1' + d;
+      if (d.length === 11 && d.charAt(0) === '1') return '+' + d;
+      return p.trim();
+    }
 
     var form = document.getElementById('signupForm');
     var formError = document.getElementById('formError');
@@ -944,7 +950,7 @@
 
     // ===== PERSON CARD SYSTEM (reusable for both panels) =====
     var otPeople = [], btPeople = [], pCounter = 0;
-    var MAX_PEOPLE = 10;
+    var MAX_PEOPLE = 5;
     var otAddBtn = document.getElementById('otAddBtn');
     var btAddBtn = document.getElementById('btAddBtn');
 
@@ -1133,7 +1139,7 @@
         var prog = getProgram(jmAge.value);
         payload.first_name = document.getElementById('jmFirst').value.trim();
         payload.last_name = document.getElementById('jmLast').value.trim();
-        payload.phone = document.getElementById('jmPhone').value.trim();
+        payload.phone = toE164US(document.getElementById('jmPhone').value);
         payload.email = document.getElementById('jmEmail').value.trim();
         payload.person_count = 1;
         payload.person_1_first_name = payload.first_name;
@@ -1167,9 +1173,9 @@
 
         payload.first_name = document.getElementById('otFirst').value.trim();
         payload.last_name = document.getElementById('otLast').value.trim();
-        payload.phone = document.getElementById('otPhone').value.trim();
+        payload.phone = toE164US(document.getElementById('otPhone').value);
         payload.email = document.getElementById('otEmail').value.trim();
-        if (p2) { payload.parent_2_first_name = p2.first_name; payload.parent_2_last_name = p2.last_name; if (p2.phone) payload.parent_2_phone = p2.phone; if (p2.email) payload.parent_2_email = p2.email; }
+        if (p2) { payload.parent_2_first_name = p2.first_name; payload.parent_2_last_name = p2.last_name; if (p2.phone) payload.parent_2_phone = toE164US(p2.phone); if (p2.email) payload.parent_2_email = p2.email; }
         payload.person_count = result.data.length;
         for (var i = 0; i < result.data.length; i++) {
           var pre = 'person_' + (i+1) + '_', d = result.data[i];
@@ -1214,9 +1220,9 @@
 
         payload.first_name = document.getElementById('btFirst').value.trim();
         payload.last_name = document.getElementById('btLast').value.trim();
-        payload.phone = document.getElementById('btPhone').value.trim();
+        payload.phone = toE164US(document.getElementById('btPhone').value);
         payload.email = document.getElementById('btEmail').value.trim();
-        if (p2b) { payload.parent_2_first_name = p2b.first_name; payload.parent_2_last_name = p2b.last_name; if (p2b.phone) payload.parent_2_phone = p2b.phone; if (p2b.email) payload.parent_2_email = p2b.email; }
+        if (p2b) { payload.parent_2_first_name = p2b.first_name; payload.parent_2_last_name = p2b.last_name; if (p2b.phone) payload.parent_2_phone = toE164US(p2b.phone); if (p2b.email) payload.parent_2_email = p2b.email; }
 
         // Person 1 = self
         payload.person_1_first_name = payload.first_name;

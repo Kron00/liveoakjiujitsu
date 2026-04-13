@@ -6,18 +6,18 @@ Step-by-step instructions for wiring up the `/voice-agent-signup` form to GoHigh
 
 ## Step 1: Delete Old Custom Fields
 
-Go to **Settings → Custom Fields** and delete these 20 fields from each Person folder (1–10):
+Go to **Settings → Custom Fields** and delete these 10 fields from each Person folder (1–5):
 
 - ❌ Person X Preferred Day
 - ❌ Person X Preferred Time
 
-That's 2 fields × 10 folders = **20 fields deleted**.
+That's 2 fields × 5 folders = **10 fields deleted**.
 
 ---
 
 ## Step 2: Create New Custom Fields
 
-In each Person folder (1–10), create **one** new field:
+In each Person folder (1–5), create **one** new field:
 
 | Folder | Field Name | Webhook Key | Field Type |
 |---|---|---|---|
@@ -26,13 +26,8 @@ In each Person folder (1–10), create **one** new field:
 | Person 3 | Person 3 Appointment Datetime | `person_3_appointment_datetime` | Single Line Text |
 | Person 4 | Person 4 Appointment Datetime | `person_4_appointment_datetime` | Single Line Text |
 | Person 5 | Person 5 Appointment Datetime | `person_5_appointment_datetime` | Single Line Text |
-| Person 6 | Person 6 Appointment Datetime | `person_6_appointment_datetime` | Single Line Text |
-| Person 7 | Person 7 Appointment Datetime | `person_7_appointment_datetime` | Single Line Text |
-| Person 8 | Person 8 Appointment Datetime | `person_8_appointment_datetime` | Single Line Text |
-| Person 9 | Person 9 Appointment Datetime | `person_9_appointment_datetime` | Single Line Text |
-| Person 10 | Person 10 Appointment Datetime | `person_10_appointment_datetime` | Single Line Text |
 
-That's **10 new fields**. Net result: 97 total custom fields (was 107).
+That's **5 new fields**. Net result: 52 total custom fields (was 57).
 
 ---
 
@@ -40,11 +35,11 @@ That's **10 new fields**. Net result: 97 total custom fields (was 107).
 
 In the **Voice Agent Sign Up** workflow, open the **Create Contact** action.
 
-**Remove** these 20 field mappings:
-- All `person_X_preferred_day` rows (10 rows)
-- All `person_X_preferred_time` rows (10 rows)
+**Remove** these 10 field mappings:
+- All `person_X_preferred_day` rows (5 rows)
+- All `person_X_preferred_time` rows (5 rows)
 
-**Add** these 10 new field mappings:
+**Add** these 5 new field mappings:
 
 | Select Field | Value |
 |---|---|
@@ -53,11 +48,6 @@ In the **Voice Agent Sign Up** workflow, open the **Create Contact** action.
 | Person 3 Appointment Datetime | `{{inboundWebhookRequest.person_3_appointment_datetime}}` |
 | Person 4 Appointment Datetime | `{{inboundWebhookRequest.person_4_appointment_datetime}}` |
 | Person 5 Appointment Datetime | `{{inboundWebhookRequest.person_5_appointment_datetime}}` |
-| Person 6 Appointment Datetime | `{{inboundWebhookRequest.person_6_appointment_datetime}}` |
-| Person 7 Appointment Datetime | `{{inboundWebhookRequest.person_7_appointment_datetime}}` |
-| Person 8 Appointment Datetime | `{{inboundWebhookRequest.person_8_appointment_datetime}}` |
-| Person 9 Appointment Datetime | `{{inboundWebhookRequest.person_9_appointment_datetime}}` |
-| Person 10 Appointment Datetime | `{{inboundWebhookRequest.person_10_appointment_datetime}}` |
 
 Click **Save action**.
 
@@ -105,7 +95,7 @@ After the **Add Tag** action and before the **SMS** action, add an **If/Else** b
 
 All three branches then continue to the **SMS** action.
 
-> **Note:** This books Person 1 only. For multi-person signups (person 2–10), you would need additional branching logic or a separate workflow. Start with Person 1 and add more later if needed.
+> **Note:** This books Person 1 only. For multi-person signups (person 2–5), you would need additional branching logic or a separate workflow. Start with Person 1 and add more later if needed.
 
 ---
 
@@ -135,7 +125,7 @@ Submit a test through the live form at `https://liveoakjiujitsuacademy.com/voice
 
 ```
 Inbound Webhook
-  → Create Contact (97 custom fields mapped)
+  → Create Contact (52 custom fields mapped)
   → Add Tag ("Voice Agent Signup")
   → If/Else (branch on person_1_program)
     → Book Appointment (correct calendar + appointment_datetime)
