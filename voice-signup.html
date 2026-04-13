@@ -1320,6 +1320,29 @@
       }
       return { name: name, phone: toE164US(phone) };
     }
+    function hasPersonCardInput(card, sched) {
+      var useDefaultEmergency = card.querySelector('[data-role="use-default-emergency"]');
+      var fields = [
+        card.querySelector('[data-role="first"]'),
+        card.querySelector('[data-role="last"]'),
+        card.querySelector('[data-role="dob-month"]'),
+        card.querySelector('[data-role="dob-day"]'),
+        card.querySelector('[data-role="dob-year"]'),
+        card.querySelector('[data-role="allergies"]'),
+        card.querySelector('[data-role="experience"]')
+      ];
+
+      if (!useDefaultEmergency || !useDefaultEmergency.checked) {
+        fields.push(card.querySelector('[data-role="emergency"]'));
+        fields.push(card.querySelector('[data-role="emergency-phone"]'));
+      }
+
+      for (var i = 0; i < fields.length; i++) {
+        if (fields[i] && fields[i].value && fields[i].value.trim()) return true;
+      }
+
+      return !!(sched && (sched.day || sched.time));
+    }
     function validatePersonCards(list, defaultEmergencyName, defaultEmergencyPhone) {
       var data = [], programs = {};
       for (var i = 0; i < list.length; i++) {
@@ -1328,6 +1351,7 @@
         var dobParts = { month: c.querySelector('[data-role="dob-month"]'), day: c.querySelector('[data-role="dob-day"]'), year: c.querySelector('[data-role="dob-year"]') }, em = c.querySelector('[data-role="emergency"]'), emPhone = c.querySelector('[data-role="emergency-phone"]'), useDefaultEmergency = c.querySelector('[data-role="use-default-emergency"]');
         var al = c.querySelector('[data-role="allergies"]'), ex = c.querySelector('[data-role="experience"]');
         var label = list.length === 1 ? 'this person' : 'Person ' + (i + 1);
+        if (!hasPersonCardInput(c, sc)) continue;
         if (!f.value.trim()) { f.classList.add('field-error'); showError('Please enter ' + label + "'s first name."); f.focus(); return null; }
         if (!l.value.trim()) { l.classList.add('field-error'); showError('Please enter ' + label + "'s last name."); l.focus(); return null; }
         var dobState = getDobFieldState(dobParts);
@@ -1438,6 +1462,7 @@
 
         var result = validatePersonCards(otPeople, otDefaultEmergencyName, otDefaultEmergencyPhone);
         if (!result) return;
+        if (result.data.length === 0) { showError('Please add at least one person who is training.'); document.getElementById('otPersonList').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
 
         payload.first_name = document.getElementById('otFirst').value.trim();
         payload.last_name = document.getElementById('otLast').value.trim();
@@ -1485,6 +1510,7 @@
 
         var resultB = validatePersonCards(btPeople, btDefaultEmergencyName, btDefaultEmergencyPhone);
         if (!resultB) return;
+        if (resultB.data.length === 0) { showError('Please add at least one other person who is training.'); document.getElementById('btPersonList').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
 
         var selfProg = getProgram(btAgeVal);
         programs[selfProg] = true;
