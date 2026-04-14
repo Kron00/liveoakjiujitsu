@@ -1816,96 +1816,242 @@
        ================================================================ */
     .testimonials-section {
       padding: var(--space-section) 0;
-      background: var(--color-dark);
+      background: var(--color-white);
       position: relative;
       overflow: hidden;
     }
 
+    /* Subtle warm atmospheric glow */
+    .testimonials-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 0% 30%, rgba(193, 12, 16, 0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 100% 70%, rgba(193, 12, 16, 0.03) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Bottom accent line */
+    .testimonials-section::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(200px, 25%);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(193, 12, 16, 0.25), transparent);
+      pointer-events: none;
+    }
+
+    /* Social proof line */
+    .testimonials-proof {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-top: var(--space-sm);
+    }
+
+    .testimonials-proof__stars {
+      color: var(--color-gold);
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      line-height: 1;
+    }
+
+
+    /* ---- Featured Testimonial ---- */
+    .testimonial-featured {
+      margin-top: var(--space-2xl);
+      padding: clamp(2.5rem, 5vw, 4rem);
+      padding-left: clamp(3rem, 6vw, 5rem);
+      background: linear-gradient(135deg, rgba(193, 12, 16, 0.03) 0%, rgba(193, 12, 16, 0.008) 100%);
+      border: 1px solid rgba(193, 12, 16, 0.1);
+      border-radius: var(--border-radius-xl);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(193, 12, 16, 0.04);
+    }
+
+    .testimonial-featured::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--color-gold), var(--color-gold-dark));
+    }
+
+    .testimonial-featured__mark {
+      font-family: var(--font-display);
+      font-size: clamp(5rem, 8vw, 7rem);
+      line-height: 0.7;
+      color: var(--color-gold);
+      opacity: 0.12;
+      display: block;
+      margin-bottom: 0;
+      user-select: none;
+    }
+
+    .testimonial-featured__quote {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--color-text-dim);
+      line-height: 1.55;
+      margin-bottom: var(--space-xl);
+    }
+
+    .testimonial-featured__footer {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .testimonial-featured__belt {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .testimonial-featured__name {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .testimonial-featured__meta {
+      font-family: var(--font-body);
+      font-size: var(--text-xs);
+      color: var(--color-text-muted);
+      margin-top: 0.15rem;
+    }
+
+    /* ---- Belt Color Indicators ---- */
+    .belt-white {
+      background: #f0f0f0;
+      box-shadow: 0 0 0 1.5px #ccc;
+    }
+
+    .belt-blue {
+      background: #2B7CD4;
+      box-shadow: 0 0 6px rgba(43, 124, 212, 0.3);
+    }
+
+    .belt-purple {
+      background: #7B3BBE;
+      box-shadow: 0 0 6px rgba(123, 59, 190, 0.3);
+    }
+
+    /* ---- Grid Layout (3 + 2 asymmetric) ---- */
     .testimonials__grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       gap: var(--space-lg);
-      margin-top: var(--space-3xl);
+      margin-top: var(--space-xl);
+      align-items: start;
     }
 
+    .testimonials__grid .testimonial-card:nth-child(-n+3) {
+      grid-column: span 2;
+    }
+
+    .testimonials__grid .testimonial-card:nth-child(4) {
+      grid-column: 1 / span 3;
+    }
+
+    .testimonials__grid .testimonial-card:nth-child(5) {
+      grid-column: 4 / span 3;
+    }
+
+    /* ---- Card ---- */
     .testimonial-card {
-      background: var(--color-dark-card);
-      border: 1px solid #eee;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-light);
       border-radius: var(--border-radius-lg);
-      padding: clamp(2rem, 3vw, 2.5rem);
+      padding: clamp(1.75rem, 3vw, 2.25rem);
       position: relative;
       transition: all var(--duration-base) var(--ease-smooth);
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
       overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .testimonial-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-gold), var(--color-gold-light), transparent);
+      opacity: 0;
+      transition: opacity var(--duration-base) var(--ease-smooth);
     }
 
     .testimonial-card:hover {
-      transform: translateY(-4px);
-      border-color: #ddd;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1), 0 8px 24px rgba(0,0,0,0.08);
+      transform: translateY(-6px);
+      border-color: rgba(193, 12, 16, 0.15);
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.08),
+        0 0 40px rgba(193, 12, 16, 0.04);
     }
 
-    .testimonial-card-media {
-      width: calc(100% + clamp(4rem, 6vw, 5rem));
-      margin-left: calc(-1 * clamp(2rem, 3vw, 2.5rem));
-      margin-right: calc(-1 * clamp(2rem, 3vw, 2.5rem));
-      margin-top: calc(-1 * clamp(2rem, 3vw, 2.5rem));
-      margin-bottom: var(--space-lg);
-      aspect-ratio: 4 / 3;
-      background: #f7f3ee;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
+    .testimonial-card:hover::before {
+      opacity: 1;
     }
 
-    .testimonial-card-photo {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center center;
-      display: block;
-    }
-
-    .testimonial-card-photo--focus-middle {
-      object-fit: cover;
-      object-position: center 34%;
-      transform: scale(1.1);
-      transform-origin: center center;
+    /* Card inner elements */
+    .testimonial-stars {
+      color: var(--color-gold);
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+      line-height: 1;
     }
 
     .testimonial-quote-mark {
       font-family: var(--font-display);
-      font-size: 4rem;
-      line-height: 1;
+      font-size: 3rem;
+      line-height: 0.75;
       color: var(--color-gold);
-      opacity: 0.3;
-      position: absolute;
-      top: 1rem;
-      left: 1.5rem;
-    }
-
-    .testimonial-card:has(.testimonial-card-photo) .testimonial-quote-mark {
-      display: none;
+      opacity: 0.2;
+      display: block;
+      margin-bottom: 0.5rem;
+      user-select: none;
     }
 
     .testimonial-text {
       font-family: var(--font-body);
       font-size: var(--text-sm);
       font-weight: 300;
-      font-style: normal;
       color: var(--color-text-dim);
-      line-height: 1.8;
+      line-height: 1.85;
       margin-bottom: var(--space-lg);
-      position: relative;
-      z-index: 1;
     }
 
     .testimonial-divider {
-      width: 100%;
+      width: 2rem;
       height: 1px;
-      background: #eee;
+      background: rgba(193, 12, 16, 0.25);
       margin-bottom: var(--space-md);
+    }
+
+    .testimonial-attribution {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .testimonial-belt {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
     }
 
     .testimonial-name {
@@ -1913,71 +2059,12 @@
       font-size: var(--text-base);
       font-weight: 600;
       color: var(--color-text);
-      margin-bottom: 0.15rem;
+      margin-bottom: 0.1rem;
     }
 
     .testimonial-meta {
       font-size: var(--text-xs);
       color: var(--color-text-muted);
-      margin-bottom: var(--space-sm);
-    }
-
-    .testimonial-stars {
-      display: flex;
-      gap: 0.2rem;
-      color: var(--color-gold);
-    }
-
-    .testimonial-stars svg {
-      fill: var(--color-gold);
-      color: var(--color-gold);
-    }
-
-    .testimonial-google-badge {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: var(--space-sm);
-    }
-
-    .testimonial-google-badge svg {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-
-    .testimonial-google-badge span {
-      font-size: var(--text-xs);
-      color: var(--color-text-muted);
-      letter-spacing: 0.02em;
-    }
-
-    /* Carousel navigation */
-    .testimonials__nav {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: var(--space-sm);
-      margin-top: var(--space-xl);
-    }
-
-    .testimonials__nav-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #ccc;
-      border: none;
-      cursor: pointer;
-      transition: all var(--duration-base) var(--ease-smooth);
-    }
-
-    .testimonials__nav-dot.active {
-      background: var(--color-gold);
-      transform: scale(1.3);
-    }
-
-    .testimonials__nav-dot:hover {
-      background: var(--color-gold-dark);
     }
 
 
@@ -2544,6 +2631,17 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
+      .testimonials__grid .testimonial-card:nth-child(-n+3),
+      .testimonials__grid .testimonial-card:nth-child(4),
+      .testimonials__grid .testimonial-card:nth-child(5) {
+        grid-column: auto;
+      }
+
+      .testimonial-featured {
+        padding: clamp(2rem, 4vw, 3rem);
+        padding-left: clamp(2.5rem, 5vw, 3.5rem);
+      }
+
       .steps__grid::before {
         left: calc(16.666%);
         right: calc(16.666%);
@@ -2695,7 +2793,17 @@
       .testimonials__grid {
         grid-template-columns: 1fr;
         max-width: 500px;
-        margin: 0 auto;
+        margin: var(--space-xl) auto 0;
+      }
+
+      .testimonials__grid .testimonial-card:nth-child(-n+3),
+      .testimonials__grid .testimonial-card:nth-child(4),
+      .testimonials__grid .testimonial-card:nth-child(5) {
+        grid-column: auto;
+      }
+
+      .testimonial-featured__quote {
+        font-size: var(--text-xl);
       }
 
       .contact-grid {
@@ -3832,56 +3940,98 @@
 
     <span class="section-label">MEMBER TESTIMONIALS</span>
 
-    <h2 class="section-heading">Hear What Our Members Have To Say</h2>
+    <h2 class="section-heading">Voices From the Mat</h2>
 
+    <div class="testimonials-proof">
+      <span class="testimonials-proof__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    </div>
+
+    <!-- Featured Testimonial -->
+    <div class="testimonial-featured reveal">
+      <span class="testimonial-featured__mark">&ldquo;</span>
+      <blockquote class="testimonial-featured__quote">As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. From day one while training, Coach Alex has been my rock. From the early struggles of being a white belt with a body that simply had to learn how to adapt to survive to being able to compete against able bodied competitors as a competent purple belt&mdash;Coach Alex has helped me overcome every challenge that I have encountered along the way, both on and off the mats. My coach and friend, my good wolf. Never give up!</blockquote>
+      <div class="testimonial-featured__footer">
+        <span class="testimonial-featured__belt belt-purple"></span>
+        <div>
+          <h4 class="testimonial-featured__name">Frank P.</h4>
+          <p class="testimonial-featured__meta">Purple Belt, Competitor, Artist</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Testimonial Grid -->
     <div class="testimonials__grid">
 
+      <!-- Row 1: Three equal cards -->
       <div class="testimonial-card reveal">
-        <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">I started training jiu jitsu in early 2021. I was out of shape and in search of something new in terms of working out. I thought I&rsquo;d try jiu jitsu. It turned out to be one of the best decisions I have ever made, and Alex Lucas is a big part of that. Alex was one of my first instructors, and he continues to be to this day. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student&rsquo;s progress. He&rsquo;s not just my coach anymore, but a friend on and off the mats. Jiu jitsu has become an incredibly important part of my life. Alex is a big reason why. I cannot recommend Alex and the instructors at Live Oak JJ enough. Sign up for a class, you won&rsquo;t regret it!</p>
-        <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Steve A.</h4>
-        <p class="testimonial-meta">Blue Belt, Attorney</p>
-      </div>
-
-      <div class="testimonial-card reveal">
-        <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">Having been on my journey from white belt to purple under the instruction of Coach Alex, I can attest to his mastery of the art of jiujitsu and his talent for teaching those concepts and techniques to his students. I was able to follow him in my early days as he broke down basic escapes and passes for the class to learn in a way that was easy to grasp. Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self-control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes well structured, goal oriented, and most of all fun plus entertaining. He has a vast library in his head of not just BJJ tactics and strategy, but also competitive experience. He helped me organize my own game plan for competitions I entered and was an invaluable support.<br><br>But above all these things, more than him being a leader, an expert, a supporter, or a friend, Coach Alex is a student of the craft and he makes you feel welcome to follow him as he continues to grow in this special sport. I can&rsquo;t recommend him enough to practitioners at any level.</p>
-        <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Tito P.</h4>
-        <p class="testimonial-meta">Purple Belt, Art Director</p>
-      </div>
-
-      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <span class="testimonial-quote-mark">&ldquo;</span>
         <p class="testimonial-text">Coach Alex shows up for his team and his students. His love for Jiu Jitsu and passion for learning is inspiring to those he shares the mats with. His expertise, technical, physical, and mental preparation have helped me succeed numerous times in competitions. These lessons I&rsquo;ve since applied to other aspects of my life. He is a leader.</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Nick R.</h4>
-        <p class="testimonial-meta">Purple Belt, Competitor, Nutrition Consultant, Sponsored Athlete</p>
+        <div class="testimonial-attribution">
+          <span class="testimonial-belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-name">Nick R.</h4>
+            <p class="testimonial-meta">Purple Belt, Competitor, Nutrition Consultant</p>
+          </div>
+        </div>
       </div>
 
       <div class="testimonial-card reveal">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. With his wealth of knowledge and experience of jiu jitsu and other martial arts, anyone that comes in to learn with Alex will come away with something new and challenging to develop. He will help guide your practice to be as sharp as possible and tailored to your style whether you're a hobbyist or a competitor. Alex has helped me grow as a jiu jitsu practitioner and as a person. His care for his family, his friends, and his community is unparalleled. You have an outstanding coach and person in Alex Lucas.</p>
+        <p class="testimonial-text">Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. With his wealth of knowledge and experience, anyone that comes in to learn with Alex will come away with something new and challenging to develop. He will help guide your practice to be as sharp as possible and tailored to your style whether you&rsquo;re a hobbyist or a competitor.</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Brittany R.</h4>
-        <p class="testimonial-meta">Purple Belt, Stunt Person, Artist</p>
+        <div class="testimonial-attribution">
+          <span class="testimonial-belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-name">Brittany R.</h4>
+            <p class="testimonial-meta">Purple Belt, Stunt Person, Artist</p>
+          </div>
+        </div>
       </div>
 
       <div class="testimonial-card reveal">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. From day one while training, Coach Alex has been my rock. From the early struggles of being a white belt with a body that simply had to learn how to adapt to survive to being able to compete against able bodied competitors as a competent purple belt Coach Alex has helped me overcome every challenge that I have encountered along the way, both on and off the mats. My coach and friend, my good wolf. Never give up!</p>
+        <p class="testimonial-text">Having trained extensively under the guidance of Professor Alex Lucas, I can confidently say he&rsquo;s a standout in his field. His mastery of Jiu Jitsu is matched only by his passion for teaching and mentoring. Coach Alex creates an environment that fosters growth and camaraderie among students of all levels. His personalized approach ensures that each student receives the attention and guidance needed to progress.</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Frank P.</h4>
-        <p class="testimonial-meta">Purple Belt, Competitor, Artist</p>
+        <div class="testimonial-attribution">
+          <span class="testimonial-belt belt-white"></span>
+          <div>
+            <h4 class="testimonial-name">Karin H.</h4>
+            <p class="testimonial-meta">White Belt, Competitor, Attorney</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Two wider cards -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <span class="testimonial-quote-mark">&ldquo;</span>
+        <p class="testimonial-text">I started training jiu jitsu in early 2021. I was out of shape and in search of something new in terms of working out. I thought I&rsquo;d try jiu jitsu. It turned out to be one of the best decisions I have ever made, and Alex Lucas is a big part of that. Alex was one of my first instructors, and he continues to be to this day. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student&rsquo;s progress. He&rsquo;s not just my coach anymore, but a friend on and off the mats. Jiu jitsu has become an incredibly important part of my life. Alex is a big reason why. I cannot recommend Alex and the instructors at Live Oak JJ enough. Sign up for a class, you won&rsquo;t regret it!</p>
+        <div class="testimonial-divider"></div>
+        <div class="testimonial-attribution">
+          <span class="testimonial-belt belt-blue"></span>
+          <div>
+            <h4 class="testimonial-name">Steve A.</h4>
+            <p class="testimonial-meta">Blue Belt, Attorney</p>
+          </div>
+        </div>
       </div>
 
       <div class="testimonial-card reveal">
+        <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
         <span class="testimonial-quote-mark">&ldquo;</span>
-        <p class="testimonial-text">Having trained extensively under the guidance of Professor Alex Lucas, I can confidently say he&rsquo;s a standout in his field. His mastery of Jiu Jitsu is matched only by his passion for teaching and mentoring. Coach Alex creates an environment that fosters growth and camaraderie among students of all levels. His personalized approach ensures that each student receives the attention and guidance needed to progress. Beyond technique, Coach Alex instills values of discipline, respect, and perseverance, which resonate both on and off the mat. My journey with Coach Alex has been immensely rewarding, thanks to his dedication and expertise. He has not only improved my skills but also inspired me to push beyond my limits and embrace the spirit of Jiu Jitsu. For anyone seeking a dedicated and knowledgeable mentor in Jiu Jitsu, Professor Lucas at Live Oak Jiu Jitsu Academy is second to none.</p>
+        <p class="testimonial-text">Having been on my journey from white belt to purple under the instruction of Coach Alex, I can attest to his mastery of the art of jiujitsu and his talent for teaching those concepts and techniques to his students. Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self-control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes well structured, goal oriented, and most of all fun plus entertaining. Above all, Coach Alex is a student of the craft and he makes you feel welcome to follow him as he continues to grow in this special sport. I can&rsquo;t recommend him enough to practitioners at any level.</p>
         <div class="testimonial-divider"></div>
-        <h4 class="testimonial-name">Karin H.</h4>
-        <p class="testimonial-meta">White Belt, Competitor, Attorney</p>
+        <div class="testimonial-attribution">
+          <span class="testimonial-belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-name">Tito P.</h4>
+            <p class="testimonial-meta">Purple Belt, Art Director</p>
+          </div>
+        </div>
       </div>
 
     </div>
