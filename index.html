@@ -1703,10 +1703,9 @@
        ================================================================ */
     .getting-started-section {
       padding: var(--space-section) 0;
-      background: var(--color-black);
+      background: var(--color-dark);
       position: relative;
       overflow: hidden;
-      color: #ffffff;
     }
 
     .getting-started-section .section-label {
@@ -1714,22 +1713,17 @@
     }
 
     .getting-started-section .section-heading {
-      color: #ffffff;
+      color: var(--color-text);
+      max-width: 600px;
     }
 
+    /* Background image hidden — clean light section */
     .getting-started-bg {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-position: center;
-      z-index: 0;
+      display: none;
     }
 
     .getting-started-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(10, 10, 10, 0.85);
-      z-index: 1;
+      display: none;
     }
 
     .getting-started-section .container {
@@ -1740,20 +1734,21 @@
     .steps__grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-lg);
+      gap: var(--space-xl);
       position: relative;
-      margin-top: var(--space-3xl);
+      margin-top: var(--space-2xl);
     }
 
-    /* Connecting line between steps */
+    /* Connecting timeline between step numbers */
     .steps__grid::before {
       content: '';
       position: absolute;
-      top: 60px;
-      left: calc(16.666% + 1rem);
-      right: calc(16.666% + 1rem);
-      height: 1px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.2), var(--color-gold), rgba(255,255,255,0.2));
+      top: 36px;
+      left: calc(16.666%);
+      right: calc(16.666%);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--color-gold), var(--color-gold-light), var(--color-gold), transparent);
+      opacity: 0.18;
       z-index: 0;
     }
 
@@ -1761,50 +1756,52 @@
       text-align: center;
       position: relative;
       z-index: 1;
-      background: rgba(0,0,0,0.6);
-      color: #fff;
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: var(--border-radius-lg);
-      padding: clamp(2rem, 3vw, 2.5rem);
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      padding: 0;
     }
 
     .step-number {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 80px;
-      height: 80px;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
-      margin: 0 auto var(--space-lg);
-      background: rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.2);
+      margin: 0 auto var(--space-xl);
+      background: var(--color-gold);
+      border: none;
       font-family: var(--font-display);
-      font-size: var(--text-2xl);
+      font-size: var(--text-xl);
       font-weight: 600;
-      color: var(--color-gold);
+      color: #ffffff;
       transition: all var(--duration-base) var(--ease-smooth);
+      box-shadow: 0 4px 20px rgba(193, 12, 16, 0.15);
+      position: relative;
     }
 
     .step-card:hover .step-number {
-      border-color: var(--color-gold);
-      box-shadow: var(--shadow-gold);
-      transform: scale(1.08);
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(193, 12, 16, 0.25);
     }
 
     .step-title {
-      font-family: var(--font-body);
-      font-size: var(--text-sm);
+      font-family: var(--font-display);
+      font-size: var(--text-xl);
       font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #ffffff;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--color-text);
       margin-bottom: var(--space-sm);
+      line-height: 1.25;
     }
 
     .step-description {
+      font-family: var(--font-body);
       font-size: var(--text-sm);
       font-weight: 300;
-      color: rgba(255, 255, 255, 0.75);
+      color: var(--color-text-muted);
       line-height: 1.7;
       max-width: 280px;
       margin: 0 auto;
@@ -2643,6 +2640,7 @@
       }
 
       .steps__grid::before {
+        top: 36px;
         left: calc(16.666%);
         right: calc(16.666%);
       }
@@ -3911,21 +3909,21 @@
       <!-- Step 1 -->
       <div class="step-card reveal">
         <span class="step-number">01</span>
-        <h3 class="step-title">SCHEDULE A VISIT</h3>
+        <h3 class="step-title">Schedule a Visit</h3>
         <p class="step-description">We have a fundamental program specially built for beginners where no experience is necessary.</p>
       </div>
 
       <!-- Step 2 -->
       <div class="step-card reveal">
         <span class="step-number">02</span>
-        <h3 class="step-title">START YOUR 3 CALENDAR DAY TRIAL</h3>
+        <h3 class="step-title">Start Your Free Trial</h3>
         <p class="step-description">Come train over three calendar days so you can get to know our instructors, program, and school atmosphere.</p>
       </div>
 
       <!-- Step 3 -->
       <div class="step-card reveal">
         <span class="step-number">03</span>
-        <h3 class="step-title">START YOUR JOURNEY WITH US</h3>
+        <h3 class="step-title">Join the Family</h3>
         <p class="step-description">You will have an entire family and a beautiful community supporting you.</p>
       </div>
 
