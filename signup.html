@@ -437,9 +437,9 @@
       transition: all var(--fast) var(--smooth);
       -webkit-tap-highlight-color: transparent;
     }
-    .btn-submit:hover { background: var(--red-light); box-shadow: 0 4px 24px var(--red-glow-md); transform: translateY(-1px); }
-    .btn-submit:active { transform: translateY(0); }
-    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .btn-submit:hover:not(:disabled) { background: var(--red-light); box-shadow: 0 4px 24px var(--red-glow-md); transform: translateY(-1px); }
+    .btn-submit:active:not(:disabled) { transform: translateY(0); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; background: #999; }
 
     /* ERROR */
     .form-error { display: none; padding: 0.75rem 1rem; background: #fef2f2; border: 1px solid #fecaca; border-radius: var(--radius); color: #991b1b; font-size: 0.8rem; margin-bottom: 1.25rem; line-height: 1.45; }
@@ -830,7 +830,7 @@
                 <span class="consent-copy">I confirm that I am 18 or older, or that I am the parent, legal guardian, or otherwise authorized adult for each participant whose information I submit, and I consent to the collection and use of that information to schedule and manage the trial.</span>
               </label>
             </div>
-            <button type="submit" class="btn-submit" id="submitBtn">Sign Up for Your Free Trial</button>
+            <button type="submit" class="btn-submit" id="submitBtn" disabled>Sign Up for Your Free Trial</button>
           </div>
 
         </form>
@@ -1154,7 +1154,7 @@
     function showError(message) {
       formError.textContent = message;
       formError.classList.add('show');
-      formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      formError.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
     ['jmPhone', 'chContactPhone', 'btPhone'].forEach(function(id) {
@@ -1662,9 +1662,25 @@
       };
     }
 
+    var smsConsent = document.getElementById('smsConsent');
+    var legalConsent = document.getElementById('legalConsent');
+    var guardianConsent = document.getElementById('guardianConsent');
+
+    function allConsentsChecked() {
+      return smsConsent.checked && legalConsent.checked && guardianConsent.checked;
+    }
+
+    function updateSubmitState() {
+      submitBtn.disabled = !allConsentsChecked();
+    }
+
+    smsConsent.addEventListener('change', updateSubmitState);
+    legalConsent.addEventListener('change', updateSubmitState);
+    guardianConsent.addEventListener('change', updateSubmitState);
+
     function restoreSubmitButton() {
       submitBtn.textContent = 'Sign Up for Your Free Trial';
-      submitBtn.disabled = false;
+      submitBtn.disabled = !allConsentsChecked();
     }
 
     function submitPayload(payload, participants) {
@@ -1709,9 +1725,9 @@
       clearErrors();
 
       if (!currentMode) { showError('Please select who this signup is for.'); return; }
-      if (!document.getElementById('smsConsent').checked) { showError('Please consent to receiving text messages to continue.'); return; }
-      if (!document.getElementById('legalConsent').checked) { showError('Please agree to the Privacy Policy and Terms of Service to continue.'); return; }
-      if (!document.getElementById('guardianConsent').checked) { showError('Please confirm you are authorized to submit information for each participant.'); return; }
+      if (!smsConsent.checked) { showError('Please consent to receiving text messages to continue.'); return; }
+      if (!legalConsent.checked) { showError('Please agree to the Privacy Policy and Terms of Service to continue.'); return; }
+      if (!guardianConsent.checked) { showError('Please confirm you are authorized to submit information for each participant.'); return; }
 
       if (currentMode === 'just-me') {
         if (!validateField('jmFirst', 'Please enter your first name.')) return;
