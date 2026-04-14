@@ -477,6 +477,11 @@
       border-width: 0 2px 2px 0;
       transform: rotate(45deg);
     }
+    .consent-copy a {
+      color: var(--red-dark);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
 
     /* SUBMIT */
     .btn-submit {
@@ -893,7 +898,19 @@
             <div class="consent">
               <label class="consent-label">
                 <input type="checkbox" id="smsConsent">
-                <span>I consent to receiving text messages from Live Oak Jiu Jitsu Academy. Message and data rates may apply. Reply BYE to opt out.</span>
+                <span class="consent-copy">I consent to receiving text messages from Live Oak Jiu Jitsu Academy about my inquiry, booking, and follow-up. Message and data rates may apply. Reply BYE to opt out.</span>
+              </label>
+            </div>
+            <div class="consent">
+              <label class="consent-label">
+                <input type="checkbox" id="legalConsent">
+                <span class="consent-copy">I have read and agree to the <a href="/privacy-policy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a> and <a href="/terms-of-service.html" target="_blank" rel="noopener noreferrer">Terms of Service</a>.</span>
+              </label>
+            </div>
+            <div class="consent">
+              <label class="consent-label">
+                <input type="checkbox" id="guardianConsent">
+                <span class="consent-copy">I confirm that I am 18 or older, or that I am the parent, legal guardian, or otherwise authorized adult for each participant whose information I submit, and I consent to the collection and use of that information to schedule and manage the trial.</span>
               </label>
             </div>
             <button type="submit" class="btn-submit" id="submitBtn">Sign Up for Your Free Trial</button>
@@ -1396,9 +1413,13 @@
 
       if (!currentMode) { showError('Please select who this signup is for.'); return; }
       if (!document.getElementById('smsConsent').checked) { showError('Please consent to receiving text messages to continue.'); return; }
+      if (!document.getElementById('legalConsent').checked) { showError('Please agree to the Privacy Policy and Terms of Service to continue.'); return; }
+      if (!document.getElementById('guardianConsent').checked) { showError('Please confirm you are authorized to submit information for each participant.'); return; }
 
       var payload = {
         sms_consent: true,
+        legal_consent: true,
+        authorized_submitter_confirmation: true,
         signup_source: SIGNUP_SOURCE,
         signup_path: SIGNUP_PATH,
         page_url: window.location.href

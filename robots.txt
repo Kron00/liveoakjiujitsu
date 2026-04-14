@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /output/
 
-Sitemap: https://liveoakjiujitsuacademy.com/sitemap.xml
+Sitemap: https://liveoakjiujitsu.vercel.app/sitemap.xml
