@@ -242,6 +242,15 @@
     .schedule-section.show { display: block; }
     .schedule-prompt { font-size: 0.78rem; font-weight: 500; color: var(--text); margin-bottom: 0.6rem; }
     .schedule-note { font-size: 0.74rem; color: var(--text-muted); margin: -0.2rem 0 1.1rem; line-height: 1.45; }
+    .slot-feedback {
+      display: none;
+      margin: -0.3rem 0 1rem;
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: var(--text-muted);
+    }
+    .slot-feedback.show { display: block; }
+    .slot-feedback.error { color: #991b1b; }
     .day-picker { margin-bottom: 1.15rem; }
     .week-nav {
       display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.6rem;
@@ -522,22 +531,22 @@
                 </label>
               </div>
               <div class="mode-option">
-                <input type="radio" id="modeOthers" name="mode" value="others">
-                <label for="modeOthers">
+                <input type="radio" id="modeChild" name="mode" value="my-child">
+                <label for="modeChild">
                   <span class="mode-icon"><svg width="20" height="18" viewBox="0 0 28 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 21v-2a4 4 0 0 0-4-4h-2"/><circle cx="12" cy="7" r="4"/><circle cx="20" cy="9" r="3"/><path d="M6 21v-2a4 4 0 0 1 4-4h4"/></svg></span>
                   <div class="mode-text-wrap">
                     <div class="mode-title">My Child / Someone Else</div>
-                    <div class="mode-sub">I'm signing someone else up</div>
+                    <div class="mode-sub">I'm signing up my child or another dependent</div>
                   </div>
                 </label>
               </div>
               <div class="mode-option">
-                <input type="radio" id="modeBoth" name="mode" value="both">
-                <label for="modeBoth">
+                <input type="radio" id="modeMeOther" name="mode" value="me-plus-other">
+                <label for="modeMeOther">
                   <span class="mode-icon"><svg width="20" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
                   <div class="mode-text-wrap">
                     <div class="mode-title">Me + Others</div>
-                    <div class="mode-sub">I'm signing up myself and others</div>
+                    <div class="mode-sub">I'm signing up myself and one or more additional people</div>
                   </div>
                 </label>
               </div>
@@ -578,7 +587,7 @@
                 <input type="text" id="jmDobDay" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Day" aria-label="Birth day">
                 <input type="text" id="jmDobYear" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Year" aria-label="Birth year">
               </div>
-              <div class="dob-help">Month / day / year</div>
+              <div class="dob-help">Month / day / year. Class times appear after date of birth.</div>
             </div>
             <div class="program-tag" id="jmTag">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -621,69 +630,126 @@
             </div>
           </div>
 
-          <!-- ===== PANEL B: Others only ===== -->
-          <div class="panel" id="panelOthers">
+          <!-- ===== PANEL B: My Child ===== -->
+          <div class="panel" id="panelMyChild">
             <div class="divider"></div>
-            <div class="section-label">Your Contact Information</div>
+            <div class="section-label">Who's Training?</div>
+            <div class="section-note">Use this option when you're signing up your child or another dependent.</div>
             <div class="row">
               <div class="field">
-                <label for="otFirst">First Name</label>
-                <input type="text" id="otFirst" placeholder="First name" autocomplete="given-name">
+                <label for="chFirst">Child's First Name</label>
+                <input type="text" id="chFirst" placeholder="First name" autocomplete="off">
               </div>
               <div class="field">
-                <label for="otLast">Last Name</label>
-                <input type="text" id="otLast" placeholder="Last name" autocomplete="family-name">
+                <label for="chLast">Child's Last Name</label>
+                <input type="text" id="chLast" placeholder="Last name" autocomplete="off">
               </div>
             </div>
             <div class="field">
-              <label for="otPhone">Phone Number</label>
-              <input type="tel" id="otPhone" placeholder="(555) 123-4567" autocomplete="tel">
+              <label for="chDobMonth">Child's Date of Birth <span class="optional">(used to show the right class times)</span></label>
+              <div class="dob-grid">
+                <select id="chDobMonth" aria-label="Child birth month">
+                  <option value="" selected>Month</option>
+                  <option value="1">Jan</option>
+                  <option value="2">Feb</option>
+                  <option value="3">Mar</option>
+                  <option value="4">Apr</option>
+                  <option value="5">May</option>
+                  <option value="6">Jun</option>
+                  <option value="7">Jul</option>
+                  <option value="8">Aug</option>
+                  <option value="9">Sep</option>
+                  <option value="10">Oct</option>
+                  <option value="11">Nov</option>
+                  <option value="12">Dec</option>
+                </select>
+                <input type="text" id="chDobDay" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Day" aria-label="Child birth day">
+                <input type="text" id="chDobYear" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Year" aria-label="Child birth year">
+              </div>
+              <div class="dob-help">Month / day / year. Class times appear after date of birth.</div>
+            </div>
+            <div class="program-tag" id="chTag">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span id="chTagText"></span>
+            </div>
+            <div class="schedule-section" id="chSchedule">
+              <div class="divider"></div>
+              <div class="section-label">Pick Your Child's Class Time</div>
+              <div class="schedule-note">Available class times are based on your child's date of birth.</div>
+              <div class="schedule-prompt">What day works best?</div>
+              <div class="day-picker" id="chDays"></div>
+              <div class="schedule-prompt" id="chTimeLabel" style="display:none">What time?</div>
+              <div class="time-picker" id="chTimes"></div>
+              <div class="schedule-confirm" id="chConfirm">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                <span id="chConfirmText"></span>
+              </div>
             </div>
             <div class="field">
-              <label for="otEmail">Email Address</label>
-              <input type="email" id="otEmail" placeholder="you@example.com" autocomplete="email">
+              <label for="chAllergies">Allergies / Medical Notes <span class="optional">(optional)</span></label>
+              <input type="text" id="chAllergies" placeholder="Any allergies or conditions we should know about">
             </div>
-
-            <button type="button" class="expand-btn" id="otParent2Toggle">
+            <div class="field">
+              <label for="chExperience">Prior Martial Arts Experience <span class="optional">(optional)</span></label>
+              <select id="chExperience">
+                <option value="" selected>Select experience level</option>
+                <option value="None">None</option>
+                <option value="Less than 1 year">Less than 1 year</option>
+                <option value="1-3 years">1–3 years</option>
+                <option value="3+ years">3+ years</option>
+              </select>
+            </div>
+            <div class="divider"></div>
+            <div class="section-label">Parent / Guardian Contact Information</div>
+            <div class="row">
+              <div class="field">
+                <label for="chContactFirst">First Name</label>
+                <input type="text" id="chContactFirst" placeholder="First name" autocomplete="given-name">
+              </div>
+              <div class="field">
+                <label for="chContactLast">Last Name</label>
+                <input type="text" id="chContactLast" placeholder="Last name" autocomplete="family-name">
+              </div>
+            </div>
+            <div class="field">
+              <label for="chContactPhone">Phone Number</label>
+              <input type="tel" id="chContactPhone" placeholder="(555) 123-4567" autocomplete="tel">
+            </div>
+            <div class="field">
+              <label for="chContactEmail">Email Address</label>
+              <input type="email" id="chContactEmail" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <button type="button" class="expand-btn" id="chParent2Toggle">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              <span id="otParent2Text">Add Second Parent / Guardian</span>
+              <span id="chParent2Text">Add Second Parent / Guardian</span>
             </button>
-            <div class="expandable" id="otParent2Section">
+            <div class="expandable" id="chParent2Section">
               <div style="margin-top:1rem">
                 <div class="section-label">Second Parent / Guardian</div>
                 <div class="row">
                   <div class="field">
-                    <label for="otP2First">First Name</label>
-                    <input type="text" id="otP2First" placeholder="First name">
+                    <label for="chP2First">First Name</label>
+                    <input type="text" id="chP2First" placeholder="First name">
                   </div>
                   <div class="field">
-                    <label for="otP2Last">Last Name</label>
-                    <input type="text" id="otP2Last" placeholder="Last name">
+                    <label for="chP2Last">Last Name</label>
+                    <input type="text" id="chP2Last" placeholder="Last name">
                   </div>
                 </div>
                 <div class="field">
-                  <label for="otP2Phone">Phone <span class="optional">(optional)</span></label>
-                  <input type="tel" id="otP2Phone" placeholder="(555) 123-4567">
+                  <label for="chP2Phone">Phone <span class="optional">(optional)</span></label>
+                  <input type="tel" id="chP2Phone" placeholder="(555) 123-4567">
                 </div>
                 <div class="field">
-                  <label for="otP2Email">Email <span class="optional">(optional)</span></label>
-                  <input type="email" id="otP2Email" placeholder="you@example.com">
+                  <label for="chP2Email">Email <span class="optional">(optional)</span></label>
+                  <input type="email" id="chP2Email" placeholder="you@example.com">
                 </div>
               </div>
             </div>
-
-            <div class="divider"></div>
-            <div class="section-label">Who's Training?</div>
-            <div class="section-note">Each person picks their own class time after you enter their birthdate.</div>
-            <div id="otPersonList"></div>
-            <button type="button" class="add-btn" id="otAddBtn">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Add a Person
-            </button>
           </div>
 
           <!-- ===== PANEL C: Me + Others ===== -->
-          <div class="panel" id="panelBoth">
+          <div class="panel" id="panelMeOther">
             <div class="divider"></div>
             <div class="section-label">Your Information</div>
             <div class="row">
@@ -717,7 +783,7 @@
                 <input type="text" id="btDobDay" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Day" aria-label="Birth day">
                 <input type="text" id="btDobYear" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Year" aria-label="Birth year">
               </div>
-              <div class="dob-help">Month / day / year</div>
+              <div class="dob-help">Month / day / year. Class times appear after date of birth.</div>
             </div>
             <div class="program-tag" id="btTag">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -758,6 +824,16 @@
                 <option value="3+ years">3+ years</option>
               </select>
             </div>
+
+            <div class="divider"></div>
+            <div class="section-label">Additional People</div>
+            <div class="section-note">Add each additional person and choose their class time.</div>
+            <div id="btExtraList"></div>
+            <button type="button" class="add-btn" id="btAddBtn">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Add a Person
+            </button>
+
             <button type="button" class="expand-btn" id="btParent2Toggle">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
               <span id="btParent2Text">Add Second Parent / Guardian</span>
@@ -765,13 +841,14 @@
             <div class="expandable" id="btParent2Section">
               <div style="margin-top:1rem">
                 <div class="section-label">Second Parent / Guardian</div>
+                <div class="section-note">This will be attached to each additional person.</div>
                 <div class="row">
                   <div class="field">
-                    <label for="btP2First">First Name</label>
+                    <label for="btP2First">First Name <span class="optional">(optional)</span></label>
                     <input type="text" id="btP2First" placeholder="First name">
                   </div>
                   <div class="field">
-                    <label for="btP2Last">Last Name</label>
+                    <label for="btP2Last">Last Name <span class="optional">(optional)</span></label>
                     <input type="text" id="btP2Last" placeholder="Last name">
                   </div>
                 </div>
@@ -785,15 +862,6 @@
                 </div>
               </div>
             </div>
-
-            <div class="divider"></div>
-            <div class="section-label">Who Else Is Training?</div>
-            <div class="section-note">Each additional person picks their own class time after you enter their birthdate.</div>
-            <div id="btPersonList"></div>
-            <button type="button" class="add-btn" id="btAddBtn">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Add a Person
-            </button>
           </div>
 
           <!-- ===== CONSENT + SUBMIT (shared) ===== -->
@@ -846,30 +914,32 @@
     <a href="tel:+17077557247">(707) 755-7247</a>
   </footer>
 
+  <script src="/api/runtime-config.js"></script>
   <script>
   (function() {
-    var WEBHOOK = 'https://services.leadconnectorhq.com/hooks/lotrqaddDPbq4iNMladP/webhook-trigger/I3uVatKWBy04ptkMOYPD';
-    var SIGNUP_SOURCE = 'website';
-    var SIGNUP_PATH = '/signup';
-    var LABELS = { sprouts: 'Sprouts (Ages 3\u20135)', youth: 'Youth BJJ (Ages 6\u201312)', adult: 'Adult & Teen BJJ (Ages 13+)' };
-    var DAYS = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    var SCHEDULE = {
-      adult: { Monday:['6:30 AM','12:00 PM','6:00 PM'], Tuesday:['6:30 AM','12:00 PM','6:00 PM'], Wednesday:['6:30 AM','12:00 PM','6:00 PM'], Thursday:['6:30 AM','12:00 PM','6:00 PM'], Friday:['6:30 AM','12:00 PM','6:00 PM'], Saturday:['10:00 AM'] },
-      youth: { Monday:['11:00 AM','4:00 PM'], Tuesday:['11:00 AM','4:00 PM'], Wednesday:['11:00 AM','4:00 PM'], Thursday:['11:00 AM','4:00 PM'], Friday:['11:00 AM','4:00 PM'], Saturday:['9:00 AM'] },
-      sprouts: { Monday:['5:00 PM'], Tuesday:['5:00 PM'], Wednesday:['5:00 PM'], Thursday:['5:00 PM'] }
-    };
+    var AVAILABLE_SLOTS_URL = '/api/available-slots';
+    var SUBMIT_ERROR_MESSAGE = 'Something went wrong. Please try again or call us at (707) 755-7247.';
+    var SLOT_ERROR_MESSAGE = "Couldn't load class times. Please try again or call (707) 755-7247.";
+    var NO_SLOTS_MESSAGE = 'No available class times right now. Please call us at (707) 755-7247.';
+    var TOO_YOUNG_MESSAGE = 'Participants must be at least 3 years old.';
+    var LABELS = { sprouts: 'Sprouts (Ages 3–5)', youth: 'Youth BJJ (Ages 6–12)', adult: 'Adult & Teen BJJ (Ages 13+)' };
 
-    // Date helpers
-    var MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-    var DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    function padTime(t) { return t.replace(/^(\d):/, '0$1:'); }
+    function getWebhookUrl() {
+      return window.__LIVE_OAK_CONFIG__ && window.__LIVE_OAK_CONFIG__.webhookUrl
+        ? window.__LIVE_OAK_CONFIG__.webhookUrl
+        : '';
+    }
 
     function pad2(n) { return n < 10 ? '0' + n : '' + n; }
-    function toISO(d) { return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate()); }
-    function toShort(d) { return MONTHS[d.getMonth()] + ' ' + d.getDate(); }
 
-    // Helpers
-    function getProgram(age) { var a = parseInt(age, 10); if (a >= 3 && a <= 5) return 'sprouts'; if (a >= 6 && a <= 12) return 'youth'; if (a >= 13) return 'adult'; return null; }
+    function getProgram(age) {
+      var a = parseInt(age, 10);
+      if (a >= 3 && a <= 5) return 'sprouts';
+      if (a >= 6 && a <= 12) return 'youth';
+      if (a >= 13) return 'adult';
+      return null;
+    }
+
     function getAgeFromDob(dobValue) {
       if (!dobValue) return null;
       var dob = new Date(dobValue + 'T00:00:00');
@@ -882,14 +952,7 @@
       if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) age--;
       return age;
     }
-    function getProgramFromDob(dobValue) {
-      var age = getAgeFromDob(dobValue);
-      return age === null ? null : getProgram(age);
-    }
-    function getProgramLabelFromDob(dobValue) {
-      var program = getProgramFromDob(dobValue);
-      return program ? LABELS[program] : '';
-    }
+
     function getDobFieldState(parts) {
       var month = parts.month.value.trim();
       var day = parts.day.value.trim();
@@ -897,32 +960,235 @@
       if (!month && !day && !year) return { complete: false, valid: false, value: '', empty: true };
       if (!month || !day || !year) return { complete: false, valid: false, value: '', empty: false };
       if (!/^\d{1,2}$/.test(day) || !/^\d{4}$/.test(year) || !/^\d{1,2}$/.test(month)) return { complete: true, valid: false, value: '', empty: false };
-      var m = parseInt(month, 10), d = parseInt(day, 10), y = parseInt(year, 10);
+      var m = parseInt(month, 10);
+      var d = parseInt(day, 10);
+      var y = parseInt(year, 10);
       var currentYear = new Date().getFullYear();
       if (m < 1 || m > 12 || d < 1 || d > 31 || y < 1900 || y > currentYear) return { complete: true, valid: false, value: '', empty: false };
       var dob = new Date(y, m - 1, d);
       if (dob.getFullYear() !== y || dob.getMonth() !== m - 1 || dob.getDate() !== d) return { complete: true, valid: false, value: '', empty: false };
       return { complete: true, valid: true, value: y + '-' + pad2(m) + '-' + pad2(d), empty: false };
     }
+
     function bindDobInputs(parts, handler) {
       ['month', 'day', 'year'].forEach(function(key) {
         parts[key].addEventListener(key === 'month' ? 'change' : 'input', handler);
       });
     }
+
     function setDobFieldError(parts, hasError) {
       ['month', 'day', 'year'].forEach(function(key) {
         parts[key].classList.toggle('field-error', hasError);
       });
     }
-    function formatPhone(v) { var d = v.replace(/\D/g, ''); if (!d) return ''; if (d.length <= 3) return '(' + d; if (d.length <= 6) return '(' + d.slice(0,3) + ') ' + d.slice(3); return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6,10); }
-    function phoneFormat(el) { el.addEventListener('input', function(e) { var p = e.target.selectionStart, ol = e.target.value.length; e.target.value = formatPhone(e.target.value); e.target.setSelectionRange(p + e.target.value.length - ol, p + e.target.value.length - ol); }); }
-    function validEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
-    function validPhone(p) { return p.replace(/\D/g,'').length >= 10; }
-    function toE164US(p) {
-      var d = p.replace(/\D/g, '');
-      if (d.length === 10) return '+1' + d;
-      if (d.length === 11 && d.charAt(0) === '1') return '+' + d;
-      return p.trim();
+
+    function formatPhone(value) {
+      var digits = value.replace(/\D/g, '');
+      if (!digits) return '';
+      if (digits.length <= 3) return '(' + digits;
+      if (digits.length <= 6) return '(' + digits.slice(0, 3) + ') ' + digits.slice(3);
+      return '(' + digits.slice(0, 3) + ') ' + digits.slice(3, 6) + '-' + digits.slice(6, 10);
+    }
+
+    function phoneFormat(el) {
+      el.addEventListener('input', function(e) {
+        var selectionStart = e.target.selectionStart;
+        var oldLength = e.target.value.length;
+        e.target.value = formatPhone(e.target.value);
+        e.target.setSelectionRange(selectionStart + e.target.value.length - oldLength, selectionStart + e.target.value.length - oldLength);
+      });
+    }
+
+    function validEmail(value) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value); }
+    function validPhone(value) { return value.replace(/\D/g, '').length >= 10; }
+
+    function toE164US(value) {
+      var digits = value.replace(/\D/g, '');
+      if (digits.length === 10) return '+1' + digits;
+      if (digits.length === 11 && digits.charAt(0) === '1') return '+' + digits;
+      return value.trim();
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function(char) {
+        return {
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+        }[char];
+      });
+    }
+
+    function fetchWithTimeout(url, options, timeoutMs, controller) {
+      var requestController = controller || new AbortController();
+      requestController.__timedOut = false;
+      var timer = setTimeout(function() {
+        requestController.__timedOut = true;
+        requestController.abort();
+      }, timeoutMs);
+
+      var requestOptions = options || {};
+      requestOptions.signal = requestController.signal;
+
+      return fetch(url, requestOptions).finally(function() {
+        clearTimeout(timer);
+      });
+    }
+
+    function ensureSlotFeedback(section) {
+      var existing = section.querySelector('.slot-feedback');
+      if (existing) return existing;
+      var feedback = document.createElement('div');
+      feedback.className = 'slot-feedback';
+      var note = section.querySelector('.schedule-note');
+      note.insertAdjacentElement('afterend', feedback);
+      return feedback;
+    }
+
+    function setSlotFeedback(state, message, kind) {
+      if (!state.feedbackEl) return;
+      state.feedbackEl.className = 'slot-feedback';
+      if (!message) {
+        state.feedbackEl.textContent = '';
+        return;
+      }
+      state.feedbackEl.textContent = message;
+      state.feedbackEl.classList.add('show');
+      if (kind) state.feedbackEl.classList.add(kind);
+    }
+
+    function clearSlotFeedback(state) {
+      if (!state.feedbackEl) return;
+      state.feedbackEl.textContent = '';
+      state.feedbackEl.className = 'slot-feedback';
+    }
+
+    function cancelScheduleRequest(state) {
+      if (state.abortController) {
+        state.abortController.abort();
+        state.abortController = null;
+      }
+    }
+
+    function resetScheduleSelection(state, timeLabel, timesEl, confirmEl) {
+      state.day = null;
+      state.date = null;
+      state.dateShort = null;
+      state.time = null;
+      state.selectedSlot = null;
+      state.selectedDay = null;
+      state.appointmentDatetime = null;
+      timeLabel.style.display = 'none';
+      timesEl.classList.remove('show');
+      timesEl.innerHTML = '';
+      confirmEl.classList.remove('show');
+    }
+
+    function resetScheduleUI(state, daysEl, timeLabel, timesEl, confirmEl) {
+      resetScheduleSelection(state, timeLabel, timesEl, confirmEl);
+      state.availableDays = [];
+      daysEl.innerHTML = '';
+      clearSlotFeedback(state);
+    }
+
+    function setActiveBtn(container, value, attr) {
+      var buttons = container.querySelectorAll('button');
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.toggle('active', buttons[i].getAttribute(attr) === value);
+      }
+    }
+
+    function buildDayBtns(container, days, onDayClick) {
+      container.innerHTML = '';
+      if (!days.length) return;
+
+      var weeks = [];
+      for (var i = 0; i < days.length; i += 7) weeks.push(days.slice(i, i + 7));
+      var currentWeek = 0;
+      var selectedDate = null;
+
+      var nav = document.createElement('div');
+      nav.className = 'week-nav';
+      var prevBtn = document.createElement('button');
+      prevBtn.type = 'button';
+      prevBtn.className = 'week-arrow';
+      prevBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>';
+      var label = document.createElement('span');
+      label.className = 'week-label';
+      var nextBtn = document.createElement('button');
+      nextBtn.type = 'button';
+      nextBtn.className = 'week-arrow';
+      nextBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
+      nav.appendChild(prevBtn);
+      nav.appendChild(label);
+      nav.appendChild(nextBtn);
+
+      var row = document.createElement('div');
+      row.className = 'week-days';
+      container.appendChild(nav);
+      container.appendChild(row);
+
+      function render() {
+        row.innerHTML = '';
+        var week = weeks[currentWeek];
+        label.textContent = week[0].shortLabel + ' – ' + week[week.length - 1].shortLabel;
+        prevBtn.disabled = currentWeek === 0;
+        nextBtn.disabled = currentWeek === weeks.length - 1;
+
+        for (var index = 0; index < week.length; index++) {
+          var item = week[index];
+          var btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'day-btn';
+          if (item.date === selectedDate) btn.classList.add('active');
+          btn.innerHTML = '<span class="day-btn-name">' + item.dayName.slice(0, 3) + '</span><span class="day-btn-date">' + item.shortLabel + '</span>';
+          btn.setAttribute('data-date', item.date);
+          (function(day) {
+            btn.addEventListener('click', function() {
+              selectedDate = day.date;
+              setActiveBtn(row, day.date, 'data-date');
+              onDayClick(day);
+            });
+          })(item);
+          row.appendChild(btn);
+        }
+      }
+
+      prevBtn.addEventListener('click', function() {
+        if (currentWeek > 0) {
+          currentWeek--;
+          render();
+        }
+      });
+
+      nextBtn.addEventListener('click', function() {
+        if (currentWeek < weeks.length - 1) {
+          currentWeek++;
+          render();
+        }
+      });
+
+      render();
+    }
+
+    function buildTimeBtns(container, slots, onTimeClick) {
+      container.innerHTML = '';
+      for (var i = 0; i < slots.length; i++) {
+        var slot = slots[i];
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'time-btn';
+        btn.textContent = slot.label;
+        btn.setAttribute('data-slot', slot.value);
+        (function(timeSlot) {
+          btn.addEventListener('click', function() {
+            onTimeClick(timeSlot);
+          });
+        })(slot);
+        container.appendChild(btn);
+      }
     }
 
     var form = document.getElementById('signupForm');
@@ -933,256 +1199,181 @@
     var bookingSummary = document.getElementById('bookingSummary');
     var successMsg = document.getElementById('successMsg');
 
-    function clearErrors() { formError.classList.remove('show'); formError.textContent = ''; var e = form.querySelectorAll('.field-error'); for (var i = 0; i < e.length; i++) e[i].classList.remove('field-error'); }
-    function showError(m) { formError.textContent = m; formError.classList.add('show'); formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
-
-    // Phone formatting
-    ['jmPhone','otPhone','btPhone','otP2Phone','btP2Phone'].forEach(function(id) { phoneFormat(document.getElementById(id)); });
-
-    // ===== SCHEDULE PICKER HELPERS =====
-    function buildDayBtns(container, program, onDayClick) {
-      container.innerHTML = '';
-      var today = new Date();
-      var weeks = [[], []];
-      for (var i = 1; i <= 14; i++) {
-        var d = new Date(today); d.setDate(today.getDate() + i);
-        var dayName = DAY_NAMES[d.getDay()];
-        var times = SCHEDULE[program] && SCHEDULE[program][dayName];
-        if (!times || times.length === 0) continue;
-        weeks[i <= 7 ? 0 : 1].push({ day: dayName, dateISO: toISO(d), dateShort: toShort(d) });
-      }
-      weeks = weeks.filter(function(w) { return w.length > 0; });
-      var cur = 0, selectedDate = null;
-
-      var nav = document.createElement('div'); nav.className = 'week-nav';
-      var prevBtn = document.createElement('button'); prevBtn.type = 'button'; prevBtn.className = 'week-arrow';
-      prevBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>';
-      var label = document.createElement('span'); label.className = 'week-label';
-      var nextBtn = document.createElement('button'); nextBtn.type = 'button'; nextBtn.className = 'week-arrow';
-      nextBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>';
-      nav.appendChild(prevBtn); nav.appendChild(label); nav.appendChild(nextBtn);
-
-      var row = document.createElement('div'); row.className = 'week-days';
-      container.appendChild(nav); container.appendChild(row);
-
-      function render() {
-        row.innerHTML = '';
-        var wk = weeks[cur];
-        label.textContent = wk[0].dateShort + ' – ' + wk[wk.length - 1].dateShort;
-        prevBtn.disabled = cur === 0;
-        nextBtn.disabled = cur === weeks.length - 1;
-        for (var i = 0; i < wk.length; i++) {
-          var w = wk[i];
-          var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'day-btn';
-          if (w.dateISO === selectedDate) btn.classList.add('active');
-          btn.innerHTML = '<span class="day-btn-name">' + w.day.slice(0, 3) + '</span><span class="day-btn-date">' + w.dateShort + '</span>';
-          btn.setAttribute('data-date', w.dateISO);
-          (function(day, iso, short) {
-            btn.addEventListener('click', function() {
-              selectedDate = iso;
-              var all = row.querySelectorAll('.day-btn');
-              for (var j = 0; j < all.length; j++) all[j].classList.toggle('active', all[j].getAttribute('data-date') === iso);
-              onDayClick(day, iso, short);
-            });
-          })(w.day, w.dateISO, w.dateShort);
-          row.appendChild(btn);
-        }
-      }
-      prevBtn.addEventListener('click', function() { if (cur > 0) { cur--; render(); } });
-      nextBtn.addEventListener('click', function() { if (cur < weeks.length - 1) { cur++; render(); } });
-      render();
-    }
-    function buildTimeBtns(container, program, day, onTimeClick) {
-      container.innerHTML = '';
-      var times = SCHEDULE[program][day] || [];
-      for (var i = 0; i < times.length; i++) {
-        var btn = document.createElement('button');
-        btn.type = 'button'; btn.className = 'time-btn'; btn.textContent = times[i];
-        btn.setAttribute('data-time', times[i]);
-        (function(t) { btn.addEventListener('click', function() { onTimeClick(t, container); }); })(times[i]);
-        container.appendChild(btn);
-      }
-    }
-    function setActiveBtn(container, val, attr) {
-      var btns = container.querySelectorAll('button');
-      for (var i = 0; i < btns.length; i++) btns[i].classList.toggle('active', btns[i].getAttribute(attr) === val);
+    function clearErrors() {
+      formError.classList.remove('show');
+      formError.textContent = '';
+      var errors = form.querySelectorAll('.field-error');
+      for (var i = 0; i < errors.length; i++) errors[i].classList.remove('field-error');
     }
 
-    function syncProgramUI(dobState, tag, txt, section, reset, buildDays, state) {
-      var age = dobState.valid ? getAgeFromDob(dobState.value) : null;
-      var program = age === null ? null : getProgram(age);
-      state.program = program;
-      reset();
+    function showError(message) {
+      formError.textContent = message;
+      formError.classList.add('show');
+      formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    ['jmPhone', 'chContactPhone', 'btPhone', 'chP2Phone', 'btP2Phone'].forEach(function(id) {
+      phoneFormat(document.getElementById(id));
+    });
+
+    function syncProgramUI(dobState, tag, text, section, state, resetUI, loadSlots) {
+      cancelScheduleRequest(state);
+      state.program = dobState.valid ? getProgram(getAgeFromDob(dobState.value)) : null;
+      resetUI();
       tag.classList.remove('too-young');
+
       if (!dobState.complete || !dobState.valid) {
         tag.classList.remove('show');
         section.classList.remove('show');
         return;
       }
+
+      var age = getAgeFromDob(dobState.value);
       if (age < 3) {
-        txt.textContent = 'Our youngest program (Sprouts) starts at age 3';
+        text.textContent = TOO_YOUNG_MESSAGE;
         tag.classList.add('show', 'too-young');
         section.classList.remove('show');
         return;
       }
-      txt.textContent = LABELS[program];
+
+      text.textContent = LABELS[state.program];
       tag.classList.add('show');
-      buildDays(program);
       section.classList.add('show');
+      loadSlots(age);
     }
 
-    // Wire a static schedule section (for "Just Me" / "Both" self)
-    function wireSchedule(dobIds, tagId, textId, scheduleId, daysId, timeLabelId, timesId, confirmId, confirmTextId) {
-      var dobParts = { month: document.getElementById(dobIds.month), day: document.getElementById(dobIds.day), year: document.getElementById(dobIds.year) };
-      var tag = document.getElementById(tagId);
-      var txt = document.getElementById(textId);
-      var section = document.getElementById(scheduleId);
-      var daysEl = document.getElementById(daysId);
-      var timeLabel = document.getElementById(timeLabelId);
-      var timesEl = document.getElementById(timesId);
-      var confirmEl = document.getElementById(confirmId);
-      var confirmText = document.getElementById(confirmTextId);
-      var state = { day: null, date: null, dateShort: null, time: null, program: null, appointmentDatetime: null };
+    function wireSchedule(config) {
+      var dobParts = {
+        month: document.getElementById(config.dobIds.month),
+        day: document.getElementById(config.dobIds.day),
+        year: document.getElementById(config.dobIds.year)
+      };
+      var tag = document.getElementById(config.tagId);
+      var text = document.getElementById(config.textId);
+      var section = document.getElementById(config.scheduleId);
+      var daysEl = document.getElementById(config.daysId);
+      var timeLabel = document.getElementById(config.timeLabelId);
+      var timesEl = document.getElementById(config.timesId);
+      var confirmEl = document.getElementById(config.confirmId);
+      var confirmText = document.getElementById(config.confirmTextId);
+      var state = {
+        day: null,
+        date: null,
+        dateShort: null,
+        time: null,
+        program: null,
+        selectedSlot: null,
+        selectedDay: null,
+        appointmentDatetime: null,
+        availableDays: [],
+        requestId: 0,
+        abortController: null,
+        feedbackEl: ensureSlotFeedback(section)
+      };
 
-      function reset() { state.day = null; state.date = null; state.dateShort = null; state.time = null; state.appointmentDatetime = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
+      function resetUI() {
+        resetScheduleUI(state, daysEl, timeLabel, timesEl, confirmEl);
+      }
 
-      bindDobInputs(dobParts, function() {
-        syncProgramUI(getDobFieldState(dobParts), tag, txt, section, reset, function(program) {
-          buildDayBtns(daysEl, program, onDay);
-        }, state);
-      });
-
-      function onDay(day, dateISO, dateShort) {
-        state.day = day; state.date = dateISO; state.dateShort = dateShort; state.time = null; state.appointmentDatetime = null;
-        setActiveBtn(daysEl, dateISO, 'data-date');
+      function onDay(day) {
+        state.selectedDay = day;
+        state.day = day.dayName;
+        state.date = day.date;
+        state.dateShort = day.shortLabel;
+        state.time = null;
+        state.selectedSlot = null;
+        state.appointmentDatetime = null;
+        setActiveBtn(daysEl, day.date, 'data-date');
         timeLabel.style.display = 'block';
         timesEl.classList.add('show');
         confirmEl.classList.remove('show');
-        buildTimeBtns(timesEl, state.program, day, onTime);
+        buildTimeBtns(timesEl, day.slots, onTime);
       }
-      function onTime(time) {
-        state.time = time;
-        state.appointmentDatetime = state.date + ' ' + padTime(time);
-        setActiveBtn(timesEl, time, 'data-time');
-        confirmText.textContent = state.day + ', ' + state.dateShort + ' at ' + time;
+
+      function onTime(slot) {
+        state.time = slot.label;
+        state.selectedSlot = slot.value;
+        state.appointmentDatetime = slot.value;
+        setActiveBtn(timesEl, slot.value, 'data-slot');
+        confirmText.textContent = state.day + ', ' + state.dateShort + ' at ' + slot.label;
         confirmEl.classList.add('show');
       }
+
+      function loadSlots(age) {
+        var requestId = ++state.requestId;
+        state.abortController = new AbortController();
+        resetUI();
+        setSlotFeedback(state, 'Loading class times…', 'loading');
+
+        fetchWithTimeout(AVAILABLE_SLOTS_URL + '?age=' + encodeURIComponent(age), {
+          method: 'GET',
+          headers: { Accept: 'application/json' }
+        }, 10000, state.abortController)
+        .then(function(response) {
+          if (!response.ok) {
+            return response.json().catch(function() { return {}; }).then(function(body) {
+              var error = new Error(body && body.error ? body.error : 'Failed to load class times.');
+              error.status = response.status;
+              throw error;
+            });
+          }
+          return response.json();
+        })
+        .then(function(data) {
+          if (requestId !== state.requestId) return;
+          state.abortController = null;
+          clearSlotFeedback(state);
+          state.availableDays = data.days || [];
+          state.program = data.calendarKey || state.program;
+
+          if (!state.availableDays.length) {
+            setSlotFeedback(state, NO_SLOTS_MESSAGE, 'error');
+            return;
+          }
+
+          buildDayBtns(daysEl, state.availableDays, onDay);
+        })
+        .catch(function(error) {
+          if (requestId !== state.requestId) return;
+          var timedOut = state.abortController && state.abortController.__timedOut;
+          state.abortController = null;
+          if (error && error.name === 'AbortError' && !timedOut) return;
+          console.error('Failed to load available class times.', error);
+          setSlotFeedback(state, error && error.status === 400 && error.message ? error.message : SLOT_ERROR_MESSAGE, 'error');
+        });
+      }
+
+      bindDobInputs(dobParts, function() {
+        syncProgramUI(getDobFieldState(dobParts), tag, text, section, state, resetUI, loadSlots);
+      });
 
       return state;
     }
 
-    var jmSched = wireSchedule({ month: 'jmDobMonth', day: 'jmDobDay', year: 'jmDobYear' }, 'jmTag', 'jmTagText', 'jmSchedule', 'jmDays', 'jmTimeLabel', 'jmTimes', 'jmConfirm', 'jmConfirmText');
-    var btSched = wireSchedule({ month: 'btDobMonth', day: 'btDobDay', year: 'btDobYear' }, 'btTag', 'btTagText', 'btSchedule', 'btDays', 'btTimeLabel', 'btTimes', 'btConfirm', 'btConfirmText');
+    var jmSched = wireSchedule({ dobIds: { month: 'jmDobMonth', day: 'jmDobDay', year: 'jmDobYear' }, tagId: 'jmTag', textId: 'jmTagText', scheduleId: 'jmSchedule', daysId: 'jmDays', timeLabelId: 'jmTimeLabel', timesId: 'jmTimes', confirmId: 'jmConfirm', confirmTextId: 'jmConfirmText' });
+    var chSched = wireSchedule({ dobIds: { month: 'chDobMonth', day: 'chDobDay', year: 'chDobYear' }, tagId: 'chTag', textId: 'chTagText', scheduleId: 'chSchedule', daysId: 'chDays', timeLabelId: 'chTimeLabel', timesId: 'chTimes', confirmId: 'chConfirm', confirmTextId: 'chConfirmText' });
+    var btSched = wireSchedule({ dobIds: { month: 'btDobMonth', day: 'btDobDay', year: 'btDobYear' }, tagId: 'btTag', textId: 'btTagText', scheduleId: 'btSchedule', daysId: 'btDays', timeLabelId: 'btTimeLabel', timesId: 'btTimes', confirmId: 'btConfirm', confirmTextId: 'btConfirmText' });
 
-    // ===== MODE SWITCHING =====
-    var panels = { 'just-me': document.getElementById('panelJustMe'), 'others': document.getElementById('panelOthers'), 'both': document.getElementById('panelBoth') };
+    var panels = {
+      'just-me': document.getElementById('panelJustMe'),
+      'my-child': document.getElementById('panelMyChild'),
+      'me-plus-other': document.getElementById('panelMeOther')
+    };
     var currentMode = null;
+    var btAdditionalPeople = [];
+    var btExtraList = document.getElementById('btExtraList');
+    var btAddBtn = document.getElementById('btAddBtn');
+    var btPersonCounter = 0;
 
     document.querySelectorAll('input[name="mode"]').forEach(function(radio) {
       radio.addEventListener('change', function() {
         currentMode = radio.value;
-        for (var k in panels) { panels[k].classList.toggle('active', k === currentMode); }
+        for (var key in panels) panels[key].classList.toggle('active', key === currentMode);
         consentArea.style.display = 'block';
         clearErrors();
-
-        // Init first person card for "others" and "both" if empty
-        if (currentMode === 'others' && otPeople.length === 0) addPersonTo('ot');
-        if (currentMode === 'both' && btPeople.length === 0) addPersonTo('bt');
       });
     });
 
-    // ===== PERSON CARD SYSTEM (reusable for both panels) =====
-    var otPeople = [], btPeople = [], pCounter = 0;
-    var MAX_PEOPLE = 5;
-    var otAddBtn = document.getElementById('otAddBtn');
-    var btAddBtn = document.getElementById('btAddBtn');
-
-    function checkAddLimit(prefix) {
-      var list = prefix === 'ot' ? otPeople : btPeople;
-      var btn = prefix === 'ot' ? otAddBtn : btAddBtn;
-      var max = prefix === 'bt' ? MAX_PEOPLE - 1 : MAX_PEOPLE; // "both" reserves slot 1 for self
-      btn.style.display = list.length >= max ? 'none' : 'flex';
-    }
-
-    function addPersonTo(prefix) {
-      var list = prefix === 'ot' ? otPeople : btPeople;
-      var max = prefix === 'bt' ? MAX_PEOPLE - 1 : MAX_PEOPLE;
-      if (list.length >= max) return;
-      pCounter++;
-      var id = pCounter;
-      var container = document.getElementById(prefix + 'PersonList');
-
-      var card = document.createElement('div');
-      card.className = 'person-card';
-      card.innerHTML =
-        '<div class="person-card-header"><span class="person-card-label">Person</span>' +
-        '<button type="button" class="person-remove" data-id="' + id + '">' +
-        '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Remove</button></div>' +
-        '<div class="row"><div class="field"><label>First Name</label><input type="text" data-role="first" placeholder="First name"></div>' +
-        '<div class="field"><label>Last Name</label><input type="text" data-role="last" placeholder="Last name"></div></div>' +
-        '<div class="field"><label>Date of Birth <span class="optional">(used to show the right class times)</span></label><div class="dob-grid"><select data-role="dob-month" aria-label="Birth month"><option value="" selected>Month</option><option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option><option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option><option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option></select><input type="text" data-role="dob-day" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Day" aria-label="Birth day"><input type="text" data-role="dob-year" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Year" aria-label="Birth year"></div><div class="dob-help">Month / day / year</div></div>' +
-        '<div class="program-tag" data-role="tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span data-role="tagtext"></span></div>' +
-        '<div class="schedule-section" data-role="schedule"><div class="divider"></div><div class="section-label">Pick Class Time</div><div class="schedule-note">This person picks their own class time based on their birthdate.</div><div class="schedule-prompt">What day works best?</div><div class="day-picker" data-role="days"></div><div class="schedule-prompt" data-role="timelabel" style="display:none">What time?</div><div class="time-picker" data-role="times"></div><div class="schedule-confirm" data-role="confirm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-role="confirmtext"></span></div></div>' +
-        '<div class="field"><label>Allergies / Medical Notes <span class="optional">(optional)</span></label><input type="text" data-role="allergies" placeholder="Any allergies or conditions"></div>' +
-        '<div class="field"><label>Prior Martial Arts Experience <span class="optional">(optional)</span></label><select data-role="experience"><option value="" selected>Select experience level</option><option value="None">None</option><option value="Less than 1 year">Less than 1 year</option><option value="1-3 years">1\u20133 years</option><option value="3+ years">3+ years</option></select></div>';
-
-      var dobParts = { month: card.querySelector('[data-role="dob-month"]'), day: card.querySelector('[data-role="dob-day"]'), year: card.querySelector('[data-role="dob-year"]') };
-      var tag = card.querySelector('[data-role="tag"]');
-      var tagText = card.querySelector('[data-role="tagtext"]');
-      var schedSection = card.querySelector('[data-role="schedule"]');
-      var daysEl = card.querySelector('[data-role="days"]');
-      var timeLabel = card.querySelector('[data-role="timelabel"]');
-      var timesEl = card.querySelector('[data-role="times"]');
-      var confirmEl = card.querySelector('[data-role="confirm"]');
-      var confirmText = card.querySelector('[data-role="confirmtext"]');
-      var cardState = { day: null, date: null, dateShort: null, time: null, program: null, appointmentDatetime: null };
-
-      function resetCardSched() { cardState.day = null; cardState.date = null; cardState.dateShort = null; cardState.time = null; cardState.appointmentDatetime = null; timeLabel.style.display = 'none'; timesEl.classList.remove('show'); timesEl.innerHTML = ''; confirmEl.classList.remove('show'); }
-
-      bindDobInputs(dobParts, function() {
-        syncProgramUI(getDobFieldState(dobParts), tag, tagText, schedSection, resetCardSched, function(program) {
-          buildDayBtns(daysEl, program, onCardDay);
-        }, cardState);
-      });
-      function onCardDay(day, dateISO, dateShort) {
-        cardState.day = day; cardState.date = dateISO; cardState.dateShort = dateShort; cardState.time = null; cardState.appointmentDatetime = null;
-        setActiveBtn(daysEl, dateISO, 'data-date');
-        timeLabel.style.display = 'block'; timesEl.classList.add('show');
-        confirmEl.classList.remove('show');
-        buildTimeBtns(timesEl, cardState.program, day, onCardTime);
-      }
-      function onCardTime(time) {
-        cardState.time = time;
-        cardState.appointmentDatetime = cardState.date + ' ' + padTime(time);
-        setActiveBtn(timesEl, time, 'data-time');
-        confirmText.textContent = cardState.day + ', ' + cardState.dateShort + ' at ' + time;
-        confirmEl.classList.add('show');
-      }
-
-      card.querySelector('.person-remove').addEventListener('click', function() {
-        for (var i = 0; i < list.length; i++) { if (list[i].id === id) { list[i].el.remove(); list.splice(i, 1); break; } }
-        updatePersonLabels(list);
-        checkAddLimit(prefix);
-      });
-
-      list.push({ id: id, el: card, sched: cardState });
-      container.appendChild(card);
-      updatePersonLabels(list);
-      checkAddLimit(prefix);
-    }
-
-    function updatePersonLabels(list) {
-      for (var i = 0; i < list.length; i++) {
-        list[i].el.querySelector('.person-card-label').textContent = list.length === 1 ? 'Person' : 'Person ' + (i + 1);
-        var rm = list[i].el.querySelector('.person-remove');
-        list.length > 1 ? rm.classList.add('show') : rm.classList.remove('show');
-      }
-    }
-
-    document.getElementById('otAddBtn').addEventListener('click', function() { addPersonTo('ot'); });
-    document.getElementById('btAddBtn').addEventListener('click', function() { addPersonTo('bt'); });
-
-    // ===== PARENT 2 TOGGLES =====
     function wireParent2(toggleId, textId, sectionId, phoneId) {
       var open = false;
       document.getElementById(toggleId).addEventListener('click', function() {
@@ -1190,78 +1381,438 @@
         document.getElementById(sectionId).classList.toggle('show', open);
         this.classList.toggle('open', open);
         document.getElementById(textId).textContent = open ? 'Remove Second Parent / Guardian' : 'Add Second Parent / Guardian';
-        if (!open) { var sec = document.getElementById(sectionId); sec.querySelectorAll('input').forEach(function(inp) { inp.value = ''; }); }
+        if (!open) {
+          var section = document.getElementById(sectionId);
+          section.querySelectorAll('input').forEach(function(input) { input.value = ''; });
+        }
       });
       phoneFormat(document.getElementById(phoneId));
     }
-    wireParent2('otParent2Toggle', 'otParent2Text', 'otParent2Section', 'otP2Phone');
+
+    wireParent2('chParent2Toggle', 'chParent2Text', 'chParent2Section', 'chP2Phone');
     wireParent2('btParent2Toggle', 'btParent2Text', 'btParent2Section', 'btP2Phone');
 
-    // ===== VALIDATION HELPERS =====
-    function validateField(id, msg) {
+    function validateField(id, message) {
       var el = document.getElementById(id);
-      if (!el.value.trim()) { el.classList.add('field-error'); showError(msg); el.focus(); return false; }
+      if (!el.value.trim()) {
+        el.classList.add('field-error');
+        showError(message);
+        el.focus();
+        return false;
+      }
       return true;
     }
-    function hasPersonCardInput(card, sched) {
-      var fields = [
-        card.querySelector('[data-role="first"]'),
-        card.querySelector('[data-role="last"]'),
-        card.querySelector('[data-role="dob-month"]'),
-        card.querySelector('[data-role="dob-day"]'),
-        card.querySelector('[data-role="dob-year"]'),
-        card.querySelector('[data-role="allergies"]'),
-        card.querySelector('[data-role="experience"]')
-      ];
 
-      for (var i = 0; i < fields.length; i++) {
-        if (fields[i] && fields[i].value && fields[i].value.trim()) return true;
+    function validatePhoneField(id, message) {
+      var el = document.getElementById(id);
+      if (!validPhone(el.value)) {
+        el.classList.add('field-error');
+        showError(message);
+        el.focus();
+        return false;
+      }
+      return true;
+    }
+
+    function validateEmailField(id, message) {
+      var el = document.getElementById(id);
+      if (!validEmail(el.value.trim())) {
+        el.classList.add('field-error');
+        showError(message);
+        el.focus();
+        return false;
+      }
+      return true;
+    }
+
+    function relabelAdditionalPeople() {
+      for (var i = 0; i < btAdditionalPeople.length; i++) {
+        btAdditionalPeople[i].card.querySelector('.person-card-label').textContent = 'Additional Person ' + (i + 1);
+      }
+    }
+
+    function addAdditionalPersonCard() {
+      btPersonCounter++;
+      var suffix = 'btx' + btPersonCounter;
+      var card = document.createElement('div');
+      card.className = 'person-card';
+      card.innerHTML =
+        '<div class="person-card-header"><span class="person-card-label"></span>' +
+        '<button type="button" class="person-remove show">' +
+        '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Remove</button></div>' +
+        '<div class="row"><div class="field"><label>First Name</label><input type="text" data-role="first" placeholder="First name"></div>' +
+        '<div class="field"><label>Last Name</label><input type="text" data-role="last" placeholder="Last name"></div></div>' +
+        '<div class="field"><label>Date of Birth <span class="optional">(used to show the right class times)</span></label>' +
+        '<div class="dob-grid"><select data-role="dob-month" aria-label="Birth month"><option value="" selected>Month</option><option value="1">Jan</option><option value="2">Feb</option><option value="3">Mar</option><option value="4">Apr</option><option value="5">May</option><option value="6">Jun</option><option value="7">Jul</option><option value="8">Aug</option><option value="9">Sep</option><option value="10">Oct</option><option value="11">Nov</option><option value="12">Dec</option></select>' +
+        '<input type="text" data-role="dob-day" inputmode="numeric" pattern="[0-9]*" maxlength="2" placeholder="Day" aria-label="Birth day">' +
+        '<input type="text" data-role="dob-year" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="Year" aria-label="Birth year"></div>' +
+        '<div class="dob-help">Month / day / year. Class times appear after date of birth.</div></div>' +
+        '<div class="program-tag" data-role="tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span data-role="tagtext"></span></div>' +
+        '<div class="schedule-section" data-role="schedule"><div class="divider"></div><div class="section-label">Pick This Person\'s Class Time</div><div class="schedule-note">Available class times are based on this person\'s date of birth.</div><div class="schedule-prompt">What day works best?</div><div class="day-picker" data-role="days"></div><div class="schedule-prompt" data-role="timelabel" style="display:none">What time?</div><div class="time-picker" data-role="times"></div><div class="schedule-confirm" data-role="confirm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-role="confirmtext"></span></div></div>' +
+        '<div class="field"><label>Allergies / Medical Notes <span class="optional">(optional)</span></label><input type="text" data-role="allergies" placeholder="Any allergies or conditions we should know about"></div>' +
+        '<div class="field"><label>Prior Martial Arts Experience <span class="optional">(optional)</span></label><select data-role="experience"><option value="" selected>Select experience level</option><option value="None">None</option><option value="Less than 1 year">Less than 1 year</option><option value="1-3 years">1–3 years</option><option value="3+ years">3+ years</option></select></div>';
+
+      var dobParts = {
+        month: card.querySelector('[data-role="dob-month"]'),
+        day: card.querySelector('[data-role="dob-day"]'),
+        year: card.querySelector('[data-role="dob-year"]')
+      };
+      var tag = card.querySelector('[data-role="tag"]');
+      var tagText = card.querySelector('[data-role="tagtext"]');
+      var section = card.querySelector('[data-role="schedule"]');
+      var daysEl = card.querySelector('[data-role="days"]');
+      var timeLabel = card.querySelector('[data-role="timelabel"]');
+      var timesEl = card.querySelector('[data-role="times"]');
+      var confirmEl = card.querySelector('[data-role="confirm"]');
+      var confirmText = card.querySelector('[data-role="confirmtext"]');
+      var sched = {
+        day: null,
+        date: null,
+        dateShort: null,
+        time: null,
+        program: null,
+        selectedSlot: null,
+        selectedDay: null,
+        appointmentDatetime: null,
+        availableDays: [],
+        requestId: 0,
+        abortController: null,
+        feedbackEl: ensureSlotFeedback(section)
+      };
+
+      function resetUI() {
+        resetScheduleUI(sched, daysEl, timeLabel, timesEl, confirmEl);
       }
 
-      return !!(sched && (sched.day || sched.time));
+      function onDay(day) {
+        sched.selectedDay = day;
+        sched.day = day.dayName;
+        sched.date = day.date;
+        sched.dateShort = day.shortLabel;
+        sched.time = null;
+        sched.selectedSlot = null;
+        sched.appointmentDatetime = null;
+        setActiveBtn(daysEl, day.date, 'data-date');
+        timeLabel.style.display = 'block';
+        timesEl.classList.add('show');
+        confirmEl.classList.remove('show');
+        buildTimeBtns(timesEl, day.slots, onTime);
+      }
+
+      function onTime(slot) {
+        sched.time = slot.label;
+        sched.selectedSlot = slot.value;
+        sched.appointmentDatetime = slot.value;
+        setActiveBtn(timesEl, slot.value, 'data-slot');
+        confirmText.textContent = sched.day + ', ' + sched.dateShort + ' at ' + slot.label;
+        confirmEl.classList.add('show');
+      }
+
+      function loadSlots(age) {
+        var requestId = ++sched.requestId;
+        sched.abortController = new AbortController();
+        resetUI();
+        setSlotFeedback(sched, 'Loading class times…', 'loading');
+
+        fetchWithTimeout(AVAILABLE_SLOTS_URL + '?age=' + encodeURIComponent(age), {
+          method: 'GET',
+          headers: { Accept: 'application/json' }
+        }, 10000, sched.abortController)
+        .then(function(response) {
+          if (!response.ok) {
+            return response.json().catch(function() { return {}; }).then(function(body) {
+              var error = new Error(body && body.error ? body.error : 'Failed to load class times.');
+              error.status = response.status;
+              throw error;
+            });
+          }
+          return response.json();
+        })
+        .then(function(data) {
+          if (requestId !== sched.requestId) return;
+          sched.abortController = null;
+          clearSlotFeedback(sched);
+          sched.availableDays = data.days || [];
+          sched.program = data.calendarKey || sched.program;
+
+          if (!sched.availableDays.length) {
+            setSlotFeedback(sched, NO_SLOTS_MESSAGE, 'error');
+            return;
+          }
+
+          buildDayBtns(daysEl, sched.availableDays, onDay);
+        })
+        .catch(function(error) {
+          if (requestId !== sched.requestId) return;
+          var timedOut = sched.abortController && sched.abortController.__timedOut;
+          sched.abortController = null;
+          if (error && error.name === 'AbortError' && !timedOut) return;
+          console.error('Failed to load available class times.', error);
+          setSlotFeedback(sched, error && error.status === 400 && error.message ? error.message : SLOT_ERROR_MESSAGE, 'error');
+        });
+      }
+
+      bindDobInputs(dobParts, function() {
+        syncProgramUI(getDobFieldState(dobParts), tag, tagText, section, sched, resetUI, loadSlots);
+      });
+
+      var entry = { key: suffix, card: card, sched: sched };
+      card.querySelector('.person-remove').addEventListener('click', function() {
+        cancelScheduleRequest(sched);
+        for (var i = 0; i < btAdditionalPeople.length; i++) {
+          if (btAdditionalPeople[i].key === suffix) {
+            btAdditionalPeople.splice(i, 1);
+            break;
+          }
+        }
+        card.remove();
+        relabelAdditionalPeople();
+      });
+
+      btAdditionalPeople.push(entry);
+      btExtraList.appendChild(card);
+      relabelAdditionalPeople();
     }
-    function validatePersonCards(list) {
-      var data = [], programs = {};
-      for (var i = 0; i < list.length; i++) {
-        var c = list[i].el, sc = list[i].sched;
-        var f = c.querySelector('[data-role="first"]'), l = c.querySelector('[data-role="last"]');
-        var dobParts = { month: c.querySelector('[data-role="dob-month"]'), day: c.querySelector('[data-role="dob-day"]'), year: c.querySelector('[data-role="dob-year"]') };
-        var al = c.querySelector('[data-role="allergies"]'), ex = c.querySelector('[data-role="experience"]');
-        var label = list.length === 1 ? 'this person' : 'Person ' + (i + 1);
-        if (!hasPersonCardInput(c, sc)) continue;
-        if (!f.value.trim()) { f.classList.add('field-error'); showError('Please enter ' + label + "'s first name."); f.focus(); return null; }
-        if (!l.value.trim()) { l.classList.add('field-error'); showError('Please enter ' + label + "'s last name."); l.focus(); return null; }
+
+    function validateAdditionalPeople() {
+      if (!btAdditionalPeople.length) {
+        showError('Please add at least one additional person.');
+        btAddBtn.focus();
+        return null;
+      }
+
+      var participants = [];
+      for (var i = 0; i < btAdditionalPeople.length; i++) {
+        var person = btAdditionalPeople[i];
+        var firstEl = person.card.querySelector('[data-role="first"]');
+        var lastEl = person.card.querySelector('[data-role="last"]');
+        var dobParts = {
+          month: person.card.querySelector('[data-role="dob-month"]'),
+          day: person.card.querySelector('[data-role="dob-day"]'),
+          year: person.card.querySelector('[data-role="dob-year"]')
+        };
+        var allergiesEl = person.card.querySelector('[data-role="allergies"]');
+        var experienceEl = person.card.querySelector('[data-role="experience"]');
+        var label = 'additional person ' + (i + 1);
+
+        if (!firstEl.value.trim()) { firstEl.classList.add('field-error'); showError('Please enter ' + label + '\'s first name.'); firstEl.focus(); return null; }
+        if (!lastEl.value.trim()) { lastEl.classList.add('field-error'); showError('Please enter ' + label + '\'s last name.'); lastEl.focus(); return null; }
+
         var dobState = getDobFieldState(dobParts);
-        if (!dobState.complete) { setDobFieldError(dobParts, true); showError('Please enter ' + label + "'s date of birth."); dobParts.month.focus(); return null; }
+        if (!dobState.complete) { setDobFieldError(dobParts, true); showError('Please enter ' + label + '\'s date of birth.'); dobParts.month.focus(); return null; }
         if (!dobState.valid) { setDobFieldError(dobParts, true); showError('Please enter a valid date of birth for ' + label + '.'); dobParts.month.focus(); return null; }
-        var ageVal = getAgeFromDob(dobState.value);
-        if (ageVal < 3) { setDobFieldError(dobParts, true); showError('Our youngest program (Sprouts) starts at age 3.'); dobParts.month.focus(); return null; }
-        if (!sc.day || !sc.time) { showError('Please pick a day and time for ' + label + '.'); c.querySelector('[data-role="days"]').scrollIntoView({ behavior:'smooth', block:'nearest' }); return null; }
-        var prog = getProgram(ageVal);
-        programs[prog] = true;
-        var entry = { first_name: f.value.trim(), last_name: l.value.trim(), age: ageVal, program: prog, dob: dobState.value, preferred_day: sc.day, preferred_time: sc.time, appointment_datetime: sc.appointmentDatetime, dateShort: sc.dateShort };
-        if (al.value.trim()) entry.allergies = al.value.trim();
-        if (ex.value) entry.experience = ex.value;
-        data.push(entry);
+
+        var age = getAgeFromDob(dobState.value);
+        if (age < 3) { setDobFieldError(dobParts, true); showError(TOO_YOUNG_MESSAGE); dobParts.month.focus(); return null; }
+        if (!person.sched.day || !person.sched.time || !person.sched.selectedSlot) {
+          showError('Please pick a day and time for ' + label + '.');
+          person.card.querySelector('[data-role="days"]').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          return null;
+        }
+
+        var programKey = getProgram(age);
+        var participant = {
+          role: 'dependent',
+          first_name: firstEl.value.trim(),
+          last_name: lastEl.value.trim(),
+          age: age,
+          is_minor: age < 18,
+          dob: dobState.value,
+          program_key: programKey,
+          program: LABELS[programKey],
+          preferred_day: person.sched.day,
+          preferred_time: person.sched.time,
+          selected_slot: person.sched.selectedSlot,
+          appointment_date: person.sched.date,
+          appointment_date_short: person.sched.dateShort,
+          appointment_datetime: person.sched.selectedSlot
+        };
+        if (allergiesEl.value.trim()) participant.allergies = allergiesEl.value.trim();
+        if (experienceEl.value) participant.experience = experienceEl.value;
+        participants.push(participant);
       }
-      return { data: data, programs: programs };
+      return participants;
     }
+
+    btAddBtn.addEventListener('click', addAdditionalPersonCard);
 
     function getParent2Data(prefix) {
-      var sec = document.getElementById(prefix + 'Parent2Section');
-      if (!sec.classList.contains('show')) return null;
-      var f = document.getElementById(prefix + 'P2First'), l = document.getElementById(prefix + 'P2Last');
-      if (!f.value.trim()) { f.classList.add('field-error'); showError("Please enter the second parent's first name."); f.focus(); return false; }
-      if (!l.value.trim()) { l.classList.add('field-error'); showError("Please enter the second parent's last name."); l.focus(); return false; }
-      var d = { first_name: f.value.trim(), last_name: l.value.trim() };
-      var ph = document.getElementById(prefix + 'P2Phone').value.trim();
-      var em = document.getElementById(prefix + 'P2Email').value.trim();
-      if (ph) d.phone = ph;
-      if (em) d.email = em;
-      return d;
+      var section = document.getElementById(prefix + 'Parent2Section');
+      if (!section.classList.contains('show')) return null;
+      var firstName = document.getElementById(prefix + 'P2First').value.trim();
+      var lastName = document.getElementById(prefix + 'P2Last').value.trim();
+      var phone = document.getElementById(prefix + 'P2Phone').value.trim();
+      var email = document.getElementById(prefix + 'P2Email').value.trim();
+      if (!firstName && !lastName && !phone && !email) return null;
+      if (phone && !validPhone(phone)) {
+        var phoneEl = document.getElementById(prefix + 'P2Phone');
+        phoneEl.classList.add('field-error');
+        showError('Please enter a valid phone number for the second parent or guardian.');
+        phoneEl.focus();
+        return false;
+      }
+      if (email && !validEmail(email)) {
+        var emailEl = document.getElementById(prefix + 'P2Email');
+        emailEl.classList.add('field-error');
+        showError('Please enter a valid email address for the second parent or guardian.');
+        emailEl.focus();
+        return false;
+      }
+      return {
+        firstName: firstName || '',
+        lastName: lastName || '',
+        phone: phone ? toE164US(phone) : '',
+        email: email || ''
+      };
     }
 
-    // ===== SUBMIT =====
+    function buildParticipantData(config) {
+      var firstEl = document.getElementById(config.firstId);
+      var lastEl = document.getElementById(config.lastId);
+      var dobParts = {
+        month: document.getElementById(config.dobIds.month),
+        day: document.getElementById(config.dobIds.day),
+        year: document.getElementById(config.dobIds.year)
+      };
+      var allergiesEl = config.allergiesId ? document.getElementById(config.allergiesId) : null;
+      var experienceEl = config.experienceId ? document.getElementById(config.experienceId) : null;
+
+      if (!firstEl.value.trim()) { firstEl.classList.add('field-error'); showError(config.firstNameError); firstEl.focus(); return null; }
+      if (!lastEl.value.trim()) { lastEl.classList.add('field-error'); showError(config.lastNameError); lastEl.focus(); return null; }
+
+      var dobState = getDobFieldState(dobParts);
+      if (!dobState.complete) { setDobFieldError(dobParts, true); showError(config.dobMissingError); dobParts.month.focus(); return null; }
+      if (!dobState.valid) { setDobFieldError(dobParts, true); showError(config.dobInvalidError); dobParts.month.focus(); return null; }
+
+      var age = getAgeFromDob(dobState.value);
+      if (age < 3) { setDobFieldError(dobParts, true); showError(TOO_YOUNG_MESSAGE); dobParts.month.focus(); return null; }
+      if (!config.schedule.day || !config.schedule.time || !config.schedule.selectedSlot) {
+        showError(config.scheduleError);
+        document.getElementById(config.daysId).scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        return null;
+      }
+
+      var programKey = getProgram(age);
+      var participant = {
+        role: config.role,
+        first_name: firstEl.value.trim(),
+        last_name: lastEl.value.trim(),
+        age: age,
+        is_minor: age < 18,
+        dob: dobState.value,
+        program_key: programKey,
+        program: LABELS[programKey],
+        preferred_day: config.schedule.day,
+        preferred_time: config.schedule.time,
+        selected_slot: config.schedule.selectedSlot,
+        appointment_date: config.schedule.date,
+        appointment_date_short: config.schedule.dateShort,
+        appointment_datetime: config.schedule.selectedSlot
+      };
+      if (allergiesEl && allergiesEl.value.trim()) participant.allergies = allergiesEl.value.trim();
+      if (experienceEl && experienceEl.value) participant.experience = experienceEl.value;
+      return participant;
+    }
+
+    function formatDobValue(value) {
+      var parts = value.split('-');
+      if (parts.length !== 3) return value;
+      return parts[1] + '/' + parts[2] + '/' + parts[0];
+    }
+
+    function createPrimaryContact(firstId, lastId, phoneId, emailId) {
+      return {
+        firstName: document.getElementById(firstId).value.trim(),
+        lastName: document.getElementById(lastId).value.trim(),
+        phone: toE164US(document.getElementById(phoneId).value),
+        email: document.getElementById(emailId).value.trim()
+      };
+    }
+
+    function createSignupContact(participant, role, phone, email) {
+      return {
+        role: role,
+        firstName: participant.first_name,
+        lastName: participant.last_name,
+        dob: formatDobValue(participant.dob),
+        phone: phone,
+        email: email,
+        classDay: participant.preferred_day,
+        classTime: participant.preferred_time,
+        selectedSlot: participant.selected_slot,
+        allergies: participant.allergies || '',
+        experience: participant.experience || 'None'
+      };
+    }
+
+    function createDependentContact(participant, parent, parent2) {
+      var contact = createSignupContact(participant, 'dependent', parent.phone, parent.email);
+      contact.parent = {
+        firstName: parent.firstName,
+        lastName: parent.lastName,
+        phone: parent.phone,
+        email: parent.email
+      };
+      if (parent2) {
+        contact.parent2 = {
+          firstName: parent2.firstName,
+          lastName: parent2.lastName,
+          phone: parent2.phone,
+          email: parent2.email
+        };
+      }
+      return contact;
+    }
+
+    function createPayload(signupType, contacts) {
+      return {
+        signup_type: signupType,
+        contacts: contacts
+      };
+    }
+
+    function restoreSubmitButton() {
+      submitBtn.textContent = 'Sign Up for Your Free Trial';
+      submitBtn.disabled = false;
+    }
+
+    function submitPayload(payload, participants) {
+      var webhookUrl = getWebhookUrl();
+      if (!webhookUrl) {
+        console.error('Missing NEXT_PUBLIC_WEBHOOK_URL runtime config.');
+        showError(SUBMIT_ERROR_MESSAGE);
+        return;
+      }
+
+      submitBtn.textContent = 'Submitting…';
+      submitBtn.disabled = true;
+
+      fetchWithTimeout(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }, 10000)
+      .then(function(response) {
+        if (response.status !== 200 && response.status !== 201) {
+          throw new Error('Webhook failed with status ' + response.status);
+        }
+        showSuccess(participants.map(function(participant) {
+          return {
+            first_name: participant.first_name,
+            program: participant.program_key,
+            day: participant.preferred_day,
+            time: participant.preferred_time,
+            dateShort: participant.appointment_date_short
+          };
+        }));
+      })
+      .catch(function(error) {
+        console.error('Failed to submit signup payload.', error);
+        restoreSubmitButton();
+        showError(SUBMIT_ERROR_MESSAGE);
+      });
+    }
+
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       clearErrors();
@@ -1271,157 +1822,106 @@
       if (!document.getElementById('legalConsent').checked) { showError('Please agree to the Privacy Policy and Terms of Service to continue.'); return; }
       if (!document.getElementById('guardianConsent').checked) { showError('Please confirm you are authorized to submit information for each participant.'); return; }
 
-      var payload = {
-        sms_consent: true,
-        legal_consent: true,
-        authorized_submitter_confirmation: true,
-        signup_source: SIGNUP_SOURCE,
-        signup_path: SIGNUP_PATH,
-        page_url: window.location.href
-      };
-      var allPeople = [];
-      var programs = {};
-
-      // ------ JUST ME ------
       if (currentMode === 'just-me') {
         if (!validateField('jmFirst', 'Please enter your first name.')) return;
         if (!validateField('jmLast', 'Please enter your last name.')) return;
-        if (!validPhone(document.getElementById('jmPhone').value)) { document.getElementById('jmPhone').classList.add('field-error'); showError('Please enter a valid phone number.'); return; }
-        if (!validEmail(document.getElementById('jmEmail').value)) { document.getElementById('jmEmail').classList.add('field-error'); showError('Please enter a valid email address.'); return; }
-        var jmDobParts = { month: document.getElementById('jmDobMonth'), day: document.getElementById('jmDobDay'), year: document.getElementById('jmDobYear') };
-        var jmDobState = getDobFieldState(jmDobParts);
-        if (!jmDobState.complete) { setDobFieldError(jmDobParts, true); showError('Please enter your date of birth.'); jmDobParts.month.focus(); return; }
-        if (!jmDobState.valid) { setDobFieldError(jmDobParts, true); showError('Please enter a valid date of birth.'); jmDobParts.month.focus(); return; }
-        var jmAgeVal = getAgeFromDob(jmDobState.value);
-        if (jmAgeVal < 3) { setDobFieldError(jmDobParts, true); showError('Our youngest program (Sprouts) starts at age 3.'); jmDobParts.month.focus(); return; }
-        if (!jmSched.day || !jmSched.time) { showError('Please pick a day and time for your trial.'); document.getElementById('jmDays').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
+        if (!validatePhoneField('jmPhone', 'Please enter a valid phone number.')) return;
+        if (!validateEmailField('jmEmail', 'Please enter a valid email address.')) return;
 
-        var prog = getProgram(jmAgeVal);
-        payload.first_name = document.getElementById('jmFirst').value.trim();
-        payload.last_name = document.getElementById('jmLast').value.trim();
-        payload.phone = toE164US(document.getElementById('jmPhone').value);
-        payload.email = document.getElementById('jmEmail').value.trim();
-        payload.person_count = 1;
-        payload.person_1_first_name = payload.first_name;
-        payload.person_1_last_name = payload.last_name;
-        payload.person_1_age = jmAgeVal;
-        payload.person_1_program = LABELS[prog];
-        payload.person_1_appointment_datetime = jmSched.appointmentDatetime;
-        payload.person_1_dob = jmDobState.value;
-        var jmAll = document.getElementById('jmAllergies').value.trim();
-        if (jmAll) payload.person_1_allergies = jmAll;
-        var jmExp = document.getElementById('jmExperience').value;
-        if (jmExp) payload.person_1_experience = jmExp;
-        payload.programs_needed = LABELS[prog];
-        programs[prog] = true;
-        allPeople.push({ first_name: payload.first_name, program: prog, day: jmSched.day, time: jmSched.time, dateShort: jmSched.dateShort });
+        var selfParticipant = buildParticipantData({
+          role: 'self',
+          firstId: 'jmFirst',
+          lastId: 'jmLast',
+          dobIds: { month: 'jmDobMonth', day: 'jmDobDay', year: 'jmDobYear' },
+          schedule: jmSched,
+          daysId: 'jmDays',
+          allergiesId: 'jmAllergies',
+          experienceId: 'jmExperience',
+          firstNameError: 'Please enter your first name.',
+          lastNameError: 'Please enter your last name.',
+          dobMissingError: 'Please enter your date of birth.',
+          dobInvalidError: 'Please enter a valid date of birth.',
+          scheduleError: 'Please pick a day and time for your trial.'
+        });
+        if (!selfParticipant) return;
+
+        var selfContact = createPrimaryContact('jmFirst', 'jmLast', 'jmPhone', 'jmEmail');
+        submitPayload(createPayload('just_me', [
+          createSignupContact(selfParticipant, 'self', selfContact.phone, selfContact.email)
+        ]), [selfParticipant]);
+        return;
       }
 
-      // ------ OTHERS ------
-      if (currentMode === 'others') {
-        if (!validateField('otFirst', 'Please enter your first name.')) return;
-        if (!validateField('otLast', 'Please enter your last name.')) return;
-        if (!validPhone(document.getElementById('otPhone').value)) { document.getElementById('otPhone').classList.add('field-error'); showError('Please enter a valid phone number.'); return; }
-        if (!validEmail(document.getElementById('otEmail').value)) { document.getElementById('otEmail').classList.add('field-error'); showError('Please enter a valid email address.'); return; }
-        var p2 = getParent2Data('ot');
-        if (p2 === false) return;
+      if (currentMode === 'my-child') {
+        if (!validateField('chContactFirst', 'Please enter the parent or guardian first name.')) return;
+        if (!validateField('chContactLast', 'Please enter the parent or guardian last name.')) return;
+        if (!validatePhoneField('chContactPhone', 'Please enter a valid phone number.')) return;
+        if (!validateEmailField('chContactEmail', 'Please enter a valid email address.')) return;
 
-        var result = validatePersonCards(otPeople);
-        if (!result) return;
-        if (result.data.length === 0) { showError('Please add at least one person who is training.'); document.getElementById('otPersonList').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
+        var secondParent = getParent2Data('ch');
+        if (secondParent === false) return;
 
-        payload.first_name = document.getElementById('otFirst').value.trim();
-        payload.last_name = document.getElementById('otLast').value.trim();
-        payload.phone = toE164US(document.getElementById('otPhone').value);
-        payload.email = document.getElementById('otEmail').value.trim();
-        if (p2) { payload.parent_2_first_name = p2.first_name; payload.parent_2_last_name = p2.last_name; if (p2.phone) payload.parent_2_phone = toE164US(p2.phone); if (p2.email) payload.parent_2_email = p2.email; }
-        payload.person_count = result.data.length;
-        for (var i = 0; i < result.data.length; i++) {
-          var pre = 'person_' + (i+1) + '_', d = result.data[i];
-          payload[pre + 'first_name'] = d.first_name; payload[pre + 'last_name'] = d.last_name;
-          payload[pre + 'age'] = d.age; payload[pre + 'program'] = LABELS[d.program];
-          payload[pre + 'appointment_datetime'] = d.appointment_datetime;
-          payload[pre + 'dob'] = d.dob;
-          if (d.allergies) payload[pre + 'allergies'] = d.allergies;
-          if (d.experience) payload[pre + 'experience'] = d.experience;
-        }
-        programs = result.programs;
-        payload.programs_needed = Object.keys(programs).map(function(k) { return LABELS[k]; }).join(', ');
-        allPeople = result.data.map(function(d) { return { first_name: d.first_name, program: d.program, day: d.preferred_day, time: d.preferred_time, dateShort: d.dateShort }; });
+        var childParticipant = buildParticipantData({
+          role: 'dependent',
+          firstId: 'chFirst',
+          lastId: 'chLast',
+          dobIds: { month: 'chDobMonth', day: 'chDobDay', year: 'chDobYear' },
+          schedule: chSched,
+          daysId: 'chDays',
+          allergiesId: 'chAllergies',
+          experienceId: 'chExperience',
+          firstNameError: "Please enter your child's first name.",
+          lastNameError: "Please enter your child's last name.",
+          dobMissingError: "Please enter your child's date of birth.",
+          dobInvalidError: "Please enter a valid date of birth for your child.",
+          scheduleError: "Please pick a day and time for your child's trial."
+        });
+        if (!childParticipant) return;
+
+        var guardianContact = createPrimaryContact('chContactFirst', 'chContactLast', 'chContactPhone', 'chContactEmail');
+        submitPayload(createPayload('someone_else', [
+          createDependentContact(childParticipant, guardianContact, secondParent)
+        ]), [childParticipant]);
+        return;
       }
 
-      // ------ BOTH ------
-      if (currentMode === 'both') {
+      if (currentMode === 'me-plus-other') {
         if (!validateField('btFirst', 'Please enter your first name.')) return;
         if (!validateField('btLast', 'Please enter your last name.')) return;
-        if (!validPhone(document.getElementById('btPhone').value)) { document.getElementById('btPhone').classList.add('field-error'); showError('Please enter a valid phone number.'); return; }
-        if (!validEmail(document.getElementById('btEmail').value)) { document.getElementById('btEmail').classList.add('field-error'); showError('Please enter a valid email address.'); return; }
-        var btDobParts = { month: document.getElementById('btDobMonth'), day: document.getElementById('btDobDay'), year: document.getElementById('btDobYear') };
-        var btDobState = getDobFieldState(btDobParts);
-        if (!btDobState.complete) { setDobFieldError(btDobParts, true); showError('Please enter your date of birth.'); btDobParts.month.focus(); return; }
-        if (!btDobState.valid) { setDobFieldError(btDobParts, true); showError('Please enter a valid date of birth.'); btDobParts.month.focus(); return; }
-        var btAgeVal = getAgeFromDob(btDobState.value);
-        if (btAgeVal < 3) { setDobFieldError(btDobParts, true); showError('Our youngest program (Sprouts) starts at age 3.'); btDobParts.month.focus(); return; }
-        if (!btSched.day || !btSched.time) { showError('Please pick a day and time for your trial.'); document.getElementById('btDays').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
+        if (!validatePhoneField('btPhone', 'Please enter a valid phone number.')) return;
+        if (!validateEmailField('btEmail', 'Please enter a valid email address.')) return;
 
-        var p2b = getParent2Data('bt');
-        if (p2b === false) return;
+        var meParticipant = buildParticipantData({
+          role: 'self',
+          firstId: 'btFirst',
+          lastId: 'btLast',
+          dobIds: { month: 'btDobMonth', day: 'btDobDay', year: 'btDobYear' },
+          schedule: btSched,
+          daysId: 'btDays',
+          allergiesId: 'btAllergies',
+          experienceId: 'btExperience',
+          firstNameError: 'Please enter your first name.',
+          lastNameError: 'Please enter your last name.',
+          dobMissingError: 'Please enter your date of birth.',
+          dobInvalidError: 'Please enter a valid date of birth.',
+          scheduleError: 'Please pick a day and time for your trial.'
+        });
+        if (!meParticipant) return;
 
-        var resultB = validatePersonCards(btPeople);
-        if (!resultB) return;
-        if (resultB.data.length === 0) { showError('Please add at least one other person who is training.'); document.getElementById('btPersonList').scrollIntoView({ behavior:'smooth', block:'nearest' }); return; }
+        var additionalPeople = validateAdditionalPeople();
+        if (!additionalPeople) return;
 
-        var selfProg = getProgram(btAgeVal);
-        programs[selfProg] = true;
-        for (var kk in resultB.programs) programs[kk] = true;
+        var meSecondParent = getParent2Data('bt');
+        if (meSecondParent === false) return;
 
-        payload.first_name = document.getElementById('btFirst').value.trim();
-        payload.last_name = document.getElementById('btLast').value.trim();
-        payload.phone = toE164US(document.getElementById('btPhone').value);
-        payload.email = document.getElementById('btEmail').value.trim();
-        if (p2b) { payload.parent_2_first_name = p2b.first_name; payload.parent_2_last_name = p2b.last_name; if (p2b.phone) payload.parent_2_phone = toE164US(p2b.phone); if (p2b.email) payload.parent_2_email = p2b.email; }
-
-        // Person 1 = self
-        payload.person_1_first_name = payload.first_name;
-        payload.person_1_last_name = payload.last_name;
-        payload.person_1_age = btAgeVal;
-        payload.person_1_program = LABELS[selfProg];
-        payload.person_1_appointment_datetime = btSched.appointmentDatetime;
-        payload.person_1_dob = btDobState.value;
-        var btAll = document.getElementById('btAllergies').value.trim();
-        if (btAll) payload.person_1_allergies = btAll;
-        var btExp = document.getElementById('btExperience').value;
-        if (btExp) payload.person_1_experience = btExp;
-        allPeople.push({ first_name: payload.first_name, program: selfProg, day: btSched.day, time: btSched.time, dateShort: btSched.dateShort });
-
-        // Rest
-        for (var j = 0; j < resultB.data.length; j++) {
-          var pre2 = 'person_' + (j+2) + '_', d2 = resultB.data[j];
-          payload[pre2 + 'first_name'] = d2.first_name; payload[pre2 + 'last_name'] = d2.last_name;
-          payload[pre2 + 'age'] = d2.age; payload[pre2 + 'program'] = LABELS[d2.program];
-          payload[pre2 + 'appointment_datetime'] = d2.appointment_datetime;
-          payload[pre2 + 'dob'] = d2.dob;
-          if (d2.allergies) payload[pre2 + 'allergies'] = d2.allergies;
-          if (d2.experience) payload[pre2 + 'experience'] = d2.experience;
-          allPeople.push({ first_name: d2.first_name, program: d2.program, day: d2.preferred_day, time: d2.preferred_time, dateShort: d2.dateShort });
+        var meContact = createPrimaryContact('btFirst', 'btLast', 'btPhone', 'btEmail');
+        var contacts = [createSignupContact(meParticipant, 'self', meContact.phone, meContact.email)];
+        for (var i = 0; i < additionalPeople.length; i++) {
+          contacts.push(createDependentContact(additionalPeople[i], meContact, meSecondParent));
         }
-        payload.person_count = 1 + resultB.data.length;
-        payload.programs_needed = Object.keys(programs).map(function(k) { return LABELS[k]; }).join(', ');
+
+        submitPayload(createPayload('me_plus_others', contacts), [meParticipant].concat(additionalPeople));
       }
-
-      submitBtn.textContent = 'Submitting\u2026';
-      submitBtn.disabled = true;
-
-      fetch(WEBHOOK, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-      .then(function(res) {
-        if (!res.ok) throw new Error('Webhook failed');
-        showSuccess(allPeople);
-      })
-      .catch(function() {
-        submitBtn.textContent = 'Sign Up for Your Free Trial';
-        submitBtn.disabled = false;
-        showError("We couldn't finish your booking. Please try again or call (707) 755-7247.");
-      });
     });
 
     function showSuccess(people) {
@@ -1430,18 +1930,20 @@
         ? 'Your free trial class has been scheduled. See you there!'
         : 'All ' + people.length + ' free trial classes have been scheduled. See you there!';
       bookingSummary.innerHTML = '';
+
       for (var i = 0; i < people.length; i++) {
-        var p = people[i];
-        var card = document.createElement('div'); card.className = 'booking-card';
-        card.innerHTML = '<div class="booking-card-name">' + p.first_name + '</div>' +
-          '<div class="booking-card-detail">' + p.day + ', ' + p.dateShort + ' at ' + p.time + '</div>' +
-          '<div class="booking-card-program">' + LABELS[p.program] + '</div>';
+        var person = people[i];
+        var card = document.createElement('div');
+        card.className = 'booking-card';
+        card.innerHTML = '<div class="booking-card-name">' + escapeHtml(person.first_name) + '</div>' +
+          '<div class="booking-card-detail">' + escapeHtml(person.day + ', ' + person.dateShort + ' at ' + person.time) + '</div>' +
+          '<div class="booking-card-program">' + escapeHtml(LABELS[person.program]) + '</div>';
         bookingSummary.appendChild(card);
       }
+
       successArea.classList.add('show');
       document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-
   })();
   </script>
 </body>

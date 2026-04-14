@@ -62,10 +62,6 @@
       "destination": "/robots.txt"
     },
     {
-      "source": "/voice-signup",
-      "destination": "/voice-signup.html"
-    },
-    {
       "source": "/privacy-policy",
       "destination": "/privacy-policy.html"
     },
