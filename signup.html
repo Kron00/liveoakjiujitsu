@@ -719,33 +719,6 @@
               <label for="chContactEmail">Email Address</label>
               <input type="email" id="chContactEmail" placeholder="you@example.com" autocomplete="email">
             </div>
-            <button type="button" class="expand-btn" id="chParent2Toggle">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              <span id="chParent2Text">Add Second Parent / Guardian</span>
-            </button>
-            <div class="expandable" id="chParent2Section">
-              <div style="margin-top:1rem">
-                <div class="section-label">Second Parent / Guardian</div>
-                <div class="row">
-                  <div class="field">
-                    <label for="chP2First">First Name</label>
-                    <input type="text" id="chP2First" placeholder="First name">
-                  </div>
-                  <div class="field">
-                    <label for="chP2Last">Last Name</label>
-                    <input type="text" id="chP2Last" placeholder="Last name">
-                  </div>
-                </div>
-                <div class="field">
-                  <label for="chP2Phone">Phone <span class="optional">(optional)</span></label>
-                  <input type="tel" id="chP2Phone" placeholder="(555) 123-4567">
-                </div>
-                <div class="field">
-                  <label for="chP2Email">Email <span class="optional">(optional)</span></label>
-                  <input type="email" id="chP2Email" placeholder="you@example.com">
-                </div>
-              </div>
-            </div>
           </div>
 
           <!-- ===== PANEL C: Me + Others ===== -->
@@ -834,34 +807,6 @@
               Add a Person
             </button>
 
-            <button type="button" class="expand-btn" id="btParent2Toggle">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              <span id="btParent2Text">Add Second Parent / Guardian</span>
-            </button>
-            <div class="expandable" id="btParent2Section">
-              <div style="margin-top:1rem">
-                <div class="section-label">Second Parent / Guardian</div>
-                <div class="section-note">This will be attached to each additional person.</div>
-                <div class="row">
-                  <div class="field">
-                    <label for="btP2First">First Name <span class="optional">(optional)</span></label>
-                    <input type="text" id="btP2First" placeholder="First name">
-                  </div>
-                  <div class="field">
-                    <label for="btP2Last">Last Name <span class="optional">(optional)</span></label>
-                    <input type="text" id="btP2Last" placeholder="Last name">
-                  </div>
-                </div>
-                <div class="field">
-                  <label for="btP2Phone">Phone <span class="optional">(optional)</span></label>
-                  <input type="tel" id="btP2Phone" placeholder="(555) 123-4567">
-                </div>
-                <div class="field">
-                  <label for="btP2Email">Email <span class="optional">(optional)</span></label>
-                  <input type="email" id="btP2Email" placeholder="you@example.com">
-                </div>
-              </div>
-            </div>
           </div>
 
           <!-- ===== CONSENT + SUBMIT (shared) ===== -->
@@ -1212,7 +1157,7 @@
       formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    ['jmPhone', 'chContactPhone', 'btPhone', 'chP2Phone', 'btP2Phone'].forEach(function(id) {
+    ['jmPhone', 'chContactPhone', 'btPhone'].forEach(function(id) {
       phoneFormat(document.getElementById(id));
     });
 
@@ -1374,23 +1319,6 @@
       });
     });
 
-    function wireParent2(toggleId, textId, sectionId, phoneId) {
-      var open = false;
-      document.getElementById(toggleId).addEventListener('click', function() {
-        open = !open;
-        document.getElementById(sectionId).classList.toggle('show', open);
-        this.classList.toggle('open', open);
-        document.getElementById(textId).textContent = open ? 'Remove Second Parent / Guardian' : 'Add Second Parent / Guardian';
-        if (!open) {
-          var section = document.getElementById(sectionId);
-          section.querySelectorAll('input').forEach(function(input) { input.value = ''; });
-        }
-      });
-      phoneFormat(document.getElementById(phoneId));
-    }
-
-    wireParent2('chParent2Toggle', 'chParent2Text', 'chParent2Section', 'chP2Phone');
-    wireParent2('btParent2Toggle', 'btParent2Text', 'btParent2Section', 'btP2Phone');
 
     function validateField(id, message) {
       var el = document.getElementById(id);
@@ -1636,35 +1564,6 @@
 
     btAddBtn.addEventListener('click', addAdditionalPersonCard);
 
-    function getParent2Data(prefix) {
-      var section = document.getElementById(prefix + 'Parent2Section');
-      if (!section.classList.contains('show')) return null;
-      var firstName = document.getElementById(prefix + 'P2First').value.trim();
-      var lastName = document.getElementById(prefix + 'P2Last').value.trim();
-      var phone = document.getElementById(prefix + 'P2Phone').value.trim();
-      var email = document.getElementById(prefix + 'P2Email').value.trim();
-      if (!firstName && !lastName && !phone && !email) return null;
-      if (phone && !validPhone(phone)) {
-        var phoneEl = document.getElementById(prefix + 'P2Phone');
-        phoneEl.classList.add('field-error');
-        showError('Please enter a valid phone number for the second parent or guardian.');
-        phoneEl.focus();
-        return false;
-      }
-      if (email && !validEmail(email)) {
-        var emailEl = document.getElementById(prefix + 'P2Email');
-        emailEl.classList.add('field-error');
-        showError('Please enter a valid email address for the second parent or guardian.');
-        emailEl.focus();
-        return false;
-      }
-      return {
-        firstName: firstName || '',
-        lastName: lastName || '',
-        phone: phone ? toE164US(phone) : '',
-        email: email || ''
-      };
-    }
 
     function buildParticipantData(config) {
       var firstEl = document.getElementById(config.firstId);
@@ -1745,7 +1644,7 @@
       };
     }
 
-    function createDependentContact(participant, parent, parent2) {
+    function createDependentContact(participant, parent) {
       var contact = createSignupContact(participant, 'dependent', parent.phone, parent.email);
       contact.parent = {
         firstName: parent.firstName,
@@ -1753,14 +1652,6 @@
         phone: parent.phone,
         email: parent.email
       };
-      if (parent2) {
-        contact.parent2 = {
-          firstName: parent2.firstName,
-          lastName: parent2.lastName,
-          phone: parent2.phone,
-          email: parent2.email
-        };
-      }
       return contact;
     }
 
@@ -1858,9 +1749,6 @@
         if (!validatePhoneField('chContactPhone', 'Please enter a valid phone number.')) return;
         if (!validateEmailField('chContactEmail', 'Please enter a valid email address.')) return;
 
-        var secondParent = getParent2Data('ch');
-        if (secondParent === false) return;
-
         var childParticipant = buildParticipantData({
           role: 'dependent',
           firstId: 'chFirst',
@@ -1880,7 +1768,7 @@
 
         var guardianContact = createPrimaryContact('chContactFirst', 'chContactLast', 'chContactPhone', 'chContactEmail');
         submitPayload(createPayload('someone_else', [
-          createDependentContact(childParticipant, guardianContact, secondParent)
+          createDependentContact(childParticipant, guardianContact)
         ]), [childParticipant]);
         return;
       }
@@ -1911,13 +1799,10 @@
         var additionalPeople = validateAdditionalPeople();
         if (!additionalPeople) return;
 
-        var meSecondParent = getParent2Data('bt');
-        if (meSecondParent === false) return;
-
         var meContact = createPrimaryContact('btFirst', 'btLast', 'btPhone', 'btEmail');
         var contacts = [createSignupContact(meParticipant, 'self', meContact.phone, meContact.email)];
         for (var i = 0; i < additionalPeople.length; i++) {
-          contacts.push(createDependentContact(additionalPeople[i], meContact, meSecondParent));
+          contacts.push(createDependentContact(additionalPeople[i], meContact));
         }
 
         submitPayload(createPayload('me_plus_others', contacts), [meParticipant].concat(additionalPeople));
