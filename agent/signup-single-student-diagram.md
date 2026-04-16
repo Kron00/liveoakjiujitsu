@@ -278,7 +278,7 @@ flowchart TD
     B --> C[Add Tag]
     C --> D{person_1_program}
 
-    D -->|Adult| E[Book Adult/Teen Trial]
+    D -->|Adult| E[Book Adult Trial]
     D -->|Youth| F[Book Youth Trial]
     D -->|Sprouts| G[Book Sprouts Trial]
 
@@ -569,7 +569,7 @@ flowchart TD
     F --> G[Add Tag]
     G --> H{person_1_program}
 
-    H -->|Adult| I[Book Adult/Teen Trial]
+    H -->|Adult| I[Book Adult Trial]
     H -->|Youth| J[Book Youth Trial]
     H -->|Sprouts| K[Book Sprouts Trial]
 
