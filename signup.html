@@ -478,6 +478,21 @@
     .footer { text-align: center; padding: 1.5rem 1rem; font-size: 0.72rem; color: var(--text-faint); font-weight: 300; line-height: 1.6; }
     .footer a { color: var(--text-muted); transition: color var(--fast); }
     .footer a:hover { color: var(--red); }
+    .turnstile-wrap {
+      display: none;
+      justify-content: center;
+      margin: 0 0 1.35rem;
+    }
+    .turnstile-wrap.show { display: flex; }
+    .honeypot-field {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+    }
 
     /* RESPONSIVE */
     @media (max-width: 480px) {
@@ -615,8 +630,8 @@
               <input type="email" id="jmEmail" placeholder="you@example.com" autocomplete="email">
             </div>
             <div class="field">
-              <label for="jmAllergies">Allergies / Medical Notes <span class="optional">(optional)</span></label>
-              <input type="text" id="jmAllergies" placeholder="Any allergies or conditions we should know about">
+              <label for="jmMedicalNotes">Medical Notes <span class="optional">(optional)</span></label>
+              <input type="text" id="jmMedicalNotes" placeholder="Anything medical we should know about">
             </div>
             <div class="field">
               <label for="jmExperience">Prior Martial Arts Experience <span class="optional">(optional)</span></label>
@@ -686,8 +701,8 @@
               </div>
             </div>
             <div class="field">
-              <label for="chAllergies">Allergies / Medical Notes <span class="optional">(optional)</span></label>
-              <input type="text" id="chAllergies" placeholder="Any allergies or conditions we should know about">
+              <label for="chMedicalNotes">Medical Notes <span class="optional">(optional)</span></label>
+              <input type="text" id="chMedicalNotes" placeholder="Anything medical we should know about">
             </div>
             <div class="field">
               <label for="chExperience">Prior Martial Arts Experience <span class="optional">(optional)</span></label>
@@ -784,8 +799,8 @@
               <input type="email" id="btEmail" placeholder="you@example.com" autocomplete="email">
             </div>
             <div class="field">
-              <label for="btAllergies">Allergies / Medical Notes <span class="optional">(optional)</span></label>
-              <input type="text" id="btAllergies" placeholder="Any allergies or conditions we should know about">
+              <label for="btMedicalNotes">Medical Notes <span class="optional">(optional)</span></label>
+              <input type="text" id="btMedicalNotes" placeholder="Anything medical we should know about">
             </div>
             <div class="field">
               <label for="btExperience">Prior Martial Arts Experience <span class="optional">(optional)</span></label>
@@ -830,6 +845,13 @@
                 <span class="consent-copy">I confirm that I am 18 or older, or that I am the parent, legal guardian, or otherwise authorized adult for each participant whose information I submit, and I consent to the collection and use of that information to schedule and manage the trial.</span>
               </label>
             </div>
+            <div class="honeypot-field" aria-hidden="true">
+              <label for="website">Website</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
+            <div class="turnstile-wrap" id="turnstileWrap">
+              <div id="turnstileWidget"></div>
+            </div>
             <button type="submit" class="btn-submit" id="submitBtn" disabled>Sign Up for Your Free Trial</button>
           </div>
 
@@ -859,21 +881,22 @@
     <a href="tel:+17077557247">(707) 755-7247</a>
   </footer>
 
-  <script src="/api/runtime-config.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
   <script>
   (function() {
     var AVAILABLE_SLOTS_URL = '/api/available-slots';
+    var PUBLIC_CONFIG_URL = '/api/public-config';
+    var SUBMIT_URL = '/api/submit-signup';
     var SUBMIT_ERROR_MESSAGE = 'Something went wrong. Please try again or call us at (707) 755-7247.';
     var SLOT_ERROR_MESSAGE = "Couldn't load class times. Please try again or call (707) 755-7247.";
     var NO_SLOTS_MESSAGE = 'No available class times right now. Please call us at (707) 755-7247.';
     var TOO_YOUNG_MESSAGE = 'Participants must be at least 3 years old.';
     var LABELS = { sprouts: 'Sprouts (Ages 3–5)', youth: 'Youth BJJ (Ages 6–12)', adult: 'Adult & Teen BJJ (Ages 13+)' };
-
-    function getWebhookUrl() {
-      return window.__LIVE_OAK_CONFIG__ && window.__LIVE_OAK_CONFIG__.webhookUrl
-        ? window.__LIVE_OAK_CONFIG__.webhookUrl
-        : '';
-    }
+    var turnstileSiteKey = '';
+    var turnstileToken = '';
+    var turnstileWidgetId = null;
+    var turnstileRendered = false;
+    var turnstileLoadAttempts = 0;
 
     function pad2(n) { return n < 10 ? '0' + n : '' + n; }
 
@@ -1143,6 +1166,9 @@
     var successArea = document.getElementById('successArea');
     var bookingSummary = document.getElementById('bookingSummary');
     var successMsg = document.getElementById('successMsg');
+    var turnstileWrap = document.getElementById('turnstileWrap');
+    var turnstileWidget = document.getElementById('turnstileWidget');
+    var honeypotField = document.getElementById('website');
 
     function clearErrors() {
       formError.classList.remove('show');
@@ -1377,7 +1403,7 @@
         '<div class="dob-help">Month / day / year. Class times appear after date of birth.</div></div>' +
         '<div class="program-tag" data-role="tag"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span data-role="tagtext"></span></div>' +
         '<div class="schedule-section" data-role="schedule"><div class="divider"></div><div class="section-label">Pick This Person\'s Class Time</div><div class="schedule-note">Available class times are based on this person\'s date of birth.</div><div class="schedule-prompt">What day works best?</div><div class="day-picker" data-role="days"></div><div class="schedule-prompt" data-role="timelabel" style="display:none">What time?</div><div class="time-picker" data-role="times"></div><div class="schedule-confirm" data-role="confirm"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-role="confirmtext"></span></div></div>' +
-        '<div class="field"><label>Allergies / Medical Notes <span class="optional">(optional)</span></label><input type="text" data-role="allergies" placeholder="Any allergies or conditions we should know about"></div>' +
+        '<div class="field"><label>Medical Notes <span class="optional">(optional)</span></label><input type="text" data-role="medical-notes" placeholder="Anything medical we should know about"></div>' +
         '<div class="field"><label>Prior Martial Arts Experience <span class="optional">(optional)</span></label><select data-role="experience"><option value="" selected>Select experience level</option><option value="None">None</option><option value="Less than 1 year">Less than 1 year</option><option value="1-3 years">1–3 years</option><option value="3+ years">3+ years</option></select></div>';
 
       var dobParts = {
@@ -1519,7 +1545,7 @@
           day: person.card.querySelector('[data-role="dob-day"]'),
           year: person.card.querySelector('[data-role="dob-year"]')
         };
-        var allergiesEl = person.card.querySelector('[data-role="allergies"]');
+        var medicalNotesEl = person.card.querySelector('[data-role="medical-notes"]');
         var experienceEl = person.card.querySelector('[data-role="experience"]');
         var label = 'additional person ' + (i + 1);
 
@@ -1555,7 +1581,7 @@
           appointment_date_short: person.sched.dateShort,
           appointment_datetime: person.sched.selectedSlot
         };
-        if (allergiesEl.value.trim()) participant.allergies = allergiesEl.value.trim();
+        if (medicalNotesEl.value.trim()) participant.medical_notes = medicalNotesEl.value.trim();
         if (experienceEl.value) participant.experience = experienceEl.value;
         participants.push(participant);
       }
@@ -1573,7 +1599,7 @@
         day: document.getElementById(config.dobIds.day),
         year: document.getElementById(config.dobIds.year)
       };
-      var allergiesEl = config.allergiesId ? document.getElementById(config.allergiesId) : null;
+      var medicalNotesEl = config.medicalNotesId ? document.getElementById(config.medicalNotesId) : null;
       var experienceEl = config.experienceId ? document.getElementById(config.experienceId) : null;
 
       if (!firstEl.value.trim()) { firstEl.classList.add('field-error'); showError(config.firstNameError); firstEl.focus(); return null; }
@@ -1608,7 +1634,7 @@
         appointment_date_short: config.schedule.dateShort,
         appointment_datetime: config.schedule.selectedSlot
       };
-      if (allergiesEl && allergiesEl.value.trim()) participant.allergies = allergiesEl.value.trim();
+      if (medicalNotesEl && medicalNotesEl.value.trim()) participant.medical_notes = medicalNotesEl.value.trim();
       if (experienceEl && experienceEl.value) participant.experience = experienceEl.value;
       return participant;
     }
@@ -1639,7 +1665,7 @@
         classDay: participant.preferred_day,
         classTime: participant.preferred_time,
         selectedSlot: participant.selected_slot,
-        allergies: participant.allergies || '',
+        medicalNotes: participant.medical_notes || '',
         experience: participant.experience || 'None'
       };
     }
@@ -1666,8 +1692,12 @@
     var legalConsent = document.getElementById('legalConsent');
     var guardianConsent = document.getElementById('guardianConsent');
 
+    function hasTurnstileToken() {
+      return !!turnstileToken;
+    }
+
     function allConsentsChecked() {
-      return smsConsent.checked && legalConsent.checked && guardianConsent.checked;
+      return smsConsent.checked && legalConsent.checked && guardianConsent.checked && hasTurnstileToken();
     }
 
     function updateSubmitState() {
@@ -1683,26 +1713,110 @@
       submitBtn.disabled = !allConsentsChecked();
     }
 
-    function submitPayload(payload, participants) {
-      var webhookUrl = getWebhookUrl();
-      if (!webhookUrl) {
-        console.error('Missing NEXT_PUBLIC_WEBHOOK_URL runtime config.');
+    function resetTurnstile() {
+      turnstileToken = '';
+      if (window.turnstile && turnstileWidgetId !== null) {
+        window.turnstile.reset(turnstileWidgetId);
+      }
+      updateSubmitState();
+    }
+
+    function renderTurnstile() {
+      if (!turnstileSiteKey || !turnstileWidget || turnstileRendered || !window.turnstile) return;
+
+      turnstileWidgetId = window.turnstile.render(turnstileWidget, {
+        sitekey: turnstileSiteKey,
+        callback: function(token) {
+          turnstileToken = token;
+          updateSubmitState();
+        },
+        'expired-callback': function() {
+          turnstileToken = '';
+          updateSubmitState();
+        },
+        'error-callback': function() {
+          turnstileToken = '';
+          updateSubmitState();
+        }
+      });
+
+      turnstileRendered = true;
+      turnstileWrap.classList.add('show');
+    }
+
+    function waitForTurnstile() {
+      if (window.turnstile) {
+        renderTurnstile();
+        return;
+      }
+
+      if (turnstileLoadAttempts >= 50) {
+        console.error('Cloudflare Turnstile failed to load.');
         showError(SUBMIT_ERROR_MESSAGE);
+        return;
+      }
+
+      turnstileLoadAttempts++;
+      setTimeout(waitForTurnstile, 200);
+    }
+
+    function loadPublicConfig() {
+      fetchWithTimeout(PUBLIC_CONFIG_URL, {
+        method: 'GET',
+        headers: { Accept: 'application/json' }
+      }, 5000)
+      .then(function(response) {
+        if (!response.ok) throw new Error('Failed to load public config.');
+        return response.json();
+      })
+      .then(function(data) {
+        turnstileSiteKey = data && data.turnstileSiteKey ? String(data.turnstileSiteKey).trim() : '';
+        if (!turnstileSiteKey) {
+          console.error('Missing TURNSTILE_SITE_KEY public config.');
+          showError(SUBMIT_ERROR_MESSAGE);
+          return;
+        }
+        waitForTurnstile();
+      })
+      .catch(function(error) {
+        console.error('Failed to load public config.', error);
+        showError(SUBMIT_ERROR_MESSAGE);
+      });
+    }
+
+    function submitPayload(payload, participants) {
+      if (!turnstileToken) {
+        showError('Please complete the verification to continue.');
         return;
       }
 
       submitBtn.textContent = 'Submitting…';
       submitBtn.disabled = true;
 
-      fetchWithTimeout(webhookUrl, {
+      fetchWithTimeout(SUBMIT_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          signup_type: payload.signup_type,
+          contacts: payload.contacts,
+          turnstileToken: turnstileToken,
+          website: honeypotField.value.trim()
+        })
       }, 10000)
       .then(function(response) {
-        if (response.status !== 200 && response.status !== 201) {
-          throw new Error('Webhook failed with status ' + response.status);
+        if (!response.ok) {
+          return response.json().catch(function() { return {}; }).then(function(body) {
+            var error = new Error(body && body.error ? body.error : SUBMIT_ERROR_MESSAGE);
+            error.status = response.status;
+            throw error;
+          });
         }
+        return response.json();
+      })
+      .then(function() {
         showSuccess(participants.map(function(participant) {
           return {
             first_name: participant.first_name,
@@ -1716,7 +1830,8 @@
       .catch(function(error) {
         console.error('Failed to submit signup payload.', error);
         restoreSubmitButton();
-        showError(SUBMIT_ERROR_MESSAGE);
+        resetTurnstile();
+        showError(error && error.message ? error.message : SUBMIT_ERROR_MESSAGE);
       });
     }
 
@@ -1742,7 +1857,7 @@
           dobIds: { month: 'jmDobMonth', day: 'jmDobDay', year: 'jmDobYear' },
           schedule: jmSched,
           daysId: 'jmDays',
-          allergiesId: 'jmAllergies',
+          medicalNotesId: 'jmMedicalNotes',
           experienceId: 'jmExperience',
           firstNameError: 'Please enter your first name.',
           lastNameError: 'Please enter your last name.',
@@ -1772,7 +1887,7 @@
           dobIds: { month: 'chDobMonth', day: 'chDobDay', year: 'chDobYear' },
           schedule: chSched,
           daysId: 'chDays',
-          allergiesId: 'chAllergies',
+          medicalNotesId: 'chMedicalNotes',
           experienceId: 'chExperience',
           firstNameError: "Please enter your child's first name.",
           lastNameError: "Please enter your child's last name.",
@@ -1802,7 +1917,7 @@
           dobIds: { month: 'btDobMonth', day: 'btDobDay', year: 'btDobYear' },
           schedule: btSched,
           daysId: 'btDays',
-          allergiesId: 'btAllergies',
+          medicalNotesId: 'btMedicalNotes',
           experienceId: 'btExperience',
           firstNameError: 'Please enter your first name.',
           lastNameError: 'Please enter your last name.',
@@ -1845,6 +1960,8 @@
       successArea.classList.add('show');
       document.querySelector('.card').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+
+    loadPublicConfig();
   })();
   </script>
 </body>

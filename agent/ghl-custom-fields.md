@@ -97,7 +97,7 @@ Use these for child signups so the parent's info is not lost when the contact re
 | Person 1 Appointment Date Short | `person_1_appointment_date_short` | Single Line Text |
 | Person 1 Appointment Datetime | `person_1_appointment_datetime` | Single Line Text |
 | Person 1 Relationship to Primary Contact | `person_1_relationship_to_primary_contact` | Single Line Text |
-| Person 1 Allergies | `person_1_allergies` | Single Line Text |
+| Person 1 Medical Notes | `person_1_medical_notes` | Single Line Text |
 | Person 1 Experience | `person_1_experience` | Single Line Text |
 
 ## Person 2
@@ -123,7 +123,7 @@ Used for:
 | Person 2 Appointment Date Short | `person_2_appointment_date_short` | Single Line Text |
 | Person 2 Appointment Datetime | `person_2_appointment_datetime` | Single Line Text |
 | Person 2 Relationship to Primary Contact | `person_2_relationship_to_primary_contact` | Single Line Text |
-| Person 2 Allergies | `person_2_allergies` | Single Line Text |
+| Person 2 Medical Notes | `person_2_medical_notes` | Single Line Text |
 | Person 2 Experience | `person_2_experience` | Single Line Text |
 
 ## Person 3
@@ -144,7 +144,7 @@ Used for:
 | Person 3 Appointment Date Short | `person_3_appointment_date_short` | Single Line Text |
 | Person 3 Appointment Datetime | `person_3_appointment_datetime` | Single Line Text |
 | Person 3 Relationship to Primary Contact | `person_3_relationship_to_primary_contact` | Single Line Text |
-| Person 3 Allergies | `person_3_allergies` | Single Line Text |
+| Person 3 Medical Notes | `person_3_medical_notes` | Single Line Text |
 | Person 3 Experience | `person_3_experience` | Single Line Text |
 
 ## Person 4
@@ -165,7 +165,7 @@ Used for:
 | Person 4 Appointment Date Short | `person_4_appointment_date_short` | Single Line Text |
 | Person 4 Appointment Datetime | `person_4_appointment_datetime` | Single Line Text |
 | Person 4 Relationship to Primary Contact | `person_4_relationship_to_primary_contact` | Single Line Text |
-| Person 4 Allergies | `person_4_allergies` | Single Line Text |
+| Person 4 Medical Notes | `person_4_medical_notes` | Single Line Text |
 | Person 4 Experience | `person_4_experience` | Single Line Text |
 
 ## Person 5
@@ -186,7 +186,7 @@ Used for:
 | Person 5 Appointment Date Short | `person_5_appointment_date_short` | Single Line Text |
 | Person 5 Appointment Datetime | `person_5_appointment_datetime` | Single Line Text |
 | Person 5 Relationship to Primary Contact | `person_5_relationship_to_primary_contact` | Single Line Text |
-| Person 5 Allergies | `person_5_allergies` | Single Line Text |
+| Person 5 Medical Notes | `person_5_medical_notes` | Single Line Text |
 | Person 5 Experience | `person_5_experience` | Single Line Text |
 
 ## Keys You Do Not Need as GHL Custom Fields
@@ -217,7 +217,7 @@ If you want the leanest possible GHL setup, the minimum high-value fields are:
 - `person_1_program`
 - `person_1_appointment_datetime`
 - `person_1_dob`
-- `person_1_allergies`
+- `person_1_medical_notes`
 - `person_1_experience`
 - `person_2_*` through `person_5_*` if you plan to allow additional kids
 

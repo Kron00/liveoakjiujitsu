@@ -110,7 +110,7 @@ Do not collect these in chat for routine trial signup because the form handles t
 - last name
 - date of birth
 - emergency contact information
-- allergies or medical notes
+- medical notes
 - prior experience
 - class day and time selection
 

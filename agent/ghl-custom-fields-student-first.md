@@ -94,7 +94,7 @@ Only populated for `my_child`.
 | Person 1 Appointment Time | `person_1_appointment_time` |
 | Person 1 Appointment Datetime | `person_1_appointment_datetime` |
 | Person 1 Date Short | `person_1_date_short` |
-| Person 1 Allergies | `person_1_allergies` |
+| Person 1 Medical Notes | `person_1_medical_notes` |
 | Person 1 Experience | `person_1_experience` |
 
 ### 6. Student 2
@@ -117,7 +117,7 @@ Only needed for `me_plus_other`.
 | Person 2 Appointment Time | `person_2_appointment_time` |
 | Person 2 Appointment Datetime | `person_2_appointment_datetime` |
 | Person 2 Date Short | `person_2_date_short` |
-| Person 2 Allergies | `person_2_allergies` |
+| Person 2 Medical Notes | `person_2_medical_notes` |
 | Person 2 Experience | `person_2_experience` |
 
 ## Booking Logic

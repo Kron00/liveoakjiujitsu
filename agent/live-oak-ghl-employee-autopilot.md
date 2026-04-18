@@ -141,7 +141,7 @@ The form should handle:
 - last name
 - date of birth
 - emergency contact details
-- allergies or medical notes
+- medical notes
 - prior martial arts experience
 - class day and time selection
 
