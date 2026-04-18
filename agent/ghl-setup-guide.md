@@ -57,8 +57,8 @@ Click **Save action**.
 
 You need three trial calendars under **Calendars**:
 
-1. **Adult/Teen Trial** — for Adult & Teen BJJ (Ages 13+)
-2. **Youth Trial** — for Youth BJJ (Ages 6–12)
+1. **Adult Trial** — for Adult BJJ (Ages 18+)
+2. **Youth Trial** — for Youth BJJ (Ages 6–17)
 3. **Sprouts Trial** — for Sprouts (Ages 3–5)
 
 Set each calendar's timezone to **America/Los_Angeles** (Pacific Time).
@@ -69,12 +69,12 @@ Set each calendar's timezone to **America/Los_Angeles** (Pacific Time).
 
 After the **Add Tag** action and before the **SMS** action, add an **If/Else** branch.
 
-### Branch 1: Adult/Teen
+### Branch 1: Adult
 
 - **Condition:** `{{inboundWebhookRequest.person_1_program}}` contains `Adult`
 - **Action:** Book Appointment
   - Action Name: `Book Adult Trial`
-  - Calendar: **Adult/Teen Trial**
+  - Calendar: **Adult Trial**
   - Start Date & Time: `{{inboundWebhookRequest.person_1_appointment_datetime}}`
 
 ### Branch 2: Youth

@@ -225,8 +225,8 @@ If you want the leanest possible GHL setup, the minimum high-value fields are:
 
 - Program labels:
   - `Sprouts (Ages 3–5)`
-  - `Youth BJJ (Ages 6–12)`
-  - `Adult & Teen BJJ (Ages 13+)`
+  - `Youth BJJ (Ages 6–17)`
+  - `Adult BJJ (Ages 18+)`
 - Program keys:
   - `sprouts`
   - `youth`
