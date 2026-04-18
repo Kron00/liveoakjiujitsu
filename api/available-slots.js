@@ -11,21 +11,21 @@ const CALENDARS = [
     label: 'Sprouts (Ages 3–5)',
     minAge: 3,
     maxAge: 5,
-    id: 'AYvj0FnPIrV2tVHSnAfG'
+    id: 'bd2gOYTWJQ8MbQ5eXeCr'
   },
   {
     key: 'youth',
     label: 'Youth BJJ (Ages 6–17)',
     minAge: 6,
     maxAge: 17,
-    id: 'FBZx2VkRCnSo30gRRwz8'
+    id: 'O7aMCGhEnCpYfOGpOsH4'
   },
   {
     key: 'adult',
     label: 'Adult BJJ (Ages 18+)',
     minAge: 18,
     maxAge: Infinity,
-    id: 'BRchGSNTKsjodFsm8s5u'
+    id: 'bdny8Ve5pWGgc8XCvlQH'
   }
 ];
 
