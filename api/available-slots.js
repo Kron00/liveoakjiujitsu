@@ -1,6 +1,9 @@
 const GHL_BASE_URL = 'https://services.leadconnectorhq.com';
 const LOOKAHEAD_DAYS = 14;
 const CALENDAR_TIMEZONE = 'America/Los_Angeles';
+const MAX_AGE = 120;
+
+const { checkRateLimit, getClientIp, getRequestId } = require('./_security');
 
 const CALENDARS = [
   {
@@ -119,9 +122,30 @@ async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  const requestId = getRequestId(req);
+  const clientIp = getClientIp(req);
+  const rateLimit = checkRateLimit('available-slots', clientIp, [
+    { windowMs: 10 * 60 * 1000, max: 30 }
+  ]);
+
+  if (!rateLimit.allowed) {
+    res.setHeader('Retry-After', String(rateLimit.retryAfterSeconds));
+    res.setHeader('Cache-Control', 'no-store');
+    console.error('Rejected available-slots request due to rate limit.', {
+      endpoint: '/api/available-slots',
+      requestId,
+      clientIp
+    });
+    return res.status(429).json({ error: 'Too many requests. Please try again later.' });
+  }
+
   const age = Number.parseInt(req.query.age, 10);
   if (Number.isNaN(age)) {
     return res.status(400).json({ error: 'Age is required and must be a number.' });
+  }
+
+  if (!Number.isInteger(age) || age > MAX_AGE) {
+    return res.status(400).json({ error: 'Age must be a valid number.' });
   }
 
   if (age < 3) {
@@ -145,10 +169,12 @@ async function handler(req, res) {
     return res.status(200).json(transformSlotsResponse(calendar, rawSlots));
   } catch (error) {
     console.error('Failed to load available slots from GHL.', {
+      endpoint: '/api/available-slots',
+      requestId,
+      clientIp,
       calendarId: calendar.id,
       message: error && error.message,
-      status: error && error.status,
-      body: error && error.body
+      status: error && error.status
     });
     return res.status(502).json({ error: 'Failed to load class times.' });
   }

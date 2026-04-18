@@ -109,7 +109,7 @@ Do not collect these by voice for routine trial signup because the form handles 
 - last name
 - date of birth
 - emergency contact information
-- allergies or medical notes
+- medical notes
 - prior experience
 - class day and time selection
 

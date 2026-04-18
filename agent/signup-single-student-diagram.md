@@ -81,7 +81,7 @@ flowchart TD
     C2 --> C3[Determine program from DOB]
     C3 --> C4[Choose day and time]
     C4 --> C5[Collect phone and email]
-    C5 --> C6[Optional allergies and experience]
+    C5 --> C6[Optional medical notes and experience]
 
     D --> D1[Collect parent contact info]
     D1 --> D2[Optional second parent]
@@ -89,7 +89,7 @@ flowchart TD
     D3 --> D4[Each trainee enters name + DOB]
     D4 --> D5[Each trainee gets program from DOB]
     D5 --> D6[Each trainee chooses day and time]
-    D6 --> D7[Optional allergies and experience per trainee]
+    D6 --> D7[Optional medical notes and experience per trainee]
 
     E --> E1[Collect adult self info]
     E1 --> E2[Adult self DOB -> program]
@@ -98,7 +98,7 @@ flowchart TD
     E4 --> E5[Add 1 to 4 additional trainees]
     E5 --> E6[Each added trainee enters name + DOB]
     E6 --> E7[Each added trainee chooses day and time]
-    E7 --> E8[Optional allergies and experience per trainee]
+    E7 --> E8[Optional medical notes and experience per trainee]
 ```
 
 ### 1.3 Current Website Signup Payload
@@ -421,7 +421,7 @@ flowchart LR
       C3[person_1_dob]
       C4[person_1_program]
       C5[person_1_appointment_datetime]
-      C6[person_1_allergies optional]
+      C6[person_1_medical_notes optional]
       C7[person_1_experience optional]
     end
 

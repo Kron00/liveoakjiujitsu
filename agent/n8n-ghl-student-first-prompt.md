@@ -73,7 +73,7 @@ Output schema:
     "person_1_appointment_time": "",
     "person_1_appointment_datetime": "",
     "person_1_date_short": "",
-    "person_1_allergies": "",
+    "person_1_medical_notes": "",
     "person_1_experience": "",
     "person_2_relation_to_submitter": "",
     "person_2_first_name": "",
@@ -89,7 +89,7 @@ Output schema:
     "person_2_appointment_time": "",
     "person_2_appointment_datetime": "",
     "person_2_date_short": "",
-    "person_2_allergies": "",
+    "person_2_medical_notes": "",
     "person_2_experience": ""
   }
 }

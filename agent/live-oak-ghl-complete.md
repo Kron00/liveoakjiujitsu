@@ -77,7 +77,7 @@ The free trial is a free three-day calendar trial.
 There is no charge and no commitment.
 The signup form is where the caller chooses the class day and time.
 You do not book the calendar manually on the phone.
-You do not collect last name, email, date of birth, emergency contact, allergies, experience, or class time by voice for routine trial signup.
+You do not collect last name, email, date of birth, emergency contact, medical notes, experience, or class time by voice for routine trial signup.
 The form handles those details. This step is important.
 
 # Booking Trigger
