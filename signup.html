@@ -148,6 +148,13 @@
     .field-error { border-color: #ef4444 !important; }
     .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .divider { height: 1px; background: var(--border-light); margin: 1.75rem 0; }
+    .hp-field {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
     .section-note {
       font-size: 0.8rem;
       color: var(--text-muted);
@@ -813,6 +820,10 @@
           <!-- ===== CONSENT + SUBMIT (shared) ===== -->
           <div id="consentArea" style="display:none">
             <div class="divider"></div>
+            <div class="hp-field" aria-hidden="true">
+              <label for="website">Leave this field empty</label>
+              <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+            </div>
             <div class="consent">
               <label class="consent-label">
                 <input type="checkbox" id="smsConsent">
@@ -859,22 +870,15 @@
     Live Oak Jiu Jitsu Academy &middot; 910 Texas Street, Fairfield, CA 94533<br>
     <a href="tel:+17077557247">(707) 755-7247</a>
   </footer>
-
-  <script src="/api/runtime-config.js"></script>
   <script>
   (function() {
     var AVAILABLE_SLOTS_URL = '/api/available-slots';
+    var SUBMIT_SIGNUP_URL = '/api/submit-signup';
     var SUBMIT_ERROR_MESSAGE = 'Something went wrong. Please try again or call us at (707) 755-7247.';
     var SLOT_ERROR_MESSAGE = "Couldn't load class times. Please try again or call (707) 755-7247.";
     var NO_SLOTS_MESSAGE = 'No available class times right now. Please call us at (707) 755-7247.';
     var TOO_YOUNG_MESSAGE = 'Participants must be at least 3 years old.';
     var LABELS = { sprouts: 'Sprouts (Ages 3–5)', youth: 'Youth BJJ (Ages 6–12)', adult: 'Adult & Teen BJJ (Ages 13+)' };
-
-    function getWebhookUrl() {
-      return window.__LIVE_OAK_CONFIG__ && window.__LIVE_OAK_CONFIG__.webhookUrl
-        ? window.__LIVE_OAK_CONFIG__.webhookUrl
-        : '';
-    }
 
     function pad2(n) { return n < 10 ? '0' + n : '' + n; }
 
@@ -1659,13 +1663,15 @@
     function createPayload(signupType, contacts) {
       return {
         signup_type: signupType,
-        contacts: contacts
+        contacts: contacts,
+        website: honeypotEl ? honeypotEl.value.trim() : ''
       };
     }
 
     var smsConsent = document.getElementById('smsConsent');
     var legalConsent = document.getElementById('legalConsent');
     var guardianConsent = document.getElementById('guardianConsent');
+    var honeypotEl = document.getElementById('website');
 
     function allConsentsChecked() {
       return smsConsent.checked && legalConsent.checked && guardianConsent.checked;
@@ -1685,25 +1691,33 @@
     }
 
     function submitPayload(payload, participants) {
-      var webhookUrl = getWebhookUrl();
-      if (!webhookUrl) {
-        console.error('Missing NEXT_PUBLIC_WEBHOOK_URL runtime config.');
-        showError(SUBMIT_ERROR_MESSAGE);
-        return;
-      }
-
       submitBtn.textContent = 'Submitting…';
       submitBtn.disabled = true;
 
-      fetchWithTimeout(webhookUrl, {
+      fetchWithTimeout(SUBMIT_SIGNUP_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
         body: JSON.stringify(payload)
       }, 10000)
       .then(function(response) {
-        if (response.status !== 200 && response.status !== 201) {
-          throw new Error('Webhook failed with status ' + response.status);
+        if (response.status === 200 || response.status === 201) {
+          return null;
         }
+        return response.json().catch(function() {
+          return null;
+        }).then(function(body) {
+          var message = body && body.error ? body.error : ('Signup request failed with status ' + response.status);
+          var error = new Error(message);
+          error.userMessage = response.status === 429
+            ? 'Too many signup attempts. Please wait a few minutes and try again.'
+            : SUBMIT_ERROR_MESSAGE;
+          throw error;
+        });
+      })
+      .then(function() {
         showSuccess(participants.map(function(participant) {
           return {
             first_name: participant.first_name,
@@ -1717,7 +1731,7 @@
       .catch(function(error) {
         console.error('Failed to submit signup payload.', error);
         restoreSubmitButton();
-        showError(SUBMIT_ERROR_MESSAGE);
+        showError(error && error.userMessage ? error.userMessage : SUBMIT_ERROR_MESSAGE);
       });
     }
 

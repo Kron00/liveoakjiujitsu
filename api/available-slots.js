@@ -1,6 +1,7 @@
 const GHL_BASE_URL = 'https://services.leadconnectorhq.com';
 const LOOKAHEAD_DAYS = 14;
 const CALENDAR_TIMEZONE = 'America/Los_Angeles';
+const { applyRateLimit, createTimeoutSignal } = require('./_lib/security');
 
 const CALENDARS = [
   {
@@ -90,6 +91,7 @@ async function fetchAvailableSlots(calendar, apiKey) {
   const startDate = Date.now();
   const endDate = startDate + LOOKAHEAD_DAYS * 24 * 60 * 60 * 1000;
   const url = new URL(`${GHL_BASE_URL}/calendars/${calendar.id}/free-slots`);
+  const timeout = createTimeoutSignal(8000);
 
   url.searchParams.set('startDate', String(startDate));
   url.searchParams.set('endDate', String(endDate));
@@ -99,7 +101,10 @@ async function fetchAvailableSlots(calendar, apiKey) {
     headers: {
       Authorization: `Bearer ${apiKey}`,
       Version: '2021-04-15'
-    }
+    },
+    signal: timeout.signal
+  }).finally(() => {
+    timeout.clear();
   });
 
   if (!response.ok) {
@@ -119,6 +124,15 @@ async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  if (!applyRateLimit(req, res, {
+    scope: 'available-slots',
+    limit: 30,
+    windowMs: 5 * 60 * 1000,
+    message: 'Too many schedule lookups. Please wait a minute and try again.'
+  })) {
+    return;
+  }
+
   const age = Number.parseInt(req.query.age, 10);
   if (Number.isNaN(age)) {
     return res.status(400).json({ error: 'Age is required and must be a number.' });
@@ -126,6 +140,10 @@ async function handler(req, res) {
 
   if (age < 3) {
     return res.status(400).json({ error: 'Participants must be at least 3 years old.' });
+  }
+
+  if (age > 120) {
+    return res.status(400).json({ error: 'Age must be 120 or younger.' });
   }
 
   const calendar = getCalendarForAge(age);
@@ -141,7 +159,7 @@ async function handler(req, res) {
 
   try {
     const rawSlots = await fetchAvailableSlots(calendar, apiKey);
-    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=60');
+    res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=600');
     return res.status(200).json(transformSlotsResponse(calendar, rawSlots));
   } catch (error) {
     console.error('Failed to load available slots from GHL.', {
