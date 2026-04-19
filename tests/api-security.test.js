@@ -62,7 +62,16 @@ function createValidPayload(overrides = {}) {
 
 test.beforeEach(() => {
   security._private.getRateLimitStore().clear();
+  availableSlots._private.getCalendarIdCache().clear();
   delete process.env.ALLOWED_ORIGINS;
+  delete process.env.GHL_API_KEY;
+  delete process.env.GHL_LOCATION_ID;
+  delete process.env.GHL_SPROUTS_CALENDAR_ID;
+  delete process.env.GHL_YOUTH_CALENDAR_ID;
+  delete process.env.GHL_ADULT_CALENDAR_ID;
+  delete process.env.GHL_SPROUTS_CALENDAR_NAME;
+  delete process.env.GHL_YOUTH_CALENDAR_NAME;
+  delete process.env.GHL_ADULT_CALENDAR_NAME;
   delete process.env.N8N_SIGNUP_WEBHOOK_URL;
   delete process.env.NEXT_PUBLIC_WEBHOOK_URL;
   delete global.fetch;
@@ -164,4 +173,39 @@ test('available-slots calendar mapping stays aligned with age boundaries', () =>
   assert.equal(availableSlots._private.getCalendarForAge(17).key, 'youth');
   assert.equal(availableSlots._private.getCalendarForAge(18).key, 'adult');
   assert.equal(availableSlots._private.getCalendarForAge(2), null);
+});
+
+test('available-slots uses the current calendar IDs by default', () => {
+  assert.equal(availableSlots._private.getCalendarForAge(3).id, 'bd2gOYTWJQ8MbQ5eXeCr');
+  assert.equal(availableSlots._private.getCalendarForAge(12).id, 'O7aMCGhEnCpYfOGpOsH4');
+  assert.equal(availableSlots._private.getCalendarForAge(18).id, 'bdny8Ve5pWGgc8XCvlQH');
+});
+
+test('available-slots supports calendar ID environment overrides', () => {
+  process.env.GHL_ADULT_CALENDAR_ID = 'adult-env-id';
+
+  assert.equal(availableSlots._private.getCalendarForAge(18).id, 'adult-env-id');
+});
+
+test('available-slots converts GHL offset slot timestamps to UTC ISO values', () => {
+  const calendar = availableSlots._private.getCalendarForAge(18);
+  const result = availableSlots._private.transformSlotsResponse(calendar, {
+    '2026-04-20': {
+      slots: ['2026-04-20T06:30:00-07:00']
+    }
+  });
+
+  assert.equal(result.days[0].slots[0].label, '6:30 AM');
+  assert.equal(result.days[0].slots[0].value, '2026-04-20T13:30:00.000Z');
+});
+
+test('available-slots can match recreated calendars by configured names', () => {
+  process.env.GHL_ADULT_CALENDAR_NAME = 'Adult Trial,Adults Trial Booking';
+
+  const id = availableSlots._private.findMatchingCalendarId([
+    { id: 'deleted-calendar', name: 'Adult Trial', deleted: true },
+    { id: 'new-adult-calendar', name: 'Adults Trial Booking' }
+  ], availableSlots._private.getCalendarForAge(18));
+
+  assert.equal(id, 'new-adult-calendar');
 });
