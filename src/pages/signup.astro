@@ -1718,17 +1718,37 @@
 
     function getWebhookResultError(body) {
       if (!body || typeof body !== 'object') return '';
-      if (body.message && body.success === false) return body.message;
+      if (body.message && body.success === false) return getMessageText(body.message);
       if (!Array.isArray(body.results)) return '';
 
       for (var i = 0; i < body.results.length; i++) {
         var result = body.results[i];
         if (result && result.success === false) {
-          return result.message || 'One of the trial bookings could not be completed.';
+          return getMessageText(result.message) || 'One of the trial bookings could not be completed.';
         }
       }
 
       return '';
+    }
+
+    function getMessageText(message) {
+      if (!message) return '';
+      if (typeof message === 'string') return extractNestedJsonMessage(message) || message;
+      if (typeof message === 'object') return getMessageText(message.message) || getMessageText(message.error);
+      return String(message);
+    }
+
+    function extractNestedJsonMessage(message) {
+      var firstBrace = message.indexOf('{');
+      var lastBrace = message.lastIndexOf('}');
+      if (firstBrace === -1 || lastBrace <= firstBrace) return '';
+
+      try {
+        var parsed = JSON.parse(message.slice(firstBrace, lastBrace + 1).replace(/\\"/g, '"'));
+        return parsed && parsed.message ? parsed.message : '';
+      } catch (error) {
+        return '';
+      }
     }
 
     var smsConsent = document.getElementById('smsConsent');
