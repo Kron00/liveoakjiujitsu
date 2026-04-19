@@ -135,14 +135,29 @@ test('submit-signup rejects requests from unapproved origins', async () => {
 
 test('submit-signup forwards sanitized payloads through the first-party endpoint', async () => {
   process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  const webhookResult = {
+    success: true,
+    count: 1,
+    results: [
+      {
+        index: 0,
+        firstName: 'Alex',
+        lastName: 'Lucas',
+        role: 'self',
+        success: true,
+        message: 'Trial booked successfully',
+        selectedSlot: '2026-04-21T01:00:00.000Z'
+      }
+    ]
+  };
 
   let forwardedRequest;
   global.fetch = async (url, options) => {
     forwardedRequest = { url, options };
     return {
       ok: true,
-      status: 201,
-      text: async () => ''
+      status: 200,
+      text: async () => JSON.stringify(webhookResult)
     };
   };
 
@@ -157,14 +172,53 @@ test('submit-signup forwards sanitized payloads through the first-party endpoint
 
   await submitSignup(req, res);
 
-  assert.equal(res.statusCode, 201);
-  assert.deepEqual(res.body, { ok: true });
+  assert.equal(res.statusCode, 200);
+  assert.deepEqual(res.body, webhookResult);
   assert.equal(forwardedRequest.url, 'https://example.com/webhook');
 
   const forwardedPayload = JSON.parse(forwardedRequest.options.body);
   assert.equal(forwardedPayload.signup_type, 'me_plus_others');
   assert.equal(forwardedPayload.contacts[0].dob, '04/18/1990');
+  assert.equal(forwardedPayload.contacts[0].selectedSlot, '2026-04-21T01:00:00.000Z');
+  assert.equal(forwardedPayload.contacts[0].medicalNotes, '');
+  assert.equal(forwardedPayload.contacts[0].experience, 'None');
   assert.equal(Object.hasOwn(forwardedPayload, 'website'), false);
+});
+
+test('normalizeSignupPayload accepts my_child dependent payloads', () => {
+  const payload = createValidPayload({
+    signup_type: 'my_child',
+    contacts: [
+      {
+        role: 'dependent',
+        firstName: 'Timothy',
+        lastName: 'Sanders',
+        dob: '06/27/2015',
+        phone: '+19168860323',
+        email: 'julian@example.com',
+        classDay: 'Friday',
+        classTime: '11:00 AM',
+        selectedSlot: '2026-04-24T18:00:00.000Z',
+        medicalNotes: 'Broken left pinky toe',
+        experience: 'None',
+        parent: {
+          firstName: 'Julian',
+          lastName: 'Sanders',
+          phone: '+19168860323',
+          email: 'julian@example.com'
+        }
+      }
+    ]
+  });
+
+  const normalized = submitSignupPrivate.normalizeSignupPayload(payload);
+
+  assert.equal(normalized.signup_type, 'my_child');
+  assert.equal(normalized.contacts[0].role, 'dependent');
+  assert.equal(normalized.contacts[0].selectedSlot, '2026-04-24T18:00:00.000Z');
+  assert.equal(normalized.contacts[0].medicalNotes, 'Broken left pinky toe');
+  assert.equal(normalized.contacts[0].experience, 'None');
+  assert.equal(normalized.contacts[0].parent.firstName, 'Julian');
 });
 
 test('available-slots calendar mapping stays aligned with age boundaries', () => {

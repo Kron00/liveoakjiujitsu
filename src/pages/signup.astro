@@ -878,6 +878,7 @@
     var SLOT_ERROR_MESSAGE = "Couldn't load class times. Please try again or call (707) 755 7247.";
     var NO_SLOTS_MESSAGE = 'No available class times right now. Please call us at (707) 755 7247.';
     var TOO_YOUNG_MESSAGE = 'Participants must be at least 3 years old.';
+    var MAX_CONTACTS = 6;
     var LABELS = { sprouts: 'Sprouts (Ages 3 to 5)', youth: 'Youth BJJ (Ages 6 to 17)', adult: 'Adult BJJ (Ages 18+)' };
 
     function pad2(n) { return n < 10 ? '0' + n : '' + n; }
@@ -1362,9 +1363,15 @@
       for (var i = 0; i < btAdditionalPeople.length; i++) {
         btAdditionalPeople[i].card.querySelector('.person-card-label').textContent = 'Additional Person ' + (i + 1);
       }
+      btAddBtn.disabled = btAdditionalPeople.length >= MAX_CONTACTS - 1;
     }
 
     function addAdditionalPersonCard() {
+      if (btAdditionalPeople.length >= MAX_CONTACTS - 1) {
+        showError('You can register up to ' + MAX_CONTACTS + ' total participants at once.');
+        return;
+      }
+
       btPersonCounter++;
       var suffix = 'btx' + btPersonCounter;
       var card = document.createElement('div');
@@ -1668,6 +1675,62 @@
       };
     }
 
+    function validIsoUtc(value) {
+      return /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/.test(value);
+    }
+
+    function validatePayloadContract(payload) {
+      var allowedTypes = ['just_me', 'my_child', 'me_plus_other', 'me_plus_others'];
+      if (!payload || allowedTypes.indexOf(payload.signup_type) === -1) {
+        return 'Please select who this signup is for.';
+      }
+
+      if (!Array.isArray(payload.contacts) || payload.contacts.length < 1 || payload.contacts.length > MAX_CONTACTS) {
+        return 'Please include between 1 and ' + MAX_CONTACTS + ' participants.';
+      }
+
+      for (var i = 0; i < payload.contacts.length; i++) {
+        var contact = payload.contacts[i];
+        var label = contact && contact.firstName ? contact.firstName : 'participant ' + (i + 1);
+
+        if (!contact || (contact.role !== 'self' && contact.role !== 'dependent')) return 'Please review the participant information.';
+        if (!contact.firstName || !contact.lastName || !contact.dob || !contact.classDay || !contact.classTime || !contact.selectedSlot) {
+          return 'Please complete all required booking fields for ' + label + '.';
+        }
+        if (!validIsoUtc(contact.selectedSlot)) {
+          return 'Please pick a valid class time for ' + label + '.';
+        }
+        if (typeof contact.medicalNotes !== 'string') contact.medicalNotes = '';
+        if (typeof contact.experience !== 'string' || !contact.experience) contact.experience = 'None';
+
+        if (contact.role === 'self' && (!contact.phone || !contact.email)) {
+          return 'Please enter a phone number and email for ' + label + '.';
+        }
+        if (contact.role === 'dependent') {
+          if (!contact.parent || !contact.parent.firstName || !contact.parent.lastName || !contact.parent.phone || !contact.parent.email) {
+            return 'Please complete the parent or guardian contact information for ' + label + '.';
+          }
+        }
+      }
+
+      return '';
+    }
+
+    function getWebhookResultError(body) {
+      if (!body || typeof body !== 'object') return '';
+      if (body.message && body.success === false) return body.message;
+      if (!Array.isArray(body.results)) return '';
+
+      for (var i = 0; i < body.results.length; i++) {
+        var result = body.results[i];
+        if (result && result.success === false) {
+          return result.message || 'One of the trial bookings could not be completed.';
+        }
+      }
+
+      return '';
+    }
+
     var smsConsent = document.getElementById('smsConsent');
     var legalConsent = document.getElementById('legalConsent');
     var guardianConsent = document.getElementById('guardianConsent');
@@ -1691,6 +1754,12 @@
     }
 
     function submitPayload(payload, participants) {
+      var contractError = validatePayloadContract(payload);
+      if (contractError) {
+        showError(contractError);
+        return;
+      }
+
       submitBtn.textContent = 'Submitting…';
       submitBtn.disabled = true;
 
@@ -1704,7 +1773,9 @@
       }, 10000)
       .then(function(response) {
         if (response.status === 200 || response.status === 201) {
-          return null;
+          return response.json().catch(function() {
+            return null;
+          });
         }
         return response.json().catch(function() {
           return null;
@@ -1717,7 +1788,14 @@
           throw error;
         });
       })
-      .then(function() {
+      .then(function(body) {
+        var resultError = getWebhookResultError(body);
+        if (resultError) {
+          var bookingError = new Error(resultError);
+          bookingError.userMessage = resultError;
+          throw bookingError;
+        }
+
         showSuccess(participants.map(function(participant) {
           return {
             first_name: participant.first_name,
@@ -1798,7 +1876,7 @@
         if (!childParticipant) return;
 
         var guardianContact = createPrimaryContact('chContactFirst', 'chContactLast', 'chContactPhone', 'chContactEmail');
-        submitPayload(createPayload('someone_else', [
+        submitPayload(createPayload('my_child', [
           createDependentContact(childParticipant, guardianContact)
         ]), [childParticipant]);
         return;
@@ -1836,7 +1914,7 @@
           contacts.push(createDependentContact(additionalPeople[i], meContact));
         }
 
-        submitPayload(createPayload('me_plus_others', contacts), [meParticipant].concat(additionalPeople));
+        submitPayload(createPayload(additionalPeople.length === 1 ? 'me_plus_other' : 'me_plus_others', contacts), [meParticipant].concat(additionalPeople));
       }
     });
 

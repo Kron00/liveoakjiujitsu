@@ -167,12 +167,27 @@ async function forwardSignup(webhookUrl, payload) {
       signal: timeout.signal
     });
 
+    const bodyText = await response.text();
     if (!response.ok) {
-      const body = await response.text();
       const error = new Error(`Signup webhook failed with ${response.status}`);
       error.status = response.status;
-      error.body = body;
+      error.body = bodyText;
       throw error;
+    }
+
+    if (!bodyText) {
+      return { success: true, count: payload.contacts.length, results: [] };
+    }
+
+    try {
+      return JSON.parse(bodyText);
+    } catch (error) {
+      return {
+        success: true,
+        count: payload.contacts.length,
+        results: [],
+        raw: bodyText
+      };
     }
   } finally {
     timeout.clear();
@@ -209,10 +224,10 @@ async function handler(req, res) {
     const payload = await readJsonBody(req, { maxBytes: 32 * 1024 });
     const normalizedPayload = normalizeSignupPayload(payload);
 
-    await forwardSignup(webhookUrl, normalizedPayload);
+    const webhookResult = await forwardSignup(webhookUrl, normalizedPayload);
 
     res.setHeader('Cache-Control', 'no-store');
-    return res.status(201).json({ ok: true });
+    return res.status(200).json(webhookResult);
   } catch (error) {
     if (error && error.status && error.status < 500) {
       return res.status(error.status).json({ error: error.message });
