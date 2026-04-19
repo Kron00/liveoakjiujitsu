@@ -52,7 +52,7 @@ function createValidPayload(overrides = {}) {
         classDay: 'Monday',
         classTime: '6:00 PM',
         selectedSlot: '2026-04-21T01:00:00.000Z',
-        allergies: '',
+        medicalNotes: '',
         experience: 'None'
       }
     ],

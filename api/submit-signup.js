@@ -114,7 +114,7 @@ function validateContact(contact) {
     classDay: readString(contact.classDay, 'classDay', 40),
     classTime: readString(contact.classTime, 'classTime', 40),
     selectedSlot: validateSlot(contact.selectedSlot),
-    allergies: validateOptionalText(contact.allergies, 'allergies', 300),
+    medicalNotes: validateOptionalText(contact.medicalNotes, 'medicalNotes', 300),
     experience: validateOptionalText(contact.experience, 'experience', 40) || 'None'
   };
 

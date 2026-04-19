@@ -6,14 +6,14 @@ const { applyRateLimit, createTimeoutSignal } = require('./_lib/security');
 const CALENDARS = [
   {
     key: 'sprouts',
-    label: 'Sprouts (Ages 3–5)',
+    label: 'Sprouts (Ages 3 to 5)',
     minAge: 3,
     maxAge: 5,
     id: 'AYvj0FnPIrV2tVHSnAfG'
   },
   {
     key: 'youth',
-    label: 'Youth BJJ (Ages 6–17)',
+    label: 'Youth BJJ (Ages 6 to 17)',
     minAge: 6,
     maxAge: 17,
     id: 'FBZx2VkRCnSo30gRRwz8'
