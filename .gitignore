@@ -2,9 +2,11 @@
 .playwright-cli/
 .playwright-mcp/
 *.png
-!assets/images/favicon-circle.png
+!public/assets/images/favicon-circle.png
 .env
 .env.*
 !.env.example
 node_modules/
+.astro/
+dist/
 .vercel/

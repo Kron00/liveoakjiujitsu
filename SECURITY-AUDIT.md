@@ -1,5 +1,10 @@
 # Security Audit Report
 
+> Status note: This report predates the follow-up hardening work that moved signup
+> submission behind `/api/submit-signup`, removed `/api/runtime-config.js`, and
+> migrated static pages into Astro under `src/pages`. Keep the findings below as
+> historical context, not a current-state assessment.
+
 **Target:** Live Oak Jiu Jitsu Academy website  
 **Repo:** `/Users/julian/Documents/Projects/Business/liveoakjiujitsu`  
 **Audit date:** 2026-04-14  
