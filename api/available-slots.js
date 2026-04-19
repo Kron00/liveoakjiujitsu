@@ -13,15 +13,15 @@ const CALENDARS = [
   },
   {
     key: 'youth',
-    label: 'Youth BJJ (Ages 6–12)',
+    label: 'Youth BJJ (Ages 6–17)',
     minAge: 6,
-    maxAge: 12,
+    maxAge: 17,
     id: 'FBZx2VkRCnSo30gRRwz8'
   },
   {
     key: 'adult',
-    label: 'Adult & Teen BJJ (Ages 13+)',
-    minAge: 13,
+    label: 'Adult BJJ (Ages 18+)',
+    minAge: 18,
     maxAge: Infinity,
     id: 'BRchGSNTKsjodFsm8s5u'
   }

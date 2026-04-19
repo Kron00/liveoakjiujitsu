@@ -161,6 +161,7 @@ test('submit-signup forwards sanitized payloads through the first-party endpoint
 test('available-slots calendar mapping stays aligned with age boundaries', () => {
   assert.equal(availableSlots._private.getCalendarForAge(3).key, 'sprouts');
   assert.equal(availableSlots._private.getCalendarForAge(12).key, 'youth');
-  assert.equal(availableSlots._private.getCalendarForAge(13).key, 'adult');
+  assert.equal(availableSlots._private.getCalendarForAge(17).key, 'youth');
+  assert.equal(availableSlots._private.getCalendarForAge(18).key, 'adult');
   assert.equal(availableSlots._private.getCalendarForAge(2), null);
 });

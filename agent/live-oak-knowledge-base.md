@@ -17,8 +17,8 @@ Instructors are Live Scanned certified
 
 ## Programs
 
-Adult and Teen Brazilian Jiu Jitsu: ages 13 and up
-Youth BJJ: ages 6 to 12
+Adult Brazilian Jiu Jitsu: ages 18 and up
+Youth BJJ: ages 6 to 17
 Sprouts: ages 3 to 5
 Women's class: available, but exact placement or scheduling may require staff follow-up
 Executive Program: private and semi-private training, staff follow-up may be needed for details
@@ -33,7 +33,7 @@ Jose Meza: Co-Instructor and Co-Owner, fundamentals focused and known for strong
 
 ### Monday, Wednesday, Friday
 
-Adult and Teen BJJ:
+Adult BJJ:
 - 6:30 a.m.
 - 12:00 p.m.
 - 6:00 p.m.
@@ -47,7 +47,7 @@ Sprouts:
 
 ### Tuesday, Thursday
 
-Adult and Teen BJJ:
+Adult BJJ:
 - 6:30 a.m.
 - 12:00 p.m.
 - 6:00 p.m.
@@ -64,7 +64,7 @@ Sprouts:
 Youth BJJ:
 - 9:00 a.m.
 
-Adult and Teen BJJ:
+Adult BJJ:
 - 10:00 a.m.
 
 ### Sunday
@@ -75,7 +75,7 @@ New callers should be directed to a regular Monday through Saturday class for th
 
 ## Pricing
 
-Adult and Teen BJJ: $180 per month
+Adult BJJ: $180 per month
 Youth BJJ: $160 per month
 Sprouts: $125 per month
 First responders and active military: $153 per month
@@ -125,7 +125,7 @@ Are beginners welcome?
 Yes. The academy is beginner friendly and many students start with no experience.
 
 Do you offer kids classes?
-Yes. Sprouts is ages 3 to 5. Youth BJJ is ages 6 to 12. Ages 13 and up join the adult and teen program.
+Yes. Sprouts is ages 3 to 5. Youth BJJ is ages 6 to 17. Ages 18 and up join the adult program.
 
 Do you offer a women's class?
 Yes. The academy offers a women's class. Exact schedule or placement may require staff follow-up.
@@ -146,7 +146,7 @@ Is there parking?
 Yes. There is free parking across the street and on the side streets.
 
 How long are classes?
-Adult and teen classes are about one hour and thirty minutes.
+Adult classes are about one hour and thirty minutes.
 Youth classes are about one hour.
 Sprouts is about thirty minutes followed by about twenty minutes of playtime.
 
