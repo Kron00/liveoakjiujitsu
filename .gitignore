@@ -3,5 +3,8 @@
 .playwright-mcp/
 *.png
 !assets/images/favicon-circle.png
+.env
+.env.*
+!.env.example
 node_modules/
 .vercel/

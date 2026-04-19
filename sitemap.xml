@@ -1,21 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://liveoakjiujitsu.vercel.app/</loc>
-    <lastmod>2026-04-13</lastmod>
+    <lastmod>2026-04-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://liveoakjiujitsu.vercel.app/assets/images/hero-main.jpeg</image:loc>
+      <image:title>Brazilian Jiu Jitsu training at Live Oak Jiu Jitsu Academy in Fairfield, CA</image:title>
+      <image:caption>Live Oak Jiu Jitsu Academy — Fairfield, California</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://liveoakjiujitsu.vercel.app/assets/images/logo.jpeg</image:loc>
+      <image:title>Live Oak Jiu Jitsu Academy logo</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://liveoakjiujitsu.vercel.app/assets/images/programs-bjj.jpeg</image:loc>
+      <image:title>Adult Brazilian Jiu Jitsu program in Fairfield, CA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://liveoakjiujitsu.vercel.app/assets/images/programs-youth.jpg</image:loc>
+      <image:title>Youth Brazilian Jiu Jitsu program (ages 6-12) in Fairfield, CA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://liveoakjiujitsu.vercel.app/assets/images/programs-sprouts.jpg</image:loc>
+      <image:title>Sprouts Brazilian Jiu Jitsu program (ages 3-5) in Fairfield, CA</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://liveoakjiujitsu.vercel.app/assets/images/coach-alex.jpeg</image:loc>
+      <image:title>Coach Alejandro Lucas — Head Instructor at Live Oak Jiu Jitsu Academy</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://liveoakjiujitsu.vercel.app/assets/images/coach-chris.jpeg</image:loc>
+      <image:title>Coach Chris Park — Instructor at Live Oak Jiu Jitsu Academy</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://liveoakjiujitsu.vercel.app/assets/images/coach-jose.jpeg</image:loc>
+      <image:title>Coach Jose Meza — Co-Instructor at Live Oak Jiu Jitsu Academy</image:title>
+    </image:image>
   </url>
   <url>
-    <loc>https://liveoakjiujitsu.vercel.app/privacy-policy.html</loc>
-    <lastmod>2026-04-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://liveoakjiujitsu.vercel.app/privacy-policy</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
   </url>
   <url>
-    <loc>https://liveoakjiujitsu.vercel.app/terms-of-service.html</loc>
-    <lastmod>2026-04-13</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
+    <loc>https://liveoakjiujitsu.vercel.app/terms-of-service</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.2</priority>
   </url>
 </urlset>
