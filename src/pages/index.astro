@@ -3096,19 +3096,27 @@
     }
 
     /* ---- Mobile auto carousel (≤768px) ----
-       Native horizontal scrolling remains available, while JS drives a
-       continuous marquee and restarts it after brief touch inactivity. */
+       iOS Safari fails to render very wide marquee tracks (the seamless
+       loop duplicates doubled the track to 7000-8000px, which exceeded
+       WebKit's GPU-composited layer / texture-size limits and caused the
+       ribbon to render fully blank on real iPhones, even though Chromium
+       mobile emulation rendered it fine).
+
+       Fix for mobile: hide the aria-hidden duplicate slides, drop the
+       CSS marquee animation + will-change transform promotion, and let
+       users swipe the single set of originals natively with scroll-snap.
+       The seamless-loop duplicates are only needed for the CSS marquee
+       on desktop, so removing them on mobile is safe. */
     @media (max-width: 768px) {
       .testimonial-ribbon {
         overflow-x: auto;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
-        scroll-snap-type: none;
+        scroll-snap-type: x proximity;
         scrollbar-width: none;
-        /* Disable mask-image on mobile: iOS Safari fails to paint
+        /* Also disable mask-image on mobile: iOS Safari fails to paint
            horizontally-scrollable content when a -webkit-mask-image
-           is combined with overflow-x: auto on very wide children,
-           which caused the testimonial ribbon to render blank. */
+           is combined with overflow-x: auto on wide children. */
         mask-image: none;
         -webkit-mask-image: none;
       }
@@ -3118,14 +3126,48 @@
       }
 
       .testimonial-ribbon__track {
-        animation: none;
+        animation: none !important;
+        width: max-content;
         padding-left: 0;
         padding-right: 0;
         will-change: auto;
       }
 
+      /* Hide the seamless-loop duplicates on mobile so the track stays
+         within iOS Safari's GPU layer size limits. */
+      .testimonial-ribbon__card[aria-hidden="true"] {
+        display: none !important;
+      }
+
       .testimonial-ribbon__card {
-        scroll-snap-align: none;
+        scroll-snap-align: start;
+      }
+
+      /* --- Programs ribbon: same treatment --- */
+      .programs-ribbon {
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        scrollbar-width: none;
+      }
+
+      .programs-ribbon::-webkit-scrollbar {
+        display: none;
+      }
+
+      .programs-ribbon__track {
+        animation: none !important;
+        will-change: auto !important;
+        width: max-content;
+      }
+
+      .programs-ribbon__slide[aria-hidden="true"] {
+        display: none !important;
+      }
+
+      .programs-ribbon__slide {
+        scroll-snap-align: center;
       }
     }
 
@@ -5304,8 +5346,24 @@
       testimonialRaf = requestAnimationFrame(stepMobileTestimonials);
     }
 
+    function hasTestimonialDuplicates() {
+      // On mobile we hide the aria-hidden duplicates via CSS so the
+      // ribbon stays within iOS Safari's GPU layer size limits. Without
+      // duplicates the seamless marquee loop can't work, so the JS
+      // auto-scroll should bail out and let users swipe manually.
+      if (!track) return false;
+      return track.querySelector('.testimonial-ribbon__card[aria-hidden="true"]:not([hidden])') &&
+             track.querySelector('.testimonial-ribbon__card[aria-hidden="true"]').offsetParent !== null;
+    }
+
     function startMobileTestimonials() {
       if (!mobileTestimonials.matches || reducedMotionTestimonials.matches || !track) return;
+
+      // If the aria-hidden duplicates are display:none (mobile breakpoint),
+      // seamless looping is impossible — don't auto-scroll, user swipes.
+      if (!hasTestimonialDuplicates()) {
+        return;
+      }
 
       testimonialScrollPosition = ribbon.scrollLeft || getTestimonialLoopWidth();
       normalizeTestimonialScroll();
