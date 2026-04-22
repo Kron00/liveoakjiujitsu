@@ -5275,7 +5275,7 @@
         entry.target.classList.add('active');
 
         // Stagger children animations
-        const children = entry.target.querySelectorAll('.step-card, .struggle__card, .program-card');
+        const children = entry.target.querySelectorAll('.step-card, .struggle__card, .program-card, .program-showcase__photo');
         children.forEach(function(child, index) {
           child.style.animationDelay = (index * 0.15) + 's';
           child.style.transitionDelay = (index * 0.15) + 's';
