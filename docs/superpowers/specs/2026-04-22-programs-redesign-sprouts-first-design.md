@@ -297,10 +297,38 @@ Single commit on a feature branch:
 
 Youth and Adult passes are separate PRs so each one can be reviewed on its own.
 
-## Open Questions
+## Future Passes — Photo Selections (Captured Early)
 
-None gating implementation. Worth noting for future passes:
+Owner provided Youth + Adult/Teen photos during the Sprouts spec review. Curated here so nothing gets lost before those design passes begin. **Not part of this PR** — reference only.
 
-1. When Youth and Adult passes land, the final pass should **delete** the old `.program-card`, `.programs__grid` CSS blocks (currently lines ~986–1079 and mobile overrides) to avoid dead code.
-2. If the three stacked editorial sections become too long vertically on mobile, consider an accordion-per-program pattern. Not needed yet.
-3. The `programs__note` paragraph about the competition team feels out of place once Sprouts leads (Sprouts doesn't have a comp team). Consider moving it to live under the Adult section instead of at the bottom of the whole programs area. Revisit in the Adult pass.
+### Youth Program (Pass 2)
+
+Pool of **5 strong candidates**:
+
+| Role candidate | Content | Suggested filename |
+|---|---|---|
+| Hero | Young girl with blonde braids in black/red Kimono gi, head-to-head pin of boy in white gi | `youth-01-hero-braids-pin.jpg` |
+| Branded moment | Girl in blue Live Oak Jiu Jitsu Academy gi with back-take, Academy crest visible | `youth-02-academy-gi-backtake.jpg` |
+| Community / belt test | Wide shot of ~15 youth students lined against wall watching a demo, Live Oak wall logo visible | `youth-03-group-demo.jpg` |
+| Candid / rolling | Purple-belt coach standing over two girls in white gis rolling on the ground (from original Sprouts batch, reclassified) | `youth-04-coach-rolling.jpg` |
+| Candid / takedown | Two boys in black gis practicing takedown grip (from original Sprouts batch, reclassified) | `youth-05-boys-takedown.jpg` |
+
+Character direction for Youth section: **focused, gritty, earned** — less overtly warm than Sprouts, more about discipline and real technique. The braids-pin shot supports that tone as the hero.
+
+### Adult & Teen Program (Pass 3)
+
+Pool of **2 strong candidates** — thin; owner may provide more later:
+
+| Role candidate | Content | Suggested filename |
+|---|---|---|
+| Hero | Teen boy in white gi mid-air hip-throwing coach in dark gi — motion, cinematic | `adult-01-hero-teen-throw.jpg` |
+| Accent / technique | Purple belt coach standing over grounded partner with leg lifted, portrait orientation | `adult-02-standing-technique.jpg` |
+
+Character direction for Adult/Teen section: **technical, serious, competitive** — skew toward motion and precision over candid emotion. If we only get 2 photos by implementation time, consider a **larger single hero + one accent + a quote/testimonial card** layout variant instead of the full 4-photo bento.
+
+### Open Questions for Future Passes
+
+1. **Adult photo count** — 2 is thin. Ask owner whether more photos are coming from Google Drive before that pass begins; adjust layout if we stay at 2.
+2. **Cleanup** — the Youth pass *or* the Adult pass (whichever lands last) should delete the old `.program-card`, `.programs__grid`, `.programs__grid--two-up` CSS blocks (currently lines ~986–1079 and mobile overrides).
+3. **Mobile length** — if three stacked editorial sections become too tall on mobile, consider accordion-per-program. Not needed yet; revisit after Pass 2.
+4. **`programs__note` placement** — the paragraph about the competition team feels out of place once Sprouts leads (Sprouts has no comp team). Move it to live under the Adult section during Pass 3 instead of at the bottom of the whole programs area.
