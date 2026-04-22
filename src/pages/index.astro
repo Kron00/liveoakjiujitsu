@@ -965,12 +965,26 @@
 
 
     /* ================================================================
-       PROGRAMS SECTION
+       PROGRAMS SECTION  —  Editorial Gallery
        ================================================================ */
     .programs-section {
       padding: var(--space-section) 0;
       background: var(--color-dark);
       position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle editorial hairline across the top of the section */
+    .programs-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(1100px, 90vw);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--color-border), transparent);
+      pointer-events: none;
     }
 
     .section-subtitle {
@@ -986,87 +1000,143 @@
     .programs__grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: var(--space-lg);
-      margin-top: var(--space-lg);
+      gap: clamp(1.25rem, 2.4vw, 2.25rem);
+      margin-top: clamp(2rem, 4vw, 3.25rem);
+      align-items: stretch;
     }
 
     .program-card {
-      --program-focus: center;
-      --program-focus-mobile: var(--program-focus);
       position: relative;
+      background: var(--color-dark-card);
+      border: 1px solid var(--color-border-light);
       border-radius: var(--border-radius-lg);
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      background: var(--color-dark-card);
-      border: 1px solid var(--color-border-light);
-      transition: transform var(--duration-base) var(--ease-smooth),
-                  box-shadow var(--duration-base) var(--ease-smooth);
+      transition: transform 0.6s var(--ease-smooth),
+                  box-shadow 0.6s var(--ease-smooth),
+                  border-color 0.4s var(--ease-smooth);
     }
 
     .program-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08), 0 8px 20px rgba(0, 0, 0, 0.04);
+      transform: translateY(-10px);
+      border-color: transparent;
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.08),
+                  0 10px 24px rgba(193, 12, 16, 0.06);
     }
 
-    .program-card__image {
+    /* ---- Media ---- */
+    .program-card__media {
       position: relative;
       width: 100%;
-      aspect-ratio: 4 / 3;
-      background-size: cover;
-      background-position: var(--program-focus);
+      aspect-ratio: 4 / 5;
       overflow: hidden;
+      background: #fafafa;
     }
 
-    .program-card__image::after {
+    /* Soft gradient ONLY at the top so the image's white/airy space stays light */
+    .program-card__media::before {
       content: '';
       position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        0deg,
-        rgba(10, 10, 10, 0.7) 0%,
-        rgba(10, 10, 10, 0.15) 50%,
-        rgba(10, 10, 10, 0.05) 100%
-      );
-      transition: background var(--duration-base) var(--ease-smooth);
-    }
-
-    .program-card:hover .program-card__image::after {
-      background: linear-gradient(
-        0deg,
-        rgba(10, 10, 10, 0.75) 0%,
-        rgba(10, 10, 10, 0.1) 50%,
-        rgba(10, 10, 10, 0) 100%
-      );
-    }
-
-    .program-card__overlay {
-      display: none;
-    }
-
-    .program-card__title {
-      position: absolute;
-      bottom: 0;
+      top: 0;
       left: 0;
       right: 0;
-      padding: clamp(1.25rem, 2.5vw, 2rem);
-      font-family: var(--font-display);
-      font-size: var(--text-2xl);
-      font-weight: 600;
-      color: #ffffff;
+      height: 38%;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 100%);
       z-index: 1;
-      transition: color var(--duration-fast) var(--ease-smooth);
+      pointer-events: none;
     }
 
-    .program-card:hover .program-card__title {
-      color: var(--color-gold);
+    .program-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 1.4s var(--ease-smooth);
+      display: block;
     }
 
-    .program-card__content {
-      padding: clamp(1.25rem, 2.5vw, 1.75rem);
+    .program-card:hover .program-card__img {
+      transform: scale(1.05);
+    }
+
+    /* Large editorial index numeral overlaid on photo */
+    .program-card__index {
+      position: absolute;
+      top: clamp(0.35rem, 1vw, 0.65rem);
+      left: clamp(0.9rem, 1.6vw, 1.4rem);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(3.75rem, 5.5vw, 5.25rem);
+      line-height: 0.9;
+      letter-spacing: -0.045em;
+      color: rgba(255, 255, 255, 0.95);
+      z-index: 2;
+      pointer-events: none;
+      text-shadow: 0 2px 30px rgba(0, 0, 0, 0.28);
+    }
+
+    /* Age badge pill */
+    .program-card__age {
+      position: absolute;
+      top: clamp(1rem, 1.8vw, 1.35rem);
+      right: clamp(1rem, 1.8vw, 1.35rem);
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: var(--color-gold);
+      padding: 0.5rem 0.9rem;
+      border-radius: 100px;
+      z-index: 2;
+      box-shadow: 0 8px 22px rgba(193, 12, 16, 0.32);
+      white-space: nowrap;
+    }
+
+    /* ---- Body ---- */
+    .program-card__body {
+      padding: clamp(1.5rem, 2.4vw, 2.15rem);
       flex: 1;
       display: flex;
       flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .program-card__eyebrow {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-gold);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .program-card__eyebrow::before {
+      content: '';
+      width: 22px;
+      height: 1px;
+      background: var(--color-gold);
+      display: inline-block;
+      transition: width 0.4s var(--ease-smooth);
+    }
+
+    .program-card:hover .program-card__eyebrow::before {
+      width: 34px;
+    }
+
+    .program-card__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 1.95vw, 1.95rem);
+      font-weight: 600;
+      color: var(--color-text);
+      line-height: 1.12;
+      letter-spacing: -0.005em;
+      margin: 0;
     }
 
     .program-card__desc {
@@ -1075,6 +1145,38 @@
       font-weight: 300;
       color: var(--color-text-muted);
       line-height: 1.7;
+      margin: 0;
+    }
+
+    /* Program offerings chips */
+    .program-card__chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      list-style: none;
+      padding: 0;
+      margin: 0.6rem 0 0;
+    }
+
+    .program-card__chips li {
+      font-family: var(--font-body);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--color-text-dim);
+      background: #fafafa;
+      border: 1px solid var(--color-border-light);
+      padding: 0.35rem 0.75rem;
+      border-radius: 100px;
+      transition: background 0.35s var(--ease-smooth),
+                  border-color 0.35s var(--ease-smooth),
+                  color 0.35s var(--ease-smooth);
+    }
+
+    .program-card:hover .program-card__chips li {
+      background: #ffffff;
+      border-color: rgba(193, 12, 16, 0.18);
+      color: var(--color-text);
     }
 
     .programs__note {
@@ -2809,11 +2911,15 @@
         grid-template-columns: 1fr;
         gap: var(--space-md);
         margin-top: var(--space-sm);
-        max-width: 500px;
+        max-width: 520px;
       }
 
-      .program-card__image {
-        background-position: var(--program-focus-mobile);
+      .program-card__media {
+        aspect-ratio: 4 / 3;
+      }
+
+      .program-card__index {
+        font-size: 4.5rem;
       }
 
       .coaches__grid {
@@ -2933,8 +3039,16 @@
         font-size: clamp(1.75rem, 6vw, 2.5rem);
       }
 
-      .program-card__image {
-        aspect-ratio: 3 / 2;
+      .program-card__media {
+        aspect-ratio: 4 / 3;
+      }
+
+      .program-card__body {
+        gap: 0.7rem;
+      }
+
+      .program-card__index {
+        font-size: 4rem;
       }
 
       .step-number {
@@ -3733,33 +3847,69 @@
 
     <div class="programs__grid">
 
-      <!-- Program 1 — BJJ Adult Program and Comp Team -->
-      <article class="program-card reveal" style="--program-focus: 55% 34%; --program-focus-mobile: 55% 28%;">
-        <div class="program-card__image" style="background-image: url('assets/images/programs-bjj.jpeg');">
-          <h3 class="program-card__title">BJJ Adult Program and Competition Team</h3>
+      <!-- Program 1 — Adult / Teen -->
+      <article class="program-card reveal">
+        <div class="program-card__media">
+          <span class="program-card__index" aria-hidden="true">01</span>
+          <span class="program-card__age">Ages 13+</span>
+          <img src="assets/images/programs-adult-new.jpeg" alt="Adult and teen BJJ training in front of the Live Oak Jiu Jitsu Academy mural in Fairfield, CA" class="program-card__img" loading="lazy" width="1067" height="1600" style="object-position: 55% 38%;">
         </div>
-        <div class="program-card__content">
-          <p class="program-card__desc">A mix of modern and old school techniques, rooted in self defense and competition tested. We teach white belts leg locks because it’s not just the future of BJJ, but the now. We offer Gi, No Gi, Fundamentals, Women's Only Seminars, Judo and Wrestling Takedowns.</p>
+        <div class="program-card__body">
+          <span class="program-card__eyebrow">Adult / Teen</span>
+          <h3 class="program-card__title">BJJ Program<br>&amp; Competition Team</h3>
+          <p class="program-card__desc">A mix of modern and old school techniques, rooted in self defense and competition tested. We teach white belts leg locks because it&rsquo;s not just the future of BJJ, but the now.</p>
+          <ul class="program-card__chips" aria-label="What we teach in the Adult and Teen program">
+            <li>Gi</li>
+            <li>No Gi</li>
+            <li>Fundamentals</li>
+            <li>Women&rsquo;s Seminars</li>
+            <li>Judo</li>
+            <li>Wrestling</li>
+          </ul>
         </div>
       </article>
 
-      <!-- Program 2 — Youth Program and Comp Team -->
-      <article class="program-card reveal" style="--program-focus: 50% 40%; --program-focus-mobile: 50% 40%;">
-        <div class="program-card__image" style="background-image: url('assets/images/programs-youth.jpg');">
-          <h3 class="program-card__title">Youth &amp; Teen Program and Comp Team (Ages 6 to 17)</h3>
+      <!-- Program 2 — Youth -->
+      <article class="program-card reveal">
+        <div class="program-card__media">
+          <span class="program-card__index" aria-hidden="true">02</span>
+          <span class="program-card__age">Ages 6&ndash;12</span>
+          <img src="assets/images/programs-youth-new.jpeg" alt="Live Oak Jiu Jitsu instructor demonstrating a technique to a seated row of youth students in Fairfield, CA" class="program-card__img" loading="lazy" width="1600" height="1200" style="object-position: 58% 55%;">
         </div>
-        <div class="program-card__content">
-          <p class="program-card__desc">Youth Program fundamentals and advanced BJJ technique taught along with strength and confidence building. Significant attention is placed on anti bullying and emotional regulation. Our philosophy is that Brazilian Jiu Jitsu is seen as a means to individual development, leadership and personal control. Body awareness, respect, discipline, and responsibility are core values taught within all of our kid's programs. All staff are Live Scanned to ensure your child's safety. We are a vendor through Compass Charter School and accept E Vouchers.</p>
+        <div class="program-card__body">
+          <span class="program-card__eyebrow">Youth</span>
+          <h3 class="program-card__title">Youth Program<br>&amp; Competition Team</h3>
+          <p class="program-card__desc">Fundamentals and advanced BJJ taught alongside strength and confidence building. Significant focus on anti bullying and emotional regulation. Body awareness, respect, discipline, and responsibility are core values. All staff are Live Scanned.</p>
+          <ul class="program-card__chips" aria-label="What we teach in the Youth program">
+            <li>Anti Bullying</li>
+            <li>Technique</li>
+            <li>Confidence</li>
+            <li>Leadership</li>
+            <li>Compass Charter</li>
+            <li>E Vouchers</li>
+          </ul>
         </div>
       </article>
 
-      <!-- Program 3 — Sprouts Program -->
-      <article class="program-card reveal" style="--program-focus: 50% 38%; --program-focus-mobile: 50% 38%;">
-        <div class="program-card__image" style="background-image: url('assets/images/programs-sprouts.jpg');">
-          <h3 class="program-card__title">Sprouts Program (Ages 3 to 5)</h3>
+      <!-- Program 3 — Sprouts -->
+      <article class="program-card reveal">
+        <div class="program-card__media">
+          <span class="program-card__index" aria-hidden="true">03</span>
+          <span class="program-card__age">Ages 3&ndash;5</span>
+          <img src="assets/images/programs-sprouts-new.jpeg" alt="Joyful circle of Sprouts students training Brazilian Jiu Jitsu with two instructors at Live Oak in Fairfield, CA" class="program-card__img" loading="lazy" width="1600" height="1066" style="object-position: 50% 60%;">
         </div>
-        <div class="program-card__content">
-          <p class="program-card__desc">Sprouts Program is an excellent opportunity for your child to learn the fundamentals of BJJ, Judo and Wrestling through animal movements and games. Students primarily learn takedowns, passing, sweeps, controls and specific submissions. For many of our students, this is their first experience of an organized sport thus we emphasize positive reinforcement, modeling and rewards to ensure their success. All staff are Live Scanned to ensure your child's safety.</p>
+        <div class="program-card__body">
+          <span class="program-card__eyebrow">Sprouts</span>
+          <h3 class="program-card__title">Sprouts Program</h3>
+          <p class="program-card__desc">An excellent first sport: children learn the fundamentals of BJJ, Judo and Wrestling through animal movements and games. We emphasize positive reinforcement, modeling and rewards. All staff are Live Scanned.</p>
+          <ul class="program-card__chips" aria-label="What we teach in the Sprouts program">
+            <li>Animal Games</li>
+            <li>Takedowns</li>
+            <li>Passing</li>
+            <li>Sweeps</li>
+            <li>Controls</li>
+            <li>Positive Reinforcement</li>
+          </ul>
         </div>
       </article>
 
