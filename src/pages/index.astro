@@ -1029,23 +1029,12 @@
     .program-card__media {
       position: relative;
       width: 100%;
-      aspect-ratio: 4 / 5;
+      aspect-ratio: 4 / 3;
       overflow: hidden;
-      background: #fafafa;
+      background: #ffffff;
     }
 
-    /* Soft gradient ONLY at the top so the image's white/airy space stays light */
-    .program-card__media::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 38%;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.22) 0%, rgba(0, 0, 0, 0) 100%);
-      z-index: 1;
-      pointer-events: none;
-    }
+    /* (Previous top gradient removed — no longer needed without the index numeral) */
 
     .program-card__img {
       width: 100%;
@@ -1187,6 +1176,111 @@
       font-weight: 300;
       color: var(--color-text-muted);
       line-height: 1.8;
+    }
+
+    /* ---- Per-card photo carousel ---- */
+    .program-carousel {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .program-carousel__track {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      overscroll-behavior-x: contain;
+    }
+
+    .program-carousel__track::-webkit-scrollbar {
+      display: none;
+    }
+
+    .program-carousel__slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .program-carousel__slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      background: #ffffff;
+    }
+
+    /* Dots */
+    .program-carousel__dots {
+      position: absolute;
+      bottom: clamp(0.75rem, 1.4vw, 1.1rem);
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      z-index: 3;
+      padding: 0.35rem 0.55rem;
+      background: rgba(10, 10, 10, 0.28);
+      border-radius: 100px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .program-carousel__dot {
+      width: 7px;
+      height: 7px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.55);
+      cursor: pointer;
+      transition: background var(--duration-fast) var(--ease-smooth),
+                  width var(--duration-base) var(--ease-smooth),
+                  transform var(--duration-fast) var(--ease-smooth);
+      outline-offset: 3px;
+    }
+
+    .program-carousel__dot:hover {
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .program-carousel__dot[aria-selected="true"] {
+      background: #ffffff;
+      width: 22px;
+      border-radius: 100px;
+    }
+
+    .program-carousel__dot:focus-visible {
+      outline: 2px solid var(--color-gold);
+      outline-offset: 3px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .program-carousel__track {
+        scroll-behavior: auto;
+      }
+      .program-carousel__dot {
+        transition: none;
+      }
+      .program-carousel__slide img {
+        transition: none;
+      }
+      .program-card:hover .program-carousel__slide img {
+        transform: none;
+      }
     }
 
 
@@ -3847,69 +3941,80 @@
 
     <div class="programs__grid">
 
-      <!-- Program 1 — Adult / Teen -->
+      <!-- Program 1 — BJJ Adult Program and Comp Team -->
       <article class="program-card reveal">
         <div class="program-card__media">
-          <span class="program-card__index" aria-hidden="true">01</span>
-          <span class="program-card__age">Ages 13+</span>
-          <img src="assets/images/programs-adult-new.jpeg" alt="Adult and teen BJJ training in front of the Live Oak Jiu Jitsu Academy mural in Fairfield, CA" class="program-card__img" loading="lazy" width="1067" height="1600" style="object-position: 55% 38%;">
+          <div class="program-carousel" data-autoplay="5000" aria-roledescription="carousel" aria-label="Adult and Teen BJJ program photos">
+            <ul class="program-carousel__track">
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/adult-1.jpeg" alt="Adult Brazilian Jiu Jitsu sparring with the Live Oak Competition Team watching from the sideline in Fairfield, CA" width="1600" height="1066" style="object-position: 50% 62%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/adult-2.jpeg" alt="Coach demonstrating a standing Brazilian Jiu Jitsu technique in front of the Live Oak Jiu Jitsu Academy logo in Fairfield, CA" loading="lazy" width="1067" height="1600" style="object-position: 55% 38%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/adult-3.jpeg" alt="Close guard pressure during adult Brazilian Jiu Jitsu training at Live Oak Jiu Jitsu Academy in Fairfield, CA" loading="lazy" width="1600" height="1600" style="object-position: 50% 50%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/adult-4.jpeg" alt="Teen student training Brazilian Jiu Jitsu one-on-one with a Live Oak instructor in Fairfield, CA" loading="lazy" width="1200" height="1600" style="object-position: 50% 50%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/adult-5.jpeg" alt="Adult Brazilian Jiu Jitsu takedown and throw technique at Live Oak Jiu Jitsu Academy in Fairfield, CA" loading="lazy" width="1600" height="1066" style="object-position: 55% 45%;"></li>
+            </ul>
+            <div class="program-carousel__dots" role="tablist" aria-label="Photo navigation for Adult and Teen program">
+              <button type="button" class="program-carousel__dot" aria-label="Photo 1 of 5" aria-selected="true"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 2 of 5" aria-selected="false"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 3 of 5" aria-selected="false"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 4 of 5" aria-selected="false"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 5 of 5" aria-selected="false"></button>
+            </div>
+          </div>
         </div>
         <div class="program-card__body">
           <span class="program-card__eyebrow">Adult / Teen</span>
-          <h3 class="program-card__title">BJJ Program<br>&amp; Competition Team</h3>
-          <p class="program-card__desc">A mix of modern and old school techniques, rooted in self defense and competition tested. We teach white belts leg locks because it&rsquo;s not just the future of BJJ, but the now.</p>
-          <ul class="program-card__chips" aria-label="What we teach in the Adult and Teen program">
-            <li>Gi</li>
-            <li>No Gi</li>
-            <li>Fundamentals</li>
-            <li>Women&rsquo;s Seminars</li>
-            <li>Judo</li>
-            <li>Wrestling</li>
-          </ul>
+          <h3 class="program-card__title">BJJ Adult &amp; Teen<br>Program &amp; Competition Team</h3>
+          <p class="program-card__desc">A mix of modern and old school techniques, rooted in self defense and competition tested. We teach white belts leg locks because it&rsquo;s not just the future of BJJ, but the now. We offer Gi, No Gi, Fundamentals, Women's Only Seminars, Judo and Wrestling Takedowns.</p>
         </div>
       </article>
 
-      <!-- Program 2 — Youth -->
+      <!-- Program 2 — Youth Program and Comp Team -->
       <article class="program-card reveal">
         <div class="program-card__media">
-          <span class="program-card__index" aria-hidden="true">02</span>
-          <span class="program-card__age">Ages 6&ndash;12</span>
-          <img src="assets/images/programs-youth-new.jpeg" alt="Live Oak Jiu Jitsu instructor demonstrating a technique to a seated row of youth students in Fairfield, CA" class="program-card__img" loading="lazy" width="1600" height="1200" style="object-position: 58% 55%;">
+          <div class="program-carousel" data-autoplay="5000" aria-roledescription="carousel" aria-label="Youth and Teen BJJ program photos">
+            <ul class="program-carousel__track">
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/youth-1.jpeg" alt="Live Oak Jiu Jitsu instructor demonstrating a technique to a seated row of youth students in Fairfield, CA" width="1600" height="1200" style="object-position: 58% 55%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/youth-2.jpeg" alt="Young Brazilian Jiu Jitsu student working a guard pass in a blue gi at Live Oak in Fairfield, CA" loading="lazy" width="1600" height="1066" style="object-position: 50% 45%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/youth-3.jpeg" alt="Youth Brazilian Jiu Jitsu students working from a mounted position at Live Oak Jiu Jitsu Academy in Fairfield, CA" loading="lazy" width="1067" height="1600" style="object-position: 50% 40%;"></li>
+            </ul>
+            <div class="program-carousel__dots" role="tablist" aria-label="Photo navigation for Youth and Teen program">
+              <button type="button" class="program-carousel__dot" aria-label="Photo 1 of 3" aria-selected="true"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 2 of 3" aria-selected="false"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 3 of 3" aria-selected="false"></button>
+            </div>
+          </div>
         </div>
         <div class="program-card__body">
-          <span class="program-card__eyebrow">Youth</span>
-          <h3 class="program-card__title">Youth Program<br>&amp; Competition Team</h3>
-          <p class="program-card__desc">Fundamentals and advanced BJJ taught alongside strength and confidence building. Significant focus on anti bullying and emotional regulation. Body awareness, respect, discipline, and responsibility are core values. All staff are Live Scanned.</p>
-          <ul class="program-card__chips" aria-label="What we teach in the Youth program">
-            <li>Anti Bullying</li>
-            <li>Technique</li>
-            <li>Confidence</li>
-            <li>Leadership</li>
-            <li>Compass Charter</li>
-            <li>E Vouchers</li>
-          </ul>
+          <span class="program-card__eyebrow">Youth / Teen</span>
+          <h3 class="program-card__title">Youth &amp; Teen Program<br>and Comp Team</h3>
+          <p class="program-card__desc">Youth Program fundamentals and advanced BJJ technique taught along with strength and confidence building. Significant attention is placed on anti bullying and emotional regulation. Our philosophy is that Brazilian Jiu Jitsu is seen as a means to individual development, leadership and personal control. Body awareness, respect, discipline, and responsibility are core values taught within all of our kid's programs. All staff are Live Scanned to ensure your child's safety. We are a vendor through Compass Charter School and accept E Vouchers.</p>
         </div>
       </article>
 
-      <!-- Program 3 — Sprouts -->
+      <!-- Program 3 — Sprouts Program -->
       <article class="program-card reveal">
         <div class="program-card__media">
-          <span class="program-card__index" aria-hidden="true">03</span>
-          <span class="program-card__age">Ages 3&ndash;5</span>
-          <img src="assets/images/programs-sprouts-new.jpeg" alt="Joyful circle of Sprouts students training Brazilian Jiu Jitsu with two instructors at Live Oak in Fairfield, CA" class="program-card__img" loading="lazy" width="1600" height="1066" style="object-position: 50% 60%;">
+          <div class="program-carousel" data-autoplay="5000" aria-roledescription="carousel" aria-label="Sprouts BJJ program photos">
+            <ul class="program-carousel__track">
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/sprouts-1.jpeg" alt="Live Oak Jiu Jitsu instructor tying a belt on a young Sprouts student in Fairfield, CA" width="1600" height="1600" style="object-position: 50% 40%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/sprouts-2.jpeg" alt="Two Sprouts students smiling during Brazilian Jiu Jitsu class at Live Oak in Fairfield, CA" loading="lazy" width="1600" height="1600" style="object-position: 50% 45%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/sprouts-3.jpeg" alt="Sprouts class seated with instructors during a calm teaching moment at Live Oak Jiu Jitsu Academy in Fairfield, CA" loading="lazy" width="1600" height="900" style="object-position: 55% 50%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/sprouts-4.jpeg" alt="Sprouts students in a circle with instructors during Brazilian Jiu Jitsu class at Live Oak in Fairfield, CA" loading="lazy" width="1600" height="1066" style="object-position: 50% 50%;"></li>
+              <li class="program-carousel__slide"><img src="assets/images/programs-carousel/sprouts-5.jpeg" alt="Young Sprouts students playing a movement game during Brazilian Jiu Jitsu class at Live Oak in Fairfield, CA" loading="lazy" width="1600" height="1066" style="object-position: 50% 55%;"></li>
+            </ul>
+            <div class="program-carousel__dots" role="tablist" aria-label="Photo navigation for Sprouts program">
+              <button type="button" class="program-carousel__dot" aria-label="Photo 1 of 5" aria-selected="true"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 2 of 5" aria-selected="false"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 3 of 5" aria-selected="false"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 4 of 5" aria-selected="false"></button>
+              <button type="button" class="program-carousel__dot" aria-label="Photo 5 of 5" aria-selected="false"></button>
+            </div>
+          </div>
         </div>
         <div class="program-card__body">
           <span class="program-card__eyebrow">Sprouts</span>
           <h3 class="program-card__title">Sprouts Program</h3>
-          <p class="program-card__desc">An excellent first sport: children learn the fundamentals of BJJ, Judo and Wrestling through animal movements and games. We emphasize positive reinforcement, modeling and rewards. All staff are Live Scanned.</p>
-          <ul class="program-card__chips" aria-label="What we teach in the Sprouts program">
-            <li>Animal Games</li>
-            <li>Takedowns</li>
-            <li>Passing</li>
-            <li>Sweeps</li>
-            <li>Controls</li>
-            <li>Positive Reinforcement</li>
-          </ul>
+          <p class="program-card__desc">Sprouts Program is an excellent opportunity for your child to learn the fundamentals of BJJ, Judo and Wrestling through animal movements and games. Students primarily learn takedowns, passing, sweeps, controls and specific submissions. For many of our students, this is their first experience of an organized sport thus we emphasize positive reinforcement, modeling and rewards to ensure their success. All staff are Live Scanned to ensure your child's safety.</p>
         </div>
       </article>
 
@@ -5287,6 +5392,158 @@
   }
 
   animateCounters();
+
+
+  /* --------------------------------------------------
+     Program Photo Carousels — per-card swipe + autoplay
+  -------------------------------------------------- */
+  function initProgramCarousels() {
+    const carousels = document.querySelectorAll('.program-carousel');
+    if (!carousels.length) return;
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    carousels.forEach(function(carousel) {
+      const track = carousel.querySelector('.program-carousel__track');
+      const slides = carousel.querySelectorAll('.program-carousel__slide');
+      const dots = carousel.querySelectorAll('.program-carousel__dot');
+      if (!track || !slides.length || !dots.length) return;
+
+      const total = slides.length;
+      const autoplayMs = parseInt(carousel.getAttribute('data-autoplay'), 10) || 0;
+      let autoplayTimer = null;
+      let idleTimer = null;
+      let userEngaged = false;
+
+      function getIndex() {
+        const w = track.clientWidth;
+        if (!w) return 0;
+        return Math.min(total - 1, Math.max(0, Math.round(track.scrollLeft / w)));
+      }
+
+      function syncDots() {
+        const idx = getIndex();
+        dots.forEach(function(dot, i) {
+          dot.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+        });
+      }
+
+      function goTo(i) {
+        const target = Math.min(total - 1, Math.max(0, i));
+        track.scrollTo({ left: target * track.clientWidth, behavior: 'smooth' });
+      }
+
+      function next() {
+        const idx = getIndex();
+        const nextIdx = (idx + 1) % total;
+        goTo(nextIdx);
+      }
+
+      function startAutoplay() {
+        if (prefersReducedMotion || !autoplayMs || userEngaged) return;
+        stopAutoplay();
+        autoplayTimer = window.setInterval(next, autoplayMs);
+      }
+
+      function stopAutoplay() {
+        if (autoplayTimer) {
+          window.clearInterval(autoplayTimer);
+          autoplayTimer = null;
+        }
+      }
+
+      function resumeAfterIdle() {
+        if (idleTimer) window.clearTimeout(idleTimer);
+        idleTimer = window.setTimeout(function() {
+          userEngaged = false;
+          startAutoplay();
+        }, 8000);
+      }
+
+      // Scroll -> sync dots
+      let scrollTick = null;
+      track.addEventListener('scroll', function() {
+        if (scrollTick) return;
+        scrollTick = window.requestAnimationFrame(function() {
+          syncDots();
+          scrollTick = null;
+        });
+      }, { passive: true });
+
+      // Dot clicks
+      dots.forEach(function(dot, i) {
+        dot.addEventListener('click', function() {
+          userEngaged = true;
+          stopAutoplay();
+          goTo(i);
+          resumeAfterIdle();
+        });
+        dot.addEventListener('keydown', function(e) {
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            userEngaged = true;
+            stopAutoplay();
+            const nxt = (i + 1) % total;
+            dots[nxt].focus();
+            goTo(nxt);
+            resumeAfterIdle();
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            userEngaged = true;
+            stopAutoplay();
+            const prv = (i - 1 + total) % total;
+            dots[prv].focus();
+            goTo(prv);
+            resumeAfterIdle();
+          }
+        });
+      });
+
+      // Pause on hover / touch interaction
+      carousel.addEventListener('mouseenter', stopAutoplay);
+      carousel.addEventListener('mouseleave', function() {
+        if (!userEngaged) startAutoplay();
+      });
+      carousel.addEventListener('touchstart', function() {
+        userEngaged = true;
+        stopAutoplay();
+        resumeAfterIdle();
+      }, { passive: true });
+
+      // Start when the section scrolls into view (save battery offscreen)
+      if ('IntersectionObserver' in window && autoplayMs && !prefersReducedMotion) {
+        const io = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              if (!userEngaged) startAutoplay();
+            } else {
+              stopAutoplay();
+            }
+          });
+        }, { threshold: 0.35 });
+        io.observe(carousel);
+      } else {
+        startAutoplay();
+      }
+
+      // Resync dots on resize (clientWidth changes)
+      window.addEventListener('resize', function() {
+        // jump to current index's new pixel position without smooth to avoid drift
+        const idx = getIndex();
+        track.scrollTo({ left: idx * track.clientWidth, behavior: 'auto' });
+        syncDots();
+      });
+
+      // Initial paint
+      syncDots();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initProgramCarousels);
+  } else {
+    initProgramCarousels();
+  }
 
 
 })();
