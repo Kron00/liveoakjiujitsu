@@ -3105,6 +3105,12 @@
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: none;
         scrollbar-width: none;
+        /* Disable mask-image on mobile: iOS Safari fails to paint
+           horizontally-scrollable content when a -webkit-mask-image
+           is combined with overflow-x: auto on very wide children,
+           which caused the testimonial ribbon to render blank. */
+        mask-image: none;
+        -webkit-mask-image: none;
       }
 
       .testimonial-ribbon::-webkit-scrollbar {

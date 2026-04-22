@@ -10,3 +10,4 @@ node_modules/
 .astro/
 dist/
 .vercel/
+.image-originals/
