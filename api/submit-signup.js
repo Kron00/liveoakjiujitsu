@@ -6,6 +6,7 @@ const {
   parseAllowedOrigins,
   readJsonBody
 } = require('./_lib/security');
+const { waitUntil } = require('@vercel/functions');
 
 const ALLOWED_SIGNUP_TYPES = new Set(['just_me', 'my_child', 'me_plus_other', 'me_plus_others']);
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -14,6 +15,7 @@ const ISO_DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const SLASH_DATE_PATTERN = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12]\d|3[01])\/\d{4}$/;
 const ISO_DATE_TIME_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/;
 const MAX_CONTACTS = 6;
+const SIGNUP_WEBHOOK_TIMEOUT_MS = 9000;
 
 function readString(value, field, maxLength, options = {}) {
   if (typeof value !== 'string') {
@@ -154,8 +156,44 @@ function normalizeSignupPayload(payload) {
   };
 }
 
+function isAbortError(error) {
+  return Boolean(
+    error &&
+    (
+      error.name === 'AbortError' ||
+      error.code === 'ABORT_ERR' ||
+      error.message === 'This operation was aborted'
+    )
+  );
+}
+
+function createAcceptedSignupResponse(payload) {
+  return {
+    success: true,
+    accepted: true,
+    pending_confirmation: true,
+    count: payload.contacts.length,
+    results: [],
+    message: 'Signup request accepted.'
+  };
+}
+
+function logSignupForwardingError(error) {
+  console.error('Failed to submit signup payload.', {
+    message: error && error.message,
+    status: error && error.status,
+    body: error && error.body
+  });
+}
+
+function queueSignupForward(webhookUrl, payload) {
+  const task = forwardSignup(webhookUrl, payload).catch(logSignupForwardingError);
+  waitUntil(task);
+  return task;
+}
+
 async function forwardSignup(webhookUrl, payload) {
-  const timeout = createTimeoutSignal(10000);
+  const timeout = createTimeoutSignal(SIGNUP_WEBHOOK_TIMEOUT_MS);
 
   try {
     const response = await fetch(webhookUrl, {
@@ -189,6 +227,18 @@ async function forwardSignup(webhookUrl, payload) {
         raw: bodyText
       };
     }
+  } catch (error) {
+    if (isAbortError(error)) {
+      return {
+        success: true,
+        pending_confirmation: true,
+        count: payload.contacts.length,
+        results: [],
+        message: 'Signup request was accepted, but webhook confirmation timed out.'
+      };
+    }
+
+    throw error;
   } finally {
     timeout.clear();
   }
@@ -224,6 +274,13 @@ async function handler(req, res) {
     const payload = await readJsonBody(req, { maxBytes: 32 * 1024 });
     const normalizedPayload = normalizeSignupPayload(payload);
 
+    if (process.env.SIGNUP_SUBMIT_MODE !== 'sync') {
+      queueSignupForward(webhookUrl, normalizedPayload);
+
+      res.setHeader('Cache-Control', 'no-store');
+      return res.status(202).json(createAcceptedSignupResponse(normalizedPayload));
+    }
+
     const webhookResult = await forwardSignup(webhookUrl, normalizedPayload);
 
     res.setHeader('Cache-Control', 'no-store');
@@ -246,7 +303,12 @@ module.exports = handler;
 module.exports._private = {
   DEFAULT_ALLOWED_ORIGINS,
   MAX_CONTACTS,
+  SIGNUP_WEBHOOK_TIMEOUT_MS,
+  createAcceptedSignupResponse,
+  forwardSignup,
+  isAbortError,
   normalizeSignupPayload,
+  queueSignupForward,
   validateContact,
   validateParent
 };

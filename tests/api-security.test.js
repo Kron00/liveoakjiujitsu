@@ -74,6 +74,7 @@ test.beforeEach(() => {
   delete process.env.GHL_ADULT_CALENDAR_NAME;
   delete process.env.N8N_SIGNUP_WEBHOOK_URL;
   delete process.env.NEXT_PUBLIC_WEBHOOK_URL;
+  delete process.env.SIGNUP_SUBMIT_MODE;
   delete global.fetch;
 });
 
@@ -134,6 +135,7 @@ test('submit-signup rejects requests from unapproved origins', async () => {
 });
 
 test('submit-signup forwards sanitized payloads through the first-party endpoint', async () => {
+  process.env.SIGNUP_SUBMIT_MODE = 'sync';
   process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
   const webhookResult = {
     success: true,
@@ -183,6 +185,73 @@ test('submit-signup forwards sanitized payloads through the first-party endpoint
   assert.equal(forwardedPayload.contacts[0].medicalNotes, '');
   assert.equal(forwardedPayload.contacts[0].experience, 'None');
   assert.equal(Object.hasOwn(forwardedPayload, 'website'), false);
+});
+
+test('submit-signup treats slow webhook confirmation as accepted', async () => {
+  process.env.SIGNUP_SUBMIT_MODE = 'sync';
+  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+
+  global.fetch = async () => {
+    const error = new Error('This operation was aborted');
+    error.name = 'AbortError';
+    throw error;
+  };
+
+  const req = createMockReq({
+    headers: {
+      origin: 'http://localhost:3000',
+      'content-type': 'application/json'
+    },
+    body: createValidPayload({ website: '' })
+  });
+  const res = createMockRes();
+
+  await submitSignup(req, res);
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.pending_confirmation, true);
+  assert.equal(res.body.count, 1);
+});
+
+test('submit-signup returns immediately after queuing webhook forwarding', async () => {
+  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+
+  let forwardedRequest;
+  let releaseFetch;
+  const fetchCanFinish = new Promise((resolve) => {
+    releaseFetch = resolve;
+  });
+
+  global.fetch = async (url, options) => {
+    forwardedRequest = { url, options };
+    await fetchCanFinish;
+    return {
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify({ success: true, results: [] })
+    };
+  };
+
+  const req = createMockReq({
+    headers: {
+      origin: 'http://localhost:3000',
+      'content-type': 'application/json'
+    },
+    body: createValidPayload({ website: '' })
+  });
+  const res = createMockRes();
+
+  await submitSignup(req, res);
+
+  assert.equal(res.statusCode, 202);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.accepted, true);
+  assert.equal(res.body.pending_confirmation, true);
+  assert.equal(forwardedRequest.url, 'https://example.com/webhook');
+  assert.equal(JSON.parse(forwardedRequest.options.body).contacts[0].email, 'alex@example.com');
+
+  releaseFetch();
 });
 
 test('normalizeSignupPayload accepts my_child dependent payloads', () => {
