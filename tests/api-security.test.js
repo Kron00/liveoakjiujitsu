@@ -223,8 +223,10 @@ test('normalizeSignupPayload accepts my_child dependent payloads', () => {
 
 test('available-slots calendar mapping stays aligned with age boundaries', () => {
   assert.equal(availableSlots._private.getCalendarForAge(3).key, 'sprouts');
+  assert.equal(availableSlots._private.getCalendarForAge(6).key, 'youth');
   assert.equal(availableSlots._private.getCalendarForAge(12).key, 'youth');
-  assert.equal(availableSlots._private.getCalendarForAge(17).key, 'youth');
+  assert.equal(availableSlots._private.getCalendarForAge(13).key, 'adult');
+  assert.equal(availableSlots._private.getCalendarForAge(17).key, 'adult');
   assert.equal(availableSlots._private.getCalendarForAge(18).key, 'adult');
   assert.equal(availableSlots._private.getCalendarForAge(2), null);
 });
@@ -232,6 +234,7 @@ test('available-slots calendar mapping stays aligned with age boundaries', () =>
 test('available-slots uses the current calendar IDs by default', () => {
   assert.equal(availableSlots._private.getCalendarForAge(3).id, 'bd2gOYTWJQ8MbQ5eXeCr');
   assert.equal(availableSlots._private.getCalendarForAge(12).id, 'O7aMCGhEnCpYfOGpOsH4');
+  assert.equal(availableSlots._private.getCalendarForAge(13).id, 'bdny8Ve5pWGgc8XCvlQH');
   assert.equal(availableSlots._private.getCalendarForAge(18).id, 'bdny8Ve5pWGgc8XCvlQH');
 });
 

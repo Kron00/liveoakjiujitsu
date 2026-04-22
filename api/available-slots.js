@@ -17,9 +17,9 @@ const CALENDARS = [
   },
   {
     key: 'youth',
-    label: 'Youth BJJ (Ages 6 to 17)',
+    label: 'Youth BJJ (Ages 6 to 12)',
     minAge: 6,
-    maxAge: 17,
+    maxAge: 12,
     id: 'O7aMCGhEnCpYfOGpOsH4',
     idEnv: 'GHL_YOUTH_CALENDAR_ID',
     nameEnv: 'GHL_YOUTH_CALENDAR_NAME',
@@ -27,13 +27,13 @@ const CALENDARS = [
   },
   {
     key: 'adult',
-    label: 'Adult BJJ (Ages 18+)',
-    minAge: 18,
+    label: 'Adult/Teen BJJ (Ages 13+)',
+    minAge: 13,
     maxAge: Infinity,
     id: 'bdny8Ve5pWGgc8XCvlQH',
     idEnv: 'GHL_ADULT_CALENDAR_ID',
     nameEnv: 'GHL_ADULT_CALENDAR_NAME',
-    names: ['Adult Trial', 'Adult BJJ Trial', 'Adult BJJ']
+    names: ['Adult Trial', 'Adult BJJ Trial', 'Adult BJJ', 'Adult/Teen Trial', 'Adult/Teen BJJ']
   }
 ];
 

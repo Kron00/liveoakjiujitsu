@@ -879,14 +879,20 @@
     var NO_SLOTS_MESSAGE = 'No available class times right now. Please call us at (707) 755 7247.';
     var TOO_YOUNG_MESSAGE = 'Participants must be at least 3 years old.';
     var MAX_CONTACTS = 6;
-    var LABELS = { sprouts: 'Sprouts (Ages 3 to 5)', youth: 'Youth BJJ (Ages 6 to 17)', adult: 'Adult BJJ (Ages 18+)' };
+    var LABELS = {
+      sprouts: 'Sprouts (Ages 3 to 5)',
+      youth: 'Youth BJJ (Ages 6 to 12)',
+      teen: 'Teen BJJ (Ages 13 to 17) — trains in Adult/Teen class',
+      adult: 'Adult BJJ (Ages 18+)'
+    };
 
     function pad2(n) { return n < 10 ? '0' + n : '' + n; }
 
     function getProgram(age) {
       var a = parseInt(age, 10);
       if (a >= 3 && a <= 5) return 'sprouts';
-      if (a >= 6 && a <= 17) return 'youth';
+      if (a >= 6 && a <= 12) return 'youth';
+      if (a >= 13 && a <= 17) return 'teen';
       if (a >= 18) return 'adult';
       return null;
     }
@@ -1275,7 +1281,9 @@
           state.abortController = null;
           clearSlotFeedback(state);
           state.availableDays = data.days || [];
-          state.program = data.calendarKey || state.program;
+          // Preserve age-based program (e.g. 'teen') over the API's calendarKey
+          // so teens keep their Teen label even though they book the Adult/Teen calendar.
+          state.program = state.program || data.calendarKey;
 
           if (!state.availableDays.length) {
             setSlotFeedback(state, NO_SLOTS_MESSAGE, 'error');
@@ -1473,7 +1481,9 @@
           sched.abortController = null;
           clearSlotFeedback(sched);
           sched.availableDays = data.days || [];
-          sched.program = data.calendarKey || sched.program;
+          // Preserve age-based program (e.g. 'teen') over the API's calendarKey
+          // so teens keep their Teen label even though they book the Adult/Teen calendar.
+          sched.program = sched.program || data.calendarKey;
 
           if (!sched.availableDays.length) {
             setSlotFeedback(sched, NO_SLOTS_MESSAGE, 'error');
