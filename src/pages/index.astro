@@ -1084,6 +1084,29 @@
       margin: 0;
     }
 
+    .program-card__age-guide {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-top: 0.15rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    .program-card__age-rule {
+      margin: 0;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 300;
+      color: var(--color-text-muted);
+      line-height: 1.55;
+    }
+
+    .program-card__age-rule strong {
+      color: var(--color-text);
+      font-weight: 600;
+    }
+
     /* Program offerings chips */
     .program-card__chips {
       display: flex;
@@ -1115,16 +1138,6 @@
       color: var(--color-text);
     }
 
-    .programs__note {
-      margin-top: var(--space-xl);
-      max-width: 900px;
-      font-family: var(--font-body);
-      font-size: var(--text-base);
-      font-weight: 300;
-      color: var(--color-text-muted);
-      line-height: 1.8;
-    }
-
     /* ---- Programs Photo Ribbon / Marquee ---- */
     .programs-ribbon {
       margin-top: var(--space-2xl);
@@ -1149,6 +1162,7 @@
 
     .programs-ribbon__track {
       display: flex;
+      align-items: center;
       gap: var(--space-lg);
       width: max-content;
       animation: programsRibbonScroll 150s linear infinite;
@@ -1177,6 +1191,11 @@
       background: var(--color-border-light);
     }
 
+    .programs-ribbon__slide--groundwork {
+      flex-basis: clamp(280px, 24vw, 360px);
+      aspect-ratio: 1 / 1;
+    }
+
     .programs-ribbon__slide img {
       width: 100%;
       height: 100%;
@@ -1184,9 +1203,45 @@
       display: block;
     }
 
+    .programs-ribbon__slide img.programs-ribbon__img--groundwork {
+      object-position: 50% 100%;
+    }
+
     @media (min-width: 769px) {
       .programs-ribbon__track {
         animation-duration: 170s;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .programs-ribbon {
+        mask-image: none;
+        -webkit-mask-image: none;
+      }
+
+      .programs-ribbon__track {
+        gap: var(--space-md);
+        animation-duration: 72s;
+        padding: 0.75rem 0;
+        will-change: transform;
+      }
+
+      .programs-ribbon__slide {
+        flex-basis: clamp(240px, 76vw, 300px);
+      }
+
+      .programs-ribbon__slide--groundwork {
+        flex-basis: clamp(260px, 82vw, 320px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .programs-ribbon__track {
+        animation-duration: 64s;
+      }
+
+      .programs-ribbon__slide {
+        flex-basis: min(78vw, 280px);
       }
     }
 
@@ -2020,8 +2075,7 @@
       padding: 1rem 0;
     }
 
-    /* Pause on hover, but only for pointers that actually hover (mice/trackpads).
-       Touch devices get a native swipe carousel at ≤768px instead. */
+    /* Pause on hover, but only for pointers that actually hover (mice/trackpads). */
     @media (hover: hover) {
       .testimonial-ribbon:hover .testimonial-ribbon__track {
         animation-play-state: paused;
@@ -3013,6 +3067,11 @@
         gap: 0.7rem;
       }
 
+      .program-card__age-guide {
+        gap: 0.5rem;
+        padding-top: 0.75rem;
+      }
+
       .program-card__index {
         font-size: 4rem;
       }
@@ -3036,22 +3095,16 @@
       }
     }
 
-    /* ---- Mobile swipe carousel (≤768px) ----
-       Replaces the auto-scrolling marquee with a native horizontal scroll +
-       scroll-snap carousel so users can drag/swipe through testimonials at
-       their own pace. Placed AFTER the ≤480px block so `animation: none`
-       reliably overrides the earlier `animation-duration` rules at every
-       mobile viewport width. */
+    /* ---- Mobile auto carousel (≤768px) ----
+       Native horizontal scrolling remains available, while JS drives a
+       continuous marquee and restarts it after brief touch inactivity. */
     @media (max-width: 768px) {
       .testimonial-ribbon {
         overflow-x: auto;
-        overflow-y: visible;
+        overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x proximity;
+        scroll-snap-type: none;
         scrollbar-width: none;
-        /* Edge fade masks clip the snapped first/last cards oddly — drop them. */
-        mask-image: none;
-        -webkit-mask-image: none;
       }
 
       .testimonial-ribbon::-webkit-scrollbar {
@@ -3060,19 +3113,13 @@
 
       .testimonial-ribbon__track {
         animation: none;
-        /* Breathing room so first/last card can snap near viewport center. */
-        padding-left: 5vw;
-        padding-right: 5vw;
+        padding-left: 0;
+        padding-right: 0;
+        will-change: auto;
       }
 
       .testimonial-ribbon__card {
-        scroll-snap-align: center;
-      }
-
-      /* Duplicate cards exist only to make the desktop marquee loop seamlessly.
-         The swipe carousel shows each testimonial once. */
-      .testimonial-ribbon__card[aria-hidden="true"] {
-        display: none;
+        scroll-snap-align: none;
       }
     }
 
@@ -3809,9 +3856,12 @@
       <!-- Program 1 — BJJ Adult Program and Comp Team -->
       <article class="program-card reveal">
         <div class="program-card__body">
-          <span class="program-card__eyebrow">Adult / Teen</span>
-          <h3 class="program-card__title">BJJ Adult &amp; Teen<br>Program &amp; Competition Team</h3>
+          <span class="program-card__eyebrow">Adult</span>
+          <h3 class="program-card__title">BJJ Adult<br>Program &amp; Competition Team</h3>
           <p class="program-card__desc">A mix of modern and old school techniques, rooted in self defense and competition tested. We teach white belts leg locks because it&rsquo;s not just the future of BJJ, but the now. We offer Gi, No Gi, Fundamentals, Women's Only Seminars, Judo and Wrestling Takedowns.</p>
+          <div class="program-card__age-guide" aria-label="Adult age placement">
+            <p class="program-card__age-rule"><strong>Adults ages 18+</strong> train here on the Adult membership.</p>
+          </div>
         </div>
       </article>
 
@@ -3821,6 +3871,10 @@
           <span class="program-card__eyebrow">Youth / Teen</span>
           <h3 class="program-card__title">Youth &amp; Teen Program<br>and Comp Team</h3>
           <p class="program-card__desc">Youth Program fundamentals and advanced BJJ technique taught along with strength and confidence building. Significant attention is placed on anti bullying and emotional regulation. Our philosophy is that Brazilian Jiu Jitsu is seen as a means to individual development, leadership and personal control. Body awareness, respect, discipline, and responsibility are core values taught within all of our kid's programs. All staff are Live Scanned to ensure your child's safety. We are a vendor through Compass Charter School and accept E Vouchers.</p>
+          <div class="program-card__age-guide" aria-label="Youth and teen age placement">
+            <p class="program-card__age-rule"><strong>Youth ages 6 to 12</strong> train in Youth BJJ classes.</p>
+            <p class="program-card__age-rule"><strong>Teens ages 13 to 17</strong> move into Adult/Teen classes while staying under Youth &amp; Teen pricing.</p>
+          </div>
         </div>
       </article>
 
@@ -3830,6 +3884,10 @@
           <span class="program-card__eyebrow">Sprouts</span>
           <h3 class="program-card__title">Sprouts Program</h3>
           <p class="program-card__desc">Sprouts Program is an excellent opportunity for your child to learn the fundamentals of BJJ, Judo and Wrestling through animal movements and games. Students primarily learn takedowns, passing, sweeps, controls and specific submissions. For many of our students, this is their first experience of an organized sport thus we emphasize positive reinforcement, modeling and rewards to ensure their success. All staff are Live Scanned to ensure your child's safety.</p>
+          <div class="program-card__age-guide" aria-label="Sprouts age placement">
+            <p class="program-card__age-rule"><strong>Ages 3 to 5</strong> train in Sprouts with age appropriate movement, games, and mat skills.</p>
+            <p class="program-card__age-rule"><strong>Age 6</strong> is when students move into Youth BJJ.</p>
+          </div>
         </div>
       </article>
 
@@ -3849,7 +3907,7 @@
       <li class="programs-ribbon__slide"><img src="assets/images/programs-carousel/youth-2.jpeg" alt="Young Brazilian Jiu Jitsu student working a guard pass in a blue gi at Live Oak in Fairfield, CA" loading="lazy" width="1600" height="1066"></li>
       <li class="programs-ribbon__slide"><img src="assets/images/programs-carousel/sprouts-2.jpeg" alt="Two Sprouts students smiling during Brazilian Jiu Jitsu class at Live Oak in Fairfield, CA" loading="lazy" width="1600" height="1600"></li>
       <li class="programs-ribbon__slide"><img src="assets/images/programs-carousel/adult-3.jpeg" alt="Close guard pressure during adult Brazilian Jiu Jitsu training at Live Oak Jiu Jitsu Academy in Fairfield, CA" loading="lazy" width="1600" height="1600"></li>
-      <li class="programs-ribbon__slide"><img src="assets/images/programs-carousel/youth-3.jpeg" alt="Youth Brazilian Jiu Jitsu students working from a mounted position at Live Oak Jiu Jitsu Academy in Fairfield, CA" loading="lazy" width="1067" height="1600"></li>
+      <li class="programs-ribbon__slide programs-ribbon__slide--groundwork"><img class="programs-ribbon__img--groundwork" src="assets/images/programs-carousel/youth-3.jpeg" alt="Youth Brazilian Jiu Jitsu students working from a mounted position at Live Oak Jiu Jitsu Academy in Fairfield, CA" loading="lazy" width="1067" height="1600"></li>
       <li class="programs-ribbon__slide"><img src="assets/images/programs-carousel/sprouts-3.jpeg" alt="Sprouts class seated with instructors during a calm teaching moment at Live Oak Jiu Jitsu Academy in Fairfield, CA" loading="lazy" width="1600" height="900"></li>
       <li class="programs-ribbon__slide"><img src="assets/images/programs-carousel/adult-4.jpeg" alt="Teen student training Brazilian Jiu Jitsu one-on-one with a Live Oak instructor in Fairfield, CA" loading="lazy" width="1200" height="1600"></li>
       <li class="programs-ribbon__slide"><img src="assets/images/programs-carousel/sprouts-4.jpeg" alt="Sprouts students in a circle with instructors during Brazilian Jiu Jitsu class at Live Oak in Fairfield, CA" loading="lazy" width="1600" height="1066"></li>
@@ -3864,7 +3922,7 @@
       <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/youth-2.jpeg" alt="" loading="lazy" width="1600" height="1066"></li>
       <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/sprouts-2.jpeg" alt="" loading="lazy" width="1600" height="1600"></li>
       <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/adult-3.jpeg" alt="" loading="lazy" width="1600" height="1600"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/youth-3.jpeg" alt="" loading="lazy" width="1067" height="1600"></li>
+      <li class="programs-ribbon__slide programs-ribbon__slide--groundwork" aria-hidden="true"><img class="programs-ribbon__img--groundwork" src="assets/images/programs-carousel/youth-3.jpeg" alt="" loading="lazy" width="1067" height="1600"></li>
       <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/sprouts-3.jpeg" alt="" loading="lazy" width="1600" height="900"></li>
       <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/adult-4.jpeg" alt="" loading="lazy" width="1200" height="1600"></li>
       <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/sprouts-4.jpeg" alt="" loading="lazy" width="1600" height="1066"></li>
@@ -3874,9 +3932,6 @@
     </ul>
   </div>
 
-  <div class="container">
-    <p class="programs__note">Competition team members at the adult and youth levels get instruction, strategy building, personalized game plans, and cardio maximizing support throughout their competition journey. We also offer private and semi private training with IBJJF certified instructors to elevate your skills.</p>
-  </div>
 </section>
 <!-- ========== COACHES SECTION ========== -->
 <section id="coaches" class="coaches-section">
@@ -5173,32 +5228,172 @@
 
 
   /* --------------------------------------------------
-     6. Testimonial Ribbon Touch Pause (>768px only)
+     6. Testimonial Ribbon Pause / Mobile Autoplay
      Desktop marquee: CSS :hover (hover-capable pointers) pauses the scroll.
-     This JS handles touchscreen LAPTOPS/tablets-in-landscape at >768px,
-     which have touch but no `:hover`.
-     On mobile (≤768px) the ribbon is a native swipe carousel with no
-     animation, so we skip the handlers to avoid leaving stale inline
-     `animationPlayState` styles when the viewport crosses the breakpoint.
+     Touch interaction pauses the ribbon, then resumes after a short idle delay.
+     Mobile uses native horizontal scroll driven by requestAnimationFrame so
+     users can still drag the ribbon without losing continuous autoplay.
   -------------------------------------------------- */
   var ribbon = document.querySelector('.testimonial-ribbon');
 
   if (ribbon) {
     var track = ribbon.querySelector('.testimonial-ribbon__track');
-    var mobileMarqueeOff = window.matchMedia('(max-width: 768px)');
+    var mobileTestimonials = window.matchMedia('(max-width: 768px)');
+    var reducedMotionTestimonials = window.matchMedia('(prefers-reduced-motion: reduce)');
+    var testimonialResumeDelay = 5000;
+    var testimonialMobileSpeed = 0.025;
+    var testimonialResumeTimer = null;
+    var testimonialRaf = null;
+    var testimonialLastFrame = null;
+    var testimonialScrollPosition = null;
+    var testimonialMobileRunning = false;
+
+    function getTestimonialLoopWidth() {
+      return track ? track.scrollWidth / 2 : 0;
+    }
+
+    function normalizeTestimonialScroll() {
+      var loopWidth = getTestimonialLoopWidth();
+      if (!loopWidth) return;
+
+      if (testimonialScrollPosition === null) {
+        testimonialScrollPosition = ribbon.scrollLeft;
+      }
+
+      while (testimonialScrollPosition < loopWidth * 0.25) {
+        testimonialScrollPosition += loopWidth;
+      }
+
+      while (testimonialScrollPosition > loopWidth * 1.25) {
+        testimonialScrollPosition -= loopWidth;
+      }
+
+      ribbon.scrollLeft = testimonialScrollPosition;
+    }
+
+    function stopMobileTestimonials() {
+      testimonialMobileRunning = false;
+      testimonialLastFrame = null;
+
+      if (testimonialRaf) {
+        cancelAnimationFrame(testimonialRaf);
+        testimonialRaf = null;
+      }
+    }
+
+    function stepMobileTestimonials(timestamp) {
+      if (!testimonialMobileRunning) return;
+
+      if (testimonialLastFrame === null) {
+        testimonialLastFrame = timestamp;
+      }
+
+      var elapsed = timestamp - testimonialLastFrame;
+      testimonialLastFrame = timestamp;
+      if (testimonialScrollPosition === null) {
+        testimonialScrollPosition = ribbon.scrollLeft;
+      }
+      testimonialScrollPosition -= elapsed * testimonialMobileSpeed;
+      normalizeTestimonialScroll();
+      testimonialRaf = requestAnimationFrame(stepMobileTestimonials);
+    }
+
+    function startMobileTestimonials() {
+      if (!mobileTestimonials.matches || reducedMotionTestimonials.matches || !track) return;
+
+      testimonialScrollPosition = ribbon.scrollLeft || getTestimonialLoopWidth();
+      normalizeTestimonialScroll();
+
+      if (!ribbon.scrollLeft) {
+        testimonialScrollPosition = getTestimonialLoopWidth();
+        ribbon.scrollLeft = testimonialScrollPosition;
+      }
+
+      if (testimonialMobileRunning) return;
+
+      testimonialMobileRunning = true;
+      testimonialLastFrame = null;
+      testimonialRaf = requestAnimationFrame(stepMobileTestimonials);
+    }
+
+    function clearTestimonialResumeTimer() {
+      if (testimonialResumeTimer) {
+        clearTimeout(testimonialResumeTimer);
+        testimonialResumeTimer = null;
+      }
+    }
+
+    function queueTestimonialResume() {
+      clearTestimonialResumeTimer();
+
+      testimonialResumeTimer = setTimeout(function() {
+        if (mobileTestimonials.matches) {
+          startMobileTestimonials();
+        } else if (track) {
+          track.style.animationPlayState = 'running';
+        }
+      }, testimonialResumeDelay);
+    }
+
+    function pauseTestimonialRibbon() {
+      if (!track) return;
+
+      clearTestimonialResumeTimer();
+
+      if (mobileTestimonials.matches) {
+        stopMobileTestimonials();
+      } else {
+        track.style.animationPlayState = 'paused';
+      }
+    }
+
+    function pauseThenResumeTestimonialRibbon() {
+      pauseTestimonialRibbon();
+      queueTestimonialResume();
+    }
+
+    function handleTestimonialBreakpoint() {
+      clearTestimonialResumeTimer();
+
+      if (mobileTestimonials.matches) {
+        if (track) {
+          track.style.animationPlayState = '';
+        }
+        startMobileTestimonials();
+      } else {
+        stopMobileTestimonials();
+        if (track) {
+          track.style.animationPlayState = 'running';
+        }
+      }
+    }
 
     if (track) {
-      ribbon.addEventListener('touchstart', function() {
-        if (mobileMarqueeOff.matches) return;
-        track.style.animationPlayState = 'paused';
-      }, { passive: true });
+      ribbon.addEventListener('pointerdown', pauseTestimonialRibbon, { passive: true });
+      ribbon.addEventListener('pointerup', queueTestimonialResume, { passive: true });
+      ribbon.addEventListener('pointercancel', queueTestimonialResume, { passive: true });
+      ribbon.addEventListener('touchstart', pauseTestimonialRibbon, { passive: true });
+      ribbon.addEventListener('touchend', queueTestimonialResume, { passive: true });
+      ribbon.addEventListener('touchcancel', queueTestimonialResume, { passive: true });
+      ribbon.addEventListener('wheel', pauseThenResumeTestimonialRibbon, { passive: true });
+      ribbon.addEventListener('click', pauseThenResumeTestimonialRibbon);
+      ribbon.addEventListener('focusin', pauseThenResumeTestimonialRibbon);
 
-      ribbon.addEventListener('touchend', function() {
-        if (mobileMarqueeOff.matches) return;
-        setTimeout(function() {
-          track.style.animationPlayState = 'running';
-        }, 3000);
-      }, { passive: true });
+      window.addEventListener('resize', handleTestimonialBreakpoint);
+
+      if (mobileTestimonials.addEventListener) {
+        mobileTestimonials.addEventListener('change', handleTestimonialBreakpoint);
+      } else if (mobileTestimonials.addListener) {
+        mobileTestimonials.addListener(handleTestimonialBreakpoint);
+      }
+
+      if (reducedMotionTestimonials.addEventListener) {
+        reducedMotionTestimonials.addEventListener('change', handleTestimonialBreakpoint);
+      } else if (reducedMotionTestimonials.addListener) {
+        reducedMotionTestimonials.addListener(handleTestimonialBreakpoint);
+      }
+
+      handleTestimonialBreakpoint();
     }
   }
 
@@ -5260,8 +5455,39 @@
   if (programsRibbon) {
     var programsTrack = programsRibbon.querySelector('.programs-ribbon__track');
     var programsMobileOff = window.matchMedia('(max-width: 768px)');
+    var programsImagesLoaded = false;
+
+    function loadProgramsRibbonImages() {
+      if (programsImagesLoaded) return;
+      programsImagesLoaded = true;
+
+      programsRibbon.querySelectorAll('.programs-ribbon__slide:not([aria-hidden]) img').forEach(function(img) {
+        if (img.loading === 'lazy') {
+          img.loading = 'eager';
+        }
+
+        if (!img.complete) {
+          var preload = new Image();
+          preload.decoding = 'async';
+          preload.src = img.currentSrc || img.src;
+        }
+      });
+    }
 
     if (programsTrack) {
+      if ('IntersectionObserver' in window) {
+        var programsImageObserver = new IntersectionObserver(function(entries) {
+          if (entries.some(function(entry) { return entry.isIntersecting; })) {
+            loadProgramsRibbonImages();
+            programsImageObserver.disconnect();
+          }
+        }, { rootMargin: '1200px 0px' });
+
+        programsImageObserver.observe(programsRibbon);
+      } else {
+        loadProgramsRibbonImages();
+      }
+
       programsRibbon.addEventListener('touchstart', function() {
         if (programsMobileOff.matches) return;
         programsTrack.style.animationPlayState = 'paused';

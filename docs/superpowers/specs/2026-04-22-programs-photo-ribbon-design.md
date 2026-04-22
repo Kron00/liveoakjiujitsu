@@ -23,7 +23,6 @@ Three carousels drive 13 total images (5 Adult, 3 Youth, 5 Sprouts) plus dot con
 
 1. `.container` — section label, heading, subtitle, grid of 3 **text-only** cards
 2. **New** `.programs-ribbon` — full-bleed, outside `.container`, scrolls horizontally
-3. `.container` — closing `.programs__note` paragraph (unchanged)
 
 ### Card changes
 
@@ -140,19 +139,28 @@ Re-use the existing alt text from the current carousel slides verbatim for Set 1
 
 Timing note: 150s mobile / 170s desktop is slightly slower than the testimonial ribbon (120s / 140s) so photos breathe.
 
+Follow-up note: mobile was later tightened to 72s at tablet/phone widths and 64s at narrow phone widths, with the edge mask disabled on mobile to avoid transformed image blanking.
+
 ### Ribbon JavaScript (new — mirrors testimonial pattern)
 
 ```javascript
 var programsRibbon = document.querySelector('.programs-ribbon');
 
 if (programsRibbon) {
-  var programsTrack = programsRibbon.querySelector('.programs-ribbon__track');
-  var programsMobileOff = window.matchMedia('(max-width: 768px)');
+    var programsTrack = programsRibbon.querySelector('.programs-ribbon__track');
+    var programsMobileOff = window.matchMedia('(max-width: 768px)');
+    var programsImagesLoaded = false;
 
-  if (programsTrack) {
-    programsRibbon.addEventListener('touchstart', function() {
-      if (programsMobileOff.matches) return;
-      programsTrack.style.animationPlayState = 'paused';
+    function loadProgramsRibbonImages() {
+      // Preload first-set photos before the marquee reaches them.
+    }
+
+    if (programsTrack) {
+      // IntersectionObserver calls loadProgramsRibbonImages() before the ribbon enters view.
+
+      programsRibbon.addEventListener('touchstart', function() {
+        if (programsMobileOff.matches) return;
+        programsTrack.style.animationPlayState = 'paused';
     }, { passive: true });
 
     programsRibbon.addEventListener('touchend', function() {
@@ -189,7 +197,7 @@ Implementation step must verify via grep that these selectors and JS hooks aren'
 ## What is preserved
 
 - All image files in `assets/images/programs-carousel/` stay on disk.
-- Section label, heading, subtitle, `.programs__note`, and all card copy are unchanged.
+- Section label, heading, subtitle, and all card copy are unchanged.
 - All other sections (Hero, Coaches, Testimonials, Footer, etc.) are untouched.
 - The existing `.program-card` / `.program-card__body` / `.program-card__eyebrow` / `.program-card__title` / `.program-card__desc` CSS stays — cards will now simply lack media on top, so verify their top padding still looks right once media is gone.
 
@@ -205,6 +213,7 @@ Implementation step must verify via grep that these selectors and JS hooks aren'
 
 - Ribbon is full-bleed at all widths.
 - Slide width is fluid (`clamp(280px, 26vw, 380px)`), so the number of visible slides adapts to screen size.
+- On mobile, the slide width tightens, the marquee runs faster, and the edge mask is removed to prevent mobile compositing blanks.
 - Cards above stack on mobile via existing `.programs__grid` rules (unchanged).
 
 ## Out of scope

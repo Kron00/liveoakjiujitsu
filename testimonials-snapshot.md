@@ -75,7 +75,6 @@
         - article [ref=e96]:
           - heading "Sprouts Program (Ages 3 to 5)" [level=3] [ref=e98]
           - paragraph [ref=e100]: Sprouts Program is an excellent opportunity for your child to learn the fundamentals of BJJ, Judo and Wrestling through animal movements and games. Students primarily learn takedowns, passing, sweeps, controls and specific submissions. For many of our students, this is their first experience of an organized sport thus we emphasize positive reinforcement, modeling and rewards to ensure their success. All staff are Live Scanned to ensure your child's safety.
-      - paragraph [ref=e101]: Competition team members at the adult and youth levels get instruction, strategy building, personalized game plans, and cardio maximizing support throughout their competition journey. We also offer private and semi private training with IBJJF certified instructors to elevate your skills.
     - generic [ref=e103]:
       - generic [ref=e104]: MEET YOUR COACHES
       - heading "Expert BJJ Instructors in Fairfield, CA" [level=2] [ref=e105]
