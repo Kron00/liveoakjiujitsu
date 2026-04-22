@@ -192,6 +192,34 @@
       </div>
     </div>
   </div>
+  <script>
+    // Hide the LeadConnector chat widget's auto-popup greeting on mobile (<=768px).
+    // The chat bubble itself stays tappable; only the auto-popping message is suppressed.
+    (function () {
+      var STYLE_ID = 'lc-mobile-greeting-suppress';
+      var CSS_TEXT = '@media (max-width: 768px) { .lc_text-widget--prompt { display: none !important; } }';
+
+      function inject() {
+        var widget = document.querySelector('chat-widget');
+        var sr = widget && widget.shadowRoot;
+        if (!sr) return false;
+        if (sr.getElementById(STYLE_ID)) return true;
+        var style = document.createElement('style');
+        style.id = STYLE_ID;
+        style.textContent = CSS_TEXT;
+        sr.appendChild(style);
+        return true;
+      }
+
+      if (inject()) return;
+
+      var observer = new MutationObserver(function () {
+        if (inject()) observer.disconnect();
+      });
+      observer.observe(document.documentElement, { childList: true, subtree: true });
+      setTimeout(function () { observer.disconnect(); }, 30000);
+    })();
+  </script>
   <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="69e3ff38051861c41b2475e0"></script>
 </body>
 </html>

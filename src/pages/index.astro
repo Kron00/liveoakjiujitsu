@@ -1913,7 +1913,7 @@
       display: flex;
       gap: var(--space-lg);
       width: max-content;
-      animation: ribbonScroll 120s linear infinite;
+      animation: ribbonScroll 138s linear infinite;
       padding: 1rem 0;
     }
 
@@ -2649,7 +2649,7 @@
       }
 
       .testimonial-ribbon__track {
-        animation-duration: 140s;
+        animation-duration: 161s;
       }
 
       .steps__grid::before {
@@ -2769,8 +2769,36 @@
         gap: var(--space-md);
       }
 
+      /* Center all section headers on mobile for consistent vertical rhythm */
+      .section-label {
+        display: block;
+        text-align: center;
+        padding-left: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-label::before {
+        display: none;
+      }
+
+      .section-heading {
+        text-align: center;
+      }
+
       .section-subtitle {
         margin-bottom: var(--space-xl);
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .contact-intro {
+        text-align: center;
+      }
+
+      .testimonials-proof {
+        justify-content: center;
       }
 
       .programs__grid {
@@ -2806,7 +2834,7 @@
       }
 
       .testimonial-ribbon__track {
-        animation-duration: 200s;
+        animation-duration: 230s;
       }
 
       .contact-grid {
@@ -2920,7 +2948,7 @@
       }
 
       .testimonial-ribbon__track {
-        animation-duration: 240s;
+        animation-duration: 276s;
       }
     }
 
@@ -4502,6 +4530,82 @@
 
 
 
+<!-- ========== CONTACT / FINAL CTA SECTION ========== -->
+<section id="contact" class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <!-- Left Column — Info -->
+      <div class="contact-info reveal-left">
+        <span class="section-label">GET STARTED TODAY</span>
+
+        <h2 class="section-heading">Start Your Free 3 Calendar Day Trial Online</h2>
+
+        <p class="contact-intro">Pick your first class time online, come in for your first visit, and use your 3 Calendar Day Trial to experience the academy before you commit.</p>
+
+        <ul class="contact-details">
+          <li class="contact-detail-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+            <span>910 Texas Street, Fairfield, California, 94533</span>
+          </li>
+          <li class="contact-detail-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+            </svg>
+            <a href="tel:+17077557247">(707) 755 7247</a>
+          </li>
+          <li class="contact-detail-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <a href="mailto:contact@liveoakjiujitsuacademy.com">contact@liveoakjiujitsuacademy.com</a>
+          </li>
+          <li class="contact-detail-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span>Monday to Friday 6:30 am to 8 pm &middot; Saturday 9 am to 12 pm &middot; Sunday 10 am to 11:30 am</span>
+          </li>
+        </ul>
+
+        <a href="https://www.instagram.com/liveoakjiujitsuacademy" target="_blank" rel="noopener noreferrer" class="contact-instagram">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+          </svg>
+          <span>@liveoakjiujitsuacademy</span>
+        </a>
+      </div>
+
+      <!-- Right Column — Signup CTA -->
+      <div class="contact-form-wrapper reveal-right">
+        <div class="contact-form contact-cta-card">
+          <h3 class="contact-cta-title">Start Your Trial Online</h3>
+          <p class="contact-cta-text">Use the signup form to choose who is training, pick the right class time, and reserve your first visit in a few minutes.</p>
+          <ul class="contact-cta-list">
+            <li>Choose between signing up yourself, your child, or multiple people.</li>
+            <li>Select class times based on age and program eligibility.</li>
+            <li>Start your free 3 Calendar Day Trial without waiting for a follow up call.</li>
+          </ul>
+          <div class="contact-cta-actions">
+            <a href="/signup" class="btn btn-primary btn-submit">Start Your Trial</a>
+            <a href="tel:+17077557247" class="btn btn--outline btn-submit">Call Instead</a>
+          </div>
+          <p class="contact-cta-note">Questions before booking? Call, email, or message Instagram and the team can help.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
 <!-- ========== FAQ SECTION ========== -->
 <style is:global>
   .faq-section {
@@ -4517,6 +4621,12 @@
   .faq-section .section-heading {
     text-align: center;
     display: block;
+  }
+  .faq-section .section-label {
+    padding-left: 0;
+  }
+  .faq-section .section-label::before {
+    display: none;
   }
   .faq-section .section-heading {
     margin: 0.75rem auto 2.75rem;
@@ -4681,82 +4791,6 @@
     </div>
 
     <p class="faq-cta">Have a different question? <a href="#contact">Contact us</a> or call <a href="tel:+17077557247">(707) 755 7247</a>.</p>
-  </div>
-</section>
-
-
-<!-- ========== CONTACT / FINAL CTA SECTION ========== -->
-<section id="contact" class="contact-section">
-  <div class="container">
-    <div class="contact-grid">
-
-      <!-- Left Column — Info -->
-      <div class="contact-info reveal-left">
-        <span class="section-label">GET STARTED TODAY</span>
-
-        <h2 class="section-heading">Start Your Free 3 Calendar Day Trial Online</h2>
-
-        <p class="contact-intro">Pick your first class time online, come in for your first visit, and use your 3 Calendar Day Trial to experience the academy before you commit.</p>
-
-        <ul class="contact-details">
-          <li class="contact-detail-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
-              <circle cx="12" cy="10" r="3"/>
-            </svg>
-            <span>910 Texas Street, Fairfield, California, 94533</span>
-          </li>
-          <li class="contact-detail-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-            </svg>
-            <a href="tel:+17077557247">(707) 755 7247</a>
-          </li>
-          <li class="contact-detail-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-              <polyline points="22,6 12,13 2,6"/>
-            </svg>
-            <a href="mailto:contact@liveoakjiujitsuacademy.com">contact@liveoakjiujitsuacademy.com</a>
-          </li>
-          <li class="contact-detail-item">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
-            </svg>
-            <span>Monday to Friday 6:30 am to 8 pm &middot; Saturday 9 am to 12 pm &middot; Sunday 10 am to 11:30 am</span>
-          </li>
-        </ul>
-
-        <a href="https://www.instagram.com/liveoakjiujitsuacademy" target="_blank" rel="noopener noreferrer" class="contact-instagram">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-          </svg>
-          <span>@liveoakjiujitsuacademy</span>
-        </a>
-      </div>
-
-      <!-- Right Column — Signup CTA -->
-      <div class="contact-form-wrapper reveal-right">
-        <div class="contact-form contact-cta-card">
-          <h3 class="contact-cta-title">Start Your Trial Online</h3>
-          <p class="contact-cta-text">Use the signup form to choose who is training, pick the right class time, and reserve your first visit in a few minutes.</p>
-          <ul class="contact-cta-list">
-            <li>Choose between signing up yourself, your child, or multiple people.</li>
-            <li>Select class times based on age and program eligibility.</li>
-            <li>Start your free 3 Calendar Day Trial without waiting for a follow up call.</li>
-          </ul>
-          <div class="contact-cta-actions">
-            <a href="/signup" class="btn btn-primary btn-submit">Start Your Trial</a>
-            <a href="tel:+17077557247" class="btn btn--outline btn-submit">Call Instead</a>
-          </div>
-          <p class="contact-cta-note">Questions before booking? Call, email, or message Instagram and the team can help.</p>
-        </div>
-      </div>
-
-    </div>
   </div>
 </section>
 
@@ -5057,6 +5091,34 @@
 
 </script>
 
+<script>
+  // Hide the LeadConnector chat widget's auto-popup greeting on mobile (<=768px).
+  // The chat bubble itself stays tappable; only the auto-popping message is suppressed.
+  (function () {
+    var STYLE_ID = 'lc-mobile-greeting-suppress';
+    var CSS_TEXT = '@media (max-width: 768px) { .lc_text-widget--prompt { display: none !important; } }';
+
+    function inject() {
+      var widget = document.querySelector('chat-widget');
+      var sr = widget && widget.shadowRoot;
+      if (!sr) return false;
+      if (sr.getElementById(STYLE_ID)) return true;
+      var style = document.createElement('style');
+      style.id = STYLE_ID;
+      style.textContent = CSS_TEXT;
+      sr.appendChild(style);
+      return true;
+    }
+
+    if (inject()) return;
+
+    var observer = new MutationObserver(function () {
+      if (inject()) observer.disconnect();
+    });
+    observer.observe(document.documentElement, { childList: true, subtree: true });
+    setTimeout(function () { observer.disconnect(); }, 30000);
+  })();
+</script>
 <script src="https://widgets.leadconnectorhq.com/loader.js" data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js" data-widget-id="69e3ff38051861c41b2475e0"></script>
 </body>
 </html>
