@@ -1877,6 +1877,16 @@
       box-shadow: 0 0 6px rgba(123, 59, 190, 0.3);
     }
 
+    .belt-brown {
+      background: #6B4423;
+      box-shadow: 0 0 6px rgba(107, 68, 35, 0.35);
+    }
+
+    .belt-yellow {
+      background: #F4C430;
+      box-shadow: 0 0 6px rgba(244, 196, 48, 0.4);
+    }
+
     /* ---- Testimonial Ribbon / Marquee ---- */
     .testimonial-ribbon {
       margin-top: var(--space-2xl);
@@ -1903,7 +1913,7 @@
       display: flex;
       gap: var(--space-lg);
       width: max-content;
-      animation: ribbonScroll 60s linear infinite;
+      animation: ribbonScroll 120s linear infinite;
       padding: 1rem 0;
     }
 
@@ -1959,40 +1969,60 @@
       opacity: 1;
     }
 
-    /* ---- Starred Card Variant ---- */
+    /* ---- Starred (Highlighted Red) Card Variant ---- */
     .testimonial-ribbon__card--starred {
-      border-color: rgba(193, 12, 16, 0.12);
+      border-color: var(--color-gold-dark);
       background: linear-gradient(
         135deg,
-        rgba(193, 12, 16, 0.035) 0%,
-        rgba(193, 12, 16, 0.008) 100%
+        var(--color-gold) 0%,
+        var(--color-gold-dark) 100%
       );
       box-shadow:
-        0 1px 3px rgba(0, 0, 0, 0.04),
-        0 4px 14px rgba(0, 0, 0, 0.04),
-        0 0 24px rgba(193, 12, 16, 0.04);
+        0 4px 14px rgba(193, 12, 16, 0.25),
+        0 0 32px rgba(193, 12, 16, 0.18);
     }
 
-    .testimonial-ribbon__card--starred::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 3px;
-      height: 100%;
-      background: linear-gradient(180deg, var(--color-gold), var(--color-gold-dark));
+    .testimonial-ribbon__card--starred:hover {
+      border-color: var(--color-gold-dark);
+      box-shadow:
+        0 10px 28px rgba(193, 12, 16, 0.35),
+        0 0 48px rgba(193, 12, 16, 0.25);
+    }
+
+    /* Hide the top gold accent on red cards (already visually dominant) */
+    .testimonial-ribbon__card--starred::before {
+      display: none;
+    }
+
+    /* Invert inner text colors on red cards for contrast */
+    .testimonial-ribbon__card--starred .testimonial-ribbon__mark {
+      color: #ffffff;
+      opacity: 0.35;
+    }
+
+    .testimonial-ribbon__card--starred .testimonial-ribbon__text {
+      color: #ffffff;
+      font-weight: 400;
+    }
+
+    .testimonial-ribbon__card--starred .testimonial-ribbon__divider {
+      background: rgba(255, 255, 255, 0.45);
+    }
+
+    .testimonial-ribbon__card--starred .testimonial-ribbon__name {
+      color: #ffffff;
+    }
+
+    .testimonial-ribbon__card--starred .testimonial-ribbon__meta {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* White belt dot needs a darker outline to stay visible on red */
+    .testimonial-ribbon__card--starred .belt-white {
+      box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.6);
     }
 
     /* ---- Card Inner Elements ---- */
-    .testimonial-ribbon__stars {
-      color: var(--color-gold);
-      font-size: 0.85rem;
-      letter-spacing: 0.18em;
-      margin-bottom: 0.75rem;
-      line-height: 1;
-      text-shadow: 0 0 12px rgba(193, 12, 16, 0.25);
-    }
-
     .testimonial-ribbon__mark {
       font-family: var(--font-display);
       font-size: 3rem;
@@ -2619,7 +2649,7 @@
       }
 
       .testimonial-ribbon__track {
-        animation-duration: 50s;
+        animation-duration: 100s;
       }
 
       .steps__grid::before {
@@ -2776,7 +2806,7 @@
       }
 
       .testimonial-ribbon__track {
-        animation-duration: 45s;
+        animation-duration: 90s;
       }
 
       .contact-grid {
@@ -2890,7 +2920,7 @@
       }
 
       .testimonial-ribbon__track {
-        animation-duration: 40s;
+        animation-duration: 80s;
       }
     }
 
@@ -3725,6 +3755,357 @@
 </section>
 
 
+<!-- ========== TESTIMONIALS SECTION ========== -->
+<section id="testimonials" class="testimonials-section">
+  <div class="container">
+
+    <span class="section-label">MEMBER TESTIMONIALS</span>
+
+    <h2 class="section-heading">Voices From the Mat</h2>
+
+    <div class="testimonials-proof">
+      <span class="testimonials-proof__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+    </div>
+
+  </div>
+
+  <!-- Scrolling Ribbon -->
+  <div class="testimonial-ribbon">
+    <div class="testimonial-ribbon__track">
+
+      <!-- Set 1: 6 Originals -->
+
+      <!-- Frank P. — STARRED -->
+      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. From day one while training, Coach Alex has been my rock. From the early struggles of being a white belt with a body that simply had to learn how to adapt to survive to being able to compete against able bodied competitors as a competent purple belt, Coach Alex has helped me overcome every challenge that I have encountered along the way, both on and off the mats. My coach and friend, my good wolf. Never give up!</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Frank P.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Artist</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Nick R. -->
+      <div class="testimonial-ribbon__card">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Coach Alex shows up for his team and his students. His love for Jiu Jitsu and passion for learning is inspiring to those he shares the mats with. His expertise, technical, physical, and mental preparation have helped me succeed numerous times in competitions. These lessons I&rsquo;ve since applied to other aspects of my life. He is a leader.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Nick R.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Nutrition Consultant</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Brittany R. -->
+      <div class="testimonial-ribbon__card">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. With his wealth of knowledge and experience, anyone that comes in to learn with Alex will come away with something new and challenging to develop. He will help guide your practice to be as sharp as possible and tailored to your style whether you&rsquo;re a hobbyist or a competitor.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Brittany R.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Stunt Person, Artist</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Karin H. -->
+      <div class="testimonial-ribbon__card">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Having trained extensively under the guidance of Professor Alex Lucas, I can confidently say he&rsquo;s a standout in his field. His mastery of Jiu Jitsu is matched only by his passion for teaching and mentoring. Coach Alex creates an environment that fosters growth and camaraderie among students of all levels. His personalized approach ensures that each student receives the attention and guidance needed to progress.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-white"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Karin H.</h4>
+            <p class="testimonial-ribbon__meta">White Belt, Competitor, Attorney</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steve A. — STARRED -->
+      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">I started training jiu jitsu in early 2021. I was out of shape and in search of something new in terms of working out. I thought I&rsquo;d try jiu jitsu. It turned out to be one of the best decisions I have ever made, and Alex Lucas is a big part of that. Alex was one of my first instructors, and he continues to be to this day. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student&rsquo;s progress. He&rsquo;s not just my coach anymore, but a friend on and off the mats. Jiu jitsu has become an incredibly important part of my life. Alex is a big reason why. I cannot recommend Alex and the instructors at Live Oak JJ enough. Sign up for a class, you won&rsquo;t regret it!</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-blue"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Steve A.</h4>
+            <p class="testimonial-ribbon__meta">Blue Belt, Attorney</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tito P. — STARRED -->
+      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Having trained from white belt to purple under the instruction of Coach Alex, I can attest to his mastery of the art of jiujitsu and his talent for teaching those concepts and techniques to his students. I was able to follow him in my early days as he broke down basic escapes and passes for the class to learn in a way that was easy to grasp. Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self-control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes are well structured, goal oriented and most of all fun plus entertaining. He has a vast library in his head of not just BJJ tactics and strategy, but also competitive experience. He helped me organize my own game plan for competitions I entered and was an invaluable support. But above all these things, more than him being a leader, an expert, a supporter, a friend, Coach Alex is a student of the craft and he makes you feel welcome to follow him as he continues to grow in this special sport. I can&rsquo;t recommend him enough to practitioners at any level.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Tito P.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Art Director</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jake J. -->
+      <div class="testimonial-ribbon__card">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Alex Lucas is a great Jiu Jitsu coach. He&rsquo;s a black belt and competitive champion. Not only does he have the skill and the accomplishments to prove it, he is also a great communicator. This is what you need if you are trying to learn anything. Alex is able to explain the moves and techniques as well as the theory behind the moves in a clear way that will help you to understand and improve your skills. He also creates a supportive, inclusive environment to learn. When Alex is running a class there is always an atmosphere of friendship and support. You will be in a room surrounded by friends who are working hard to help each other get better. I started Jiu Jitsu at 57 and was a little intimidated. I am now about to turn 64 and have earned a purple belt. I did not realize how Jiu Jitsu would change my life. I have become healthier and happier, more fit, and a little more dangerous to someone who might try to attack me&mdash;but the best benefits are the great friends I&rsquo;ve made and my new favorite place, the Jiu Jitsu Academy.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Jake J.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Comedian</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jocelyn A. -->
+      <div class="testimonial-ribbon__card">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">If you&rsquo;re looking to grow your skills and knowledge in Jiu-Jitsu, look no further. Coach Alex is an attentive and seasoned instructor that will work with you to meet your training and competition goals. His ability to tailor techniques and feedback to your needs makes him a great teacher to learn from no matter what belt you are.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-white"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Jocelyn A.</h4>
+            <p class="testimonial-ribbon__meta">White Belt, Competitor, Teacher</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- John G. -->
+      <div class="testimonial-ribbon__card">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">I&rsquo;ve had the privilege of having Alex Lucas as one of my coaches and mentor. He is an excellent instructor; he breaks down intricate moves into simple and manageable steps. He keeps his own skill up to date by continually learning, studying, and training with others. His techniques have been rigorously tested in high-level competitions, ensuring that what he teaches is both practical and proven. This real-world application of skills gives students confidence that they are learning techniques that work, not just in theory but in practice.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-brown"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">John G.</h4>
+            <p class="testimonial-ribbon__meta">Brown Belt, Software Engineer</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Justin F. -->
+      <div class="testimonial-ribbon__card">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">There are plenty of accomplished jiu jitsu instructors out there, and I&rsquo;d rank Alex alongside any of them, but what really sets him apart is his generous nature and natural gifts as a teacher. He&rsquo;s able to draw upon his wealth of knowledge and experience to convey complex concepts and techniques in a way that&rsquo;s accessible and personalized to the needs of every student, from white belt to black. I can think of no better person to help you start, or continue, your jiu jitsu journey.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-brown"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Justin F.</h4>
+            <p class="testimonial-ribbon__meta">Brown Belt, Competitor, Author</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Luca F. -->
+      <div class="testimonial-ribbon__card">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Coach Alex was a patient and smart teacher, who showed me how important Jiu Jitsu is for me. He will help your kid learn how to be strong, resilient, and teach them some important life lessons. Coach Alex always provided a fun and enjoyable experience in the gym.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-yellow"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Luca F.</h4>
+            <p class="testimonial-ribbon__meta">Yellow Belt, High School Junior</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chase C. -->
+      <div class="testimonial-ribbon__card">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Alex Lucas was my first, and will always be my best, BJJ instructor. Alex blends his immense skill and knowledge for the art with an amazing ability to teach it. He&rsquo;s able to make the complicated and complex concepts of BJJ applicable and digestible to any practitioner, at any level. The best part of Alex&rsquo;s curriculum is rolling with him. I&rsquo;m always in awe of Alex&rsquo;s ability to throttle his game to right where you need him to be; he doesn&rsquo;t smash you like other black belts would, but also doesn&rsquo;t let you win easily. He finds the perfect zone to match you at your skill level, and stays one slight step ahead of you so he presents a challenge you can see and overcome. Above all else, Alex is a joy to work with. His classes are the perfect blend of fun, urgent, and intellectual. You always leave a better BJJ practitioner.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-blue"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Chase C.</h4>
+            <p class="testimonial-ribbon__meta">Blue Belt, Fixer</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Set 2: 12 Duplicates for seamless loop (hidden from screen readers) -->
+
+      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. From day one while training, Coach Alex has been my rock. From the early struggles of being a white belt with a body that simply had to learn how to adapt to survive to being able to compete against able bodied competitors as a competent purple belt, Coach Alex has helped me overcome every challenge that I have encountered along the way, both on and off the mats. My coach and friend, my good wolf. Never give up!</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Frank P.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Artist</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Coach Alex shows up for his team and his students. His love for Jiu Jitsu and passion for learning is inspiring to those he shares the mats with. His expertise, technical, physical, and mental preparation have helped me succeed numerous times in competitions. These lessons I&rsquo;ve since applied to other aspects of my life. He is a leader.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Nick R.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Nutrition Consultant</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. With his wealth of knowledge and experience, anyone that comes in to learn with Alex will come away with something new and challenging to develop. He will help guide your practice to be as sharp as possible and tailored to your style whether you&rsquo;re a hobbyist or a competitor.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Brittany R.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Stunt Person, Artist</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Having trained extensively under the guidance of Professor Alex Lucas, I can confidently say he&rsquo;s a standout in his field. His mastery of Jiu Jitsu is matched only by his passion for teaching and mentoring. Coach Alex creates an environment that fosters growth and camaraderie among students of all levels. His personalized approach ensures that each student receives the attention and guidance needed to progress.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-white"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Karin H.</h4>
+            <p class="testimonial-ribbon__meta">White Belt, Competitor, Attorney</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">I started training jiu jitsu in early 2021. I was out of shape and in search of something new in terms of working out. I thought I&rsquo;d try jiu jitsu. It turned out to be one of the best decisions I have ever made, and Alex Lucas is a big part of that. Alex was one of my first instructors, and he continues to be to this day. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student&rsquo;s progress. He&rsquo;s not just my coach anymore, but a friend on and off the mats. Jiu jitsu has become an incredibly important part of my life. Alex is a big reason why. I cannot recommend Alex and the instructors at Live Oak JJ enough. Sign up for a class, you won&rsquo;t regret it!</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-blue"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Steve A.</h4>
+            <p class="testimonial-ribbon__meta">Blue Belt, Attorney</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Having trained from white belt to purple under the instruction of Coach Alex, I can attest to his mastery of the art of jiujitsu and his talent for teaching those concepts and techniques to his students. I was able to follow him in my early days as he broke down basic escapes and passes for the class to learn in a way that was easy to grasp. Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self-control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes are well structured, goal oriented and most of all fun plus entertaining. He has a vast library in his head of not just BJJ tactics and strategy, but also competitive experience. He helped me organize my own game plan for competitions I entered and was an invaluable support. But above all these things, more than him being a leader, an expert, a supporter, a friend, Coach Alex is a student of the craft and he makes you feel welcome to follow him as he continues to grow in this special sport. I can&rsquo;t recommend him enough to practitioners at any level.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Tito P.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Art Director</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Alex Lucas is a great Jiu Jitsu coach. He&rsquo;s a black belt and competitive champion. Not only does he have the skill and the accomplishments to prove it, he is also a great communicator. This is what you need if you are trying to learn anything. Alex is able to explain the moves and techniques as well as the theory behind the moves in a clear way that will help you to understand and improve your skills. He also creates a supportive, inclusive environment to learn. When Alex is running a class there is always an atmosphere of friendship and support. You will be in a room surrounded by friends who are working hard to help each other get better. I started Jiu Jitsu at 57 and was a little intimidated. I am now about to turn 64 and have earned a purple belt. I did not realize how Jiu Jitsu would change my life. I have become healthier and happier, more fit, and a little more dangerous to someone who might try to attack me&mdash;but the best benefits are the great friends I&rsquo;ve made and my new favorite place, the Jiu Jitsu Academy.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-purple"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Jake J.</h4>
+            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Comedian</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">If you&rsquo;re looking to grow your skills and knowledge in Jiu-Jitsu, look no further. Coach Alex is an attentive and seasoned instructor that will work with you to meet your training and competition goals. His ability to tailor techniques and feedback to your needs makes him a great teacher to learn from no matter what belt you are.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-white"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Jocelyn A.</h4>
+            <p class="testimonial-ribbon__meta">White Belt, Competitor, Teacher</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">I&rsquo;ve had the privilege of having Alex Lucas as one of my coaches and mentor. He is an excellent instructor; he breaks down intricate moves into simple and manageable steps. He keeps his own skill up to date by continually learning, studying, and training with others. His techniques have been rigorously tested in high-level competitions, ensuring that what he teaches is both practical and proven. This real-world application of skills gives students confidence that they are learning techniques that work, not just in theory but in practice.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-brown"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">John G.</h4>
+            <p class="testimonial-ribbon__meta">Brown Belt, Software Engineer</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">There are plenty of accomplished jiu jitsu instructors out there, and I&rsquo;d rank Alex alongside any of them, but what really sets him apart is his generous nature and natural gifts as a teacher. He&rsquo;s able to draw upon his wealth of knowledge and experience to convey complex concepts and techniques in a way that&rsquo;s accessible and personalized to the needs of every student, from white belt to black. I can think of no better person to help you start, or continue, your jiu jitsu journey.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-brown"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Justin F.</h4>
+            <p class="testimonial-ribbon__meta">Brown Belt, Competitor, Author</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Coach Alex was a patient and smart teacher, who showed me how important Jiu Jitsu is for me. He will help your kid learn how to be strong, resilient, and teach them some important life lessons. Coach Alex always provided a fun and enjoyable experience in the gym.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-yellow"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Luca F.</h4>
+            <p class="testimonial-ribbon__meta">Yellow Belt, High School Junior</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-ribbon__card" aria-hidden="true">
+        <span class="testimonial-ribbon__mark">&ldquo;</span>
+        <p class="testimonial-ribbon__text">Alex Lucas was my first, and will always be my best, BJJ instructor. Alex blends his immense skill and knowledge for the art with an amazing ability to teach it. He&rsquo;s able to make the complicated and complex concepts of BJJ applicable and digestible to any practitioner, at any level. The best part of Alex&rsquo;s curriculum is rolling with him. I&rsquo;m always in awe of Alex&rsquo;s ability to throttle his game to right where you need him to be; he doesn&rsquo;t smash you like other black belts would, but also doesn&rsquo;t let you win easily. He finds the perfect zone to match you at your skill level, and stays one slight step ahead of you so he presents a challenge you can see and overcome. Above all else, Alex is a joy to work with. His classes are the perfect blend of fun, urgent, and intellectual. You always leave a better BJJ practitioner.</p>
+        <div class="testimonial-ribbon__divider"></div>
+        <div class="testimonial-ribbon__attribution">
+          <span class="testimonial-ribbon__belt belt-blue"></span>
+          <div>
+            <h4 class="testimonial-ribbon__name">Chase C.</h4>
+            <p class="testimonial-ribbon__meta">Blue Belt, Fixer</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
 <!-- ========== SCHEDULE SECTION ========== -->
 <section id="schedule" class="schedule-section">
   <div class="container">
@@ -3746,7 +4127,7 @@
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">6:30 AM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ Gi</span>
+            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
@@ -3758,7 +4139,7 @@
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">12:00 PM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ Gi</span>
+            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
@@ -3777,7 +4158,7 @@
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">6:00 PM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ Gi</span>
+            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
@@ -3793,7 +4174,7 @@
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">6:30 AM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ Gi</span>
+            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
@@ -3805,7 +4186,7 @@
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">12:00 PM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamentals &amp; Advanced No Gi</span>
+            <span class="schedule-class-name">Adult/Teen Fundamentals &amp; Advanced BJJ</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
@@ -3824,7 +4205,7 @@
           <div class="schedule-block class-adult">
             <span class="schedule-time">6:00 PM</span>
             <span class="schedule-class-name">Takedown &amp; Submission Class</span>
-            <span class="schedule-age">Ages 11+ &middot; No Gi</span>
+            <span class="schedule-age">Ages 11+</span>
           </div>
 
         </div>
@@ -3845,7 +4226,7 @@
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">10:00 AM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamentals &amp; Advanced No Gi</span>
+            <span class="schedule-class-name">Adult/Teen Fundamentals &amp; Advanced BJJ</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
@@ -4119,199 +4500,6 @@
 </section>
 
 
-<!-- ========== TESTIMONIALS SECTION ========== -->
-<section id="testimonials" class="testimonials-section">
-  <div class="container">
-
-    <span class="section-label">MEMBER TESTIMONIALS</span>
-
-    <h2 class="section-heading">Voices From the Mat</h2>
-
-    <div class="testimonials-proof">
-      <span class="testimonials-proof__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-    </div>
-
-  </div>
-
-  <!-- Scrolling Ribbon -->
-  <div class="testimonial-ribbon">
-    <div class="testimonial-ribbon__track">
-
-      <!-- Set 1: 6 Originals -->
-
-      <!-- Frank P. — STARRED -->
-      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred">
-        <div class="testimonial-ribbon__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. From day one while training, Coach Alex has been my rock. From the early struggles of being a white belt with a body that simply had to learn how to adapt to survive to being able to compete against able bodied competitors as a competent purple belt, Coach Alex has helped me overcome every challenge that I have encountered along the way, both on and off the mats. My coach and friend, my good wolf. Never give up!</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Frank P.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Artist</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Nick R. -->
-      <div class="testimonial-ribbon__card">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Coach Alex shows up for his team and his students. His love for Jiu Jitsu and passion for learning is inspiring to those he shares the mats with. His expertise, technical, physical, and mental preparation have helped me succeed numerous times in competitions. These lessons I&rsquo;ve since applied to other aspects of my life. He is a leader.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Nick R.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Nutrition Consultant</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Brittany R. -->
-      <div class="testimonial-ribbon__card">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. With his wealth of knowledge and experience, anyone that comes in to learn with Alex will come away with something new and challenging to develop. He will help guide your practice to be as sharp as possible and tailored to your style whether you&rsquo;re a hobbyist or a competitor.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Brittany R.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Stunt Person, Artist</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Karin H. -->
-      <div class="testimonial-ribbon__card">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Having trained extensively under the guidance of Professor Alex Lucas, I can confidently say he&rsquo;s a standout in his field. His mastery of Jiu Jitsu is matched only by his passion for teaching and mentoring. Coach Alex creates an environment that fosters growth and camaraderie among students of all levels. His personalized approach ensures that each student receives the attention and guidance needed to progress.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-white"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Karin H.</h4>
-            <p class="testimonial-ribbon__meta">White Belt, Competitor, Attorney</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Steve A. — STARRED -->
-      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred">
-        <div class="testimonial-ribbon__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">I started training jiu jitsu in early 2021. I was out of shape and in search of something new in terms of working out. I thought I&rsquo;d try jiu jitsu. It turned out to be one of the best decisions I have ever made, and Alex Lucas is a big part of that. Alex was one of my first instructors, and he continues to be to this day. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student&rsquo;s progress. He&rsquo;s not just my coach anymore, but a friend on and off the mats. Jiu jitsu has become an incredibly important part of my life. Alex is a big reason why. I cannot recommend Alex and the instructors at Live Oak JJ enough. Sign up for a class, you won&rsquo;t regret it!</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-blue"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Steve A.</h4>
-            <p class="testimonial-ribbon__meta">Blue Belt, Attorney</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Tito P. — STARRED -->
-      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred">
-        <div class="testimonial-ribbon__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Having been on my journey from white belt to purple under the instruction of Coach Alex, I can attest to his mastery of the art of jiujitsu and his talent for teaching those concepts and techniques to his students. Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes well structured, goal oriented, and most of all fun plus entertaining. Above all, Coach Alex is a student of the craft and he makes you feel welcome to follow him as he continues to grow in this special sport. I can&rsquo;t recommend him enough to practitioners at any level.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Tito P.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Art Director</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Set 2: 6 Duplicates for seamless loop (hidden from screen readers) -->
-
-      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred" aria-hidden="true">
-        <div class="testimonial-ribbon__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. From day one while training, Coach Alex has been my rock. From the early struggles of being a white belt with a body that simply had to learn how to adapt to survive to being able to compete against able bodied competitors as a competent purple belt, Coach Alex has helped me overcome every challenge that I have encountered along the way, both on and off the mats. My coach and friend, my good wolf. Never give up!</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Frank P.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Artist</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Coach Alex shows up for his team and his students. His love for Jiu Jitsu and passion for learning is inspiring to those he shares the mats with. His expertise, technical, physical, and mental preparation have helped me succeed numerous times in competitions. These lessons I&rsquo;ve since applied to other aspects of my life. He is a leader.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Nick R.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Nutrition Consultant</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. With his wealth of knowledge and experience, anyone that comes in to learn with Alex will come away with something new and challenging to develop. He will help guide your practice to be as sharp as possible and tailored to your style whether you&rsquo;re a hobbyist or a competitor.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Brittany R.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Stunt Person, Artist</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Having trained extensively under the guidance of Professor Alex Lucas, I can confidently say he&rsquo;s a standout in his field. His mastery of Jiu Jitsu is matched only by his passion for teaching and mentoring. Coach Alex creates an environment that fosters growth and camaraderie among students of all levels. His personalized approach ensures that each student receives the attention and guidance needed to progress.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-white"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Karin H.</h4>
-            <p class="testimonial-ribbon__meta">White Belt, Competitor, Attorney</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred" aria-hidden="true">
-        <div class="testimonial-ribbon__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">I started training jiu jitsu in early 2021. I was out of shape and in search of something new in terms of working out. I thought I&rsquo;d try jiu jitsu. It turned out to be one of the best decisions I have ever made, and Alex Lucas is a big part of that. Alex was one of my first instructors, and he continues to be to this day. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student&rsquo;s progress. He&rsquo;s not just my coach anymore, but a friend on and off the mats. Jiu jitsu has become an incredibly important part of my life. Alex is a big reason why. I cannot recommend Alex and the instructors at Live Oak JJ enough. Sign up for a class, you won&rsquo;t regret it!</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-blue"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Steve A.</h4>
-            <p class="testimonial-ribbon__meta">Blue Belt, Attorney</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred" aria-hidden="true">
-        <div class="testimonial-ribbon__stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Having been on my journey from white belt to purple under the instruction of Coach Alex, I can attest to his mastery of the art of jiujitsu and his talent for teaching those concepts and techniques to his students. Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes well structured, goal oriented, and most of all fun plus entertaining. Above all, Coach Alex is a student of the craft and he makes you feel welcome to follow him as he continues to grow in this special sport. I can&rsquo;t recommend him enough to practitioners at any level.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Tito P.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Art Director</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
 
 
 <!-- ========== FAQ SECTION ========== -->
