@@ -3112,7 +3112,9 @@
         overflow-x: auto;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x proximity;
+        /* No scroll-snap: it would snap back tiny per-frame scrollLeft
+           increments from the JS autoscroll to the nearest card edge. */
+        scroll-snap-type: none;
         scrollbar-width: none;
         /* Also disable mask-image on mobile: iOS Safari fails to paint
            horizontally-scrollable content when a -webkit-mask-image
@@ -3140,7 +3142,7 @@
       }
 
       .testimonial-ribbon__card {
-        scroll-snap-align: start;
+        scroll-snap-align: none;
       }
 
       /* --- Programs ribbon: same treatment --- */
@@ -3148,7 +3150,7 @@
         overflow-x: auto;
         overflow-y: hidden;
         -webkit-overflow-scrolling: touch;
-        scroll-snap-type: x proximity;
+        scroll-snap-type: none;
         scrollbar-width: none;
       }
 
@@ -3167,7 +3169,7 @@
       }
 
       .programs-ribbon__slide {
-        scroll-snap-align: center;
+        scroll-snap-align: none;
       }
     }
 
@@ -5276,189 +5278,171 @@
 
 
   /* --------------------------------------------------
-     6. Testimonial Ribbon Pause / Mobile Autoplay
-     Desktop marquee: CSS :hover (hover-capable pointers) pauses the scroll.
-     Touch interaction pauses the ribbon, then resumes after a short idle delay.
-     Mobile uses native horizontal scroll driven by requestAnimationFrame so
-     users can still drag the ribbon without losing continuous autoplay.
+     6. Ribbon Pause / Mobile Autoplay (testimonials + programs)
+     Desktop marquee: CSS animation translates a duplicated track. Hover
+     pauses via CSS.
+     Mobile: because the aria-hidden duplicates are hidden via CSS (to
+     avoid iOS Safari's GPU-layer / texture-size blank-render bug on very
+     wide tracks), the seamless-loop marquee is impossible. Instead, we
+     drive the ribbon's native scrollLeft via requestAnimationFrame and
+     smoothly reset to 0 when we reach the end, giving continuous motion
+     with a gentle wrap.
   -------------------------------------------------- */
-  var ribbon = document.querySelector('.testimonial-ribbon');
+  var mobileRibbonMedia = window.matchMedia('(max-width: 768px)');
+  var reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (ribbon) {
-    var track = ribbon.querySelector('.testimonial-ribbon__track');
-    var mobileTestimonials = window.matchMedia('(max-width: 768px)');
-    var reducedMotionTestimonials = window.matchMedia('(prefers-reduced-motion: reduce)');
-    var testimonialResumeDelay = 5000;
-    var testimonialMobileSpeed = 0.025;
-    var testimonialResumeTimer = null;
-    var testimonialRaf = null;
-    var testimonialLastFrame = null;
-    var testimonialScrollPosition = null;
-    var testimonialMobileRunning = false;
+  function createMobileRibbonAutoscroll(ribbon, trackSelector, opts) {
+    if (!ribbon) return null;
+    var track = ribbon.querySelector(trackSelector);
+    if (!track) return null;
 
-    function getTestimonialLoopWidth() {
-      return track ? track.scrollWidth / 2 : 0;
+    var speed = (opts && opts.speed) || 0.03; // px per ms (~30 px/s)
+    var resumeDelay = (opts && opts.resumeDelay) || 4000;
+    var wrapDuration = (opts && opts.wrapDuration) || 1400; // ms for smooth snap-back
+
+    var running = false;
+    var raf = null;
+    var lastFrame = null;
+    var isWrapping = false;
+    var wrapTimer = null;
+    var resumeTimer = null;
+
+    function clearResumeTimer() {
+      if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
     }
 
-    function normalizeTestimonialScroll() {
-      var loopWidth = getTestimonialLoopWidth();
-      if (!loopWidth) return;
-
-      if (testimonialScrollPosition === null) {
-        testimonialScrollPosition = ribbon.scrollLeft;
-      }
-
-      while (testimonialScrollPosition < loopWidth * 0.25) {
-        testimonialScrollPosition += loopWidth;
-      }
-
-      while (testimonialScrollPosition > loopWidth * 1.25) {
-        testimonialScrollPosition -= loopWidth;
-      }
-
-      ribbon.scrollLeft = testimonialScrollPosition;
+    function clearWrapTimer() {
+      if (wrapTimer) { clearTimeout(wrapTimer); wrapTimer = null; }
     }
 
-    function stopMobileTestimonials() {
-      testimonialMobileRunning = false;
-      testimonialLastFrame = null;
+    function step(timestamp) {
+      if (!running) return;
+      if (lastFrame === null) lastFrame = timestamp;
+      var elapsed = timestamp - lastFrame;
+      lastFrame = timestamp;
 
-      if (testimonialRaf) {
-        cancelAnimationFrame(testimonialRaf);
-        testimonialRaf = null;
-      }
-    }
+      if (!isWrapping) {
+        var nextScroll = ribbon.scrollLeft + elapsed * speed;
+        var maxScroll = ribbon.scrollWidth - ribbon.clientWidth;
 
-    function stepMobileTestimonials(timestamp) {
-      if (!testimonialMobileRunning) return;
-
-      if (testimonialLastFrame === null) {
-        testimonialLastFrame = timestamp;
-      }
-
-      var elapsed = timestamp - testimonialLastFrame;
-      testimonialLastFrame = timestamp;
-      if (testimonialScrollPosition === null) {
-        testimonialScrollPosition = ribbon.scrollLeft;
-      }
-      testimonialScrollPosition -= elapsed * testimonialMobileSpeed;
-      normalizeTestimonialScroll();
-      testimonialRaf = requestAnimationFrame(stepMobileTestimonials);
-    }
-
-    function hasTestimonialDuplicates() {
-      // On mobile we hide the aria-hidden duplicates via CSS so the
-      // ribbon stays within iOS Safari's GPU layer size limits. Without
-      // duplicates the seamless marquee loop can't work, so the JS
-      // auto-scroll should bail out and let users swipe manually.
-      if (!track) return false;
-      return track.querySelector('.testimonial-ribbon__card[aria-hidden="true"]:not([hidden])') &&
-             track.querySelector('.testimonial-ribbon__card[aria-hidden="true"]').offsetParent !== null;
-    }
-
-    function startMobileTestimonials() {
-      if (!mobileTestimonials.matches || reducedMotionTestimonials.matches || !track) return;
-
-      // If the aria-hidden duplicates are display:none (mobile breakpoint),
-      // seamless looping is impossible — don't auto-scroll, user swipes.
-      if (!hasTestimonialDuplicates()) {
-        return;
-      }
-
-      testimonialScrollPosition = ribbon.scrollLeft || getTestimonialLoopWidth();
-      normalizeTestimonialScroll();
-
-      if (!ribbon.scrollLeft) {
-        testimonialScrollPosition = getTestimonialLoopWidth();
-        ribbon.scrollLeft = testimonialScrollPosition;
-      }
-
-      if (testimonialMobileRunning) return;
-
-      testimonialMobileRunning = true;
-      testimonialLastFrame = null;
-      testimonialRaf = requestAnimationFrame(stepMobileTestimonials);
-    }
-
-    function clearTestimonialResumeTimer() {
-      if (testimonialResumeTimer) {
-        clearTimeout(testimonialResumeTimer);
-        testimonialResumeTimer = null;
-      }
-    }
-
-    function queueTestimonialResume() {
-      clearTestimonialResumeTimer();
-
-      testimonialResumeTimer = setTimeout(function() {
-        if (mobileTestimonials.matches) {
-          startMobileTestimonials();
-        } else if (track) {
-          track.style.animationPlayState = 'running';
+        if (maxScroll <= 0) {
+          // Nothing to scroll (track fits). Stop quietly.
+          running = false;
+          return;
         }
-      }, testimonialResumeDelay);
+
+        if (nextScroll >= maxScroll) {
+          // Reached the end — smoothly return to start, then resume.
+          isWrapping = true;
+          ribbon.scrollLeft = maxScroll;
+          try {
+            ribbon.scrollTo({ left: 0, behavior: 'smooth' });
+          } catch (e) {
+            ribbon.scrollLeft = 0;
+          }
+          clearWrapTimer();
+          wrapTimer = setTimeout(function() {
+            isWrapping = false;
+            lastFrame = null;
+            wrapTimer = null;
+          }, wrapDuration);
+        } else {
+          ribbon.scrollLeft = nextScroll;
+        }
+      }
+
+      raf = requestAnimationFrame(step);
     }
 
-    function pauseTestimonialRibbon() {
-      if (!track) return;
+    function start() {
+      if (!mobileRibbonMedia.matches || reducedMotionMedia.matches) return;
+      if (running) return;
+      running = true;
+      lastFrame = null;
+      raf = requestAnimationFrame(step);
+    }
 
-      clearTestimonialResumeTimer();
+    function stop() {
+      running = false;
+      lastFrame = null;
+      if (raf) { cancelAnimationFrame(raf); raf = null; }
+      clearWrapTimer();
+      isWrapping = false;
+    }
 
-      if (mobileTestimonials.matches) {
-        stopMobileTestimonials();
+    function pauseAndQueueResume() {
+      stop();
+      clearResumeTimer();
+      resumeTimer = setTimeout(start, resumeDelay);
+    }
+
+    function handleBreakpointChange() {
+      clearResumeTimer();
+      if (mobileRibbonMedia.matches) {
+        // On mobile: start JS autoscroll
+        start();
       } else {
-        track.style.animationPlayState = 'paused';
+        // On desktop: CSS animation takes over
+        stop();
       }
     }
 
-    function pauseThenResumeTestimonialRibbon() {
-      pauseTestimonialRibbon();
-      queueTestimonialResume();
+    // User-interaction handlers: pause while touched, resume after idle
+    ribbon.addEventListener('touchstart', stop, { passive: true });
+    ribbon.addEventListener('touchend', pauseAndQueueResume, { passive: true });
+    ribbon.addEventListener('touchcancel', pauseAndQueueResume, { passive: true });
+    ribbon.addEventListener('pointerdown', stop, { passive: true });
+    ribbon.addEventListener('pointerup', pauseAndQueueResume, { passive: true });
+    ribbon.addEventListener('pointercancel', pauseAndQueueResume, { passive: true });
+
+    window.addEventListener('resize', handleBreakpointChange);
+
+    if (mobileRibbonMedia.addEventListener) {
+      mobileRibbonMedia.addEventListener('change', handleBreakpointChange);
+    } else if (mobileRibbonMedia.addListener) {
+      mobileRibbonMedia.addListener(handleBreakpointChange);
+    }
+    if (reducedMotionMedia.addEventListener) {
+      reducedMotionMedia.addEventListener('change', handleBreakpointChange);
+    } else if (reducedMotionMedia.addListener) {
+      reducedMotionMedia.addListener(handleBreakpointChange);
     }
 
-    function handleTestimonialBreakpoint() {
-      clearTestimonialResumeTimer();
+    handleBreakpointChange();
 
-      if (mobileTestimonials.matches) {
-        if (track) {
-          track.style.animationPlayState = '';
-        }
-        startMobileTestimonials();
-      } else {
-        stopMobileTestimonials();
-        if (track) {
-          track.style.animationPlayState = 'running';
-        }
+    return { start: start, stop: stop };
+  }
+
+  // Testimonials: desktop still uses CSS animation; mobile uses scrollLeft autoscroll
+  var testimonialRibbon = document.querySelector('.testimonial-ribbon');
+  if (testimonialRibbon) {
+    var testimonialTrack = testimonialRibbon.querySelector('.testimonial-ribbon__track');
+
+    // Desktop hover/click pause handling
+    function pauseDesktopTestimonials() {
+      if (!mobileRibbonMedia.matches && testimonialTrack) {
+        testimonialTrack.style.animationPlayState = 'paused';
       }
     }
-
-    if (track) {
-      ribbon.addEventListener('pointerdown', pauseTestimonialRibbon, { passive: true });
-      ribbon.addEventListener('pointerup', queueTestimonialResume, { passive: true });
-      ribbon.addEventListener('pointercancel', queueTestimonialResume, { passive: true });
-      ribbon.addEventListener('touchstart', pauseTestimonialRibbon, { passive: true });
-      ribbon.addEventListener('touchend', queueTestimonialResume, { passive: true });
-      ribbon.addEventListener('touchcancel', queueTestimonialResume, { passive: true });
-      ribbon.addEventListener('wheel', pauseThenResumeTestimonialRibbon, { passive: true });
-      ribbon.addEventListener('click', pauseThenResumeTestimonialRibbon);
-      ribbon.addEventListener('focusin', pauseThenResumeTestimonialRibbon);
-
-      window.addEventListener('resize', handleTestimonialBreakpoint);
-
-      if (mobileTestimonials.addEventListener) {
-        mobileTestimonials.addEventListener('change', handleTestimonialBreakpoint);
-      } else if (mobileTestimonials.addListener) {
-        mobileTestimonials.addListener(handleTestimonialBreakpoint);
+    function resumeDesktopTestimonials() {
+      if (!mobileRibbonMedia.matches && testimonialTrack) {
+        testimonialTrack.style.animationPlayState = 'running';
       }
-
-      if (reducedMotionTestimonials.addEventListener) {
-        reducedMotionTestimonials.addEventListener('change', handleTestimonialBreakpoint);
-      } else if (reducedMotionTestimonials.addListener) {
-        reducedMotionTestimonials.addListener(handleTestimonialBreakpoint);
-      }
-
-      handleTestimonialBreakpoint();
     }
+    testimonialRibbon.addEventListener('wheel', function() {
+      pauseDesktopTestimonials();
+      setTimeout(resumeDesktopTestimonials, 5000);
+    }, { passive: true });
+    testimonialRibbon.addEventListener('focusin', function() {
+      pauseDesktopTestimonials();
+      setTimeout(resumeDesktopTestimonials, 5000);
+    });
+
+    createMobileRibbonAutoscroll(testimonialRibbon, '.testimonial-ribbon__track', {
+      speed: 0.035,
+      resumeDelay: 4000,
+      wrapDuration: 1400
+    });
   }
 
 
@@ -5552,6 +5536,7 @@
         loadProgramsRibbonImages();
       }
 
+      // Desktop: pause CSS animation on touch
       programsRibbon.addEventListener('touchstart', function() {
         if (programsMobileOff.matches) return;
         programsTrack.style.animationPlayState = 'paused';
@@ -5563,6 +5548,17 @@
           programsTrack.style.animationPlayState = 'running';
         }, 3000);
       }, { passive: true });
+
+      // Mobile: drive scrollLeft autoscroll because duplicates are hidden
+      // (the CSS marquee only works with the full duplicated track that
+      // iOS Safari can't render). Same pattern as testimonials.
+      if (typeof createMobileRibbonAutoscroll === 'function') {
+        createMobileRibbonAutoscroll(programsRibbon, '.programs-ribbon__track', {
+          speed: 0.04,
+          resumeDelay: 3500,
+          wrapDuration: 1400
+        });
+      }
     }
   }
 
