@@ -112,7 +112,7 @@ After the Book Appointment branches, the existing **SMS** action sends the confi
 
 ## Step 7: Test It
 
-Submit a test through the live form at `https://liveoakjiujitsuacademy.com/voice-signup` and check:
+Submit a test through the live form at `https://www.liveoakjiujitsuacademy.com/voice-signup` and check:
 
 1. ✅ Contact created with all custom fields populated
 2. ✅ Tag added

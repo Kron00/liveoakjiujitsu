@@ -1,5 +1,5 @@
 # Live Oak Jiu Jitsu Academy — Fairfield, CA
-# https://liveoakjiujitsu.vercel.app/
+# https://www.liveoakjiujitsuacademy.com/
 
 User-agent: *
 Allow: /
@@ -22,4 +22,4 @@ Disallow: /
 User-agent: Google-Extended
 Disallow: /
 
-Sitemap: https://liveoakjiujitsu.vercel.app/sitemap.xml
+Sitemap: https://www.liveoakjiujitsuacademy.com/sitemap.xml

@@ -1,7 +1,6 @@
 const PRODUCTION_ALLOWED_ORIGINS = [
-  'https://liveoakjiujitsu.vercel.app',
-  'https://liveoakjiujitsuacademy.com',
-  'https://www.liveoakjiujitsuacademy.com'
+  'https://www.liveoakjiujitsuacademy.com',
+  'https://liveoakjiujitsuacademy.com'
 ];
 
 const LOCAL_ALLOWED_ORIGINS = [

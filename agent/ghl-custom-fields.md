@@ -4,8 +4,8 @@ These fields match the current `/signup` and `/voice-signup` webhook payload.
 
 Webhook source pages:
 
-- `https://liveoakjiujitsuacademy.com/signup`
-- `https://liveoakjiujitsuacademy.com/voice-signup`
+- `https://www.liveoakjiujitsuacademy.com/signup`
+- `https://www.liveoakjiujitsuacademy.com/voice-signup`
 
 Raw webhook behavior:
 

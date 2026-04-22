@@ -4,6 +4,30 @@
   "framework": "astro",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "liveoakjiujitsuacademy.com"
+        }
+      ],
+      "destination": "https://www.liveoakjiujitsuacademy.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "liveoakjiujitsu.vercel.app"
+        }
+      ],
+      "destination": "https://www.liveoakjiujitsuacademy.com/:path*",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/assets/images/(.*)",

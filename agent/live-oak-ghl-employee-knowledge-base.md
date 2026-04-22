@@ -10,7 +10,7 @@ After answering a prospect's question, guide naturally toward the website signup
 Business name: Live Oak Jiu Jitsu Academy
 Address: 910 Texas Street, Fairfield, California 94533
 Phone: 707-755-7247
-Website: liveoakjiujitsuacademy.com
+Website: www.liveoakjiujitsuacademy.com
 Instagram: @liveoakjiujitsuacademy
 Parking: Plenty of free parking across the street and on the side streets
 Beginner friendly: yes
@@ -92,7 +92,7 @@ It gives the prospect three days within one calendar week to come in, train, and
 The instructor goes over membership details when they come in.
 
 Written-channel signup link:
-https://liveoakjiujitsuacademy.com/signup
+https://www.liveoakjiujitsuacademy.com/signup
 
 For this bot, the only booking action is sending the signup link.
 Do not book by collecting their details in chat.
