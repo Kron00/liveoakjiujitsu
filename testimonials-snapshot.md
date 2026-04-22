@@ -1,0 +1,602 @@
+- generic [active] [ref=e1]:
+  - link "Skip to main content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - navigation "Main navigation" [ref=e3]:
+    - generic [ref=e4]:
+      - link "Live Oak Jiu Jitsu Academy Home" [ref=e5] [cursor=pointer]:
+        - /url: /
+        - img "Live Oak Jiu Jitsu Academy" [ref=e6]
+      - generic [ref=e7]:
+        - link "About" [ref=e8] [cursor=pointer]:
+          - /url: "#about"
+        - link "Programs" [ref=e9] [cursor=pointer]:
+          - /url: "#programs"
+        - link "Schedule" [ref=e10] [cursor=pointer]:
+          - /url: "#schedule"
+        - link "Testimonials" [ref=e11] [cursor=pointer]:
+          - /url: "#testimonials"
+        - link "Pricing" [ref=e12] [cursor=pointer]:
+          - /url: "#pricing"
+        - link "FAQ" [ref=e13] [cursor=pointer]:
+          - /url: "#faq"
+        - link "Contact" [ref=e14] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=e15]:
+        - link "(707) 755 7247" [ref=e16] [cursor=pointer]:
+          - /url: tel:+17077557247
+        - link "Book Free Trial" [ref=e17] [cursor=pointer]:
+          - /url: /signup
+  - main [ref=e18]:
+    - generic [ref=e19]:
+      - img "Brazilian Jiu Jitsu training at Live Oak Jiu Jitsu Academy in Fairfield, CA" [ref=e22]
+      - generic [ref=e24]:
+        - heading "Live Oak Brazilian Jiu Jitsu Academy" [level=1] [ref=e25]:
+          - text: Live Oak
+          - text: Brazilian Jiu Jitsu Academy
+        - paragraph [ref=e26]: Brazilian Jiu Jitsu & martial arts in Fairfield, California, classes for adults, teens ages 13 to 17, youth ages 6 to 12, and kids ages 3 to 5.
+        - generic [ref=e27]:
+          - link "Schedule Free Trial" [ref=e28] [cursor=pointer]:
+            - /url: /signup
+          - link "View Programs" [ref=e29] [cursor=pointer]:
+            - /url: "#programs"
+        - paragraph [ref=e30]: Fairfield, California
+      - generic [ref=e32]: Scroll
+    - generic [ref=e35]:
+      - generic [ref=e36]: TIME TO MAKE A CHANGE
+      - heading "Do You Struggle With:" [level=2] [ref=e37]
+      - generic [ref=e38]:
+        - generic [ref=e39]:
+          - img [ref=e41]
+          - heading "Balancing Physical and Mental Health" [level=3] [ref=e47]
+          - paragraph [ref=e48]: Like a chess game, Brazilian Jiu Jitsu requires a high level of concentration, while engaged in a fun, calorie burning, experience that results in a mental release.
+        - generic [ref=e49]:
+          - img [ref=e51]
+          - heading "Self Defense" [level=3] [ref=e54]
+          - paragraph [ref=e55]: No one ever signed up for Brazilian Jiu Jitsu just to win a medal. All students are taught to defend themselves resulting in being more confident.
+        - generic [ref=e56]:
+          - img [ref=e58]
+          - heading "Youth Programs" [level=3] [ref=e66]
+          - paragraph [ref=e67]: Our curriculum is specifically designed to provide children with physical, emotional and verbal tools to overcome bullying.
+        - generic [ref=e68]:
+          - img [ref=e70]
+          - heading "Community" [level=3] [ref=e78]
+          - paragraph [ref=e79]: Build life long bonds with teammates through hard work, respect and trust. Be part of our numerous programs and potentially our competition team!
+    - generic [ref=e81]:
+      - generic [ref=e82]: REACH YOUR GOALS
+      - heading "Brazilian Jiu Jitsu Programs for Every Age in Fairfield" [level=2] [ref=e83]
+      - paragraph [ref=e84]: We have multiple programs that will keep you motivated and inspired to keep coming back for more.
+      - generic [ref=e85]:
+        - article [ref=e86]:
+          - heading "BJJ Adult Program and Competition Team" [level=3] [ref=e88]
+          - paragraph [ref=e90]: A mix of modern and old school techniques, rooted in self defense and competition tested. We teach white belts leg locks because it’s not just the future of BJJ, but the now. We offer Gi, No Gi, Fundamentals, Women's Only Seminars, Judo and Wrestling Takedowns.
+        - article [ref=e91]:
+          - heading "Youth & Teen Program and Comp Team (Ages 6 to 17)" [level=3] [ref=e93]
+          - paragraph [ref=e95]: Youth Program fundamentals and advanced BJJ technique taught along with strength and confidence building. Significant attention is placed on anti bullying and emotional regulation. Our philosophy is that Brazilian Jiu Jitsu is seen as a means to individual development, leadership and personal control. Body awareness, respect, discipline, and responsibility are core values taught within all of our kid's programs. All staff are Live Scanned to ensure your child's safety. We are a vendor through Compass Charter School and accept E Vouchers.
+        - article [ref=e96]:
+          - heading "Sprouts Program (Ages 3 to 5)" [level=3] [ref=e98]
+          - paragraph [ref=e100]: Sprouts Program is an excellent opportunity for your child to learn the fundamentals of BJJ, Judo and Wrestling through animal movements and games. Students primarily learn takedowns, passing, sweeps, controls and specific submissions. For many of our students, this is their first experience of an organized sport thus we emphasize positive reinforcement, modeling and rewards to ensure their success. All staff are Live Scanned to ensure your child's safety.
+      - paragraph [ref=e101]: Competition team members at the adult and youth levels get instruction, strategy building, personalized game plans, and cardio maximizing support throughout their competition journey. We also offer private and semi private training with IBJJF certified instructors to elevate your skills.
+    - generic [ref=e103]:
+      - generic [ref=e104]: MEET YOUR COACHES
+      - heading "Expert BJJ Instructors in Fairfield, CA" [level=2] [ref=e105]
+      - paragraph [ref=e106]: All Instructors are Live Scanned Certified
+      - generic [ref=e107]:
+        - generic [ref=e108]:
+          - img "Coach Alejandro (Alex) Lucas, Second Degree Black Belt and Head Instructor at Live Oak Jiu Jitsu Academy in Fairfield, CA" [ref=e110]
+          - generic [ref=e111]:
+            - heading "Alejandro (Alex) Lucas" [level=3] [ref=e112]
+            - text: Head Instructor / All Programs / Co Owner
+            - generic [ref=e113]: Second Degree Black Belt
+            - paragraph [ref=e114]: "Alejandro Lucas, Second Degree Black Belt under Coral Belt Renato Magno, began Brazilian Jiu Jitsu at the age of 26. He's developed curriculum and successfully taught at all program levels including Youth, Adults, Fundamentals, Women's Program and Competition Team. Coach Alex's classes are detail oriented, focused on overall development and encouraging. His infectious enthusiasm can be seen in his teaching style. Coach Alex achieved #1 Black Belt for his age group in 2017 and 2023 for NABJJF."
+            - paragraph [ref=e115]:
+              - emphasis [ref=e116]: Strategic, timing and systems based.
+        - generic [ref=e117]:
+          - img "Coach Chris Park, Black Belt Instructor at Live Oak Jiu Jitsu Academy in Fairfield, CA" [ref=e119]
+          - generic [ref=e120]:
+            - heading "Chris Park" [level=3] [ref=e121]
+            - text: Instructor / Youth Programs and Adults
+            - generic [ref=e122]: Black Belt (May 2024)
+            - paragraph [ref=e123]: Started at Street Sports Jiu Jitsu Academy as a white belt in 2010. 'Park,' as he's known, earned his Black Belt in May 2024 under Coral Belt Renato Magno. He became part of the Youth coaching staff as a Blue Belt and has extensive mixed class and private session experience.
+            - paragraph [ref=e124]:
+              - emphasis [ref=e125]: Playful, creative and inventive.
+        - generic [ref=e126]:
+          - img "Coach Jose Meza, Co Instructor and Co Owner at Live Oak Jiu Jitsu Academy in Fairfield, CA" [ref=e128]
+          - generic [ref=e129]:
+            - heading "Jose Meza" [level=3] [ref=e130]
+            - text: Co Instructor / Co Owner
+            - generic [ref=e131]: Purple Belt
+            - paragraph [ref=e132]: Jose started his Jiu Jitsu journey in Chatsworth, CA. He received his blue belt under Scott Singer, a fourth degree black belt, and was later promoted to purple belt under Alejandro Lucas, head instructor at Live Oak Jiu Jitsu Academy. Jose enjoys assisting with the Youth and Sprouts programs and watching students grow in confidence both on and off the mats. His Brazilian Jiu Jitsu focuses on fundamentals and a variety of chokes, and he is always eager to learn and try new techniques.
+            - paragraph [ref=e133]:
+              - emphasis [ref=e134]: Fundamentals focused with a variety of chokes.
+    - generic [ref=e135]:
+      - generic [ref=e136]:
+        - generic [ref=e137]: MEMBER TESTIMONIALS
+        - heading "Voices From the Mat" [level=2] [ref=e138]
+        - generic [ref=e140]: ★★★★★
+      - generic [ref=e142]:
+        - generic [ref=e143]:
+          - generic [ref=e144]: “
+          - paragraph [ref=e145]: As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. From day one while training, Coach Alex has been my rock. From the early struggles of being a white belt with a body that simply had to learn how to adapt to survive to being able to compete against able bodied competitors as a competent purple belt, Coach Alex has helped me overcome every challenge that I have encountered along the way, both on and off the mats. My coach and friend, my good wolf. Never give up!
+          - generic [ref=e149]:
+            - heading "Frank P." [level=4] [ref=e150]
+            - paragraph [ref=e151]: Purple Belt, Competitor, Artist
+        - generic [ref=e152]:
+          - generic [ref=e153]: “
+          - paragraph [ref=e154]: Coach Alex shows up for his team and his students. His love for Jiu Jitsu and passion for learning is inspiring to those he shares the mats with. His expertise, technical, physical, and mental preparation have helped me succeed numerous times in competitions. These lessons I’ve since applied to other aspects of my life. He is a leader.
+          - generic [ref=e158]:
+            - heading "Nick R." [level=4] [ref=e159]
+            - paragraph [ref=e160]: Purple Belt, Competitor, Nutrition Consultant
+        - generic [ref=e161]:
+          - generic [ref=e162]: “
+          - paragraph [ref=e163]: Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. With his wealth of knowledge and experience, anyone that comes in to learn with Alex will come away with something new and challenging to develop. He will help guide your practice to be as sharp as possible and tailored to your style whether you’re a hobbyist or a competitor.
+          - generic [ref=e167]:
+            - heading "Brittany R." [level=4] [ref=e168]
+            - paragraph [ref=e169]: Purple Belt, Stunt Person, Artist
+        - generic [ref=e170]:
+          - generic [ref=e171]: “
+          - paragraph [ref=e172]: Having trained extensively under the guidance of Professor Alex Lucas, I can confidently say he’s a standout in his field. His mastery of Jiu Jitsu is matched only by his passion for teaching and mentoring. Coach Alex creates an environment that fosters growth and camaraderie among students of all levels. His personalized approach ensures that each student receives the attention and guidance needed to progress.
+          - generic [ref=e176]:
+            - heading "Karin H." [level=4] [ref=e177]
+            - paragraph [ref=e178]: White Belt, Competitor, Attorney
+        - generic [ref=e179]:
+          - generic [ref=e180]: “
+          - paragraph [ref=e181]: I started training jiu jitsu in early 2021. I was out of shape and in search of something new in terms of working out. I thought I’d try jiu jitsu. It turned out to be one of the best decisions I have ever made, and Alex Lucas is a big part of that. Alex was one of my first instructors, and he continues to be to this day. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student’s progress. He’s not just my coach anymore, but a friend on and off the mats. Jiu jitsu has become an incredibly important part of my life. Alex is a big reason why. I cannot recommend Alex and the instructors at Live Oak JJ enough. Sign up for a class, you won’t regret it!
+          - generic [ref=e185]:
+            - heading "Steve A." [level=4] [ref=e186]
+            - paragraph [ref=e187]: Blue Belt, Attorney
+        - generic [ref=e188]:
+          - generic [ref=e189]: “
+          - paragraph [ref=e190]: Having trained from white belt to purple under the instruction of Coach Alex, I can attest to his mastery of the art of jiujitsu and his talent for teaching those concepts and techniques to his students. I was able to follow him in my early days as he broke down basic escapes and passes for the class to learn in a way that was easy to grasp. Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self-control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes are well structured, goal oriented and most of all fun plus entertaining. He has a vast library in his head of not just BJJ tactics and strategy, but also competitive experience. He helped me organize my own game plan for competitions I entered and was an invaluable support. But above all these things, more than him being a leader, an expert, a supporter, a friend, Coach Alex is a student of the craft and he makes you feel welcome to follow him as he continues to grow in this special sport. I can’t recommend him enough to practitioners at any level.
+          - generic [ref=e194]:
+            - heading "Tito P." [level=4] [ref=e195]
+            - paragraph [ref=e196]: Purple Belt, Art Director
+        - generic [ref=e197]:
+          - generic [ref=e198]: “
+          - paragraph [ref=e199]: Alex Lucas is a great Jiu Jitsu coach. He’s a black belt and competitive champion. Not only does he have the skill and the accomplishments to prove it, he is also a great communicator. This is what you need if you are trying to learn anything. Alex is able to explain the moves and techniques as well as the theory behind the moves in a clear way that will help you to understand and improve your skills. He also creates a supportive, inclusive environment to learn. When Alex is running a class there is always an atmosphere of friendship and support. You will be in a room surrounded by friends who are working hard to help each other get better. I started Jiu Jitsu at 57 and was a little intimidated. I am now about to turn 64 and have earned a purple belt. I did not realize how Jiu Jitsu would change my life. I have become healthier and happier, more fit, and a little more dangerous to someone who might try to attack me—but the best benefits are the great friends I’ve made and my new favorite place, the Jiu Jitsu Academy.
+          - generic [ref=e203]:
+            - heading "Jake J." [level=4] [ref=e204]
+            - paragraph [ref=e205]: Purple Belt, Competitor, Comedian
+        - generic [ref=e206]:
+          - generic [ref=e207]: “
+          - paragraph [ref=e208]: If you’re looking to grow your skills and knowledge in Jiu-Jitsu, look no further. Coach Alex is an attentive and seasoned instructor that will work with you to meet your training and competition goals. His ability to tailor techniques and feedback to your needs makes him a great teacher to learn from no matter what belt you are.
+          - generic [ref=e212]:
+            - heading "Jocelyn A." [level=4] [ref=e213]
+            - paragraph [ref=e214]: White Belt, Competitor, Teacher
+        - generic [ref=e215]:
+          - generic [ref=e216]: “
+          - paragraph [ref=e217]: I’ve had the privilege of having Alex Lucas as one of my coaches and mentor. He is an excellent instructor; he breaks down intricate moves into simple and manageable steps. He keeps his own skill up to date by continually learning, studying, and training with others. His techniques have been rigorously tested in high-level competitions, ensuring that what he teaches is both practical and proven. This real-world application of skills gives students confidence that they are learning techniques that work, not just in theory but in practice.
+          - generic [ref=e221]:
+            - heading "John G." [level=4] [ref=e222]
+            - paragraph [ref=e223]: Brown Belt, Software Engineer
+        - generic [ref=e224]:
+          - generic [ref=e225]: “
+          - paragraph [ref=e226]: There are plenty of accomplished jiu jitsu instructors out there, and I’d rank Alex alongside any of them, but what really sets him apart is his generous nature and natural gifts as a teacher. He’s able to draw upon his wealth of knowledge and experience to convey complex concepts and techniques in a way that’s accessible and personalized to the needs of every student, from white belt to black. I can think of no better person to help you start, or continue, your jiu jitsu journey.
+          - generic [ref=e230]:
+            - heading "Justin F." [level=4] [ref=e231]
+            - paragraph [ref=e232]: Brown Belt, Competitor, Author
+        - generic [ref=e233]:
+          - generic [ref=e234]: “
+          - paragraph [ref=e235]: Coach Alex was a patient and smart teacher, who showed me how important Jiu Jitsu is for me. He will help your kid learn how to be strong, resilient, and teach them some important life lessons. Coach Alex always provided a fun and enjoyable experience in the gym.
+          - generic [ref=e239]:
+            - heading "Luca F." [level=4] [ref=e240]
+            - paragraph [ref=e241]: Yellow Belt, High School Junior
+        - generic [ref=e242]:
+          - generic [ref=e243]: “
+          - paragraph [ref=e244]: Alex Lucas was my first, and will always be my best, BJJ instructor. Alex blends his immense skill and knowledge for the art with an amazing ability to teach it. He’s able to make the complicated and complex concepts of BJJ applicable and digestible to any practitioner, at any level. The best part of Alex’s curriculum is rolling with him. I’m always in awe of Alex’s ability to throttle his game to right where you need him to be; he doesn’t smash you like other black belts would, but also doesn’t let you win easily. He finds the perfect zone to match you at your skill level, and stays one slight step ahead of you so he presents a challenge you can see and overcome. Above all else, Alex is a joy to work with. His classes are the perfect blend of fun, urgent, and intellectual. You always leave a better BJJ practitioner.
+          - generic [ref=e248]:
+            - heading "Chase C." [level=4] [ref=e249]
+            - paragraph [ref=e250]: Blue Belt, Fixer
+        - generic [ref=e251]:
+          - generic [ref=e252]: “
+          - paragraph [ref=e253]: As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. From day one while training, Coach Alex has been my rock. From the early struggles of being a white belt with a body that simply had to learn how to adapt to survive to being able to compete against able bodied competitors as a competent purple belt, Coach Alex has helped me overcome every challenge that I have encountered along the way, both on and off the mats. My coach and friend, my good wolf. Never give up!
+          - generic [ref=e257]:
+            - heading [level=4] [ref=e258]: Frank P.
+            - paragraph [ref=e259]: Purple Belt, Competitor, Artist
+        - generic [ref=e260]:
+          - generic [ref=e261]: “
+          - paragraph [ref=e262]: Coach Alex shows up for his team and his students. His love for Jiu Jitsu and passion for learning is inspiring to those he shares the mats with. His expertise, technical, physical, and mental preparation have helped me succeed numerous times in competitions. These lessons I’ve since applied to other aspects of my life. He is a leader.
+          - generic [ref=e266]:
+            - heading [level=4] [ref=e267]: Nick R.
+            - paragraph [ref=e268]: Purple Belt, Competitor, Nutrition Consultant
+        - generic [ref=e269]:
+          - generic [ref=e270]: “
+          - paragraph [ref=e271]: Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. With his wealth of knowledge and experience, anyone that comes in to learn with Alex will come away with something new and challenging to develop. He will help guide your practice to be as sharp as possible and tailored to your style whether you’re a hobbyist or a competitor.
+          - generic [ref=e275]:
+            - heading [level=4] [ref=e276]: Brittany R.
+            - paragraph [ref=e277]: Purple Belt, Stunt Person, Artist
+        - generic [ref=e278]:
+          - generic [ref=e279]: “
+          - paragraph [ref=e280]: Having trained extensively under the guidance of Professor Alex Lucas, I can confidently say he’s a standout in his field. His mastery of Jiu Jitsu is matched only by his passion for teaching and mentoring. Coach Alex creates an environment that fosters growth and camaraderie among students of all levels. His personalized approach ensures that each student receives the attention and guidance needed to progress.
+          - generic [ref=e284]:
+            - heading [level=4] [ref=e285]: Karin H.
+            - paragraph [ref=e286]: White Belt, Competitor, Attorney
+        - generic [ref=e287]:
+          - generic [ref=e288]: “
+          - paragraph [ref=e289]: I started training jiu jitsu in early 2021. I was out of shape and in search of something new in terms of working out. I thought I’d try jiu jitsu. It turned out to be one of the best decisions I have ever made, and Alex Lucas is a big part of that. Alex was one of my first instructors, and he continues to be to this day. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student’s progress. He’s not just my coach anymore, but a friend on and off the mats. Jiu jitsu has become an incredibly important part of my life. Alex is a big reason why. I cannot recommend Alex and the instructors at Live Oak JJ enough. Sign up for a class, you won’t regret it!
+          - generic [ref=e293]:
+            - heading [level=4] [ref=e294]: Steve A.
+            - paragraph [ref=e295]: Blue Belt, Attorney
+        - generic [ref=e296]:
+          - generic [ref=e297]: “
+          - paragraph [ref=e298]: Having trained from white belt to purple under the instruction of Coach Alex, I can attest to his mastery of the art of jiujitsu and his talent for teaching those concepts and techniques to his students. I was able to follow him in my early days as he broke down basic escapes and passes for the class to learn in a way that was easy to grasp. Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self-control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes are well structured, goal oriented and most of all fun plus entertaining. He has a vast library in his head of not just BJJ tactics and strategy, but also competitive experience. He helped me organize my own game plan for competitions I entered and was an invaluable support. But above all these things, more than him being a leader, an expert, a supporter, a friend, Coach Alex is a student of the craft and he makes you feel welcome to follow him as he continues to grow in this special sport. I can’t recommend him enough to practitioners at any level.
+          - generic [ref=e302]:
+            - heading [level=4] [ref=e303]: Tito P.
+            - paragraph [ref=e304]: Purple Belt, Art Director
+        - generic [ref=e305]:
+          - generic [ref=e306]: “
+          - paragraph [ref=e307]: Alex Lucas is a great Jiu Jitsu coach. He’s a black belt and competitive champion. Not only does he have the skill and the accomplishments to prove it, he is also a great communicator. This is what you need if you are trying to learn anything. Alex is able to explain the moves and techniques as well as the theory behind the moves in a clear way that will help you to understand and improve your skills. He also creates a supportive, inclusive environment to learn. When Alex is running a class there is always an atmosphere of friendship and support. You will be in a room surrounded by friends who are working hard to help each other get better. I started Jiu Jitsu at 57 and was a little intimidated. I am now about to turn 64 and have earned a purple belt. I did not realize how Jiu Jitsu would change my life. I have become healthier and happier, more fit, and a little more dangerous to someone who might try to attack me—but the best benefits are the great friends I’ve made and my new favorite place, the Jiu Jitsu Academy.
+          - generic [ref=e311]:
+            - heading [level=4] [ref=e312]: Jake J.
+            - paragraph [ref=e313]: Purple Belt, Competitor, Comedian
+        - generic [ref=e314]:
+          - generic [ref=e315]: “
+          - paragraph [ref=e316]: If you’re looking to grow your skills and knowledge in Jiu-Jitsu, look no further. Coach Alex is an attentive and seasoned instructor that will work with you to meet your training and competition goals. His ability to tailor techniques and feedback to your needs makes him a great teacher to learn from no matter what belt you are.
+          - generic [ref=e320]:
+            - heading [level=4] [ref=e321]: Jocelyn A.
+            - paragraph [ref=e322]: White Belt, Competitor, Teacher
+        - generic [ref=e323]:
+          - generic [ref=e324]: “
+          - paragraph [ref=e325]: I’ve had the privilege of having Alex Lucas as one of my coaches and mentor. He is an excellent instructor; he breaks down intricate moves into simple and manageable steps. He keeps his own skill up to date by continually learning, studying, and training with others. His techniques have been rigorously tested in high-level competitions, ensuring that what he teaches is both practical and proven. This real-world application of skills gives students confidence that they are learning techniques that work, not just in theory but in practice.
+          - generic [ref=e329]:
+            - heading [level=4] [ref=e330]: John G.
+            - paragraph [ref=e331]: Brown Belt, Software Engineer
+        - generic [ref=e332]:
+          - generic [ref=e333]: “
+          - paragraph [ref=e334]: There are plenty of accomplished jiu jitsu instructors out there, and I’d rank Alex alongside any of them, but what really sets him apart is his generous nature and natural gifts as a teacher. He’s able to draw upon his wealth of knowledge and experience to convey complex concepts and techniques in a way that’s accessible and personalized to the needs of every student, from white belt to black. I can think of no better person to help you start, or continue, your jiu jitsu journey.
+          - generic [ref=e338]:
+            - heading [level=4] [ref=e339]: Justin F.
+            - paragraph [ref=e340]: Brown Belt, Competitor, Author
+        - generic [ref=e341]:
+          - generic [ref=e342]: “
+          - paragraph [ref=e343]: Coach Alex was a patient and smart teacher, who showed me how important Jiu Jitsu is for me. He will help your kid learn how to be strong, resilient, and teach them some important life lessons. Coach Alex always provided a fun and enjoyable experience in the gym.
+          - generic [ref=e347]:
+            - heading [level=4] [ref=e348]: Luca F.
+            - paragraph [ref=e349]: Yellow Belt, High School Junior
+        - generic [ref=e350]:
+          - generic [ref=e351]: “
+          - paragraph [ref=e352]: Alex Lucas was my first, and will always be my best, BJJ instructor. Alex blends his immense skill and knowledge for the art with an amazing ability to teach it. He’s able to make the complicated and complex concepts of BJJ applicable and digestible to any practitioner, at any level. The best part of Alex’s curriculum is rolling with him. I’m always in awe of Alex’s ability to throttle his game to right where you need him to be; he doesn’t smash you like other black belts would, but also doesn’t let you win easily. He finds the perfect zone to match you at your skill level, and stays one slight step ahead of you so he presents a challenge you can see and overcome. Above all else, Alex is a joy to work with. His classes are the perfect blend of fun, urgent, and intellectual. You always leave a better BJJ practitioner.
+          - generic [ref=e356]:
+            - heading [level=4] [ref=e357]: Chase C.
+            - paragraph [ref=e358]: Blue Belt, Fixer
+    - generic [ref=e360]:
+      - generic [ref=e361]: TRAIN WITH US
+      - heading "BJJ Class Schedule in Fairfield, CA" [level=2] [ref=e362]
+      - paragraph [ref=e363]: "Open hours: Monday to Friday 6:30 am to 8 pm, Saturday 9 am to 12 pm, Sunday 10 am to 11:30 am"
+      - generic [ref=e364]:
+        - generic [ref=e365]:
+          - heading "Mon / Wed / Fri" [level=3] [ref=e367]
+          - generic [ref=e368]:
+            - generic [ref=e369]:
+              - generic [ref=e370]: 6:30 AM
+              - generic [ref=e371]: Adult/Teen Fundamental & Advanced BJJ
+              - generic [ref=e372]: Ages 13+
+            - generic [ref=e373]:
+              - generic [ref=e374]: 11:00 AM
+              - generic [ref=e375]: Youth BJJ Class
+              - generic [ref=e376]: Ages 6 to 12
+            - generic [ref=e377]:
+              - generic [ref=e378]: 12:00 PM
+              - generic [ref=e379]: Adult/Teen Fundamental & Advanced BJJ
+              - generic [ref=e380]: Ages 13+
+            - generic [ref=e381]:
+              - generic [ref=e382]: 4:00 PM
+              - generic [ref=e383]: Youth BJJ
+              - generic [ref=e384]: Ages 6 to 12
+            - generic [ref=e385]:
+              - generic [ref=e386]: 5:00 PM
+              - generic [ref=e387]: Sprouts
+              - generic [ref=e388]: Ages 3 to 5
+              - generic [ref=e389]: Mon & Wed only
+            - generic [ref=e390]:
+              - generic [ref=e391]: 6:00 PM
+              - generic [ref=e392]: Adult/Teen Fundamental & Advanced BJJ
+              - generic [ref=e393]: Ages 13+
+        - generic [ref=e394]:
+          - heading "Tue / Thu" [level=3] [ref=e396]
+          - generic [ref=e397]:
+            - generic [ref=e398]:
+              - generic [ref=e399]: 6:30 AM
+              - generic [ref=e400]: Adult/Teen Fundamental & Advanced BJJ
+              - generic [ref=e401]: Ages 13+
+            - generic [ref=e402]:
+              - generic [ref=e403]: 11:00 AM
+              - generic [ref=e404]: Youth BJJ Class
+              - generic [ref=e405]: Ages 6 to 12
+            - generic [ref=e406]:
+              - generic [ref=e407]: 12:00 PM
+              - generic [ref=e408]: Adult/Teen Fundamentals & Advanced BJJ
+              - generic [ref=e409]: Ages 13+
+            - generic [ref=e410]:
+              - generic [ref=e411]: 4:00 PM
+              - generic [ref=e412]: Youth BJJ
+              - generic [ref=e413]: Ages 6 to 12
+            - generic [ref=e414]:
+              - generic [ref=e415]: 5:00 PM
+              - generic [ref=e416]: Sprouts
+              - generic [ref=e417]: Ages 3 to 5
+            - generic [ref=e418]:
+              - generic [ref=e419]: 6:00 PM
+              - generic [ref=e420]: Takedown & Submission Class
+              - generic [ref=e421]: Ages 11+
+        - generic [ref=e422]:
+          - heading "Saturday" [level=3] [ref=e424]
+          - generic [ref=e425]:
+            - generic [ref=e426]:
+              - generic [ref=e427]: 9:00 AM
+              - generic [ref=e428]: Youth BJJ
+              - generic [ref=e429]: Ages 6 to 12
+            - generic [ref=e430]:
+              - generic [ref=e431]: 10:00 AM
+              - generic [ref=e432]: Adult/Teen Fundamentals & Advanced BJJ
+              - generic [ref=e433]: Ages 13+
+        - generic [ref=e434]:
+          - heading "Sunday" [level=3] [ref=e436]
+          - generic [ref=e438]:
+            - generic [ref=e439]: 10:00 AM
+            - generic [ref=e440]: Open Mat
+            - generic [ref=e441]: Ages 18+ · BJJ, Wrestling, Judo, MMA
+      - generic [ref=e442]:
+        - generic [ref=e445]: Adult/Teen Classes
+        - generic [ref=e448]: Youth Classes
+        - generic [ref=e451]: Sprouts
+        - generic [ref=e454]: Open Mat
+      - generic [ref=e455]:
+        - paragraph [ref=e456]:
+          - text: Your first three trial classes are
+          - strong [ref=e457]: FREE
+          - text: . Schedule your visit today!
+        - link "Book Free Trial" [ref=e458] [cursor=pointer]:
+          - /url: /signup
+    - generic [ref=e460]:
+      - generic [ref=e461]: MEMBERSHIP
+      - heading "BJJ Membership Pricing, No Contracts, No Hidden Fees" [level=2] [ref=e462]
+      - paragraph [ref=e463]: Every membership includes unlimited classes, open mat access, and a supportive community behind you from day one.
+      - generic [ref=e464]:
+        - generic [ref=e467]:
+          - text: Little Ones
+          - heading "Sprouts" [level=3] [ref=e468]
+          - paragraph [ref=e469]: Ages 3 to 5
+          - generic [ref=e470]:
+            - generic [ref=e471]: $
+            - generic [ref=e472]: "125"
+          - paragraph [ref=e473]: per month
+          - generic [ref=e475]:
+            - generic [ref=e476]:
+              - img [ref=e477]
+              - generic [ref=e479]: Monday to Thursday classes at 5:00 PM
+            - generic [ref=e480]:
+              - img [ref=e481]
+              - generic [ref=e483]: 20 minutes of supervised playtime
+            - generic [ref=e484]:
+              - img [ref=e485]
+              - generic [ref=e487]: Live Scanned certified instructors
+            - generic [ref=e488]:
+              - img [ref=e489]
+              - generic [ref=e491]: Age appropriate curriculum
+          - link "Book Free Trial" [ref=e492] [cursor=pointer]:
+            - /url: /signup
+        - generic [ref=e493]:
+          - generic [ref=e495]: Most Popular
+          - generic [ref=e496]:
+            - text: All Access
+            - heading "Adult" [level=3] [ref=e497]
+            - paragraph [ref=e498]: Ages 18+
+            - generic [ref=e499]:
+              - generic [ref=e500]: $
+              - generic [ref=e501]: "180"
+            - paragraph [ref=e502]: per month
+            - generic [ref=e504]:
+              - generic [ref=e505]:
+                - img [ref=e506]
+                - generic [ref=e508]: Unlimited Gi & No Gi classes
+              - generic [ref=e509]:
+                - img [ref=e510]
+                - generic [ref=e512]: Fundamentals & Advanced training
+              - generic [ref=e513]:
+                - img [ref=e514]
+                - generic [ref=e516]: Competition team support
+              - generic [ref=e517]:
+                - img [ref=e518]
+                - generic [ref=e520]: Women's class access
+              - generic [ref=e521]:
+                - img [ref=e522]
+                - generic [ref=e524]: Morning, noon & evening sessions
+            - link "Book Free Trial" [ref=e525] [cursor=pointer]:
+              - /url: /signup
+        - generic [ref=e528]:
+          - text: Young Athletes
+          - heading "Youth & Teen" [level=3] [ref=e529]
+          - paragraph [ref=e530]: Ages 6 to 17
+          - generic [ref=e531]:
+            - generic [ref=e532]: $
+            - generic [ref=e533]: "160"
+          - paragraph [ref=e534]: per month
+          - generic [ref=e536]:
+            - generic [ref=e537]:
+              - img [ref=e538]
+              - generic [ref=e540]: Youth (ages 6 to 12) train in Youth class
+            - generic [ref=e541]:
+              - img [ref=e542]
+              - generic [ref=e544]: Teens (ages 13 to 17) train in Adult/Teen class
+            - generic [ref=e545]:
+              - img [ref=e546]
+              - generic [ref=e548]: Weekday & Saturday classes
+            - generic [ref=e549]:
+              - img [ref=e550]
+              - generic [ref=e552]: Live Scanned certified instructors
+            - generic [ref=e553]:
+              - img [ref=e554]
+              - generic [ref=e556]: Self defense & competition prep
+          - link "Book Free Trial" [ref=e557] [cursor=pointer]:
+            - /url: /signup
+      - generic [ref=e558]:
+        - generic [ref=e559]:
+          - img [ref=e561]
+          - paragraph [ref=e563]:
+            - strong [ref=e564]: "First Responder & Military:"
+            - text: $153/month, thank you for your service.
+        - generic [ref=e565]:
+          - img [ref=e567]
+          - paragraph [ref=e572]:
+            - strong [ref=e573]: Family bundles
+            - text: and
+            - strong [ref=e574]: company wellness
+            - text: programs available. Contact us for details.
+        - generic [ref=e575]:
+          - img [ref=e577]
+          - paragraph [ref=e579]:
+            - strong [ref=e580]: Free 3 Calendar Day Trial
+            - text: ", experience the academy before you commit."
+    - generic [ref=e582]:
+      - generic [ref=e583]: YOUR JOURNEY STARTS HERE
+      - heading "Start with these 3 steps towards a healthier you." [level=2] [ref=e584]
+      - generic [ref=e585]:
+        - generic [ref=e586]:
+          - generic [ref=e587]: "01"
+          - heading "Schedule a Visit" [level=3] [ref=e588]
+          - paragraph [ref=e589]: We have a fundamental program specially built for beginners where no experience is necessary.
+        - generic [ref=e590]:
+          - generic [ref=e591]: "02"
+          - heading "Start Your Free Trial" [level=3] [ref=e592]
+          - paragraph [ref=e593]: Come train over three calendar days so you can get to know our instructors, program, and school atmosphere.
+        - generic [ref=e594]:
+          - generic [ref=e595]: "03"
+          - heading "Join the Family" [level=3] [ref=e596]
+          - paragraph [ref=e597]: You will have an entire family and a beautiful community supporting you.
+    - generic [ref=e600]:
+      - generic [ref=e601]:
+        - generic [ref=e602]: GET STARTED TODAY
+        - heading "Start Your Free 3 Calendar Day Trial Online" [level=2] [ref=e603]
+        - paragraph [ref=e604]: Pick your first class time online, come in for your first visit, and use your 3 Calendar Day Trial to experience the academy before you commit.
+        - list [ref=e605]:
+          - listitem [ref=e606]:
+            - img [ref=e607]
+            - generic [ref=e610]: 910 Texas Street, Fairfield, California, 94533
+          - listitem [ref=e611]:
+            - img [ref=e612]
+            - link "(707) 755 7247" [ref=e614] [cursor=pointer]:
+              - /url: tel:+17077557247
+          - listitem [ref=e615]:
+            - img [ref=e616]
+            - link "contact@liveoakjiujitsuacademy.com" [ref=e619] [cursor=pointer]:
+              - /url: mailto:contact@liveoakjiujitsuacademy.com
+          - listitem [ref=e620]:
+            - img [ref=e621]
+            - generic [ref=e624]: Monday to Friday 6:30 am to 8 pm · Saturday 9 am to 12 pm · Sunday 10 am to 11:30 am
+        - link "@liveoakjiujitsuacademy" [ref=e625] [cursor=pointer]:
+          - /url: https://www.instagram.com/liveoakjiujitsuacademy
+          - img [ref=e626]
+          - generic [ref=e629]: "@liveoakjiujitsuacademy"
+      - generic [ref=e631]:
+        - heading "Start Your Trial Online" [level=3] [ref=e632]
+        - paragraph [ref=e633]: Use the signup form to choose who is training, pick the right class time, and reserve your first visit in a few minutes.
+        - list [ref=e634]:
+          - listitem [ref=e635]: Choose between signing up yourself, your child, or multiple people.
+          - listitem [ref=e636]: Select class times based on age and program eligibility.
+          - listitem [ref=e637]: Start your free 3 Calendar Day Trial without waiting for a follow up call.
+        - generic [ref=e638]:
+          - link "Start Your Trial" [ref=e639] [cursor=pointer]:
+            - /url: /signup
+          - link "Call Instead" [ref=e640] [cursor=pointer]:
+            - /url: tel:+17077557247
+        - paragraph [ref=e641]: Questions before booking? Call, email, or message Instagram and the team can help.
+    - generic [ref=e643]:
+      - generic [ref=e644]: QUESTIONS
+      - heading "Frequently Asked Questions" [level=2] [ref=e645]
+      - paragraph [ref=e646]: Everything you need to know about training Brazilian Jiu Jitsu at Live Oak in Fairfield, CA, including pricing, programs, schedules, and our free 3 Calendar Day Trial.
+      - generic [ref=e647]:
+        - group [ref=e648]:
+          - generic "Are beginners welcome at Live Oak Jiu Jitsu Academy? +" [ref=e649] [cursor=pointer]
+        - group [ref=e650]:
+          - generic "Do you offer kids martial arts classes in Fairfield? +" [ref=e651] [cursor=pointer]
+        - group [ref=e652]:
+          - generic "Do you offer women’s self defense classes in Fairfield? +" [ref=e653] [cursor=pointer]
+        - group [ref=e654]:
+          - generic "How much do BJJ classes cost at Live Oak Jiu Jitsu Academy? +" [ref=e655] [cursor=pointer]
+        - group [ref=e656]:
+          - generic "Do you offer a free trial class? +" [ref=e657] [cursor=pointer]
+        - group [ref=e658]:
+          - generic "Where is Live Oak Jiu Jitsu Academy located? +" [ref=e659] [cursor=pointer]
+        - group [ref=e660]:
+          - generic "Do you accept Compass Charter School or E Voucher funds? +" [ref=e661] [cursor=pointer]
+        - group [ref=e662]:
+          - generic "Do you offer a military or first responder discount? +" [ref=e663] [cursor=pointer]
+        - group [ref=e664]:
+          - generic "What are your class schedules? +" [ref=e665] [cursor=pointer]
+      - paragraph [ref=e666]:
+        - text: Have a different question?
+        - link "Contact us" [ref=e667] [cursor=pointer]:
+          - /url: "#contact"
+        - text: or call
+        - link "(707) 755 7247" [ref=e668] [cursor=pointer]:
+          - /url: tel:+17077557247
+        - text: .
+  - contentinfo [ref=e669]:
+    - generic [ref=e670]:
+      - generic [ref=e671]:
+        - generic [ref=e672]:
+          - link "Live Oak Jiu Jitsu Academy logo" [ref=e673] [cursor=pointer]:
+            - /url: "#"
+            - img "Live Oak Jiu Jitsu Academy logo" [ref=e674]
+          - paragraph [ref=e675]: Fairfield's premier Brazilian Jiu Jitsu academy, building stronger bodies, sharper minds, and an unbreakable community. Serving Fairfield, Suisun City, Vacaville, Dixon, and all of Solano County.
+          - link "Follow us on Instagram" [ref=e676] [cursor=pointer]:
+            - /url: https://www.instagram.com/liveoakjiujitsuacademy
+            - img [ref=e677]
+        - generic [ref=e680]:
+          - heading "Quick Links" [level=4] [ref=e681]
+          - list [ref=e682]:
+            - listitem [ref=e683]:
+              - link "About" [ref=e684] [cursor=pointer]:
+                - /url: "#about"
+            - listitem [ref=e685]:
+              - link "Programs" [ref=e686] [cursor=pointer]:
+                - /url: "#programs"
+            - listitem [ref=e687]:
+              - link "Schedule" [ref=e688] [cursor=pointer]:
+                - /url: "#schedule"
+            - listitem [ref=e689]:
+              - link "Pricing" [ref=e690] [cursor=pointer]:
+                - /url: "#pricing"
+            - listitem [ref=e691]:
+              - link "FAQ" [ref=e692] [cursor=pointer]:
+                - /url: "#faq"
+            - listitem [ref=e693]:
+              - link "Contact" [ref=e694] [cursor=pointer]:
+                - /url: "#contact"
+        - generic [ref=e695]:
+          - heading "Contact" [level=4] [ref=e696]
+          - generic [ref=e697]:
+            - paragraph [ref=e698]:
+              - text: 910 Texas Street
+              - text: Fairfield, California 94533
+            - paragraph [ref=e699]:
+              - link "(707) 755 7247" [ref=e700] [cursor=pointer]:
+                - /url: tel:+17077557247
+            - paragraph [ref=e701]:
+              - link "contact@liveoakjiujitsuacademy.com" [ref=e702] [cursor=pointer]:
+                - /url: mailto:contact@liveoakjiujitsuacademy.com
+      - generic [ref=e703]:
+        - paragraph [ref=e704]: © 2025 to 2026 Live Oak Jiu Jitsu Academy. All rights reserved.
+        - generic [ref=e705]:
+          - link "Privacy Policy" [ref=e706] [cursor=pointer]:
+            - /url: /privacy-policy.html
+          - generic [ref=e707]: "|"
+          - link "Terms of Service" [ref=e708] [cursor=pointer]:
+            - /url: /terms-of-service.html
+  - generic [ref=e711]:
+    - button "Menu" [ref=e712]:
+      - img [ref=e714]
+      - generic: Menu
+    - button "Inspect" [ref=e718]:
+      - img [ref=e720]
+      - generic: Inspect
+    - button "Audit" [ref=e722]:
+      - generic [ref=e723]:
+        - img [ref=e724]
+        - img [ref=e737]
+      - generic: Audit
+    - button "Settings" [ref=e727]:
+      - img [ref=e729]
+      - generic: Settings
+  - button "Select to open the chat widget" [ref=e732] [cursor=pointer]:
+    - img [ref=e734]

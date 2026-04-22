@@ -1913,12 +1913,16 @@
       display: flex;
       gap: var(--space-lg);
       width: max-content;
-      animation: ribbonScroll 138s linear infinite;
+      animation: ribbonScroll 120s linear infinite;
       padding: 1rem 0;
     }
 
-    .testimonial-ribbon:hover .testimonial-ribbon__track {
-      animation-play-state: paused;
+    /* Pause on hover, but only for pointers that actually hover (mice/trackpads).
+       Touch devices get a native swipe carousel at ≤768px instead. */
+    @media (hover: hover) {
+      .testimonial-ribbon:hover .testimonial-ribbon__track {
+        animation-play-state: paused;
+      }
     }
 
     @keyframes ribbonScroll {
@@ -2649,7 +2653,7 @@
       }
 
       .testimonial-ribbon__track {
-        animation-duration: 161s;
+        animation-duration: 140s;
       }
 
       .steps__grid::before {
@@ -2949,6 +2953,46 @@
 
       .testimonial-ribbon__track {
         animation-duration: 276s;
+      }
+    }
+
+    /* ---- Mobile swipe carousel (≤768px) ----
+       Replaces the auto-scrolling marquee with a native horizontal scroll +
+       scroll-snap carousel so users can drag/swipe through testimonials at
+       their own pace. Placed AFTER the ≤480px block so `animation: none`
+       reliably overrides the earlier `animation-duration` rules at every
+       mobile viewport width. */
+    @media (max-width: 768px) {
+      .testimonial-ribbon {
+        overflow-x: auto;
+        overflow-y: visible;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        scrollbar-width: none;
+        /* Edge fade masks clip the snapped first/last cards oddly — drop them. */
+        mask-image: none;
+        -webkit-mask-image: none;
+      }
+
+      .testimonial-ribbon::-webkit-scrollbar {
+        display: none;
+      }
+
+      .testimonial-ribbon__track {
+        animation: none;
+        /* Breathing room so first/last card can snap near viewport center. */
+        padding-left: 5vw;
+        padding-right: 5vw;
+      }
+
+      .testimonial-ribbon__card {
+        scroll-snap-align: center;
+      }
+
+      /* Duplicate cards exist only to make the desktop marquee loop seamlessly.
+         The swipe carousel shows each testimonial once. */
+      .testimonial-ribbon__card[aria-hidden="true"] {
+        display: none;
       }
     }
 
@@ -5019,20 +5063,28 @@
 
 
   /* --------------------------------------------------
-     6. Testimonial Ribbon Touch Pause
-     (CSS :hover handles desktop pause; this handles touch devices)
+     6. Testimonial Ribbon Touch Pause (>768px only)
+     Desktop marquee: CSS :hover (hover-capable pointers) pauses the scroll.
+     This JS handles touchscreen LAPTOPS/tablets-in-landscape at >768px,
+     which have touch but no `:hover`.
+     On mobile (≤768px) the ribbon is a native swipe carousel with no
+     animation, so we skip the handlers to avoid leaving stale inline
+     `animationPlayState` styles when the viewport crosses the breakpoint.
   -------------------------------------------------- */
   var ribbon = document.querySelector('.testimonial-ribbon');
 
   if (ribbon) {
     var track = ribbon.querySelector('.testimonial-ribbon__track');
+    var mobileMarqueeOff = window.matchMedia('(max-width: 768px)');
 
     if (track) {
       ribbon.addEventListener('touchstart', function() {
+        if (mobileMarqueeOff.matches) return;
         track.style.animationPlayState = 'paused';
       }, { passive: true });
 
       ribbon.addEventListener('touchend', function() {
+        if (mobileMarqueeOff.matches) return;
         setTimeout(function() {
           track.style.animationPlayState = 'running';
         }, 3000);
