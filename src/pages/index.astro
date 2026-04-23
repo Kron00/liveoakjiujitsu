@@ -5152,6 +5152,20 @@
       });
     }
 
+    // scrollLeft is stored as an integer number of pixels, so writing
+    // `scrollLeft += 0.3` every frame gets truncated to 0 and produces
+    // choppy 1px-staircase motion. Instead, keep scrollLeft at whole
+    // pixels and apply the fractional remainder as a translate3d() on
+    // the track — the compositor handles sub-pixel motion smoothly at
+    // the device's native refresh rate (including 120Hz).
+    function applySubPixelOffset(offset) {
+      if (offset > 0) {
+        track.style.transform = 'translate3d(' + (-offset).toFixed(3) + 'px, 0, 0)';
+      } else if (track.style.transform) {
+        track.style.transform = '';
+      }
+    }
+
     function stepAuto(timestamp) {
       if (!autoRunning) return;
       if (lastAutoTimestamp === null) lastAutoTimestamp = timestamp;
@@ -5163,17 +5177,13 @@
       // forward a huge distance the instant it becomes visible again.
       if (elapsed > 100) elapsed = 100;
 
-      // scrollLeft is stored as an integer number of pixels, so writes
-      // like `scrollLeft += 0.3` get truncated to 0 and the autoscroll
-      // appears frozen (especially on 120Hz displays where per-frame
-      // deltas stay well under 1px). Accumulate the sub-pixel drift in
-      // JS and only advance scrollLeft by whole-pixel amounts.
       scrollAccumulator += elapsed * autoSpeed;
       if (scrollAccumulator >= 1) {
         var advance = Math.floor(scrollAccumulator);
         ribbon.scrollLeft += advance;
         scrollAccumulator -= advance;
       }
+      applySubPixelOffset(scrollAccumulator);
 
       queueMaintainLoop();
       autoFrame = requestAnimationFrame(stepAuto);
@@ -5183,6 +5193,9 @@
       if (!autoSpeed || autoRunning || autoStopped || reducedMotionMedia.matches) return;
       autoRunning = true;
       lastAutoTimestamp = null;
+      // Hint the compositor: the track is about to be transformed every
+      // frame, so promote it to its own GPU layer for jank-free motion.
+      track.style.willChange = 'transform';
       autoFrame = requestAnimationFrame(stepAuto);
     }
 
@@ -5193,6 +5206,11 @@
         cancelAnimationFrame(autoFrame);
         autoFrame = null;
       }
+      // Clear the sub-pixel transform so manual drag / native scroll
+      // operate on a clean track with no residual visual offset.
+      scrollAccumulator = 0;
+      applySubPixelOffset(0);
+      track.style.willChange = '';
       if (permanent) {
         autoStopped = true;
       }
