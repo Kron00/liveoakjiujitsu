@@ -41,8 +41,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/images/favicon-circle.png">
-  <link rel="apple-touch-icon" href="assets/images/favicon-circle.png">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/images/favicon-circle.png" sizes="256x256">
+  <link rel="apple-touch-icon" href="/assets/images/favicon-circle.png">
 
   <!-- Performance -->
   <link rel="preload" as="image" href="assets/images/hero-main.jpeg" type="image/jpeg">
@@ -3183,7 +3184,15 @@
           "https://www.liveoakjiujitsuacademy.com/assets/images/programs-bjj.jpeg",
           "https://www.liveoakjiujitsuacademy.com/assets/images/about-hero.jpeg"
         ],
-        "logo": "https://www.liveoakjiujitsuacademy.com/assets/images/logo.jpeg",
+        "logo": {
+          "@type": "ImageObject",
+          "@id": "https://www.liveoakjiujitsuacademy.com/#logo",
+          "url": "https://www.liveoakjiujitsuacademy.com/assets/images/logo.jpeg",
+          "contentUrl": "https://www.liveoakjiujitsuacademy.com/assets/images/logo.jpeg",
+          "width": 200,
+          "height": 192,
+          "caption": "Live Oak Jiu Jitsu Academy logo"
+        },
         "photo": "https://www.liveoakjiujitsuacademy.com/assets/images/hero-main.jpeg",
         "address": {
           "@type": "PostalAddress",
