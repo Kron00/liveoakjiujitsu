@@ -5052,6 +5052,7 @@
     var autoRunning = false;
     var autoStopped = false;
     var lastAutoTimestamp = null;
+    var scrollAccumulator = 0;
     var pointerId = null;
     var dragStartX = 0;
     var dragStartScrollLeft = 0;
@@ -5158,7 +5159,22 @@
       var elapsed = timestamp - lastAutoTimestamp;
       lastAutoTimestamp = timestamp;
 
-      ribbon.scrollLeft += elapsed * autoSpeed;
+      // Clamp elapsed so a backgrounded tab doesn't teleport the ribbon
+      // forward a huge distance the instant it becomes visible again.
+      if (elapsed > 100) elapsed = 100;
+
+      // scrollLeft is stored as an integer number of pixels, so writes
+      // like `scrollLeft += 0.3` get truncated to 0 and the autoscroll
+      // appears frozen (especially on 120Hz displays where per-frame
+      // deltas stay well under 1px). Accumulate the sub-pixel drift in
+      // JS and only advance scrollLeft by whole-pixel amounts.
+      scrollAccumulator += elapsed * autoSpeed;
+      if (scrollAccumulator >= 1) {
+        var advance = Math.floor(scrollAccumulator);
+        ribbon.scrollLeft += advance;
+        scrollAccumulator -= advance;
+      }
+
       queueMaintainLoop();
       autoFrame = requestAnimationFrame(stepAuto);
     }
