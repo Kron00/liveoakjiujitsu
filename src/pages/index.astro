@@ -3144,9 +3144,13 @@
         will-change: auto;
       }
 
-      /* Hide the seamless-loop duplicates on mobile so the track stays
-         within iOS Safari's GPU layer size limits (~3900px vs 7900px). */
-      .testimonial-ribbon__card[aria-hidden="true"] {
+      /* Keep only the first 3 seamless-loop duplicates visible on mobile.
+         Those extras sit just past the originals and let the JS do a
+         zero-glitch teleport-wrap (no DOM rearrangement needed). Hiding
+         the rest keeps the track under iOS Safari's GPU layer / texture
+         limits (~4900px worst-case vs the 7900px that previously caused
+         blank-render bugs). */
+      .testimonial-ribbon__card[aria-hidden="true"]:nth-of-type(n+16) {
         display: none !important;
       }
 
@@ -3161,7 +3165,7 @@
         width: max-content;
       }
 
-      .programs-ribbon__slide[aria-hidden="true"] {
+      .programs-ribbon__slide[aria-hidden="true"]:nth-of-type(n+17) {
         display: none !important;
       }
     }
@@ -5293,46 +5297,39 @@
     if (!track) return null;
 
     var speed = (opts && opts.speed) || 0.03; // px per ms (~30 px/s)
-    var resumeDelay = (opts && opts.resumeDelay) || 4000;
 
     var running = false;
     var raf = null;
     var lastFrame = null;
-    var position = 0;        // current translateX value (negative)
-    var resumeTimer = null;
-
-    // Snapshot the canonical DOM order of every child so we can restore
-    // it when the viewport leaves mobile. The desktop CSS marquee relies
-    // on originals followed by aria-hidden duplicates in a specific
-    // sequence to produce a seamless -50% loop — cycling on mobile
-    // would otherwise leave the DOM shuffled when we hand back to CSS.
-    var originalOrder = Array.prototype.slice.call(track.children);
-
-    function clearResumeTimer() {
-      if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
-    }
+    var position = 0;            // current translateX value (<= 0)
+    var originalsWidth = 0;      // shift to wrap seamlessly
 
     function applyTransform(x) {
-      // Use translate3d to ensure GPU-composited animation on iOS Safari.
+      // translate3d forces GPU compositing — critical for smooth scroll
+      // on iOS Safari, which otherwise falls back to slow paint updates.
       track.style.transform = 'translate3d(' + x + 'px, 0, 0)';
     }
 
-    function getGap() {
-      var cs = getComputedStyle(track);
-      var gap = parseFloat(cs.gap || cs.columnGap || '0');
-      return isNaN(gap) ? 0 : gap;
-    }
-
-    function restoreOrder() {
-      // Detach each snapshotted node from its current slot in the track,
-      // then reinsert in canonical order. Safe to call any time.
-      for (var i = 0; i < originalOrder.length; i++) {
-        var node = originalOrder[i];
-        if (node.parentNode) node.parentNode.removeChild(node);
+    function measureOriginals() {
+      // Distance in the layout from the first original to the first
+      // *visible* aria-hidden duplicate. This is exactly the shift that
+      // makes duplicate N land where original 1 started — producing a
+      // zero-pixel seam when we wrap.
+      var children = track.children;
+      var firstOriginal = null;
+      var firstDuplicate = null;
+      for (var i = 0; i < children.length; i++) {
+        var c = children[i];
+        if (c.offsetWidth === 0) continue;  // hidden via CSS
+        if (c.hasAttribute('aria-hidden')) {
+          if (!firstDuplicate) { firstDuplicate = c; break; }
+        } else {
+          if (!firstOriginal) firstOriginal = c;
+        }
       }
-      for (var j = 0; j < originalOrder.length; j++) {
-        track.appendChild(originalOrder[j]);
-      }
+      originalsWidth = (firstOriginal && firstDuplicate)
+        ? (firstDuplicate.offsetLeft - firstOriginal.offsetLeft)
+        : 0;
     }
 
     function step(timestamp) {
@@ -5343,31 +5340,14 @@
 
       position -= elapsed * speed;
 
-      // Seamless infinite scroll via DOM cycling: whenever the first
-      // card has fully scrolled off the left edge, physically move it
-      // to the end of the track and shift `position` by its width + gap
-      // so the visual position of everything else is unchanged. Hidden
-      // (aria-hidden, display:none on mobile) cards have offsetWidth 0,
-      // so we move them to the back without adjusting position — they
-      // stay out of the visible flow as we cycle through the originals.
-      var first = track.firstElementChild;
-      var guard = 0;
-      while (first && guard < 100) {
-        guard++;
-        var w = first.offsetWidth;
-        if (w === 0) {
-          // Hidden duplicate — shuffle out of the way.
-          track.appendChild(first);
-          first = track.firstElementChild;
-          continue;
-        }
-        var cardW = w + getGap();
-        if (-position >= cardW) {
-          track.appendChild(first);
-          position += cardW;
-          first = track.firstElementChild;
-        } else {
-          break;
+      // Seamless teleport-wrap. The first few aria-hidden duplicates
+      // immediately after the originals show the same content as the
+      // first originals, so resetting `position` by one originals-width
+      // is invisible to the user — no DOM churn, no flex relayout, no
+      // frame hitch. This is the critical behavior iOS Safari needs.
+      if (originalsWidth > 0) {
+        while (-position >= originalsWidth) {
+          position += originalsWidth;
         }
       }
 
@@ -5378,10 +5358,10 @@
     function start() {
       if (!mobileRibbonMedia.matches || reducedMotionMedia.matches) return;
       if (running) return;
-      // If the visible content already fits the viewport, there's nothing
-      // to animate — bail out so we don't spin a requestAnimationFrame
-      // loop that does nothing.
-      if (track.scrollWidth <= ribbon.clientWidth + 1) {
+      measureOriginals();
+      if (originalsWidth <= 0) {
+        // Nothing to scroll through — either content fits, or the HTML
+        // is missing duplicates. Reset transform and bail.
         applyTransform(0);
         return;
       }
@@ -5397,39 +5377,23 @@
     }
 
     function resetMobile() {
-      // Clear any transform we applied so the CSS animation on desktop
+      // Clear any transform we applied so the desktop CSS animation
       // takes over cleanly when the viewport crosses the breakpoint.
       track.style.transform = '';
       track.style.transition = '';
       position = 0;
     }
 
-    function pauseAndQueueResume() {
-      stop();
-      clearResumeTimer();
-      resumeTimer = setTimeout(start, resumeDelay);
-    }
-
     function handleBreakpointChange() {
-      clearResumeTimer();
-      // Always restore canonical DOM order before deciding what to do.
-      // On mobile this resets any prior cycling to a known good start;
-      // on desktop it ensures the CSS marquee's -50% seam lines up.
       stop();
-      restoreOrder();
       resetMobile();
       if (mobileRibbonMedia.matches && !reducedMotionMedia.matches) {
-        // On mobile: start JS transform-based autoscroll with DOM cycling.
         start();
       }
-      // On desktop or reduced-motion: nothing else to do — CSS takes over.
     }
 
-    // User-interaction handlers: pause briefly if the user taps the ribbon.
-    ribbon.addEventListener('touchstart', stop, { passive: true });
-    ribbon.addEventListener('touchend', pauseAndQueueResume, { passive: true });
-    ribbon.addEventListener('touchcancel', pauseAndQueueResume, { passive: true });
-
+    // Window/media listeners so the ribbon switches modes cleanly on
+    // orientation change or reduced-motion toggles.
     window.addEventListener('resize', handleBreakpointChange);
 
     if (mobileRibbonMedia.addEventListener) {
@@ -5442,6 +5406,15 @@
     } else if (reducedMotionMedia.addListener) {
       reducedMotionMedia.addListener(handleBreakpointChange);
     }
+
+    // Touch interactions: pause while the user's finger is on the
+    // ribbon (so they can read a testimonial), resume as soon as they
+    // lift off. No multi-second delay — the old 4s timeout felt like
+    // "the animation stopped" to people just grazing the ribbon while
+    // scrolling the page vertically.
+    ribbon.addEventListener('touchstart', stop, { passive: true });
+    ribbon.addEventListener('touchend', start, { passive: true });
+    ribbon.addEventListener('touchcancel', start, { passive: true });
 
     handleBreakpointChange();
 
@@ -5474,8 +5447,7 @@
     });
 
     createMobileRibbonAutoscroll(testimonialRibbon, '.testimonial-ribbon__track', {
-      speed: 0.035,
-      resumeDelay: 4000
+      speed: 0.035
     });
   }
 
@@ -5588,8 +5560,9 @@
       // iOS Safari can't render). Same pattern as testimonials.
       if (typeof createMobileRibbonAutoscroll === 'function') {
         createMobileRibbonAutoscroll(programsRibbon, '.programs-ribbon__track', {
-          speed: 0.04,
-          resumeDelay: 3500
+          // 0.046 px/ms ~= 46 px/s — 15% faster than the previous 0.04
+          // mobile speed, per product feedback.
+          speed: 0.046
         });
       }
     }
