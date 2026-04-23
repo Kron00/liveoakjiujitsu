@@ -3108,26 +3108,24 @@
        The seamless-loop duplicates are only needed for the CSS marquee
        on desktop, so removing them on mobile is safe. */
     @media (max-width: 768px) {
+      /* Mobile autoscroll is JS-driven via transform on the track
+         (see createMobileRibbonAutoscroll). The ribbon itself stays
+         overflow:hidden so the translated track is cleanly clipped —
+         we don't need native scrollability because the JS drives motion,
+         and programmatic scrollLeft is unreliable on iOS Safari. */
       .testimonial-ribbon {
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        /* No scroll-snap: it would snap back tiny per-frame scrollLeft
-           increments from the JS autoscroll to the nearest card edge. */
-        scroll-snap-type: none;
-        scrollbar-width: none;
-        /* Also disable mask-image on mobile: iOS Safari fails to paint
-           horizontally-scrollable content when a -webkit-mask-image
-           is combined with overflow-x: auto on wide children. */
+        overflow: hidden;
+        /* Disable mask-image on mobile: iOS Safari fails to paint
+           horizontally-scrollable content when -webkit-mask-image is
+           combined with transformed wide children. */
         mask-image: none;
         -webkit-mask-image: none;
       }
 
-      .testimonial-ribbon::-webkit-scrollbar {
-        display: none;
-      }
-
       .testimonial-ribbon__track {
+        /* CSS animation is disabled on mobile — the JS drives transform.
+           width: max-content lets the track extend beyond the viewport
+           so transform can translate it into view. */
         animation: none !important;
         width: max-content;
         padding-left: 0;
@@ -3136,26 +3134,14 @@
       }
 
       /* Hide the seamless-loop duplicates on mobile so the track stays
-         within iOS Safari's GPU layer size limits. */
+         within iOS Safari's GPU layer size limits (~3900px vs 7900px). */
       .testimonial-ribbon__card[aria-hidden="true"] {
         display: none !important;
       }
 
-      .testimonial-ribbon__card {
-        scroll-snap-align: none;
-      }
-
       /* --- Programs ribbon: same treatment --- */
       .programs-ribbon {
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scroll-snap-type: none;
-        scrollbar-width: none;
-      }
-
-      .programs-ribbon::-webkit-scrollbar {
-        display: none;
+        overflow: hidden;
       }
 
       .programs-ribbon__track {
@@ -3166,10 +3152,6 @@
 
       .programs-ribbon__slide[aria-hidden="true"] {
         display: none !important;
-      }
-
-      .programs-ribbon__slide {
-        scroll-snap-align: none;
       }
     }
 
@@ -5282,11 +5264,15 @@
      Desktop marquee: CSS animation translates a duplicated track. Hover
      pauses via CSS.
      Mobile: because the aria-hidden duplicates are hidden via CSS (to
-     avoid iOS Safari's GPU-layer / texture-size blank-render bug on very
-     wide tracks), the seamless-loop marquee is impossible. Instead, we
-     drive the ribbon's native scrollLeft via requestAnimationFrame and
-     smoothly reset to 0 when we reach the end, giving continuous motion
-     with a gentle wrap.
+     avoid iOS Safari's GPU-layer / texture-size blank-render bug on the
+     original 7000-8000px wide tracks), the seamless-loop CSS marquee is
+     not used on mobile. Instead we drive the track's transform via
+     requestAnimationFrame — translateX is rock-solid on iOS Safari and
+     avoids the scrollLeft quirks (programmatic scrollLeft changes can be
+     ignored by iOS when -webkit-overflow-scrolling / momentum scroll is
+     active, or silently rounded to 0 on fractional sub-pixel updates).
+     With duplicates hidden, the mobile track is ~3900px wide — well
+     within WebKit's composited-layer texture limits.
   -------------------------------------------------- */
   var mobileRibbonMedia = window.matchMedia('(max-width: 768px)');
   var reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -5303,6 +5289,7 @@
     var running = false;
     var raf = null;
     var lastFrame = null;
+    var position = 0;        // current translateX value (negative)
     var isWrapping = false;
     var wrapTimer = null;
     var resumeTimer = null;
@@ -5315,6 +5302,16 @@
       if (wrapTimer) { clearTimeout(wrapTimer); wrapTimer = null; }
     }
 
+    function applyTransform(x) {
+      // Use translate3d to ensure GPU-composited animation on iOS Safari.
+      track.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+    }
+
+    function getMaxTranslate() {
+      // How far we can translate left before the last card is on screen.
+      return Math.max(0, track.scrollWidth - ribbon.clientWidth);
+    }
+
     function step(timestamp) {
       if (!running) return;
       if (lastFrame === null) lastFrame = timestamp;
@@ -5322,32 +5319,32 @@
       lastFrame = timestamp;
 
       if (!isWrapping) {
-        var nextScroll = ribbon.scrollLeft + elapsed * speed;
-        var maxScroll = ribbon.scrollWidth - ribbon.clientWidth;
+        position -= elapsed * speed;
+        var maxTranslate = getMaxTranslate();
 
-        if (maxScroll <= 0) {
-          // Nothing to scroll (track fits). Stop quietly.
+        if (maxTranslate <= 0) {
+          // Track fits entirely — nothing to animate.
           running = false;
+          applyTransform(0);
           return;
         }
 
-        if (nextScroll >= maxScroll) {
-          // Reached the end — smoothly return to start, then resume.
+        if (-position >= maxTranslate) {
+          // Reached the end — smoothly animate back to 0 via a temporary
+          // CSS transition, then resume forward motion.
           isWrapping = true;
-          ribbon.scrollLeft = maxScroll;
-          try {
-            ribbon.scrollTo({ left: 0, behavior: 'smooth' });
-          } catch (e) {
-            ribbon.scrollLeft = 0;
-          }
+          track.style.transition = 'transform ' + wrapDuration + 'ms cubic-bezier(0.45, 0, 0.55, 1)';
+          applyTransform(0);
+          position = 0;
           clearWrapTimer();
           wrapTimer = setTimeout(function() {
+            track.style.transition = '';
             isWrapping = false;
             lastFrame = null;
             wrapTimer = null;
-          }, wrapDuration);
+          }, wrapDuration + 50);
         } else {
-          ribbon.scrollLeft = nextScroll;
+          applyTransform(position);
         }
       }
 
@@ -5370,6 +5367,14 @@
       isWrapping = false;
     }
 
+    function resetMobile() {
+      // Clear any transform we applied so the CSS animation on desktop
+      // takes over cleanly when the viewport crosses the breakpoint.
+      track.style.transform = '';
+      track.style.transition = '';
+      position = 0;
+    }
+
     function pauseAndQueueResume() {
       stop();
       clearResumeTimer();
@@ -5378,22 +5383,20 @@
 
     function handleBreakpointChange() {
       clearResumeTimer();
-      if (mobileRibbonMedia.matches) {
-        // On mobile: start JS autoscroll
+      if (mobileRibbonMedia.matches && !reducedMotionMedia.matches) {
+        // On mobile: start JS transform-based autoscroll
         start();
       } else {
-        // On desktop: CSS animation takes over
+        // On desktop or reduced-motion: hand back to CSS
         stop();
+        resetMobile();
       }
     }
 
-    // User-interaction handlers: pause while touched, resume after idle
+    // User-interaction handlers: pause briefly if the user taps the ribbon.
     ribbon.addEventListener('touchstart', stop, { passive: true });
     ribbon.addEventListener('touchend', pauseAndQueueResume, { passive: true });
     ribbon.addEventListener('touchcancel', pauseAndQueueResume, { passive: true });
-    ribbon.addEventListener('pointerdown', stop, { passive: true });
-    ribbon.addEventListener('pointerup', pauseAndQueueResume, { passive: true });
-    ribbon.addEventListener('pointercancel', pauseAndQueueResume, { passive: true });
 
     window.addEventListener('resize', handleBreakpointChange);
 
