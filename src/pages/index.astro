@@ -1144,6 +1144,7 @@
       overflow: hidden;
       position: relative;
       width: 100%;
+      padding-bottom: 0.75rem;
       mask-image: linear-gradient(
         to right,
         transparent 0%,
@@ -1165,26 +1166,9 @@
       align-items: center;
       gap: var(--space-lg);
       width: max-content;
-      animation: programsRibbonScroll 150s linear infinite;
       padding: 1rem 0;
       margin: 0;
       list-style: none;
-    }
-
-    @media (hover: hover) {
-      .programs-ribbon:hover .programs-ribbon__track {
-        animation-play-state: paused;
-      }
-    }
-
-    /* The track contains 2 identical sets of slides (originals + aria-hidden
-       duplicates). Total width = 2N cards + (2N - 1) gaps, so translateX(-50%)
-       lands 0.5 gap short of exactly one cycle and the loop seam visibly jumps.
-       Compensating by an extra (gap / 2) makes the 100% keyframe align precisely
-       with the start of the duplicate set, producing a truly seamless loop. */
-    @keyframes programsRibbonScroll {
-      0%   { transform: translateX(0); }
-      100% { transform: translateX(calc(-50% - var(--space-lg) / 2)); }
     }
 
     .programs-ribbon__slide {
@@ -1212,12 +1196,6 @@
       object-position: 50% 100%;
     }
 
-    @media (min-width: 769px) {
-      .programs-ribbon__track {
-        animation-duration: 170s;
-      }
-    }
-
     @media (max-width: 768px) {
       .programs-ribbon {
         mask-image: none;
@@ -1226,9 +1204,7 @@
 
       .programs-ribbon__track {
         gap: var(--space-md);
-        animation-duration: 72s;
         padding: 0.75rem 0;
-        will-change: transform;
       }
 
       .programs-ribbon__slide {
@@ -1241,10 +1217,6 @@
     }
 
     @media (max-width: 480px) {
-      .programs-ribbon__track {
-        animation-duration: 64s;
-      }
-
       .programs-ribbon__slide {
         flex-basis: min(78vw, 280px);
       }
@@ -2056,6 +2028,7 @@
       overflow: hidden;
       position: relative;
       width: 100%;
+      padding-bottom: 0.75rem;
       mask-image: linear-gradient(
         to right,
         transparent 0%,
@@ -2072,34 +2045,30 @@
       );
     }
 
+    .testimonial-ribbon.is-manual {
+      overflow-x: auto;
+      overflow-y: hidden;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      -webkit-overflow-scrolling: touch;
+      cursor: grab;
+    }
+
+    .testimonial-ribbon.is-manual::-webkit-scrollbar {
+      display: none;
+    }
+
     .testimonial-ribbon__track {
       display: flex;
       gap: var(--space-lg);
       width: max-content;
-      animation: ribbonScroll 120s linear infinite;
       padding: 1rem 0;
     }
 
-    /* Pause on hover, but only for pointers that actually hover (mice/trackpads). */
-    @media (hover: hover) {
-      .testimonial-ribbon:hover .testimonial-ribbon__track {
-        animation-play-state: paused;
-      }
-    }
-
-    /* Seamless loop math: the track is originals + aria-hidden duplicates, so
-       total width = 2N*card + (2N-1)*gap. translateX(-50%) lands half a gap
-       short of one full cycle (2N*card + 2N*gap) / 2 = N*card + N*gap, which
-       produces a subtle but visible jump at the loop seam. Subtracting an
-       extra gap / 2 aligns the end frame exactly with the start of the
-       duplicate set — the wrap becomes invisible. */
-    @keyframes ribbonScroll {
-      0% {
-        transform: translateX(0);
-      }
-      100% {
-        transform: translateX(calc(-50% - var(--space-lg) / 2));
-      }
+    .testimonial-ribbon.is-manual.is-dragging {
+      cursor: grabbing;
+      user-select: none;
     }
 
     /* ---- Ribbon Card ---- */
@@ -3106,67 +3075,26 @@
       }
     }
 
-    /* ---- Mobile auto carousel (≤768px) ----
-       iOS Safari fails to render very wide marquee tracks (the seamless
-       loop duplicates doubled the track to 7000-8000px, which exceeded
-       WebKit's GPU-composited layer / texture-size limits and caused the
-       ribbon to render fully blank on real iPhones, even though Chromium
-       mobile emulation rendered it fine).
-
-       Fix for mobile: hide the aria-hidden duplicate slides, drop the
-       CSS marquee animation + will-change transform promotion, and let
-       users swipe the single set of originals natively with scroll-snap.
-       The seamless-loop duplicates are only needed for the CSS marquee
-       on desktop, so removing them on mobile is safe. */
+    /* Mobile ribbon adjustments */
     @media (max-width: 768px) {
-      /* Mobile autoscroll is JS-driven via transform on the track
-         (see createMobileRibbonAutoscroll). The ribbon itself stays
-         overflow:hidden so the translated track is cleanly clipped —
-         we don't need native scrollability because the JS drives motion,
-         and programmatic scrollLeft is unreliable on iOS Safari. */
       .testimonial-ribbon {
-        overflow: hidden;
-        /* Disable mask-image on mobile: iOS Safari fails to paint
-           horizontally-scrollable content when -webkit-mask-image is
-           combined with transformed wide children. */
         mask-image: none;
         -webkit-mask-image: none;
       }
 
       .testimonial-ribbon__track {
-        /* CSS animation is disabled on mobile — the JS drives transform.
-           width: max-content lets the track extend beyond the viewport
-           so transform can translate it into view. */
-        animation: none !important;
-        width: max-content;
+        gap: var(--space-md);
         padding-left: 0;
         padding-right: 0;
-        will-change: auto;
       }
 
-      /* Keep only the first 3 seamless-loop duplicates visible on mobile.
-         Those extras sit just past the originals and let the JS do a
-         zero-glitch teleport-wrap (no DOM rearrangement needed). Hiding
-         the rest keeps the track under iOS Safari's GPU layer / texture
-         limits (~4900px worst-case vs the 7900px that previously caused
-         blank-render bugs). */
-      .testimonial-ribbon__card[aria-hidden="true"]:nth-of-type(n+16) {
-        display: none !important;
-      }
-
-      /* --- Programs ribbon: same treatment --- */
       .programs-ribbon {
-        overflow: hidden;
+        mask-image: none;
+        -webkit-mask-image: none;
       }
 
       .programs-ribbon__track {
-        animation: none !important;
-        will-change: auto !important;
-        width: max-content;
-      }
-
-      .programs-ribbon__slide[aria-hidden="true"]:nth-of-type(n+17) {
-        display: none !important;
+        gap: var(--space-md);
       }
     }
 
@@ -3961,21 +3889,6 @@
       <li class="programs-ribbon__slide"><img src="assets/images/programs-carousel/adult-5.jpeg" alt="Adult Brazilian Jiu Jitsu takedown and throw technique at Live Oak Jiu Jitsu Academy in Fairfield, CA" loading="lazy" width="1600" height="1066"></li>
       <li class="programs-ribbon__slide"><img src="assets/images/programs-carousel/sprouts-5.jpeg" alt="Young Sprouts students playing a movement game during Brazilian Jiu Jitsu class at Live Oak in Fairfield, CA" loading="lazy" width="1600" height="1066"></li>
 
-      <!-- Set 2: 13 duplicates for seamless loop (hidden from screen readers) -->
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/adult-1.jpeg" alt="" loading="lazy" width="1600" height="1066"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/youth-1.jpeg" alt="" loading="lazy" width="1600" height="1200"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/sprouts-1.jpeg" alt="" loading="lazy" width="1600" height="1600"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/adult-2.jpeg" alt="" loading="lazy" width="1067" height="1600"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/youth-2.jpeg" alt="" loading="lazy" width="1600" height="1066"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/sprouts-2.jpeg" alt="" loading="lazy" width="1600" height="1600"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/adult-3.jpeg" alt="" loading="lazy" width="1600" height="1600"></li>
-      <li class="programs-ribbon__slide programs-ribbon__slide--groundwork" aria-hidden="true"><img class="programs-ribbon__img--groundwork" src="assets/images/programs-carousel/youth-3.jpeg" alt="" loading="lazy" width="1067" height="1600"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/sprouts-3.jpeg" alt="" loading="lazy" width="1600" height="900"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/adult-4.jpeg" alt="" loading="lazy" width="1200" height="1600"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/sprouts-4.jpeg" alt="" loading="lazy" width="1600" height="1066"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/adult-5.jpeg" alt="" loading="lazy" width="1600" height="1066"></li>
-      <li class="programs-ribbon__slide" aria-hidden="true"><img src="assets/images/programs-carousel/sprouts-5.jpeg" alt="" loading="lazy" width="1600" height="1066"></li>
-
     </ul>
   </div>
 
@@ -4215,164 +4128,6 @@
 
       <!-- Chase C. -->
       <div class="testimonial-ribbon__card">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Alex Lucas was my first, and will always be my best, BJJ instructor. Alex blends his immense skill and knowledge for the art with an amazing ability to teach it. He&rsquo;s able to make the complicated and complex concepts of BJJ applicable and digestible to any practitioner, at any level. The best part of Alex&rsquo;s curriculum is rolling with him. I&rsquo;m always in awe of Alex&rsquo;s ability to throttle his game to right where you need him to be; he doesn&rsquo;t smash you like other black belts would, but also doesn&rsquo;t let you win easily. He finds the perfect zone to match you at your skill level, and stays one slight step ahead of you so he presents a challenge you can see and overcome. Above all else, Alex is a joy to work with. His classes are the perfect blend of fun, urgent, and intellectual. You always leave a better BJJ practitioner.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-blue"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Chase C.</h4>
-            <p class="testimonial-ribbon__meta">Blue Belt, Fixer</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Set 2: 12 Duplicates for seamless loop (hidden from screen readers) -->
-
-      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">As a middle aged adaptive grappler with a paralyzed leg I never believed that a competitive jiu jitsu practice was something I could accomplish. From day one while training, Coach Alex has been my rock. From the early struggles of being a white belt with a body that simply had to learn how to adapt to survive to being able to compete against able bodied competitors as a competent purple belt, Coach Alex has helped me overcome every challenge that I have encountered along the way, both on and off the mats. My coach and friend, my good wolf. Never give up!</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Frank P.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Artist</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Coach Alex shows up for his team and his students. His love for Jiu Jitsu and passion for learning is inspiring to those he shares the mats with. His expertise, technical, physical, and mental preparation have helped me succeed numerous times in competitions. These lessons I&rsquo;ve since applied to other aspects of my life. He is a leader.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Nick R.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Nutrition Consultant</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Alex Lucas has been an extraordinary influence in my jiu jitsu journey. He has a welcoming energy and is a massive supporter to all of his students. With his wealth of knowledge and experience, anyone that comes in to learn with Alex will come away with something new and challenging to develop. He will help guide your practice to be as sharp as possible and tailored to your style whether you&rsquo;re a hobbyist or a competitor.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Brittany R.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Stunt Person, Artist</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Having trained extensively under the guidance of Professor Alex Lucas, I can confidently say he&rsquo;s a standout in his field. His mastery of Jiu Jitsu is matched only by his passion for teaching and mentoring. Coach Alex creates an environment that fosters growth and camaraderie among students of all levels. His personalized approach ensures that each student receives the attention and guidance needed to progress.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-white"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Karin H.</h4>
-            <p class="testimonial-ribbon__meta">White Belt, Competitor, Attorney</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">I started training jiu jitsu in early 2021. I was out of shape and in search of something new in terms of working out. I thought I&rsquo;d try jiu jitsu. It turned out to be one of the best decisions I have ever made, and Alex Lucas is a big part of that. Alex was one of my first instructors, and he continues to be to this day. Alex is patient with his students, understands the technical aspects of JJ, and really cares about his student&rsquo;s progress. He&rsquo;s not just my coach anymore, but a friend on and off the mats. Jiu jitsu has become an incredibly important part of my life. Alex is a big reason why. I cannot recommend Alex and the instructors at Live Oak JJ enough. Sign up for a class, you won&rsquo;t regret it!</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-blue"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Steve A.</h4>
-            <p class="testimonial-ribbon__meta">Blue Belt, Attorney</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card testimonial-ribbon__card--starred" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Having trained from white belt to purple under the instruction of Coach Alex, I can attest to his mastery of the art of jiujitsu and his talent for teaching those concepts and techniques to his students. I was able to follow him in my early days as he broke down basic escapes and passes for the class to learn in a way that was easy to grasp. Under Coach Alex, I went from experiencing Jiu Jitsu as a panicked fight for survival, to a steady endeavor of self-control, and ultimately a fun sport with always something new to learn. Coach Alex keeps classes are well structured, goal oriented and most of all fun plus entertaining. He has a vast library in his head of not just BJJ tactics and strategy, but also competitive experience. He helped me organize my own game plan for competitions I entered and was an invaluable support. But above all these things, more than him being a leader, an expert, a supporter, a friend, Coach Alex is a student of the craft and he makes you feel welcome to follow him as he continues to grow in this special sport. I can&rsquo;t recommend him enough to practitioners at any level.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Tito P.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Art Director</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Alex Lucas is a great Jiu Jitsu coach. He&rsquo;s a black belt and competitive champion. Not only does he have the skill and the accomplishments to prove it, he is also a great communicator. This is what you need if you are trying to learn anything. Alex is able to explain the moves and techniques as well as the theory behind the moves in a clear way that will help you to understand and improve your skills. He also creates a supportive, inclusive environment to learn. When Alex is running a class there is always an atmosphere of friendship and support. You will be in a room surrounded by friends who are working hard to help each other get better. I started Jiu Jitsu at 57 and was a little intimidated. I am now about to turn 64 and have earned a purple belt. I did not realize how Jiu Jitsu would change my life. I have become healthier and happier, more fit, and a little more dangerous to someone who might try to attack me&mdash;but the best benefits are the great friends I&rsquo;ve made and my new favorite place, the Jiu Jitsu Academy.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-purple"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Jake J.</h4>
-            <p class="testimonial-ribbon__meta">Purple Belt, Competitor, Comedian</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">If you&rsquo;re looking to grow your skills and knowledge in Jiu-Jitsu, look no further. Coach Alex is an attentive and seasoned instructor that will work with you to meet your training and competition goals. His ability to tailor techniques and feedback to your needs makes him a great teacher to learn from no matter what belt you are.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-white"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Jocelyn A.</h4>
-            <p class="testimonial-ribbon__meta">White Belt, Competitor, Teacher</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">I&rsquo;ve had the privilege of having Alex Lucas as one of my coaches and mentor. He is an excellent instructor; he breaks down intricate moves into simple and manageable steps. He keeps his own skill up to date by continually learning, studying, and training with others. His techniques have been rigorously tested in high-level competitions, ensuring that what he teaches is both practical and proven. This real-world application of skills gives students confidence that they are learning techniques that work, not just in theory but in practice.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-brown"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">John G.</h4>
-            <p class="testimonial-ribbon__meta">Brown Belt, Software Engineer</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">There are plenty of accomplished jiu jitsu instructors out there, and I&rsquo;d rank Alex alongside any of them, but what really sets him apart is his generous nature and natural gifts as a teacher. He&rsquo;s able to draw upon his wealth of knowledge and experience to convey complex concepts and techniques in a way that&rsquo;s accessible and personalized to the needs of every student, from white belt to black. I can think of no better person to help you start, or continue, your jiu jitsu journey.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-brown"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Justin F.</h4>
-            <p class="testimonial-ribbon__meta">Brown Belt, Competitor, Author</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
-        <span class="testimonial-ribbon__mark">&ldquo;</span>
-        <p class="testimonial-ribbon__text">Coach Alex was a patient and smart teacher, who showed me how important Jiu Jitsu is for me. He will help your kid learn how to be strong, resilient, and teach them some important life lessons. Coach Alex always provided a fun and enjoyable experience in the gym.</p>
-        <div class="testimonial-ribbon__divider"></div>
-        <div class="testimonial-ribbon__attribution">
-          <span class="testimonial-ribbon__belt belt-yellow"></span>
-          <div>
-            <h4 class="testimonial-ribbon__name">Luca F.</h4>
-            <p class="testimonial-ribbon__meta">Yellow Belt, High School Junior</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="testimonial-ribbon__card" aria-hidden="true">
         <span class="testimonial-ribbon__mark">&ldquo;</span>
         <p class="testimonial-ribbon__text">Alex Lucas was my first, and will always be my best, BJJ instructor. Alex blends his immense skill and knowledge for the art with an amazing ability to teach it. He&rsquo;s able to make the complicated and complex concepts of BJJ applicable and digestible to any practitioner, at any level. The best part of Alex&rsquo;s curriculum is rolling with him. I&rsquo;m always in awe of Alex&rsquo;s ability to throttle his game to right where you need him to be; he doesn&rsquo;t smash you like other black belts would, but also doesn&rsquo;t let you win easily. He finds the perfect zone to match you at your skill level, and stays one slight step ahead of you so he presents a challenge you can see and overcome. Above all else, Alex is a joy to work with. His classes are the perfect blend of fun, urgent, and intellectual. You always leave a better BJJ practitioner.</p>
         <div class="testimonial-ribbon__divider"></div>
@@ -5274,180 +5029,252 @@
 
 
   /* --------------------------------------------------
-     6. Ribbon Pause / Mobile Autoplay (testimonials + programs)
-     Desktop marquee: CSS animation translates a duplicated track. Hover
-     pauses via CSS.
-     Mobile: because the aria-hidden duplicates are hidden via CSS (to
-     avoid iOS Safari's GPU-layer / texture-size blank-render bug on the
-     original 7000-8000px wide tracks), the seamless-loop CSS marquee is
-     not used on mobile. Instead we drive the track's transform via
-     requestAnimationFrame — translateX is rock-solid on iOS Safari and
-     avoids the scrollLeft quirks (programmatic scrollLeft changes can be
-     ignored by iOS when -webkit-overflow-scrolling / momentum scroll is
-     active, or silently rounded to 0 on fractional sub-pixel updates).
-     With duplicates hidden, the mobile track is ~3900px wide — well
-     within WebKit's composited-layer texture limits.
+     6. Infinite Ribbon Scrollers (testimonials + programs)
+     Shared loop logic:
+     - programs ribbon: always autoplay, never user-stoppable
+     - testimonials ribbon: autoplay until first interaction, then manual
   -------------------------------------------------- */
-  var mobileRibbonMedia = window.matchMedia('(max-width: 768px)');
   var reducedMotionMedia = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  function createMobileRibbonAutoscroll(ribbon, trackSelector, opts) {
+  function createInfiniteRibbonScroller(ribbon, trackSelector, options) {
     if (!ribbon) return null;
+    options = options || {};
+
     var track = ribbon.querySelector(trackSelector);
-    if (!track) return null;
+    if (!track || track.children.length < 2) return null;
 
-    var speed = (opts && opts.speed) || 0.03; // px per ms (~30 px/s)
+    var autoSpeed = options.autoSpeed || 0;
+    var manualMode = options.manualMode || 'always';
+    var manualEnabled = manualMode === 'always';
+    var isAdjusting = false;
+    var frameQueued = false;
+    var autoFrame = null;
+    var autoRunning = false;
+    var autoStopped = false;
+    var lastAutoTimestamp = null;
+    var pointerId = null;
+    var dragStartX = 0;
+    var dragStartScrollLeft = 0;
 
-    var running = false;
-    var raf = null;
-    var lastFrame = null;
-    var position = 0;            // current translateX value (<= 0)
-    var originalsWidth = 0;      // shift to wrap seamlessly
-
-    function applyTransform(x) {
-      // translate3d forces GPU compositing — critical for smooth scroll
-      // on iOS Safari, which otherwise falls back to slow paint updates.
-      track.style.transform = 'translate3d(' + x + 'px, 0, 0)';
+    function syncManualState() {
+      ribbon.classList.toggle('is-manual', manualEnabled);
     }
 
-    function measureOriginals() {
-      // Distance in the layout from the first original to the first
-      // *visible* aria-hidden duplicate. This is exactly the shift that
-      // makes duplicate N land where original 1 started — producing a
-      // zero-pixel seam when we wrap.
-      var children = track.children;
-      var firstOriginal = null;
-      var firstDuplicate = null;
-      for (var i = 0; i < children.length; i++) {
-        var c = children[i];
-        if (c.offsetWidth === 0) continue;  // hidden via CSS
-        if (c.hasAttribute('aria-hidden')) {
-          if (!firstDuplicate) { firstDuplicate = c; break; }
-        } else {
-          if (!firstOriginal) firstOriginal = c;
-        }
-      }
-      originalsWidth = (firstOriginal && firstDuplicate)
-        ? (firstDuplicate.offsetLeft - firstOriginal.offsetLeft)
-        : 0;
+    function getGap() {
+      var styles = window.getComputedStyle(track);
+      return parseFloat(styles.columnGap || styles.gap || '0') || 0;
     }
 
-    function step(timestamp) {
-      if (!running) return;
-      if (lastFrame === null) lastFrame = timestamp;
-      var elapsed = timestamp - lastFrame;
-      lastFrame = timestamp;
-
-      position -= elapsed * speed;
-
-      // Seamless teleport-wrap. The first few aria-hidden duplicates
-      // immediately after the originals show the same content as the
-      // first originals, so resetting `position` by one originals-width
-      // is invisible to the user — no DOM churn, no flex relayout, no
-      // frame hitch. This is the critical behavior iOS Safari needs.
-      if (originalsWidth > 0) {
-        while (-position >= originalsWidth) {
-          position += originalsWidth;
-        }
-      }
-
-      applyTransform(position);
-      raf = requestAnimationFrame(step);
+    function getItemSpan(item) {
+      return item.getBoundingClientRect().width + getGap();
     }
 
-    function start() {
-      if (!mobileRibbonMedia.matches || reducedMotionMedia.matches) return;
-      if (running) return;
-      measureOriginals();
-      if (originalsWidth <= 0) {
-        // Nothing to scroll through — either content fits, or the HTML
-        // is missing duplicates. Reset transform and bail.
-        applyTransform(0);
-        return;
-      }
-      running = true;
-      lastFrame = null;
-      raf = requestAnimationFrame(step);
+    function withAdjustment(fn) {
+      isAdjusting = true;
+      fn();
+      isAdjusting = false;
     }
 
-    function stop() {
-      running = false;
-      lastFrame = null;
-      if (raf) { cancelAnimationFrame(raf); raf = null; }
-    }
+    function ensureLeadingBuffer() {
+      if (!ribbon.clientWidth) return;
 
-    function resetMobile() {
-      // Clear any transform we applied so the desktop CSS animation
-      // takes over cleanly when the viewport crosses the breakpoint.
-      track.style.transform = '';
-      track.style.transition = '';
-      position = 0;
-    }
+      var gap = getGap();
+      var required = Math.max(ribbon.clientWidth + gap - ribbon.scrollLeft, 0);
+      var added = 0;
+      var safety = 0;
 
-    function handleBreakpointChange() {
-      stop();
-      resetMobile();
-      if (mobileRibbonMedia.matches && !reducedMotionMedia.matches) {
-        start();
+      while (added < required && safety < track.children.length * 3) {
+        var last = track.lastElementChild;
+        if (!last) break;
+
+        var span = getItemSpan(last);
+        withAdjustment(function() {
+          track.insertBefore(last, track.firstElementChild);
+          ribbon.scrollLeft += span;
+        });
+
+        added += span;
+        safety += 1;
       }
     }
 
-    // Window/media listeners so the ribbon switches modes cleanly on
-    // orientation change or reduced-motion toggles.
-    window.addEventListener('resize', handleBreakpointChange);
+    function recycleForward() {
+      var gap = getGap();
+      var safety = 0;
 
-    if (mobileRibbonMedia.addEventListener) {
-      mobileRibbonMedia.addEventListener('change', handleBreakpointChange);
-    } else if (mobileRibbonMedia.addListener) {
-      mobileRibbonMedia.addListener(handleBreakpointChange);
+      while (safety < track.children.length * 3) {
+        var first = track.firstElementChild;
+        if (!first) break;
+
+        var firstSpan = first.getBoundingClientRect().width + gap;
+        if (ribbon.scrollLeft + 0.5 < firstSpan) break;
+
+        withAdjustment(function() {
+          track.appendChild(first);
+          ribbon.scrollLeft -= firstSpan;
+        });
+
+        safety += 1;
+      }
     }
+
+    function recycleBackward() {
+      var safety = 0;
+
+      while (ribbon.scrollLeft <= 0.5 && safety < track.children.length * 3) {
+        var last = track.lastElementChild;
+        if (!last) break;
+
+        var lastSpan = getItemSpan(last);
+        withAdjustment(function() {
+          track.insertBefore(last, track.firstElementChild);
+          ribbon.scrollLeft += lastSpan;
+        });
+
+        safety += 1;
+      }
+    }
+
+    function maintainLoop() {
+      recycleForward();
+      recycleBackward();
+      ensureLeadingBuffer();
+    }
+
+    function queueMaintainLoop() {
+      if (frameQueued) return;
+      frameQueued = true;
+
+      requestAnimationFrame(function() {
+        frameQueued = false;
+        maintainLoop();
+      });
+    }
+
+    function stepAuto(timestamp) {
+      if (!autoRunning) return;
+      if (lastAutoTimestamp === null) lastAutoTimestamp = timestamp;
+
+      var elapsed = timestamp - lastAutoTimestamp;
+      lastAutoTimestamp = timestamp;
+
+      ribbon.scrollLeft += elapsed * autoSpeed;
+      queueMaintainLoop();
+      autoFrame = requestAnimationFrame(stepAuto);
+    }
+
+    function startAuto() {
+      if (!autoSpeed || autoRunning || autoStopped || reducedMotionMedia.matches) return;
+      autoRunning = true;
+      lastAutoTimestamp = null;
+      autoFrame = requestAnimationFrame(stepAuto);
+    }
+
+    function stopAuto(permanent) {
+      autoRunning = false;
+      lastAutoTimestamp = null;
+      if (autoFrame) {
+        cancelAnimationFrame(autoFrame);
+        autoFrame = null;
+      }
+      if (permanent) {
+        autoStopped = true;
+      }
+    }
+
+    function enableManual() {
+      if (manualEnabled) return;
+      manualEnabled = true;
+      syncManualState();
+      queueMaintainLoop();
+    }
+
+    function startPointerDrag(event) {
+      if (manualMode === 'after-interact' && !manualEnabled) {
+        stopAuto(true);
+        enableManual();
+      }
+      if (!manualEnabled) return;
+      if (event.pointerType !== 'mouse' && event.pointerType !== 'pen') return;
+
+      pointerId = event.pointerId;
+      dragStartX = event.clientX;
+      dragStartScrollLeft = ribbon.scrollLeft;
+      ribbon.classList.add('is-dragging');
+
+      if (ribbon.setPointerCapture) {
+        ribbon.setPointerCapture(pointerId);
+      }
+    }
+
+    function movePointerDrag(event) {
+      if (pointerId !== event.pointerId) return;
+
+      event.preventDefault();
+      ribbon.scrollLeft = dragStartScrollLeft - (event.clientX - dragStartX);
+    }
+
+    function endPointerDrag(event) {
+      if (pointerId !== event.pointerId) return;
+
+      pointerId = null;
+      ribbon.classList.remove('is-dragging');
+
+      if (ribbon.releasePointerCapture && ribbon.hasPointerCapture && ribbon.hasPointerCapture(event.pointerId)) {
+        ribbon.releasePointerCapture(event.pointerId);
+      }
+
+      queueMaintainLoop();
+    }
+
+    ribbon.addEventListener('scroll', function() {
+      if (!isAdjusting) {
+        queueMaintainLoop();
+      }
+    }, { passive: true });
+
+    ribbon.addEventListener('pointerdown', startPointerDrag);
+    ribbon.addEventListener('pointermove', movePointerDrag);
+    ribbon.addEventListener('pointerup', endPointerDrag);
+    ribbon.addEventListener('pointercancel', endPointerDrag);
+
+    window.addEventListener('resize', queueMaintainLoop, { passive: true });
+
     if (reducedMotionMedia.addEventListener) {
-      reducedMotionMedia.addEventListener('change', handleBreakpointChange);
+      reducedMotionMedia.addEventListener('change', function() {
+        if (reducedMotionMedia.matches) {
+          stopAuto(false);
+          return;
+        }
+        startAuto();
+      });
     } else if (reducedMotionMedia.addListener) {
-      reducedMotionMedia.addListener(handleBreakpointChange);
+      reducedMotionMedia.addListener(function() {
+        if (reducedMotionMedia.matches) {
+          stopAuto(false);
+          return;
+        }
+        startAuto();
+      });
     }
 
-    // Touch interactions: pause while the user's finger is on the
-    // ribbon (so they can read a testimonial), resume as soon as they
-    // lift off. No multi-second delay — the old 4s timeout felt like
-    // "the animation stopped" to people just grazing the ribbon while
-    // scrolling the page vertically.
-    ribbon.addEventListener('touchstart', stop, { passive: true });
-    ribbon.addEventListener('touchend', start, { passive: true });
-    ribbon.addEventListener('touchcancel', start, { passive: true });
+    syncManualState();
+    ensureLeadingBuffer();
+    queueMaintainLoop();
+    startAuto();
 
-    handleBreakpointChange();
-
-    return { start: start, stop: stop };
+    return {
+      refresh: queueMaintainLoop,
+      stopAuto: stopAuto,
+      enableManual: enableManual
+    };
   }
 
-  // Testimonials: desktop still uses CSS animation; mobile uses scrollLeft autoscroll
   var testimonialRibbon = document.querySelector('.testimonial-ribbon');
   if (testimonialRibbon) {
-    var testimonialTrack = testimonialRibbon.querySelector('.testimonial-ribbon__track');
-
-    // Desktop hover/click pause handling
-    function pauseDesktopTestimonials() {
-      if (!mobileRibbonMedia.matches && testimonialTrack) {
-        testimonialTrack.style.animationPlayState = 'paused';
-      }
-    }
-    function resumeDesktopTestimonials() {
-      if (!mobileRibbonMedia.matches && testimonialTrack) {
-        testimonialTrack.style.animationPlayState = 'running';
-      }
-    }
-    testimonialRibbon.addEventListener('wheel', function() {
-      pauseDesktopTestimonials();
-      setTimeout(resumeDesktopTestimonials, 5000);
-    }, { passive: true });
-    testimonialRibbon.addEventListener('focusin', function() {
-      pauseDesktopTestimonials();
-      setTimeout(resumeDesktopTestimonials, 5000);
-    });
-
-    createMobileRibbonAutoscroll(testimonialRibbon, '.testimonial-ribbon__track', {
-      speed: 0.035
+    createInfiniteRibbonScroller(testimonialRibbon, '.testimonial-ribbon__track', {
+      autoSpeed: 0.03,
+      manualMode: 'after-interact'
     });
   }
 
@@ -5499,23 +5326,18 @@
 
 
   /* --------------------------------------------------
-     Programs Photo Ribbon — pause on touch (non-mobile)
-     Mirrors the testimonial ribbon pattern. Mobile (≤768px)
-     is skipped so we don't leave stale animationPlayState
-     if the viewport crosses the breakpoint.
+     Programs Photo Ribbon image preload + locked autoplay
   -------------------------------------------------- */
   var programsRibbon = document.querySelector('.programs-ribbon');
 
   if (programsRibbon) {
-    var programsTrack = programsRibbon.querySelector('.programs-ribbon__track');
-    var programsMobileOff = window.matchMedia('(max-width: 768px)');
     var programsImagesLoaded = false;
 
     function loadProgramsRibbonImages() {
       if (programsImagesLoaded) return;
       programsImagesLoaded = true;
 
-      programsRibbon.querySelectorAll('.programs-ribbon__slide:not([aria-hidden]) img').forEach(function(img) {
+      programsRibbon.querySelectorAll('.programs-ribbon__slide img').forEach(function(img) {
         if (img.loading === 'lazy') {
           img.loading = 'eager';
         }
@@ -5528,45 +5350,23 @@
       });
     }
 
-    if (programsTrack) {
-      if ('IntersectionObserver' in window) {
-        var programsImageObserver = new IntersectionObserver(function(entries) {
-          if (entries.some(function(entry) { return entry.isIntersecting; })) {
-            loadProgramsRibbonImages();
-            programsImageObserver.disconnect();
-          }
-        }, { rootMargin: '1200px 0px' });
+    if ('IntersectionObserver' in window) {
+      var programsImageObserver = new IntersectionObserver(function(entries) {
+        if (entries.some(function(entry) { return entry.isIntersecting; })) {
+          loadProgramsRibbonImages();
+          programsImageObserver.disconnect();
+        }
+      }, { rootMargin: '1200px 0px' });
 
-        programsImageObserver.observe(programsRibbon);
-      } else {
-        loadProgramsRibbonImages();
-      }
-
-      // Desktop: pause CSS animation on touch
-      programsRibbon.addEventListener('touchstart', function() {
-        if (programsMobileOff.matches) return;
-        programsTrack.style.animationPlayState = 'paused';
-      }, { passive: true });
-
-      programsRibbon.addEventListener('touchend', function() {
-        if (programsMobileOff.matches) return;
-        setTimeout(function() {
-          programsTrack.style.animationPlayState = 'running';
-        }, 3000);
-      }, { passive: true });
-
-      // Mobile: drive scrollLeft autoscroll because duplicates are hidden
-      // (the CSS marquee only works with the full duplicated track that
-      // iOS Safari can't render). Same pattern as testimonials.
-      if (typeof createMobileRibbonAutoscroll === 'function') {
-        createMobileRibbonAutoscroll(programsRibbon, '.programs-ribbon__track', {
-          // 0.053 px/ms ~= 53 px/s — another +15% over the previous 0.046
-          // (which itself was +15% over the original 0.04), per product
-          // feedback. Mobile-only: the desktop CSS marquee is unaffected.
-          speed: 0.053
-        });
-      }
+      programsImageObserver.observe(programsRibbon);
+    } else {
+      loadProgramsRibbonImages();
     }
+
+    createInfiniteRibbonScroller(programsRibbon, '.programs-ribbon__track', {
+      autoSpeed: 0.038,
+      manualMode: 'never'
+    });
   }
 
 
