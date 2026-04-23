@@ -1177,9 +1177,14 @@
       }
     }
 
+    /* The track contains 2 identical sets of slides (originals + aria-hidden
+       duplicates). Total width = 2N cards + (2N - 1) gaps, so translateX(-50%)
+       lands 0.5 gap short of exactly one cycle and the loop seam visibly jumps.
+       Compensating by an extra (gap / 2) makes the 100% keyframe align precisely
+       with the start of the duplicate set, producing a truly seamless loop. */
     @keyframes programsRibbonScroll {
       0%   { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
+      100% { transform: translateX(calc(-50% - var(--space-lg) / 2)); }
     }
 
     .programs-ribbon__slide {
@@ -2082,12 +2087,18 @@
       }
     }
 
+    /* Seamless loop math: the track is originals + aria-hidden duplicates, so
+       total width = 2N*card + (2N-1)*gap. translateX(-50%) lands half a gap
+       short of one full cycle (2N*card + 2N*gap) / 2 = N*card + N*gap, which
+       produces a subtle but visible jump at the loop seam. Subtracting an
+       extra gap / 2 aligns the end frame exactly with the start of the
+       duplicate set — the wrap becomes invisible. */
     @keyframes ribbonScroll {
       0% {
         transform: translateX(0);
       }
       100% {
-        transform: translateX(-50%);
+        transform: translateX(calc(-50% - var(--space-lg) / 2));
       }
     }
 
@@ -4396,38 +4407,38 @@
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">6:30 AM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ</span>
+            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ - Gi</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
           <div class="schedule-block class-youth">
             <span class="schedule-time">11:00 AM</span>
-            <span class="schedule-class-name">Youth BJJ Class</span>
+            <span class="schedule-class-name">Youth BJJ Class - Gi</span>
             <span class="schedule-age">Ages 6 to 12</span>
           </div>
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">12:00 PM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ</span>
+            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ - Gi</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
           <div class="schedule-block class-youth">
             <span class="schedule-time">4:00 PM</span>
-            <span class="schedule-class-name">Youth BJJ</span>
+            <span class="schedule-class-name">Youth BJJ - Gi</span>
             <span class="schedule-age">Ages 6 to 12</span>
           </div>
 
           <div class="schedule-block class-sprouts">
             <span class="schedule-time">5:00 PM</span>
-            <span class="schedule-class-name">Sprouts</span>
+            <span class="schedule-class-name">Sprouts - Gi</span>
             <span class="schedule-age">Ages 3 to 5</span>
             <span class="schedule-note">Mon &amp; Wed only</span>
           </div>
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">6:00 PM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ</span>
+            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ - Gi</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
@@ -4443,37 +4454,37 @@
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">6:30 AM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ</span>
+            <span class="schedule-class-name">Adult/Teen Fundamental &amp; Advanced BJJ - No Gi</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
           <div class="schedule-block class-youth">
             <span class="schedule-time">11:00 AM</span>
-            <span class="schedule-class-name">Youth BJJ Class</span>
+            <span class="schedule-class-name">Youth BJJ Class - No Gi</span>
             <span class="schedule-age">Ages 6 to 12</span>
           </div>
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">12:00 PM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamentals &amp; Advanced BJJ</span>
+            <span class="schedule-class-name">Adult/Teen Fundamentals &amp; Advanced BJJ - No Gi</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
           <div class="schedule-block class-youth">
             <span class="schedule-time">4:00 PM</span>
-            <span class="schedule-class-name">Youth BJJ</span>
+            <span class="schedule-class-name">Youth BJJ - No Gi</span>
             <span class="schedule-age">Ages 6 to 12</span>
           </div>
 
           <div class="schedule-block class-sprouts">
             <span class="schedule-time">5:00 PM</span>
-            <span class="schedule-class-name">Sprouts</span>
+            <span class="schedule-class-name">Sprouts - No Gi</span>
             <span class="schedule-age">Ages 3 to 5</span>
           </div>
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">6:00 PM</span>
-            <span class="schedule-class-name">Takedown &amp; Submission Class</span>
+            <span class="schedule-class-name">Takedown &amp; Submission Class - No Gi</span>
             <span class="schedule-age">Ages 11+</span>
           </div>
 
@@ -4489,13 +4500,13 @@
 
           <div class="schedule-block class-youth">
             <span class="schedule-time">9:00 AM</span>
-            <span class="schedule-class-name">Youth BJJ</span>
+            <span class="schedule-class-name">Youth BJJ - No Gi</span>
             <span class="schedule-age">Ages 6 to 12</span>
           </div>
 
           <div class="schedule-block class-adult">
             <span class="schedule-time">10:00 AM</span>
-            <span class="schedule-class-name">Adult/Teen Fundamentals &amp; Advanced BJJ</span>
+            <span class="schedule-class-name">Adult/Teen Fundamentals &amp; Advanced BJJ - No Gi</span>
             <span class="schedule-age">Ages 13+</span>
           </div>
 
@@ -4512,7 +4523,7 @@
           <div class="schedule-block class-open">
             <span class="schedule-time">10:00 AM</span>
             <span class="schedule-class-name">Open Mat</span>
-            <span class="schedule-age">Ages 18+ &middot; BJJ, Wrestling, Judo, MMA</span>
+            <span class="schedule-age">Ages 13+ &middot; BJJ, Wrestling, Judo, MMA</span>
           </div>
 
         </div>
@@ -5284,22 +5295,22 @@
 
     var speed = (opts && opts.speed) || 0.03; // px per ms (~30 px/s)
     var resumeDelay = (opts && opts.resumeDelay) || 4000;
-    var wrapDuration = (opts && opts.wrapDuration) || 1400; // ms for smooth snap-back
 
     var running = false;
     var raf = null;
     var lastFrame = null;
     var position = 0;        // current translateX value (negative)
-    var isWrapping = false;
-    var wrapTimer = null;
     var resumeTimer = null;
+
+    // Snapshot the canonical DOM order of every child so we can restore
+    // it when the viewport leaves mobile. The desktop CSS marquee relies
+    // on originals followed by aria-hidden duplicates in a specific
+    // sequence to produce a seamless -50% loop — cycling on mobile
+    // would otherwise leave the DOM shuffled when we hand back to CSS.
+    var originalOrder = Array.prototype.slice.call(track.children);
 
     function clearResumeTimer() {
       if (resumeTimer) { clearTimeout(resumeTimer); resumeTimer = null; }
-    }
-
-    function clearWrapTimer() {
-      if (wrapTimer) { clearTimeout(wrapTimer); wrapTimer = null; }
     }
 
     function applyTransform(x) {
@@ -5307,9 +5318,22 @@
       track.style.transform = 'translate3d(' + x + 'px, 0, 0)';
     }
 
-    function getMaxTranslate() {
-      // How far we can translate left before the last card is on screen.
-      return Math.max(0, track.scrollWidth - ribbon.clientWidth);
+    function getGap() {
+      var cs = getComputedStyle(track);
+      var gap = parseFloat(cs.gap || cs.columnGap || '0');
+      return isNaN(gap) ? 0 : gap;
+    }
+
+    function restoreOrder() {
+      // Detach each snapshotted node from its current slot in the track,
+      // then reinsert in canonical order. Safe to call any time.
+      for (var i = 0; i < originalOrder.length; i++) {
+        var node = originalOrder[i];
+        if (node.parentNode) node.parentNode.removeChild(node);
+      }
+      for (var j = 0; j < originalOrder.length; j++) {
+        track.appendChild(originalOrder[j]);
+      }
     }
 
     function step(timestamp) {
@@ -5318,42 +5342,50 @@
       var elapsed = timestamp - lastFrame;
       lastFrame = timestamp;
 
-      if (!isWrapping) {
-        position -= elapsed * speed;
-        var maxTranslate = getMaxTranslate();
+      position -= elapsed * speed;
 
-        if (maxTranslate <= 0) {
-          // Track fits entirely — nothing to animate.
-          running = false;
-          applyTransform(0);
-          return;
+      // Seamless infinite scroll via DOM cycling: whenever the first
+      // card has fully scrolled off the left edge, physically move it
+      // to the end of the track and shift `position` by its width + gap
+      // so the visual position of everything else is unchanged. Hidden
+      // (aria-hidden, display:none on mobile) cards have offsetWidth 0,
+      // so we move them to the back without adjusting position — they
+      // stay out of the visible flow as we cycle through the originals.
+      var first = track.firstElementChild;
+      var guard = 0;
+      while (first && guard < 100) {
+        guard++;
+        var w = first.offsetWidth;
+        if (w === 0) {
+          // Hidden duplicate — shuffle out of the way.
+          track.appendChild(first);
+          first = track.firstElementChild;
+          continue;
         }
-
-        if (-position >= maxTranslate) {
-          // Reached the end — smoothly animate back to 0 via a temporary
-          // CSS transition, then resume forward motion.
-          isWrapping = true;
-          track.style.transition = 'transform ' + wrapDuration + 'ms cubic-bezier(0.45, 0, 0.55, 1)';
-          applyTransform(0);
-          position = 0;
-          clearWrapTimer();
-          wrapTimer = setTimeout(function() {
-            track.style.transition = '';
-            isWrapping = false;
-            lastFrame = null;
-            wrapTimer = null;
-          }, wrapDuration + 50);
+        var cardW = w + getGap();
+        if (-position >= cardW) {
+          track.appendChild(first);
+          position += cardW;
+          first = track.firstElementChild;
         } else {
-          applyTransform(position);
+          break;
         }
       }
 
+      applyTransform(position);
       raf = requestAnimationFrame(step);
     }
 
     function start() {
       if (!mobileRibbonMedia.matches || reducedMotionMedia.matches) return;
       if (running) return;
+      // If the visible content already fits the viewport, there's nothing
+      // to animate — bail out so we don't spin a requestAnimationFrame
+      // loop that does nothing.
+      if (track.scrollWidth <= ribbon.clientWidth + 1) {
+        applyTransform(0);
+        return;
+      }
       running = true;
       lastFrame = null;
       raf = requestAnimationFrame(step);
@@ -5363,8 +5395,6 @@
       running = false;
       lastFrame = null;
       if (raf) { cancelAnimationFrame(raf); raf = null; }
-      clearWrapTimer();
-      isWrapping = false;
     }
 
     function resetMobile() {
@@ -5383,14 +5413,17 @@
 
     function handleBreakpointChange() {
       clearResumeTimer();
+      // Always restore canonical DOM order before deciding what to do.
+      // On mobile this resets any prior cycling to a known good start;
+      // on desktop it ensures the CSS marquee's -50% seam lines up.
+      stop();
+      restoreOrder();
+      resetMobile();
       if (mobileRibbonMedia.matches && !reducedMotionMedia.matches) {
-        // On mobile: start JS transform-based autoscroll
+        // On mobile: start JS transform-based autoscroll with DOM cycling.
         start();
-      } else {
-        // On desktop or reduced-motion: hand back to CSS
-        stop();
-        resetMobile();
       }
+      // On desktop or reduced-motion: nothing else to do — CSS takes over.
     }
 
     // User-interaction handlers: pause briefly if the user taps the ribbon.
@@ -5443,8 +5476,7 @@
 
     createMobileRibbonAutoscroll(testimonialRibbon, '.testimonial-ribbon__track', {
       speed: 0.035,
-      resumeDelay: 4000,
-      wrapDuration: 1400
+      resumeDelay: 4000
     });
   }
 
@@ -5558,8 +5590,7 @@
       if (typeof createMobileRibbonAutoscroll === 'function') {
         createMobileRibbonAutoscroll(programsRibbon, '.programs-ribbon__track', {
           speed: 0.04,
-          resumeDelay: 3500,
-          wrapDuration: 1400
+          resumeDelay: 3500
         });
       }
     }
