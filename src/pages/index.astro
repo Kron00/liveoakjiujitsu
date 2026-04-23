@@ -5560,9 +5560,10 @@
       // iOS Safari can't render). Same pattern as testimonials.
       if (typeof createMobileRibbonAutoscroll === 'function') {
         createMobileRibbonAutoscroll(programsRibbon, '.programs-ribbon__track', {
-          // 0.046 px/ms ~= 46 px/s — 15% faster than the previous 0.04
-          // mobile speed, per product feedback.
-          speed: 0.046
+          // 0.053 px/ms ~= 53 px/s — another +15% over the previous 0.046
+          // (which itself was +15% over the original 0.04), per product
+          // feedback. Mobile-only: the desktop CSS marquee is unaffected.
+          speed: 0.053
         });
       }
     }
