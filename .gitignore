@@ -3,6 +3,7 @@
 .playwright-mcp/
 *.png
 !public/assets/images/favicon-circle.png
+!public/assets/images/favicon-circle-20260423.png
 .env
 .env.*
 !.env.example
