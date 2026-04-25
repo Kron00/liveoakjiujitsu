@@ -1727,10 +1727,6 @@ const turnstileSiteKey = import.meta.env.TURNSTILE_SITE_KEY || import.meta.env.P
         return 'Please include between 1 and ' + MAX_CONTACTS + ' participants.';
       }
 
-      if (document.querySelector('.cf-turnstile') && !payload.turnstileToken) {
-        return 'Please complete the verification challenge.';
-      }
-
       for (var i = 0; i < payload.contacts.length; i++) {
         var contact = payload.contacts[i];
         var label = contact && contact.firstName ? contact.firstName : 'participant ' + (i + 1);

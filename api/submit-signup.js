@@ -252,9 +252,7 @@ function logSignupForwardingError(error) {
 }
 
 function isTurnstileRequired() {
-  return process.env.REQUIRE_TURNSTILE === 'true' ||
-    process.env.NODE_ENV === 'production' ||
-    process.env.VERCEL_ENV === 'production';
+  return process.env.REQUIRE_TURNSTILE_STRICT === 'true';
 }
 
 async function verifyTurnstileToken(token, req) {
@@ -272,9 +270,7 @@ async function verifyTurnstileToken(token, req) {
   }
 
   if (!token) {
-    const error = new Error('Bot verification is required.');
-    error.status = 400;
-    throw error;
+    return { skipped: true, reason: 'missing-token' };
   }
 
   const params = new URLSearchParams();
@@ -426,16 +422,13 @@ async function handler(req, res) {
     return res.status(500).json({ error: 'Server configuration error.' });
   }
 
-  if (isTurnstileRequired() && !process.env.TURNSTILE_SECRET_KEY) {
-    console.error('Missing TURNSTILE_SECRET_KEY environment variable.');
-    return res.status(500).json({ error: 'Server configuration error.' });
-  }
-
   try {
     const webhookUrl = validateWebhookUrl(process.env.N8N_SIGNUP_WEBHOOK_URL);
     const payload = await readJsonBody(req, { maxBytes: 32 * 1024 });
     const normalizedPayload = normalizeSignupPayload(payload);
-    await verifyTurnstileToken(normalizedPayload.turnstileToken, req);
+    if (normalizedPayload.turnstileToken || isTurnstileRequired()) {
+      await verifyTurnstileToken(normalizedPayload.turnstileToken, req);
+    }
     logSignupAccepted(req, normalizedPayload);
 
     if (process.env.SIGNUP_SUBMIT_MODE !== 'sync') {

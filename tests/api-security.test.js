@@ -277,9 +277,20 @@ test('submit-signup verifies Turnstile when the secret is configured', async () 
   assert.equal(requests[1].url, TEST_WEBHOOK_URL);
 });
 
-test('submit-signup blocks missing Turnstile tokens when verification is required', async () => {
+test('submit-signup allows missing Turnstile tokens so signup is not hard-down', async () => {
+  process.env.SIGNUP_SUBMIT_MODE = 'sync';
   process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
   process.env.TURNSTILE_SECRET_KEY = 'turnstile-secret';
+
+  let forwardedRequest;
+  global.fetch = async (url, options) => {
+    forwardedRequest = { url, options };
+    return {
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify({ success: true, results: [] })
+    };
+  };
 
   const req = createMockReq({
     headers: {
@@ -292,8 +303,8 @@ test('submit-signup blocks missing Turnstile tokens when verification is require
 
   await submitSignup(req, res);
 
-  assert.equal(res.statusCode, 400);
-  assert.deepEqual(res.body, { error: 'Bot verification is required.' });
+  assert.equal(res.statusCode, 200);
+  assert.equal(forwardedRequest.url, TEST_WEBHOOK_URL);
 });
 
 test('submit-signup rejects invalid Turnstile verification responses', async () => {
