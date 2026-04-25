@@ -60,6 +60,22 @@ function localVercelApiPlugin() {
   };
 }
 
+function assertProductionSecurityConfig() {
+  if (process.env.VERCEL_ENV !== 'production') {
+    return;
+  }
+
+  if (!process.env.PUBLIC_TURNSTILE_SITE_KEY) {
+    throw new Error('PUBLIC_TURNSTILE_SITE_KEY is required for production builds.');
+  }
+
+  if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
+    throw new Error('KV_REST_API_URL and KV_REST_API_TOKEN are required for production builds.');
+  }
+}
+
+assertProductionSecurityConfig();
+
 export default defineConfig({
   build: {
     format: 'file'

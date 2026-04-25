@@ -19,6 +19,7 @@ const ISO_DATE_TIME_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/
 const MAX_CONTACTS = 6;
 const SIGNUP_WEBHOOK_TIMEOUT_MS = 9000;
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+const DEFAULT_ALLOWED_WEBHOOK_HOSTS = ['*.n8n.cloud', 'n8n.cloud'];
 
 function readString(value, field, maxLength, options = {}) {
   if (typeof value !== 'string') {
@@ -113,7 +114,38 @@ function validateWebhookUrl(value) {
     throw configurationError('Signup webhook URL must use HTTPS.');
   }
 
+  if (!isAllowedWebhookHost(parsed.hostname, process.env.ALLOWED_SIGNUP_WEBHOOK_HOSTS)) {
+    throw configurationError('Signup webhook host is not allowed.');
+  }
+
   return parsed.toString();
+}
+
+function parseAllowedWebhookHosts(value) {
+  if (!value || typeof value !== 'string') {
+    return DEFAULT_ALLOWED_WEBHOOK_HOSTS.slice();
+  }
+
+  const hosts = value
+    .split(',')
+    .map((entry) => entry.trim().toLowerCase())
+    .filter(Boolean);
+
+  return hosts.length ? hosts : DEFAULT_ALLOWED_WEBHOOK_HOSTS.slice();
+}
+
+function isAllowedWebhookHost(hostname, allowedHostValue) {
+  const normalizedHost = String(hostname || '').toLowerCase();
+  if (!normalizedHost) return false;
+
+  return parseAllowedWebhookHosts(allowedHostValue).some((allowedHost) => {
+    if (allowedHost.startsWith('*.')) {
+      const suffix = allowedHost.slice(1);
+      return normalizedHost.endsWith(suffix) && normalizedHost.length > suffix.length;
+    }
+
+    return normalizedHost === allowedHost;
+  });
 }
 
 function validateParent(parent) {
@@ -215,8 +247,7 @@ function createAcceptedSignupResponse(payload) {
 function logSignupForwardingError(error) {
   console.error('Failed to submit signup payload.', {
     message: error && error.message,
-    status: error && error.status,
-    body: error && error.body
+    status: error && error.status
   });
 }
 
@@ -268,8 +299,8 @@ async function verifyTurnstileToken(token, req) {
     });
 
     if (!response.ok) {
-      const error = new Error('Bot verification failed.');
-      error.status = 400;
+      const error = new Error('Verification temporarily unavailable.');
+      error.status = 503;
       throw error;
     }
 
@@ -281,6 +312,14 @@ async function verifyTurnstileToken(token, req) {
     }
 
     return result;
+  } catch (error) {
+    if (error && error.status) {
+      throw error;
+    }
+
+    const unavailable = new Error('Verification temporarily unavailable.');
+    unavailable.status = 503;
+    throw unavailable;
   } finally {
     timeout.clear();
   }
@@ -361,6 +400,8 @@ async function forwardSignup(webhookUrl, payload) {
 }
 
 async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
@@ -371,7 +412,7 @@ async function handler(req, res) {
     return res.status(403).json({ error: 'Forbidden origin.' });
   }
 
-  if (!applyRateLimit(req, res, {
+  if (!await applyRateLimit(req, res, {
     scope: 'submit-signup',
     limit: 5,
     windowMs: 15 * 60 * 1000,
@@ -409,14 +450,17 @@ async function handler(req, res) {
     res.setHeader('Cache-Control', 'no-store');
     return res.status(200).json(webhookResult);
   } catch (error) {
+    if (error && error.status === 503) {
+      return res.status(503).json({ error: error.message });
+    }
+
     if (error && error.status && error.status < 500) {
       return res.status(error.status).json({ error: error.message });
     }
 
     console.error('Failed to submit signup payload.', {
       message: error && error.message,
-      status: error && error.status,
-      body: error && error.body
+      status: error && error.status
     });
     return res.status(502).json({ error: 'Unable to submit signup request right now.' });
   }
@@ -431,7 +475,9 @@ module.exports._private = {
   forwardSignup,
   isAbortError,
   isTurnstileRequired,
+  isAllowedWebhookHost,
   normalizeSignupPayload,
+  parseAllowedWebhookHosts,
   queueSignupForward,
   sanitizeForwardPayload,
   validateContact,

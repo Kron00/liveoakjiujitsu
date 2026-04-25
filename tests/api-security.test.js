@@ -5,6 +5,7 @@ const submitSignup = require('../api/submit-signup');
 const submitSignupPrivate = submitSignup._private;
 const availableSlots = require('../api/available-slots');
 const security = require('../api/_lib/security');
+const TEST_WEBHOOK_URL = 'https://example.app.n8n.cloud/webhook/test';
 
 function createMockReq(overrides = {}) {
   return {
@@ -74,10 +75,17 @@ test.beforeEach(() => {
   delete process.env.GHL_YOUTH_CALENDAR_NAME;
   delete process.env.GHL_ADULT_CALENDAR_NAME;
   delete process.env.N8N_SIGNUP_WEBHOOK_URL;
+  delete process.env.ALLOWED_SIGNUP_WEBHOOK_HOSTS;
   delete process.env.NEXT_PUBLIC_WEBHOOK_URL;
   delete process.env.SIGNUP_SUBMIT_MODE;
   delete process.env.TURNSTILE_SECRET_KEY;
   delete process.env.REQUIRE_TURNSTILE;
+  delete process.env.KV_REST_API_URL;
+  delete process.env.KV_REST_API_TOKEN;
+  delete process.env.UPSTASH_REDIS_REST_URL;
+  delete process.env.UPSTASH_REDIS_REST_TOKEN;
+  delete process.env.REQUIRE_DISTRIBUTED_RATE_LIMIT;
+  delete process.env.VERCEL_ENV;
   delete global.fetch;
 });
 
@@ -120,7 +128,7 @@ test('normalizeSignupPayload rejects honeypot spam submissions', () => {
 });
 
 test('submit-signup rejects requests from unapproved origins', async () => {
-  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
 
   const req = createMockReq({
     headers: {
@@ -139,7 +147,7 @@ test('submit-signup rejects requests from unapproved origins', async () => {
 
 test('submit-signup forwards sanitized payloads through the first-party endpoint', async () => {
   process.env.SIGNUP_SUBMIT_MODE = 'sync';
-  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
   const webhookResult = {
     success: true,
     count: 1,
@@ -179,7 +187,7 @@ test('submit-signup forwards sanitized payloads through the first-party endpoint
 
   assert.equal(res.statusCode, 200);
   assert.deepEqual(res.body, webhookResult);
-  assert.equal(forwardedRequest.url, 'https://example.com/webhook');
+  assert.equal(forwardedRequest.url, TEST_WEBHOOK_URL);
 
   const forwardedPayload = JSON.parse(forwardedRequest.options.body);
   assert.equal(forwardedPayload.signup_type, 'me_plus_others');
@@ -210,7 +218,7 @@ test('submit-signup does not use client-public webhook fallback variables', asyn
 });
 
 test('submit-signup requires a real Origin header for POST requests', async () => {
-  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
 
   const req = createMockReq({
     headers: {
@@ -229,7 +237,7 @@ test('submit-signup requires a real Origin header for POST requests', async () =
 
 test('submit-signup verifies Turnstile when the secret is configured', async () => {
   process.env.SIGNUP_SUBMIT_MODE = 'sync';
-  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
   process.env.TURNSTILE_SECRET_KEY = 'turnstile-secret';
 
   const requests = [];
@@ -266,11 +274,11 @@ test('submit-signup verifies Turnstile when the secret is configured', async () 
 
   assert.equal(res.statusCode, 200);
   assert.equal(requests.length, 2);
-  assert.equal(requests[1].url, 'https://example.com/webhook');
+  assert.equal(requests[1].url, TEST_WEBHOOK_URL);
 });
 
 test('submit-signup blocks missing Turnstile tokens when verification is required', async () => {
-  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
   process.env.TURNSTILE_SECRET_KEY = 'turnstile-secret';
 
   const req = createMockReq({
@@ -288,9 +296,57 @@ test('submit-signup blocks missing Turnstile tokens when verification is require
   assert.deepEqual(res.body, { error: 'Bot verification is required.' });
 });
 
+test('submit-signup rejects invalid Turnstile verification responses', async () => {
+  process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
+  process.env.TURNSTILE_SECRET_KEY = 'turnstile-secret';
+
+  global.fetch = async () => ({
+    ok: true,
+    status: 200,
+    json: async () => ({ success: false })
+  });
+
+  const req = createMockReq({
+    headers: {
+      origin: 'http://localhost:3000',
+      'content-type': 'application/json'
+    },
+    body: createValidPayload({ turnstileToken: 'bad-token' })
+  });
+  const res = createMockRes();
+
+  await submitSignup(req, res);
+
+  assert.equal(res.statusCode, 400);
+  assert.deepEqual(res.body, { error: 'Bot verification failed.' });
+});
+
+test('submit-signup maps Turnstile network failures to temporarily unavailable', async () => {
+  process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
+  process.env.TURNSTILE_SECRET_KEY = 'turnstile-secret';
+
+  global.fetch = async () => {
+    throw new Error('network unavailable');
+  };
+
+  const req = createMockReq({
+    headers: {
+      origin: 'http://localhost:3000',
+      'content-type': 'application/json'
+    },
+    body: createValidPayload({ turnstileToken: 'token-123' })
+  });
+  const res = createMockRes();
+
+  await submitSignup(req, res);
+
+  assert.equal(res.statusCode, 503);
+  assert.deepEqual(res.body, { error: 'Verification temporarily unavailable.' });
+});
+
 test('submit-signup treats slow webhook confirmation as accepted', async () => {
   process.env.SIGNUP_SUBMIT_MODE = 'sync';
-  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
 
   global.fetch = async () => {
     const error = new Error('This operation was aborted');
@@ -316,7 +372,7 @@ test('submit-signup treats slow webhook confirmation as accepted', async () => {
 });
 
 test('submit-signup returns immediately after queuing webhook forwarding', async () => {
-  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  process.env.N8N_SIGNUP_WEBHOOK_URL = TEST_WEBHOOK_URL;
 
   let forwardedRequest;
   let releaseFetch;
@@ -349,7 +405,7 @@ test('submit-signup returns immediately after queuing webhook forwarding', async
   assert.equal(res.body.success, true);
   assert.equal(res.body.accepted, true);
   assert.equal(res.body.pending_confirmation, true);
-  assert.equal(forwardedRequest.url, 'https://example.com/webhook');
+  assert.equal(forwardedRequest.url, TEST_WEBHOOK_URL);
   assert.equal(JSON.parse(forwardedRequest.options.body).contacts[0].email, 'alex@example.com');
 
   releaseFetch();
@@ -389,6 +445,115 @@ test('normalizeSignupPayload accepts my_child dependent payloads', () => {
   assert.equal(normalized.contacts[0].medicalNotes, 'Broken left pinky toe');
   assert.equal(normalized.contacts[0].experience, 'None');
   assert.equal(normalized.contacts[0].parent.firstName, 'Julian');
+});
+
+test('validateWebhookUrl rejects non-HTTPS webhook URLs', () => {
+  assert.throws(
+    () => submitSignupPrivate.validateWebhookUrl('http://example.app.n8n.cloud/webhook/test'),
+    /must use HTTPS/
+  );
+});
+
+test('validateWebhookUrl rejects webhook hosts outside the allowlist', () => {
+  assert.throws(
+    () => submitSignupPrivate.validateWebhookUrl('https://169.254.169.254/webhook/test'),
+    /host is not allowed/
+  );
+});
+
+test('readJsonBody enforces payload size limits on pre-parsed request bodies', async () => {
+  const req = createMockReq({
+    headers: {
+      'content-type': 'application/json'
+    },
+    body: {
+      value: 'x'.repeat(64)
+    }
+  });
+
+  await assert.rejects(
+    () => security.readJsonBody(req, { maxBytes: 16 }),
+    /Payload too large/
+  );
+});
+
+test('getClientIp uses the trailing forwarded address to avoid spoofed leftmost entries', () => {
+  const req = createMockReq({
+    headers: {
+      'x-forwarded-for': '203.0.113.1, 198.51.100.10'
+    }
+  });
+
+  assert.equal(security.getClientIp(req), '198.51.100.10');
+});
+
+test('distributed rate limiting keys on the trusted forwarded address', async () => {
+  process.env.KV_REST_API_URL = 'https://kv.example';
+  process.env.KV_REST_API_TOKEN = 'kv-token';
+
+  const counts = new Map();
+  global.fetch = async (url, options) => {
+    assert.equal(url, 'https://kv.example');
+    assert.equal(options.headers.Authorization, 'Bearer kv-token');
+
+    const command = JSON.parse(options.body);
+    const name = command[0];
+    const key = command[1];
+
+    if (name === 'INCR') {
+      const next = (counts.get(key) || 0) + 1;
+      counts.set(key, next);
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ result: next })
+      };
+    }
+
+    if (name === 'PEXPIRE') {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ result: 1 })
+      };
+    }
+
+    if (name === 'PTTL') {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ result: 60000 })
+      };
+    }
+
+    throw new Error(`Unexpected command ${name}`);
+  };
+
+  const firstReq = createMockReq({
+    headers: {
+      'x-forwarded-for': '203.0.113.1, 198.51.100.10'
+    }
+  });
+  const firstRes = createMockRes();
+  const secondReq = createMockReq({
+    headers: {
+      'x-forwarded-for': '192.0.2.55, 198.51.100.10'
+    }
+  });
+  const secondRes = createMockRes();
+
+  assert.equal(await security.applyRateLimit(firstReq, firstRes, {
+    scope: 'submit-signup',
+    limit: 1,
+    windowMs: 60 * 1000
+  }), true);
+  assert.equal(await security.applyRateLimit(secondReq, secondRes, {
+    scope: 'submit-signup',
+    limit: 1,
+    windowMs: 60 * 1000
+  }), false);
+  assert.equal(secondRes.statusCode, 429);
+  assert.equal(counts.size, 1);
 });
 
 test('available-slots calendar mapping stays aligned with age boundaries', () => {

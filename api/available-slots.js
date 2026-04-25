@@ -344,12 +344,14 @@ async function getCachedAvailableSlots(calendar, apiKey, now = Date.now()) {
 }
 
 async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
+
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  if (!applyRateLimit(req, res, {
+  if (!await applyRateLimit(req, res, {
     scope: 'available-slots',
     limit: 30,
     windowMs: 5 * 60 * 1000,
@@ -392,8 +394,7 @@ async function handler(req, res) {
       calendarKey: calendar.key,
       calendarNameCandidates: calendar.matchNames,
       message: error && error.message,
-      status: error && error.status,
-      body: error && error.body
+      status: error && error.status
     });
     return res.status(502).json({ error: 'Failed to load class times.' });
   }

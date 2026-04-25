@@ -1,3 +1,5 @@
+const crypto = require('node:crypto');
+
 const PRODUCTION_ALLOWED_ORIGINS = [
   'https://www.liveoakjiujitsuacademy.com',
   'https://liveoakjiujitsuacademy.com'
@@ -21,6 +23,7 @@ const DEFAULT_ALLOWED_ORIGINS = (
   : PRODUCTION_ALLOWED_ORIGINS.concat(LOCAL_ALLOWED_ORIGINS);
 
 const RATE_LIMIT_STORE_KEY = '__LIVE_OAK_RATE_LIMIT_STORE__';
+const KV_RATE_LIMIT_TIMEOUT_MS = 2500;
 
 function getRateLimitStore() {
   if (!globalThis[RATE_LIMIT_STORE_KEY]) {
@@ -58,14 +61,30 @@ function takeRateLimitToken(key, limit, windowMs, now = Date.now()) {
   return { allowed: true, remaining: Math.max(limit - entry.count, 0), resetAt: entry.resetAt };
 }
 
-function getClientIp(req) {
-  const forwarded = req.headers['x-forwarded-for'];
-  if (typeof forwarded === 'string' && forwarded.trim()) {
-    return forwarded.split(',')[0].trim();
+function readHeader(req, name) {
+  const value = req.headers[name];
+  if (Array.isArray(value)) {
+    return value.find((entry) => typeof entry === 'string' && entry.trim()) || '';
   }
 
-  const realIp = req.headers['x-real-ip'];
-  if (typeof realIp === 'string' && realIp.trim()) {
+  return typeof value === 'string' ? value : '';
+}
+
+function getClientIp(req) {
+  const forwarded = readHeader(req, 'x-forwarded-for');
+  if (forwarded.trim()) {
+    const entries = forwarded
+      .split(',')
+      .map((entry) => entry.trim())
+      .filter(Boolean);
+
+    if (entries.length) {
+      return entries[entries.length - 1];
+    }
+  }
+
+  const realIp = readHeader(req, 'x-real-ip');
+  if (realIp.trim()) {
     return realIp.trim();
   }
 
@@ -74,12 +93,115 @@ function getClientIp(req) {
     : 'unknown';
 }
 
-function applyRateLimit(req, res, options) {
+function getKvRateLimitConfig() {
+  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL || '';
+  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || '';
+
+  if (!url || !token) {
+    return null;
+  }
+
+  return {
+    url: url.replace(/\/+$/, ''),
+    token
+  };
+}
+
+function isProductionRuntime() {
+  return process.env.NODE_ENV === 'production' || process.env.VERCEL_ENV === 'production';
+}
+
+function requiresDistributedRateLimit() {
+  return process.env.REQUIRE_DISTRIBUTED_RATE_LIMIT === 'true' || isProductionRuntime();
+}
+
+function createRateLimitKey(scope, ip) {
+  const digest = crypto
+    .createHash('sha256')
+    .update(`${scope}:${ip}`)
+    .digest('hex');
+
+  return `live-oak:rate-limit:${scope}:${digest}`;
+}
+
+async function kvCommand(config, command) {
+  const timeout = createTimeoutSignal(KV_RATE_LIMIT_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(config.url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${config.token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(command),
+      signal: timeout.signal
+    });
+
+    if (!response.ok) {
+      const error = new Error(`Rate limit store failed with ${response.status}`);
+      error.status = response.status;
+      throw error;
+    }
+
+    const payload = await response.json();
+    if (payload && payload.error) {
+      const error = new Error(String(payload.error));
+      error.status = 500;
+      throw error;
+    }
+
+    return payload ? payload.result : null;
+  } finally {
+    timeout.clear();
+  }
+}
+
+async function takeDistributedRateLimitToken(key, limit, windowMs, now = Date.now()) {
+  const config = getKvRateLimitConfig();
+  if (!config) {
+    if (requiresDistributedRateLimit()) {
+      const error = new Error('Distributed rate limit store is not configured.');
+      error.status = 500;
+      throw error;
+    }
+
+    return takeRateLimitToken(key, limit, windowMs, now);
+  }
+
+  const count = Number(await kvCommand(config, ['INCR', key]));
+  if (count === 1) {
+    await kvCommand(config, ['PEXPIRE', key, String(windowMs)]);
+  }
+
+  const ttlMs = Number(await kvCommand(config, ['PTTL', key]));
+  const resetAt = now + (ttlMs > 0 ? ttlMs : windowMs);
+
+  return {
+    allowed: count <= limit,
+    remaining: Math.max(limit - count, 0),
+    resetAt
+  };
+}
+
+async function applyRateLimit(req, res, options) {
   const ip = getClientIp(req);
   const scope = options.scope || 'default';
   const limit = options.limit;
   const windowMs = options.windowMs;
-  const result = takeRateLimitToken(`${scope}:${ip}`, limit, windowMs);
+  let result;
+
+  try {
+    result = await takeDistributedRateLimitToken(createRateLimitKey(scope, ip), limit, windowMs);
+  } catch (error) {
+    console.error('Rate limit check failed.', {
+      scope,
+      message: error && error.message,
+      status: error && error.status
+    });
+    res.status(503).json({ error: 'Rate limit temporarily unavailable.' });
+    return false;
+  }
 
   res.setHeader('X-RateLimit-Limit', String(limit));
   res.setHeader('X-RateLimit-Remaining', String(result.remaining));
@@ -227,9 +349,14 @@ module.exports = {
   parseAllowedOrigins,
   readJsonBody,
   _private: {
+    createRateLimitKey,
+    getKvRateLimitConfig,
     getRateLimitStore,
     getRequestOrigin,
+    isProductionRuntime,
     pruneRateLimitStore,
+    requiresDistributedRateLimit,
+    takeDistributedRateLimitToken,
     takeRateLimitToken
   }
 };
