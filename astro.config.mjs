@@ -65,8 +65,8 @@ function assertProductionSecurityConfig() {
     return;
   }
 
-  if (!process.env.PUBLIC_TURNSTILE_SITE_KEY) {
-    throw new Error('PUBLIC_TURNSTILE_SITE_KEY is required for production builds.');
+  if (!process.env.TURNSTILE_SITE_KEY && !process.env.PUBLIC_TURNSTILE_SITE_KEY) {
+    throw new Error('TURNSTILE_SITE_KEY or PUBLIC_TURNSTILE_SITE_KEY is required for production builds.');
   }
 
   if (!process.env.KV_REST_API_URL || !process.env.KV_REST_API_TOKEN) {
