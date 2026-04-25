@@ -2,6 +2,8 @@ const {
   DEFAULT_ALLOWED_ORIGINS,
   applyRateLimit,
   createTimeoutSignal,
+  getClientIp,
+  getRequestOrigin,
   hasAllowedOrigin,
   parseAllowedOrigins,
   readJsonBody
@@ -16,6 +18,8 @@ const SLASH_DATE_PATTERN = /^(0?[1-9]|1[0-2])\/(0?[1-9]|[12]\d|3[01])\/\d{4}$/;
 const ISO_DATE_TIME_PATTERN = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?Z$/;
 const MAX_CONTACTS = 6;
 const SIGNUP_WEBHOOK_TIMEOUT_MS = 9000;
+const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+const DEFAULT_ALLOWED_WEBHOOK_HOSTS = ['*.n8n.cloud', 'n8n.cloud'];
 
 function readString(value, field, maxLength, options = {}) {
   if (typeof value !== 'string') {
@@ -40,6 +44,12 @@ function readString(value, field, maxLength, options = {}) {
 function validationError(message) {
   const error = new Error(message);
   error.status = 400;
+  return error;
+}
+
+function configurationError(message) {
+  const error = new Error(message);
+  error.status = 500;
   return error;
 }
 
@@ -81,6 +91,61 @@ function validateOptionalText(value, field, maxLength) {
   }
 
   return readString(value, field, maxLength, { optional: true });
+}
+
+function validateWebhookUrl(value) {
+  if (typeof value !== 'string' || !value.trim()) {
+    throw configurationError('N8N_SIGNUP_WEBHOOK_URL is required.');
+  }
+
+  const webhookUrl = value.trim();
+  if (webhookUrl.length > 2048) {
+    throw configurationError('N8N_SIGNUP_WEBHOOK_URL is too long.');
+  }
+
+  let parsed;
+  try {
+    parsed = new URL(webhookUrl);
+  } catch (error) {
+    throw configurationError('Signup webhook URL is invalid.');
+  }
+
+  if (parsed.protocol !== 'https:') {
+    throw configurationError('Signup webhook URL must use HTTPS.');
+  }
+
+  if (!isAllowedWebhookHost(parsed.hostname, process.env.ALLOWED_SIGNUP_WEBHOOK_HOSTS)) {
+    throw configurationError('Signup webhook host is not allowed.');
+  }
+
+  return parsed.toString();
+}
+
+function parseAllowedWebhookHosts(value) {
+  if (!value || typeof value !== 'string') {
+    return DEFAULT_ALLOWED_WEBHOOK_HOSTS.slice();
+  }
+
+  const hosts = value
+    .split(',')
+    .map((entry) => entry.trim().toLowerCase())
+    .filter(Boolean);
+
+  return hosts.length ? hosts : DEFAULT_ALLOWED_WEBHOOK_HOSTS.slice();
+}
+
+function isAllowedWebhookHost(hostname, allowedHostValue) {
+  const normalizedHost = String(hostname || '').toLowerCase();
+  if (!normalizedHost) return false;
+
+  return parseAllowedWebhookHosts(allowedHostValue).some((allowedHost) => {
+    if (allowedHost.startsWith('*.')) {
+      const suffix = allowedHost.slice(1);
+      return normalizedHost.endsWith(suffix) && normalizedHost.length > suffix.length;
+    }
+
+    return normalizedHost === allowedHost;
+  });
 }
 
 function validateParent(parent) {
@@ -152,7 +217,8 @@ function normalizeSignupPayload(payload) {
 
   return {
     signup_type: signupType,
-    contacts: payload.contacts.map(validateContact)
+    contacts: payload.contacts.map(validateContact),
+    turnstileToken: validateOptionalText(payload.turnstileToken, 'turnstileToken', 4096)
   };
 }
 
@@ -181,8 +247,97 @@ function createAcceptedSignupResponse(payload) {
 function logSignupForwardingError(error) {
   console.error('Failed to submit signup payload.', {
     message: error && error.message,
-    status: error && error.status,
-    body: error && error.body
+    status: error && error.status
+  });
+}
+
+function isTurnstileRequired() {
+  return process.env.REQUIRE_TURNSTILE === 'true' ||
+    process.env.NODE_ENV === 'production' ||
+    process.env.VERCEL_ENV === 'production';
+}
+
+async function verifyTurnstileToken(token, req) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  const required = isTurnstileRequired();
+
+  if (!secret) {
+    if (required) {
+      const error = new Error('Bot verification is not configured.');
+      error.status = 500;
+      throw error;
+    }
+
+    return { skipped: true };
+  }
+
+  if (!token) {
+    const error = new Error('Bot verification is required.');
+    error.status = 400;
+    throw error;
+  }
+
+  const params = new URLSearchParams();
+  params.set('secret', secret);
+  params.set('response', token);
+
+  const ip = getClientIp(req);
+  if (ip && ip !== 'unknown') {
+    params.set('remoteip', ip);
+  }
+
+  const timeout = createTimeoutSignal(5000);
+
+  try {
+    const response = await fetch(TURNSTILE_VERIFY_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: params.toString(),
+      signal: timeout.signal
+    });
+
+    if (!response.ok) {
+      const error = new Error('Verification temporarily unavailable.');
+      error.status = 503;
+      throw error;
+    }
+
+    const result = await response.json();
+    if (!result || result.success !== true) {
+      const error = new Error('Bot verification failed.');
+      error.status = 400;
+      throw error;
+    }
+
+    return result;
+  } catch (error) {
+    if (error && error.status) {
+      throw error;
+    }
+
+    const unavailable = new Error('Verification temporarily unavailable.');
+    unavailable.status = 503;
+    throw unavailable;
+  } finally {
+    timeout.clear();
+  }
+}
+
+function sanitizeForwardPayload(payload) {
+  return {
+    signup_type: payload.signup_type,
+    contacts: payload.contacts
+  };
+}
+
+function logSignupAccepted(req, payload) {
+  console.info('Signup request accepted.', {
+    ip: getClientIp(req),
+    origin: getRequestOrigin(req, { allowRefererFallback: false }),
+    signupType: payload.signup_type,
+    contactCount: payload.contacts.length
   });
 }
 
@@ -201,7 +356,7 @@ async function forwardSignup(webhookUrl, payload) {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify(sanitizeForwardPayload(payload)),
       signal: timeout.signal
     });
 
@@ -245,17 +400,19 @@ async function forwardSignup(webhookUrl, payload) {
 }
 
 async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
+
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
   const allowedOrigins = parseAllowedOrigins(process.env.ALLOWED_ORIGINS);
-  if (!hasAllowedOrigin(req, allowedOrigins)) {
+  if (!hasAllowedOrigin(req, allowedOrigins, { allowRefererFallback: false })) {
     return res.status(403).json({ error: 'Forbidden origin.' });
   }
 
-  if (!applyRateLimit(req, res, {
+  if (!await applyRateLimit(req, res, {
     scope: 'submit-signup',
     limit: 5,
     windowMs: 15 * 60 * 1000,
@@ -264,15 +421,22 @@ async function handler(req, res) {
     return;
   }
 
-  const webhookUrl = process.env.N8N_SIGNUP_WEBHOOK_URL || process.env.NEXT_PUBLIC_WEBHOOK_URL;
-  if (!webhookUrl) {
+  if (!process.env.N8N_SIGNUP_WEBHOOK_URL) {
     console.error('Missing N8N_SIGNUP_WEBHOOK_URL environment variable.');
     return res.status(500).json({ error: 'Server configuration error.' });
   }
 
+  if (isTurnstileRequired() && !process.env.TURNSTILE_SECRET_KEY) {
+    console.error('Missing TURNSTILE_SECRET_KEY environment variable.');
+    return res.status(500).json({ error: 'Server configuration error.' });
+  }
+
   try {
+    const webhookUrl = validateWebhookUrl(process.env.N8N_SIGNUP_WEBHOOK_URL);
     const payload = await readJsonBody(req, { maxBytes: 32 * 1024 });
     const normalizedPayload = normalizeSignupPayload(payload);
+    await verifyTurnstileToken(normalizedPayload.turnstileToken, req);
+    logSignupAccepted(req, normalizedPayload);
 
     if (process.env.SIGNUP_SUBMIT_MODE !== 'sync') {
       queueSignupForward(webhookUrl, normalizedPayload);
@@ -286,14 +450,17 @@ async function handler(req, res) {
     res.setHeader('Cache-Control', 'no-store');
     return res.status(200).json(webhookResult);
   } catch (error) {
+    if (error && error.status === 503) {
+      return res.status(503).json({ error: error.message });
+    }
+
     if (error && error.status && error.status < 500) {
       return res.status(error.status).json({ error: error.message });
     }
 
     console.error('Failed to submit signup payload.', {
       message: error && error.message,
-      status: error && error.status,
-      body: error && error.body
+      status: error && error.status
     });
     return res.status(502).json({ error: 'Unable to submit signup request right now.' });
   }
@@ -307,8 +474,14 @@ module.exports._private = {
   createAcceptedSignupResponse,
   forwardSignup,
   isAbortError,
+  isTurnstileRequired,
+  isAllowedWebhookHost,
   normalizeSignupPayload,
+  parseAllowedWebhookHosts,
   queueSignupForward,
+  sanitizeForwardPayload,
   validateContact,
-  validateParent
+  validateParent,
+  validateWebhookUrl,
+  verifyTurnstileToken
 };

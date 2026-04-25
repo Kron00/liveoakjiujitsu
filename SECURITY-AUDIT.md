@@ -49,7 +49,7 @@ The live webhook endpoint is embedded in the runtime config served to the browse
 Verified live response on 2026-04-14:
 
 ```javascript
-window.__LIVE_OAK_CONFIG__ = Object.assign({}, window.__LIVE_OAK_CONFIG__, {"webhookUrl":"https://optyxai.app.n8n.cloud/webhook/448fa0dd-d010-4f63-a1dc-73e5e8cae387"});
+window.__LIVE_OAK_CONFIG__ = Object.assign({}, window.__LIVE_OAK_CONFIG__, {"webhookUrl":"[redacted previously exposed webhook URL]"});
 ```
 
 Impact:

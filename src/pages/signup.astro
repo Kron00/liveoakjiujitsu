@@ -1,3 +1,6 @@
+---
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+---
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -429,6 +432,12 @@
       text-decoration: underline;
       text-underline-offset: 2px;
     }
+    .turnstile-wrap {
+      display: flex;
+      justify-content: center;
+      min-height: 65px;
+      margin: 1.5rem 0;
+    }
 
     /* SUBMIT */
     .btn-submit {
@@ -843,6 +852,11 @@
                 <span class="consent-copy">I confirm that I am 18 or older, or that I am the parent, legal guardian, or otherwise authorized adult for each participant whose information I submit, and I consent to the collection and use of that information to schedule and manage the trial.</span>
               </label>
             </div>
+            {turnstileSiteKey ? (
+              <div class="turnstile-wrap">
+                <div class="cf-turnstile" data-sitekey={turnstileSiteKey} data-theme="light"></div>
+              </div>
+            ) : null}
             <button type="submit" class="btn-submit" id="submitBtn" disabled>Sign Up for Your Free Trial</button>
           </div>
 
@@ -871,6 +885,7 @@
     Live Oak Jiu Jitsu Academy &middot; 910 Texas Street, Fairfield, CA 94533<br>
     <a href="tel:+17077557247">(707) 755 7247</a>
   </footer>
+  {turnstileSiteKey ? <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> : null}
   <script is:inline>
   (function() {
     var AVAILABLE_SLOTS_URL = '/api/available-slots';
@@ -1682,8 +1697,20 @@
       return {
         signup_type: signupType,
         contacts: contacts,
-        website: honeypotEl ? honeypotEl.value.trim() : ''
+        website: honeypotEl ? honeypotEl.value.trim() : '',
+        turnstileToken: getTurnstileToken()
       };
+    }
+
+    function getTurnstileToken() {
+      var tokenEl = document.querySelector('input[name="cf-turnstile-response"]');
+      return tokenEl ? tokenEl.value.trim() : '';
+    }
+
+    function resetTurnstile() {
+      if (window.turnstile && typeof window.turnstile.reset === 'function') {
+        window.turnstile.reset();
+      }
     }
 
     function validIsoUtc(value) {
@@ -1698,6 +1725,10 @@
 
       if (!Array.isArray(payload.contacts) || payload.contacts.length < 1 || payload.contacts.length > MAX_CONTACTS) {
         return 'Please include between 1 and ' + MAX_CONTACTS + ' participants.';
+      }
+
+      if (document.querySelector('.cf-turnstile') && !payload.turnstileToken) {
+        return 'Please complete the verification challenge.';
       }
 
       for (var i = 0; i < payload.contacts.length; i++) {
@@ -1839,6 +1870,7 @@
       })
       .catch(function(error) {
         console.error('Failed to submit signup payload.', error);
+        resetTurnstile();
         restoreSubmitButton();
         showError(error && error.userMessage ? error.userMessage : SUBMIT_ERROR_MESSAGE);
       });

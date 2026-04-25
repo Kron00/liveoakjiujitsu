@@ -2,6 +2,7 @@ const GHL_BASE_URL = 'https://services.leadconnectorhq.com';
 const LOOKAHEAD_DAYS = 14;
 const CALENDAR_TIMEZONE = 'America/Los_Angeles';
 const DEFAULT_GHL_LOCATION_ID = 'ziXPD2awZnjPEyrzGL7k';
+const SLOT_CACHE_TTL_MS = 5 * 60 * 1000;
 const { applyRateLimit, createTimeoutSignal } = require('./_lib/security');
 
 const CALENDARS = [
@@ -38,6 +39,7 @@ const CALENDARS = [
 ];
 
 const CALENDAR_ID_CACHE_KEY = '__LIVE_OAK_GHL_CALENDAR_ID_CACHE__';
+const SLOT_CACHE_KEY = '__LIVE_OAK_GHL_SLOT_CACHE__';
 
 const dayFormatter = new Intl.DateTimeFormat('en-US', {
   weekday: 'long',
@@ -83,6 +85,28 @@ function getCalendarIdCache() {
   }
 
   return globalThis[CALENDAR_ID_CACHE_KEY];
+}
+
+function getSlotCache() {
+  if (!globalThis[SLOT_CACHE_KEY]) {
+    globalThis[SLOT_CACHE_KEY] = new Map();
+  }
+
+  return globalThis[SLOT_CACHE_KEY];
+}
+
+function getSlotCacheKey(calendar) {
+  return `${calendar.key}:${calendar.id}:${LOOKAHEAD_DAYS}`;
+}
+
+function pruneSlotCache(now = Date.now()) {
+  const cache = getSlotCache();
+
+  for (const [key, entry] of cache.entries()) {
+    if (!entry || entry.expiresAt <= now) {
+      cache.delete(key);
+    }
+  }
 }
 
 function normalizeCalendarName(value) {
@@ -295,13 +319,39 @@ async function fetchAvailableSlots(calendar, apiKey) {
   }
 }
 
+async function getCachedAvailableSlots(calendar, apiKey, now = Date.now()) {
+  pruneSlotCache(now);
+
+  const cache = getSlotCache();
+  const cacheKey = getSlotCacheKey(calendar);
+  const cached = cache.get(cacheKey);
+
+  if (cached && cached.expiresAt > now) {
+    return cached.promise;
+  }
+
+  const promise = fetchAvailableSlots(calendar, apiKey).catch((error) => {
+    cache.delete(cacheKey);
+    throw error;
+  });
+
+  cache.set(cacheKey, {
+    expiresAt: now + SLOT_CACHE_TTL_MS,
+    promise
+  });
+
+  return promise;
+}
+
 async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store');
+
   if (req.method !== 'GET') {
     res.setHeader('Allow', 'GET');
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  if (!applyRateLimit(req, res, {
+  if (!await applyRateLimit(req, res, {
     scope: 'available-slots',
     limit: 30,
     windowMs: 5 * 60 * 1000,
@@ -335,7 +385,7 @@ async function handler(req, res) {
   }
 
   try {
-    const rawSlots = await fetchAvailableSlots(calendar, apiKey);
+    const rawSlots = await getCachedAvailableSlots(calendar, apiKey);
     res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=300, stale-while-revalidate=600');
     return res.status(200).json(transformSlotsResponse(calendar, rawSlots));
   } catch (error) {
@@ -344,8 +394,7 @@ async function handler(req, res) {
       calendarKey: calendar.key,
       calendarNameCandidates: calendar.matchNames,
       message: error && error.message,
-      status: error && error.status,
-      body: error && error.body
+      status: error && error.status
     });
     return res.status(502).json({ error: 'Failed to load class times.' });
   }
@@ -356,9 +405,12 @@ module.exports._private = {
   CALENDARS,
   CALENDAR_TIMEZONE,
   DEFAULT_GHL_LOCATION_ID,
+  SLOT_CACHE_TTL_MS,
   extractCalendarList,
   findMatchingCalendarId,
   getCalendarIdCache,
   getCalendarForAge,
+  getCachedAvailableSlots,
+  getSlotCache,
   transformSlotsResponse
 };
