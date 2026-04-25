@@ -108,10 +108,14 @@ function parseAllowedOrigins(value) {
   return origins.length ? origins : DEFAULT_ALLOWED_ORIGINS.slice();
 }
 
-function getRequestOrigin(req) {
+function getRequestOrigin(req, options = {}) {
   const origin = req.headers.origin;
   if (typeof origin === 'string' && origin.trim()) {
     return origin.trim();
+  }
+
+  if (options.allowRefererFallback === false) {
+    return '';
   }
 
   const referer = req.headers.referer;
@@ -126,8 +130,8 @@ function getRequestOrigin(req) {
   return '';
 }
 
-function hasAllowedOrigin(req, allowedOrigins) {
-  const requestOrigin = getRequestOrigin(req);
+function hasAllowedOrigin(req, allowedOrigins, options = {}) {
+  const requestOrigin = getRequestOrigin(req, options);
   if (!requestOrigin) {
     return false;
   }
@@ -145,6 +149,12 @@ async function readJsonBody(req, options = {}) {
   }
 
   if (req.body && typeof req.body === 'object') {
+    if (Buffer.byteLength(JSON.stringify(req.body), 'utf8') > maxBytes) {
+      const error = new Error('Payload too large.');
+      error.status = 413;
+      throw error;
+    }
+
     return req.body;
   }
 
@@ -212,6 +222,7 @@ module.exports = {
   applyRateLimit,
   createTimeoutSignal,
   getClientIp,
+  getRequestOrigin,
   hasAllowedOrigin,
   parseAllowedOrigins,
   readJsonBody,

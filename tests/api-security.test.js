@@ -63,6 +63,7 @@ function createValidPayload(overrides = {}) {
 test.beforeEach(() => {
   security._private.getRateLimitStore().clear();
   availableSlots._private.getCalendarIdCache().clear();
+  availableSlots._private.getSlotCache().clear();
   delete process.env.ALLOWED_ORIGINS;
   delete process.env.GHL_API_KEY;
   delete process.env.GHL_LOCATION_ID;
@@ -75,6 +76,8 @@ test.beforeEach(() => {
   delete process.env.N8N_SIGNUP_WEBHOOK_URL;
   delete process.env.NEXT_PUBLIC_WEBHOOK_URL;
   delete process.env.SIGNUP_SUBMIT_MODE;
+  delete process.env.TURNSTILE_SECRET_KEY;
+  delete process.env.REQUIRE_TURNSTILE;
   delete global.fetch;
 });
 
@@ -185,6 +188,104 @@ test('submit-signup forwards sanitized payloads through the first-party endpoint
   assert.equal(forwardedPayload.contacts[0].medicalNotes, '');
   assert.equal(forwardedPayload.contacts[0].experience, 'None');
   assert.equal(Object.hasOwn(forwardedPayload, 'website'), false);
+  assert.equal(Object.hasOwn(forwardedPayload, 'turnstileToken'), false);
+});
+
+test('submit-signup does not use client-public webhook fallback variables', async () => {
+  process.env.NEXT_PUBLIC_WEBHOOK_URL = 'https://example.com/public-webhook';
+
+  const req = createMockReq({
+    headers: {
+      origin: 'http://localhost:3000',
+      'content-type': 'application/json'
+    },
+    body: createValidPayload()
+  });
+  const res = createMockRes();
+
+  await submitSignup(req, res);
+
+  assert.equal(res.statusCode, 500);
+  assert.deepEqual(res.body, { error: 'Server configuration error.' });
+});
+
+test('submit-signup requires a real Origin header for POST requests', async () => {
+  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+
+  const req = createMockReq({
+    headers: {
+      referer: 'http://localhost:3000/signup',
+      'content-type': 'application/json'
+    },
+    body: createValidPayload()
+  });
+  const res = createMockRes();
+
+  await submitSignup(req, res);
+
+  assert.equal(res.statusCode, 403);
+  assert.deepEqual(res.body, { error: 'Forbidden origin.' });
+});
+
+test('submit-signup verifies Turnstile when the secret is configured', async () => {
+  process.env.SIGNUP_SUBMIT_MODE = 'sync';
+  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  process.env.TURNSTILE_SECRET_KEY = 'turnstile-secret';
+
+  const requests = [];
+  global.fetch = async (url, options) => {
+    requests.push({ url, options });
+
+    if (url === 'https://challenges.cloudflare.com/turnstile/v0/siteverify') {
+      assert.match(options.body, /secret=turnstile-secret/);
+      assert.match(options.body, /response=token-123/);
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ success: true })
+      };
+    }
+
+    return {
+      ok: true,
+      status: 200,
+      text: async () => JSON.stringify({ success: true, results: [] })
+    };
+  };
+
+  const req = createMockReq({
+    headers: {
+      origin: 'http://localhost:3000',
+      'content-type': 'application/json'
+    },
+    body: createValidPayload({ turnstileToken: 'token-123' })
+  });
+  const res = createMockRes();
+
+  await submitSignup(req, res);
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(requests.length, 2);
+  assert.equal(requests[1].url, 'https://example.com/webhook');
+});
+
+test('submit-signup blocks missing Turnstile tokens when verification is required', async () => {
+  process.env.N8N_SIGNUP_WEBHOOK_URL = 'https://example.com/webhook';
+  process.env.TURNSTILE_SECRET_KEY = 'turnstile-secret';
+
+  const req = createMockReq({
+    headers: {
+      origin: 'http://localhost:3000',
+      'content-type': 'application/json'
+    },
+    body: createValidPayload()
+  });
+  const res = createMockRes();
+
+  await submitSignup(req, res);
+
+  assert.equal(res.statusCode, 400);
+  assert.deepEqual(res.body, { error: 'Bot verification is required.' });
 });
 
 test('submit-signup treats slow webhook confirmation as accepted', async () => {
@@ -334,4 +435,28 @@ test('available-slots can match recreated calendars by configured names', () => 
   ], availableSlots._private.getCalendarForAge(18));
 
   assert.equal(id, 'new-adult-calendar');
+});
+
+test('available-slots caches duplicate calendar lookups inside the server runtime', async () => {
+  const calendar = availableSlots._private.getCalendarForAge(18);
+  let fetchCount = 0;
+
+  global.fetch = async () => {
+    fetchCount += 1;
+    return {
+      ok: true,
+      status: 200,
+      json: async () => ({
+        '2026-04-20': {
+          slots: ['2026-04-20T06:30:00-07:00']
+        }
+      })
+    };
+  };
+
+  const first = await availableSlots._private.getCachedAvailableSlots(calendar, 'api-key', 1000);
+  const second = await availableSlots._private.getCachedAvailableSlots(calendar, 'api-key', 1001);
+
+  assert.deepEqual(second, first);
+  assert.equal(fetchCount, 1);
 });
